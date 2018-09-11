@@ -1,0 +1,25 @@
+<div local-class="content-page">
+    {{head-account}}
+    <div local-class="content">
+        <div local-class="name">
+            <p>ＳＹＳ  ＮＡＭＥ</p>
+        </div>
+        <div local-class="dec">
+            <p>sloganslogansloganslogansloganslogan</p>
+        </div>
+        <div local-class="lists">
+            {{#link-to 'new-project'}}
+                <div local-class="list">
+                    Start new project<span class="badge">42</span>
+                </div>
+            {{/link-to}}
+            {{#link-to 'history-project'}}
+                <div local-class="list">
+                    Historical project<span class="badge">42</span>
+                </div>
+            {{/link-to}}
+
+        </div>
+    </div>
+</div>
+{{outlet}}

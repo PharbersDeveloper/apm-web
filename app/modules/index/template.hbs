@@ -1,0 +1,33 @@
+<div local-class="content-page" class="row">
+<div local-class="content">
+    <div local-class="left" class="">
+        <img src="" alt="">
+    </div>
+    <div local-class="right" class="">
+        <div local-class="head">
+            <p>ＳＹＳ  ＮＡＭＥ</p>
+        </div>
+        <div local-class="con">
+            <div local-class="title">
+                <p>slogan</p>
+            </div>
+            <div local-class="input-area">
+                {{#bs-form model=login novalidate=true as |form|}}
+                    {{form.element controlType="email" label="Email" placeholder="帐号" property="email"}}
+                    {{form.element controlType="password" label="Password" placeholder="密码" property="password"}}
+                {{/bs-form}}
+            </div>
+            {{#link-to 'project-sort'}}
+                {{#bs-button local-class="btn"}}
+                  登入
+                {{/bs-button}}
+            {{/link-to}}
+
+            <div local-class="link-to">
+                <p>前往铁马测评<span class="glyphicon glyphicon-triangle-right"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{{outlet}}
