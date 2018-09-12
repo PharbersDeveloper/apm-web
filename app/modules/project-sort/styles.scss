@@ -18,6 +18,21 @@
             letter-spacing: 3px;
         }
         .lists {
+            a:hover {
+                text-decoration: none;
+            }
+            .select {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                span {
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    line-height: 20px;
+                    background: orange;
+                }
+            }
             .list {
                 margin-bottom: 20px;
                 width: 225px;

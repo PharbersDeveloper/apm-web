@@ -1,0 +1,38 @@
+<div local-class="content">
+    <div class="alert alert-dismissible" role="alert">
+      <button type="button" class="close" local-class="turn" data-dismiss="alert" aria-label="Close"><span local-class="clos" aria-hidden="true" >&times;</span></button>
+      <div local-class="con">
+          <div local-class="whole-tab">
+              {{#bs-tab as |tab|}}
+                {{#tab.pane title="整体"}}
+                  <div local-class="table">
+                     <h1> 各区域份额结果-折线图</h1>
+                  </div>
+                  <div local-class="dashboard">
+                      <h1>dashboard</h1>
+                  </div>
+                {{/tab.pane}}
+                {{#tab.pane title="区域A"}}
+                  {{regional-intro}}
+                {{/tab.pane}}
+                {{#tab.pane title="区域B"}}
+                  <p>区域A</p>
+                {{/tab.pane}}
+                {{#tab.pane title="区域C"}}
+                  <p>区域A</p>
+                {{/tab.pane}}
+                {{#tab.pane title="区域D"}}
+                  <p>区域A</p>
+                {{/tab.pane}}
+                {{#tab.pane title="区域E"}}
+                  <p>区域A</p>
+                {{/tab.pane}}
+                {{#tab.pane title="区域F"}}
+                  <p>区域A</p>
+                {{/tab.pane}}
+              {{/bs-tab}}
+          </div>
+      </div>
+    </div>
+</div>
+{{yield}}

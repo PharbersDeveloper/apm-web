@@ -1,0 +1,45 @@
+<div local-class="content">
+    <div local-class="top">
+        <div local-class="head">
+            <p local-class="title">区域信息</p>
+            <img src="" alt="">
+        </div>
+        <div local-class="intro">
+            <p>这是潜力较大的区域，是公司最重要的销售区域之一，附近汇集了许多大公司，尽管竞争对手是实力很强的原研厂家B，但是负责该区域的是一位非常有经验的代表，公司的产品市场份额一直保持的较好。这是潜力较大的区域，是公司最重要的销售区域之一，附近汇集了许多大公司，尽管竞争对手是实力很强的原研厂家B，但是负责该区域的是一位非常有经验的代表，公司的产品市场份额一直保持的较好。</p>
+        </div>
+    </div>
+    <div local-class="bottom">
+        <div local-class="card">
+            <p local-class="headline">市场规模</p>
+            <p local-class="num">4,383,924</p>
+        </div>
+        <div local-class="card">
+            <p local-class="headline">市场规模</p>
+            <p local-class="num">4,383,924</p>
+        </div>
+    </div>
+</div>
+<div local-class="sub-tab">
+    {{#bs-tab as |tab|}}
+      {{#tab.pane title="代表与执行"}}
+        <div local-class="analyze">
+            <h1>有效性分析</h1>
+        </div>
+        <div local-class="represent">
+            {{charge-represent}}
+        </div>
+        <div local-class="action">
+            <h1>行动KPI</h1>
+        </div>
+        <div local-class="report">
+            <h1>代表业务报告</h1>
+        </div>
+      {{/tab.pane}}
+      {{#tab.pane title="历史销售"}}
+      <div local-class="analyze">
+          <h1>公司产品历史销售结果</h1>
+      </div>
+      {{/tab.pane}}
+    {{/bs-tab}}
+</div>
+{{yield}}

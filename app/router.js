@@ -11,6 +11,8 @@ Router.map(function() {
   this.route('new-project');
   this.route('history-project');
   this.route('project-start');
+  this.route('product-info');
+  this.route('regional-info');
 });
 
 export default Router;

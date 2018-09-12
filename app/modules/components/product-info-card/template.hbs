@@ -1,0 +1,23 @@
+<div local-class="content">
+    <div class="alert alert-dismissible" role="alert">
+      <button type="button" class="close" local-class="turn" data-dismiss="alert" aria-label="Close"><span local-class="clos" aria-hidden="true" >&times;</span></button>
+      <div local-class="con">
+             <div local-class="intro">
+                 <p>{{data.prod}}</p>
+             </div>
+             <div local-class="product-list">
+                 {{#each data.company as |company|}}
+                   {{product-card data=company}}
+                 {{/each}}
+                 {{!-- {{product-card data=}} --}}
+                 {{!-- {{product-card}} --}}
+             </div>
+             <div local-class="table">
+                <div local-class="tab-area">
+                    <p>产品份额竞争趋势-折线图</p>
+                </div>
+             </div>
+      </div>
+    </div>
+</div>
+{{yield}}

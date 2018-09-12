@@ -1,0 +1,45 @@
+.content {
+    background: #efeff0;
+    height: 100%;
+    .turn {
+        display: block;
+        padding: 0 40px;
+        span.clos {
+        font-size: 30px;
+        opacity: 1;
+        color: #767980;
+        }
+    }
+    .con {
+        margin-top: 30px;
+        margin-right: -20px;
+        border-top: 1px solid #dfdfdf;
+        // margin-top: 10px;
+        padding-top: 20px;
+        .con-area {
+            background: #fff;
+            padding: 60px;
+            display: flex;
+            flex-direction: row;
+            img {
+                min-width: 134px !important;
+                height: 134px;
+                border-radius: 50%;
+                background: red;
+                margin-right: 25px;
+            }
+            .article {
+                font-family: PingFangSC-Regular;
+                font-size: 13px;
+                color: #485465;
+                letter-spacing: 2px;
+                text-align: justify;
+                line-height: 20px;
+                p {
+                    margin-bottom: 40px;
+                }
+            }
+        }
+    }
+
+}

@@ -1,6 +1,6 @@
 <div local-class="content-page" class="row">
 <div local-class="content">
-    <div local-class="left" class="">
+    <div local-class="left">
         <img src="" alt="">
     </div>
     <div local-class="right" class="">
@@ -13,8 +13,8 @@
             </div>
             <div local-class="input-area">
                 {{#bs-form model=login novalidate=true as |form|}}
-                    {{form.element controlType="email" label="Email" placeholder="帐号" property="email"}}
-                    {{form.element controlType="password" label="Password" placeholder="密码" property="password"}}
+                    {{form.element controlType="email" label="帐号" placeholder="帐号" property="email"}}
+                    {{form.element controlType="password" label="密码" placeholder="密码" property="password"}}
                 {{/bs-form}}
             </div>
             {{#link-to 'project-sort'}}

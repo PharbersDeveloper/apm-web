@@ -4,9 +4,10 @@
         <div local-class="title">
             <p><span class="glyphicon glyphicon-triangle-left"></span>New project</p>
         </div>
-        {{class-card class="col-md-4"}}
-        {{class-card class="col-md-4"}}
-        {{class-card class="col-md-4"}}            
+        <div>
+            {{class-card data=model}}
+        </div>
+
     </div>
 </div>
 {{outlet}}

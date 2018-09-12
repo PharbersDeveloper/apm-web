@@ -1,0 +1,35 @@
+.content {
+    height: 100%;
+    background: #efeff0;
+    .turn {
+        display: block;
+        padding: 0 40px;
+        span.clos {
+        font-size: 30px;
+        opacity: 1;
+        color: #767980;
+        }
+    }
+    .con {
+        // margin-top: 10px;
+        padding-top: 20px;
+        .table {
+            height: 350px;
+            background: #fff;
+            padding: 20px;
+            margin-left: 0px;
+            margin-right: -20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .dashboard {
+            height: 350px;
+            background: #fff;
+            padding: 20px;
+            margin-left: 0px;
+            margin-right: -20px;
+            margin-top: 20px;
+        }
+    }
+
+}
