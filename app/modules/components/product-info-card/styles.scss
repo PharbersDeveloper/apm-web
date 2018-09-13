@@ -1,21 +1,36 @@
 .content {
     height: 100%;
     background: #efeff0;
-    margin: 0 -40px;
+    margin-top: 70px;
+    .fork-area {
+        position: fixed;
+        width: 100%;
+        height: 40px;
+        right: 0;
+        background: #efeff1;
+        margin-top: -6px;
+        border-bottom: 1px solid #dfdfdf;
+    }
     .turn {
         display: block;
         padding: 0 40px;
         span.clos {
-        font-size: 30px;
+        font-size: 40px;
         opacity: 1;
-        color: #767980;
+        color: #000;
         }
     }
     .con {
         margin-top: 30px;
-        border-top: 1px solid #dfdfdf;
+        // border-top: 1px solid #dfdfdf;
         // margin-top: 10px;
+        width: 100%;
         padding-top: 20px;
+        display: flex;
+        justify-content: center;
+        .center {
+            max-width: 960px;
+        }
         .intro {
             height: 350px;
             background: #fff;
@@ -32,6 +47,7 @@
             .tab-area {
             height: 350px;
             padding: 60px;
+            margin-top: 15px;
             margin-left: 40px;
             margin-right: 20px;
             background: #fff;

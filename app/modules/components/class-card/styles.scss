@@ -1,6 +1,6 @@
 .content {
     padding: 18px;
-    // margin: 5px;
+    margin-bottom: 15px;
     height: 185px;
     display: flex;
     flex-direction: column;
@@ -11,6 +11,9 @@
     box-shadow: 2px 2px 6px 0 rgba(173,173,173,0.50);
     border-radius: 3px;
     .title {
+        .str {
+            display: none;
+        }
         .name {
             font-family: PingFangSC-Regular;
             font-size: 14px;

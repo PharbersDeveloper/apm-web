@@ -1,10 +1,10 @@
 .content-page {
     width: 100%;
+    min-width: 1000px;
     .content {
-        margin-top: 15px;
+        padding-top: 15px;
         .title {
             span {
-                // transform: rotate(-90deg);
                 margin-right:15px;
                 color: #4A64AC;
             }
@@ -13,10 +13,6 @@
             font-size: 18px;
             color: #485465;
             letter-spacing: 2px;
-        }
-        .con-margin {
-            padding-left: 20px;
-            padding-right: 20px;
         }
     }
 }
