@@ -18,10 +18,10 @@
         height: 40px;
         right: 0;
         background: #efeff1;
-        // background: red;
-        margin-top: -15px;
+        margin-top: -16px;
         padding-bottom: 10px;
         border-bottom: 1px solid #dfdfdf;
+        z-index: 1;
     }
     .turn {
         display: block;
@@ -40,6 +40,7 @@
             position: fixed;
             top: 80px;
             height: 40px;
+            z-index: 1;
         }
         .center {
             width: 100%;

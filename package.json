@@ -14,13 +14,14 @@
 		"build": "ember build",
 		"lint:js": "eslint .",
 		"start": "ember serve",
-		"test": "ember test" 
+		"test": "ember test"
 	},
 	"devDependencies": {
 		"broccoli-asset-rev": "^2.7.0",
 		"ember-ajax": "^3.0.0",
 		"ember-auto-import": "^1.2.13",
 		"ember-bootstrap": "1.2.2",
+		"ember-bootstrap-cp-validations": "^1.0.0",
 		"ember-cli": "~3.3.0",
 		"ember-cli-app-version": "^3.0.0",
 		"ember-cli-babel": "^6.6.0",
@@ -35,6 +36,7 @@
 		"ember-cli-shims": "^1.2.0",
 		"ember-cli-sri": "^2.1.0",
 		"ember-cli-uglify": "^2.0.0",
+		"ember-cp-validations": "^4.0.0-beta.2",
 		"ember-css-modules": "^0.7.10",
 		"ember-css-modules-sass": "^1.0.1",
 		"ember-data": "~3.3.0",

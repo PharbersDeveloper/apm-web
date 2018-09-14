@@ -15,14 +15,16 @@
                 <div local-class="input-area">
                     {{#bs-form model=login novalidate=true as |form|}}
                         {{form.element controlType="email" label="帐号" placeholder="帐号" property="email"}}
+                        <p local-class="password" {{action 'links' transition}}>忘记密码?</p>
                         {{form.element controlType="password" label="密码" placeholder="密码" property="password"}}
                     {{/bs-form}}
                     <div local-class="signin">
                         <p>还没有帐号?
-                            {{#link-to 'index'}}
+                            {{#link-to 'login'}}
                                 点击注册
                             {{/link-to}}
                         </p>
+
                     </div>
                 </div>
                 {{#link-to 'project-sort'}}

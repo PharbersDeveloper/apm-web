@@ -31,7 +31,17 @@ export default Route.extend({
             analyze:"有效性分析-",
             action:"行动KPI",
             report:{
-                title:"代表业务报告"
+                title:"代表业务报告",
+                list:[{
+                    headline:"title",
+                    des:"descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription"
+                },{
+                    headline:"title",
+                    des:"descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription"
+                },{
+                    headline:"title",
+                    des:"descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription"
+                }]
             },
             result:{
                 title:"公司产品历史销售结果"

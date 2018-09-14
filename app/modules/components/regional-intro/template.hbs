@@ -32,7 +32,8 @@
                 <h1>{{data.action}}</h1>
             </div>
             <div local-class="report">
-                <h1>{{data.report.title}}</h1>
+                {{!-- <h1>{{data.report.title}}</h1> --}}
+                {{represent-report data=data.report}}
             </div>
           {{/tab.pane}}
           {{#tab.pane title="历史销售"}}
