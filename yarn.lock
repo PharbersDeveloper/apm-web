@@ -2050,7 +2050,7 @@ charm@^1.0.0:
   dependencies:
     inherits "^2.0.1"
 
-chokidar@^2.0.2:
+chokidar@^2.0.0, chokidar@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.0.4.tgz#356ff4e2b0e8e43e322d18a372460bbcf3accd26"
   dependencies:
@@ -2754,6 +2754,12 @@ ember-auto-import@^1.2.13:
     walk-sync "^0.3.2"
     webpack "^4.12.0"
 
+ember-bootstrap-cp-validations@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/ember-bootstrap-cp-validations/-/ember-bootstrap-cp-validations-1.0.0.tgz#bd24db8dfa3576ff14be5a3f528ef76bed84d80b"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-bootstrap@1.2.2:
   version "1.2.2"
   resolved "http://registry.npmjs.org/ember-bootstrap/-/ember-bootstrap-1.2.2.tgz#768380b746c79811dd2fb508c81ac0eeb024a114"
@@ -2804,7 +2810,7 @@ ember-cli-babel@6.12.0:
     ember-cli-version-checker "^2.1.0"
     semver "^5.4.1"
 
-ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.10.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.17.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0:
+ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.10.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.17.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0, ember-cli-babel@^6.9.2:
   version "6.17.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.17.0.tgz#1f3e8ed9f4e2338caef6bc2c3d08d3c9928d0ddd"
   dependencies:
@@ -3144,6 +3150,14 @@ ember-cookies@^0.3.1:
     ember-cli-babel "^6.8.2"
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
 
+ember-cp-validations@^4.0.0-beta.2:
+  version "4.0.0-beta.2"
+  resolved "https://registry.npmjs.org/ember-cp-validations/-/ember-cp-validations-4.0.0-beta.2.tgz#7a36f2dacc77869b3b61d16b71cfdb842fe0a68c"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-require-module "^0.3.0"
+    ember-validators "^1.2.0"
+
 ember-css-modules-sass@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ember-css-modules-sass/-/ember-css-modules-sass-1.0.1.tgz#2c988a373ea473af35487c21efd6a889cb70bf54"
@@ -3333,6 +3347,18 @@ ember-raf-scheduler@^0.1.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
+ember-require-module@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/ember-require-module/-/ember-require-module-0.2.0.tgz#eafe436737ead4762220a9166b78364abf754274"
+  dependencies:
+    ember-cli-babel "^6.9.2"
+
+ember-require-module@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/ember-require-module/-/ember-require-module-0.3.0.tgz#65aff7908b5b846467e4526594d33cfe0c23456b"
+  dependencies:
+    ember-cli-babel "^6.9.2"
+
 ember-resolver@^4.0.0:
   version "4.5.6"
   resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-4.5.6.tgz#61cecc683fbe3464d759e6d0c2bab97b3914ee4b"
@@ -3431,6 +3457,13 @@ ember-try@^0.2.23:
     rimraf "^2.3.2"
     rsvp "^3.0.17"
     semver "^5.1.0"
+
+ember-validators@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/ember-validators/-/ember-validators-1.2.0.tgz#b4bc9aeaf97921d80c41b7dc21acca288d1216ae"
+  dependencies:
+    ember-cli-babel "^6.9.2"
+    ember-require-module "^0.2.0"
 
 ember-welcome-page@^3.0.0:
   version "3.2.0"
@@ -7227,6 +7260,12 @@ sane@^2.2.0, sane@^2.4.1, sane@^2.5.2:
     watch "~0.18.0"
   optionalDependencies:
     fsevents "^1.2.3"
+
+sass@^1.13.2:
+  version "1.13.2"
+  resolved "https://registry.npmjs.org/sass/-/sass-1.13.2.tgz#e4c43cf3cc9e8451960831dc66a5b76a3b038024"
+  dependencies:
+    chokidar "^2.0.0"
 
 sax@^1.2.4:
   version "1.2.4"

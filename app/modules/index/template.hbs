@@ -1,0 +1,44 @@
+<div local-class="content-page">
+<div local-class="content">
+    <div local-class="left">
+        <img src="" alt="">
+    </div>
+    <div local-class="right">
+        <div local-class="margin">
+            <div local-class="head">
+                <p>ＳＹＳ  ＮＡＭＥ</p>
+            </div>
+            <div local-class="con">
+                <div local-class="title">
+                    <p>slogan</p>
+                </div>
+                <div local-class="input-area">
+                    {{#bs-form model=login novalidate=true as |form|}}
+                        {{form.element controlType="email" label="帐号" placeholder="帐号" property="email"}}
+                        <p local-class="password" {{action 'links' transition}}>忘记密码?</p>
+                        {{form.element controlType="password" label="密码" placeholder="密码" property="password"}}
+                    {{/bs-form}}
+                    <div local-class="signin">
+                        <p>还没有帐号?
+                            {{#link-to 'login'}}
+                                点击注册
+                            {{/link-to}}
+                        </p>
+
+                    </div>
+                </div>
+                {{#link-to 'project-sort'}}
+                    {{#bs-button local-class="btn"}}
+                      登入
+                    {{/bs-button}}
+                {{/link-to}}
+
+                {{!-- <div local-class="link-to">
+                    <p>前往铁马测评<span class="glyphicon glyphicon-triangle-right"></span></p>
+                </div> --}}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{{outlet}}

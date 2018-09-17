@@ -1,0 +1,41 @@
+{{#each data as |project|}}
+<div class="col-md-4">
+    <div local-class="content">
+        <div local-class="title">
+            <p local-class="name">{{project.title}}</p>
+            {{#if project.str}}
+                <p local-class="time">{{project.time}}</p>
+            {{/if}}
+
+        </div>
+        <div local-class="btn">
+            {{#link-to 'project-start'}}
+              {{!-- {{#bs-button onClick=(action (mut modal3) true) local-class="start"}}Start{{/bs-button}} --}}
+              {{#bs-button onClick=(action 'sendTitle' project.title) local-class="start"}}Start{{/bs-button}}
+            {{/link-to}}
+
+        </div>
+    </div>
+</div>
+{{/each}}
+<div local-class="modal-dialog">
+    {{#bs-modal open=modal3 onHidden=(action (mut modal3) false) as |modal|}}
+      {{#modal.body}}
+        <div local-class="alert">
+            <div local-class="con">
+                <p local-class="part-title">您好！</p>
+                <p local-class="part-2">{{newtitle}}即将开始</p>
+                <p>在开始前我们建议你先了解课程所模拟的场景信息。</p>
+            </div>
+        </div>
+      {{/modal.body}}
+      {{#modal.footer}}
+        {{#bs-button onClick=(action modal.close) local-class="jump"}}跳过{{/bs-button}}
+        {{#link-to 'project-start'}}
+            {{#bs-button local-class="enter"}}进入场景信息{{/bs-button}}
+        {{/link-to}}
+      {{/modal.footer}}
+    {{/bs-modal}}
+</div>
+
+{{yield}}

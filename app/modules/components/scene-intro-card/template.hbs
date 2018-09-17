@@ -1,0 +1,21 @@
+<div local-class="content">
+    <div class="alert alert-dismissible" role="alert">
+        <div local-class="fork-area">
+            <button type="button" class="close" local-class="turn" data-dismiss="alert" aria-label="Close"><span local-class="clos" aria-hidden="true" >&times;</span></button>
+        </div>
+      <div local-class="con">
+          <div local-class="center">
+              <div local-class="con-area">
+                  <img src="" alt="">
+                  <div local-class="article">
+                      {{#each content as |item|}}
+                        <p>{{item.con}}</p>
+                      {{/each}}
+
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+{{yield}}
