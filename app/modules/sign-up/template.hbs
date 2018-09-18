@@ -5,7 +5,7 @@
             <p>用户注册</p>
         </div>
         <div local-class="input-area">
-            {{#bs-form model=this.model novalidate=true  as |form|}}
+            {{#bs-form model=this.model novalidate=false  as |form|}}
               <a href="#" local-class="code">发送验证码</a>
               {{form.element controlType="email" label="邮箱" placeholder="邮箱" property="email" required=true local-class="email"}}
               {{form.element controlType="string" label="邮箱验证码" placeholder="" property="password" required=true}}

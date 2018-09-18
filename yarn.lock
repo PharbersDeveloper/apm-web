@@ -2787,7 +2787,7 @@ ember-auto-import@^1.2.13:
 
 ember-bootstrap-cp-validations@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.npmjs.org/ember-bootstrap-cp-validations/-/ember-bootstrap-cp-validations-1.0.0.tgz#bd24db8dfa3576ff14be5a3f528ef76bed84d80b"
+  resolved "https://registry.yarnpkg.com/ember-bootstrap-cp-validations/-/ember-bootstrap-cp-validations-1.0.0.tgz#bd24db8dfa3576ff14be5a3f528ef76bed84d80b"
   dependencies:
     ember-cli-babel "^6.6.0"
 
@@ -2841,7 +2841,7 @@ ember-cli-babel@6.12.0:
     ember-cli-version-checker "^2.1.0"
     semver "^5.4.1"
 
-ember-cli-babel@^6.0.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0:
+ember-cli-babel@^6.0.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0, ember-cli-babel@^6.9.2:
   version "6.17.1"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.17.1.tgz#db2d325da1975149b688177f44915903fa2ecb9f"
   dependencies:
@@ -2859,7 +2859,7 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-c
     ember-cli-version-checker "^2.1.2"
     semver "^5.5.0"
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.10.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.17.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.9.2:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.10.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.17.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.8.1:
   version "6.17.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.17.0.tgz#1f3e8ed9f4e2338caef6bc2c3d08d3c9928d0ddd"
   dependencies:
@@ -3210,7 +3210,7 @@ ember-cookies@^0.3.1:
 
 ember-cp-validations@^4.0.0-beta.2:
   version "4.0.0-beta.2"
-  resolved "https://registry.npmjs.org/ember-cp-validations/-/ember-cp-validations-4.0.0-beta.2.tgz#7a36f2dacc77869b3b61d16b71cfdb842fe0a68c"
+  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-4.0.0-beta.2.tgz#7a36f2dacc77869b3b61d16b71cfdb842fe0a68c"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-require-module "^0.3.0"
@@ -3407,13 +3407,13 @@ ember-raf-scheduler@^0.1.0:
 
 ember-require-module@^0.2.0:
   version "0.2.0"
-  resolved "https://registry.npmjs.org/ember-require-module/-/ember-require-module-0.2.0.tgz#eafe436737ead4762220a9166b78364abf754274"
+  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.2.0.tgz#eafe436737ead4762220a9166b78364abf754274"
   dependencies:
     ember-cli-babel "^6.9.2"
 
 ember-require-module@^0.3.0:
   version "0.3.0"
-  resolved "https://registry.npmjs.org/ember-require-module/-/ember-require-module-0.3.0.tgz#65aff7908b5b846467e4526594d33cfe0c23456b"
+  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.3.0.tgz#65aff7908b5b846467e4526594d33cfe0c23456b"
   dependencies:
     ember-cli-babel "^6.9.2"
 
@@ -3522,18 +3522,10 @@ ember-try@^0.2.23:
 
 ember-validators@^1.2.0:
   version "1.2.0"
-  resolved "https://registry.npmjs.org/ember-validators/-/ember-validators-1.2.0.tgz#b4bc9aeaf97921d80c41b7dc21acca288d1216ae"
+  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-1.2.0.tgz#b4bc9aeaf97921d80c41b7dc21acca288d1216ae"
   dependencies:
     ember-cli-babel "^6.9.2"
     ember-require-module "^0.2.0"
-
-ember-welcome-page@^3.0.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/ember-welcome-page/-/ember-welcome-page-3.2.0.tgz#fe9903dbbaccfb4a2a05f42c716b7d07470f2d78"
-  dependencies:
-    broccoli-funnel "^1.0.1"
-    ember-cli-babel "^6.6.0"
-    ember-cli-htmlbars "^2.0.3"
 
 ember-wormhole@^0.5.4:
   version "0.5.4"
