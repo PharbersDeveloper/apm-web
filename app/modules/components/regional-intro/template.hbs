@@ -1,0 +1,48 @@
+<div local-class="center">
+    <div local-class="content">
+        <div local-class="top">
+            <div local-class="head">
+                <p local-class="title">{{data.areaInfo.title}}</p>
+                <img src="" alt="">
+            </div>
+            <div local-class="intro">
+                <p>{{data.areaInfo.des}}</p>
+            </div>
+        </div>
+        <div local-class="bottom">
+            {{#each data.areaInfo.cards as |card|}}
+                <div local-class="card">
+                    <p local-class="headline">{{card.headline}}</p>
+                    <p local-class="num">{{card.num}}</p>
+                </div>
+            {{/each}}
+
+        </div>
+    </div>
+    <div local-class="sub-tab">
+        {{#bs-tab as |tab|}}
+          {{#tab.pane title="代表与执行"}}
+            <div local-class="analyze">
+                <h1>{{data.analyze}}</h1>
+            </div>
+            <div local-class="represent">
+                {{charge-represent data=data.represent}}
+            </div>
+            <div local-class="action">
+                <h1>{{data.action}}</h1>
+            </div>
+            <div local-class="report">
+                {{!-- <h1>{{data.report.title}}</h1> --}}
+                {{represent-report data=data.report}}
+            </div>
+          {{/tab.pane}}
+          {{#tab.pane title="历史销售"}}
+          <div local-class="analyze">
+              <h1>{{data.result.title}}</h1>
+          </div>
+          {{/tab.pane}}
+        {{/bs-tab}}
+    </div>
+</div>
+
+{{yield}}

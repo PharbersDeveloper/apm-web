@@ -1,0 +1,22 @@
+<div local-class="content">
+    <div local-class="left">
+        <img src="" alt="">
+        <p local-class="title">{{data.title}}</p>
+    </div>
+    <div local-class="right">
+        <div local-class="head">
+            {{#if data.compete}}
+                <p local-class="labels">{{data.label}}</p>
+              {{else}}
+                <p local-class="label">{{data.label}}</p>
+            {{/if}}
+
+            <p local-class="factory">生产商：{{data.factory}}</p>
+            <p local-class="sort">研发类型：{{data.sort}}</p>
+        </div>
+        <div local-class="intro">
+            <p>{{data.des}}</p>
+        </div>
+    </div>
+</div>
+{{yield}}

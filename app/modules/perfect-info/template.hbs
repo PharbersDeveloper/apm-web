@@ -1,0 +1,46 @@
+<div local-class="content-page">
+    <div local-class="content">
+        <div local-class="head">
+            <img src="" alt="">
+            <p>完善基础信息</p>
+        </div>
+        <div local-class="input-area">
+            {{#bs-form model=this.model novalidate=true  as |form|}}
+                <a href="#" local-class="code">发送验证码</a>
+              {{form.element controlType="email" label="姓名" placeholder="" property="email" required=true local-class="email"}}
+              {{form.element controlType="string" label="手机" placeholder="" property="password" required=true}}
+              {{form.element controlType="password" label="手机验证码" placeholder="" property="password" required=true}}
+              {{form.element controlType="password" label="公司名称" placeholder="" property="password" required=true}}
+              {{form.element controlType="password" label="职位" placeholder="" property="password" required=true}}
+              <div local-class="clicks">
+                  {{bs-button onClick=(action (mut modal3) true) defaultText="确定" type="primary" buttonType="submit"}}
+                  <div local-class="log">
+                      已有帐号？
+                      {{#link-to 'index'}}
+                            点击登录
+                      {{/link-to}}
+                  </div>
+             </div>
+            {{/bs-form}}
+            <div local-class="modal-dialog">
+                {{#bs-modal open=modal3 onHidden=(action (mut modal3) false) as |modal|}}
+                  {{#modal.body}}
+                    <div local-class="alert">
+                        <div local-class="con">
+                            <img src="" alt="">
+                            <p>注册成功</p>
+                        </div>
+                    </div>
+                  {{/modal.body}}
+                  {{#modal.footer}}
+                    {{#link-to 'index'}}
+                        {{#bs-button local-class="enter"}}前往登入{{/bs-button}}
+                    {{/link-to}}
+                  {{/modal.footer}}
+                {{/bs-modal}}
+            </div>
+
+        </div>
+    </div>
+</div>
+{{outlet}}

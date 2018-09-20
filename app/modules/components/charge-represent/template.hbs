@@ -1,0 +1,36 @@
+<div local-class="content">
+    <div local-class="title">
+        <p>{{data.title}}</p>
+    </div>
+    <div local-class="head">
+        <img src="" alt="">
+        <div local-class="label">
+            <p local-class="name">{{data.name}}</p>
+            <p local-class="feature">{{data.feature}}</p>
+            <div local-class="advantage"><span local-class="tit">优&nbsp;&nbsp;&nbsp;势:</span>
+                {{#each data.advantage as |advantage|}}
+                    <span>{{advantage.adv}}</span>
+                {{/each}}
+            </div>
+            <div local-class="disadvantage"><span local-class="tit">待提高:</span>
+                {{#each data.disadvantage as |disadvantage|}}
+                    <span>{{disadvantage.dis}}</span>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div local-class="point">
+        {{#each data.cards as |card|}}
+            <div local-class="card">
+                <div local-class="headline">
+                    <p>{{card.headline}}</p>
+                </div>
+                <div local-class="num">
+                    <p>{{card.num}}</p>
+                </div>
+            </div>
+        {{/each}}
+
+    </div>
+</div>
+{{yield}}

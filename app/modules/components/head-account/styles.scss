@@ -1,0 +1,32 @@
+.head {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 0 40px;
+    height: 40px;
+    line-height: 40px;
+    background-image: linear-gradient(-90deg, #4863AC 0%, #8090BD 100%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 2;
+    .title {
+        font-family: PingFangSC-Regular;
+        font-size: 14px;
+        color: #FFFFFF;
+        letter-spacing: 0.88px;
+    }
+    .account {
+        opacity: 0.46;
+        background: #E3E3E3;
+        width: 120px;
+        button {
+            border: none;
+            height: 40px;
+            width: 120px;
+        }
+        ul {
+            width: 120px;
+        }
+    }
+}
