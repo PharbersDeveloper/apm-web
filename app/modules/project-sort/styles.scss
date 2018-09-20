@@ -23,9 +23,11 @@
                 text-decoration: none;
             }
             .select {
+                width: 230px;
                 display: flex;
                 flex-direction: row;
                 align-items: flex-start;
+                cursor: pointer;
                 span {
                     width: 25px;
                     height: 25px;

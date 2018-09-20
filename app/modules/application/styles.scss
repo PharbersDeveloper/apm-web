@@ -2,9 +2,13 @@
 $btn-color: #70B6BD;
 $default-radius: 3px;
 
-body,
-html {
+body, html {
 	height: 100%;
+}
+
+.application {
+    height: 100%;
+    width: 100%;
 }
 
 :global(.nav-tabs > li) {

@@ -7,13 +7,14 @@ export default Component.extend({
         console.log(this.params[0]);
     }),
     actions: {
-        links() {
-            console.log("link to")
-            this.transitionTo('project-start');
+        skip() {
+            this.sendAction('skip', this)
+        },
+        goScenarioDescribe() {
+            this.sendAction('goScenarioDescribe', this)
         },
         sendTitle(title) {
-            console.log('ddd')
-            this.set('modal3',true);
+            this.set('startTip',true);
             this.set('newtitle',title);
         }
     }

@@ -11,11 +11,11 @@ export default Controller.extend({
             getOwner(this).ownerInjection()
         );
     }),
-    // lmodel: loginModel.create(),
     actions: {
         submit() {
-            console.info(this.login.email)
-            console.info(this.login.password)
+            this.transitionToRoute('project-sort')
+            // console.info(this.login.email)
+            // console.info(this.login.password)
         }
     }
 });
