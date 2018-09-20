@@ -1,0 +1,40 @@
+.content {
+    position: fixed;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 38px;
+    background: #FDFDFD;
+    box-shadow: 0 1px 2px 0 rgba(162,162,162,0.50);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    z-index: 2;
+
+    :global(.active) {
+        background-color: #859EE3  !important; 
+    }
+    :global(a.active) {
+        color:#fff !important;
+    }
+    li {
+        width: 100px;
+        height: 30px;
+        background: #fff;
+        line-height: 40px;
+        text-align: center;
+        box-shadow: 0 2px 4px 0 rgba(210,210,210,0.50);
+        border: none;
+        a {
+            font-family: PingFangSC-Light;
+            font-size: 13px;
+            color: #485465;
+            letter-spacing: 2px;
+            border: 0px !important;
+        }
+        a:hover {
+            background-color: #ffffff00 !important;
+        }
+    }
+}

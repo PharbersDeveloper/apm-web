@@ -28,27 +28,32 @@
             }
         }
     }
-    :global(
-    .active {
-        background-color: #8090B9 !important;
+    // :global(.active {
+    //     background-color: #8090B9 !important;
+    // }
+    // a.active {
+    //     color:#fff !important;
+    // })
+
+    :global(.active) {
+        background-color: #8090B9 !important; 
     }
-    a.active {
+    :global(a.active) {
         color:#fff !important;
     }
-    )
-        li {
-            width: 100px;
-            height: 40px;
-            background: #fff;
-            line-height: 40px;
-            text-align: center;
-            border: none;
-            a {
-                font-family: PingFangSC-Light;
-                font-size: 13px;
-                color: #485465;
-                letter-spacing: 2px;
-                border: 0px !important;
-            }
+    li {
+        width: 100px;
+        height: 40px;
+        background: #fff;
+        line-height: 40px;
+        text-align: center;
+        border: none;
+        a {
+            font-family: PingFangSC-Light;
+            font-size: 13px;
+            color: #485465;
+            letter-spacing: 2px;
+            border: 0px !important;
         }
+    }
 }
