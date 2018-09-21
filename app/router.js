@@ -24,6 +24,11 @@ Router.map(function () {
         this.route('area');
       });
       this.route('analyze');
+
+      this.route('index', function() {
+        this.route('resource');
+        this.route('action-plan');
+      });
     });
   });
   this.route('history-project');
