@@ -1,0 +1,134 @@
+@media (min-width: 1400px) {
+	.resource-container {
+		width: 1400px;
+	}
+}
+
+.resource-container {
+	padding: 18px 20px;
+	background: #FFFFFF;
+	box-shadow: 0 0 4px 0 rgba(210,210,210,0.50);
+
+	.resource-content {
+		padding: 0;
+		font-size: 0;
+
+		.title-resource {
+			height: 20px;
+			line-height: 20px;
+			font-family: PingFangSC-Regular;
+			font-size: 14px;
+			color: #000000;
+			letter-spacing: 1.5px;
+			line-height: 20px;
+
+			span {
+				color: #485465;
+				letter-spacing: 1.5px;
+			}
+		}
+
+		.btn-month-container {
+			padding: 0;
+			width: 100%;
+
+			.btn-month {
+				padding: 0;
+				height: 30px;
+				line-height: 30px;
+				font-family: PingFangTC-Semibold;
+				font-size: 14px;
+				letter-spacing: 1px;
+				background: #FFF;
+				// box-shadow: 0 0 4px 0 rgba(196,196,196,0.50);
+				&:global(.active) {
+					color: #FFF;
+					background-color: #859EE3;
+				}
+			}
+		}
+
+		.card-item-container {
+			padding: 0;
+			width: 100%;
+			border-bottom: 1px solid #DFDFDF;
+
+			.card-item {
+				margin: 17px 0;
+				padding: 0 20px;
+
+				.title-card-item {
+					// margin: 0;
+					height: 20px;
+					line-height: 20px;
+					font-family: PingFangSC-Regular;
+					font-size: 14px;
+					color: #767A80;
+					letter-spacing: 2px;
+
+					span:last-child {
+						float: right;
+					}
+				}
+
+				.progress {
+					margin: 0;
+					border-radius: 100px;
+					background-color: #CDE4FF;
+
+					.progress-bar {
+						border-radius: 100px;
+						background-color: #7F91BF;
+					}
+				}
+			}
+		}
+
+		.table-container {
+			font-family: PingFangSC-Regular;
+			font-size: 14px;
+
+			thead {
+				color: #767A80;
+				letter-spacing: 1px;
+
+				td {
+					padding: 10px 0 10px 5px;
+				}
+			}
+
+			tbody {
+				color: #485465;
+				letter-spacing: 1.5px;
+
+				tr {
+					height: 60px;
+					padding: 10px 0;
+				}
+
+				td {
+					margin: 5px 0;
+					height: 40px;
+					line-height: 40px;
+					padding: 0 0 0 5px;
+					border: 0;
+
+					&:first-child {
+						cursor: pointer;
+						color: #4A90E2;
+					}
+
+					input {
+						padding: 0 14px;
+						width: 90px;
+						border: 0;
+						letter-spacing: 1.17px;
+						background: #F3F3F3;
+						border-radius: 1px;
+					}
+				}
+			}
+		}
+		// margin: 0 auto;
+	}
+}

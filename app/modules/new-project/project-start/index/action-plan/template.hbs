@@ -1,0 +1,22 @@
+{{outlet}}
+<div local-class="action-plan-container" class="container">
+	<div local-class="action-plan-radar" class="col-md-12 col-lg-12 col-sm-12">
+	</div>
+	<div local-class="action-plan-section" class="col-md-12 col-lg-12 col-sm-12">
+		<p local-class="title-section"><span>区域A名称<span class="glyphicon glyphicon-list-alt"></span></span>
+			{{#bs-button active=notCollapsed onClick=(action "toggle")}}
+				{{#if collapsed}}
+					Show
+				{{else}}
+					Hide
+				{{/if}}
+			{{/bs-button}}
+		</p>
+
+		{{#bs-collapse collapsed=collapsed}}
+			<div class="well">
+				<p>This is collapsible content</p>
+			</div>
+		{{/bs-collapse}}
+	</div>
+</div>

@@ -1,0 +1,14 @@
+<div local-class="content">
+    <div local-class="title">
+        <p>{{data.title}}</p>
+    </div>
+    <div local-class="lists">
+        {{#each data.list as |list|}}
+            <div local-class="list">
+                <p local-class="headline">{{list.headline}}</p>
+                <p local-class="des">{{list.des}}</p>
+            </div>
+        {{/each}}
+    </div>
+</div>
+{{yield}}

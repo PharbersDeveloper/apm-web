@@ -1,0 +1,17 @@
+<div local-class='content'>
+    {{#bs-nav type="tabs" as |nav|}}
+        {{#nav.item}}{{#nav.link-to "new-project.project-start.introduced.scenario"}}场景介绍{{/nav.link-to}}{{/nav.item}}
+        {{#nav.item}}{{#nav.link-to "new-project.project-start.introduced.product"}}产品信息{{/nav.link-to}}{{/nav.item}}
+        {{#nav.item}}{{#nav.link-to "new-project.project-start.introduced.area"}}区域信息{{/nav.link-to}}{{/nav.item}}
+    {{/bs-nav}}
+    <div class="dropdown" local-class="quit">
+        <div class="dropdown-toggle" type="button" 
+            id="dropdownMenu2" data-toggle="dropdown" 
+            aria-haspopup="true" aria-expanded="false">
+            退出
+        </div>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li><a href="project-sort">退出</a></li>
+        </ul>
+    </div>
+</div>
