@@ -5,9 +5,10 @@
 }
 
 .action-plan-container {
-	padding: 18px 20px;
+    margin: 10px auto;
+	padding: 0;
 	background: #FFFFFF;
-	box-shadow: 0 0 4px 0 rgba(210,210,210,0.50);
+	box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
 
 	.action-plan-radar {
 		padding: 0;
@@ -17,12 +18,103 @@
 	.action-plan-section {
 		padding: 6px 20px;
 		font-size: 0;
+		background: #FFFFFF;
+		box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 
 		.title-section {
+            margin: 0;
 			font-family: PingFangTC-Medium;
 			font-size: 14px;
 			color: #4A90E2;
 			letter-spacing: 1.5px;
+
+			.btn-toggle {
+				float: right;
+			}
+		}
+
+		.content-container {
+
+			.btn-area {
+                margin: 14px 0;
+				.btn-show {
+					margin-right: 10px;
+					padding: 15px 24px;
+					width: 160px;
+					height: 50px;
+
+					font-family: PingFangSC-Regular;
+					font-size: 14px;
+					color: #767A80;
+					letter-spacing: 2px;
+					text-align: left;
+					background: #FFFFFF;
+					box-shadow: 0 2px 4px 0 #E2E2E2;
+					border-radius: 1px;
+
+					span:last-child {
+						float: right;
+					}
+				}
+			}
+
+			.table-container {
+                margin: 12px 0;
+				font-family: PingFangSC-Regular;
+				font-size: 14px;
+				border-bottom: 1px solid #DFDFDF;
+
+				thead {
+					text-align: center;
+					color: #767A80;
+					letter-spacing: 1px;
+				}
+
+				tbody {
+					color: #485465;
+					letter-spacing: 1.17px;
+					text-align: center;
+
+					td {
+						border: 0;
+					}
+				}
+			}
+
+			.choose-plan {
+				font-family: PingFangSC-Regular;
+				font-size: 14px;
+
+				.checkbox-choose-plan {
+					float: right;
+					display: inline-block;
+					letter-spacing: 2px;
+
+					button {
+						padding: 0;
+						width: 130px;
+						height: 30px;
+						line-height: 30px;
+						color: #FFF;
+						background: #7F92C9;
+						border-radius: 100px;
+					}
+
+					ul li {
+						color: #485465;
+					}
+				}
+			}
+
+			.show-plan {
+				span {
+                    padding: 0 10px;
+					font-family: PingFangSC-Regular;
+					font-size: 14px;
+					color: #767A80;
+					letter-spacing: 2px;
+				}
+			}
 		}
 	}
 }
