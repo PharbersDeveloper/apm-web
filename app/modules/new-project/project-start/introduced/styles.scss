@@ -1,0 +1,8 @@
+.introduced {
+    position: relative;
+    z-index: 10;
+    display: none;
+    &.show {
+        display: block
+    }
+}
