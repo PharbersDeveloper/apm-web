@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 
 export default Service.extend({
-    isSelectedName: 'showScenario',
+    isSelectedName: '',
     actions: {
         showScenario(name) {
             this.set('isSelectedName', name)
