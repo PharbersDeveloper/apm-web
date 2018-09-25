@@ -12,5 +12,7 @@
     <div local-class={{if (eq introduced.isSelectedName 'showArea') 'introduced show' 'introduced'}}>
         {{regional-info-card data=AreaModel close=(action 'close')}}
     </div>
-    {{outlet}}
+    <div class={{if (not-eq introduced.isSelectedName '') 'display-none' ''}} local-class="content">
+        {{outlet}}
+    </div>
 </div>
