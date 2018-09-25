@@ -34,6 +34,7 @@ export default Controller.extend({
 
     init() {
         this._super(...arguments)
+        this.set('content', "测试数据<br>测试数据<br>测试数据")
     },
     actions: {
         dragResult(obj, ops) {
@@ -53,6 +54,9 @@ export default Controller.extend({
                     elem.set('selected', null);
                 }
             })
+        },
+        openTips() {
+            this.set('tipModal',true);
         }
         // dragStart: function () {
         //     this.set('dragEndedText', false);
