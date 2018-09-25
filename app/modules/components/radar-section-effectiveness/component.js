@@ -47,7 +47,7 @@ export default Component.extend({
 			color: d3.scaleOrdinal().range(["#AFC52F", "#ff6600"]),
 			format: '.0f',
 			legend: { title: '图例', translateX: 100, translateY: 40 },
-			unit: '$'
+			unit: '%'
 		};
 	},
 	didReceiveAttrs() {
@@ -265,17 +265,17 @@ export default Component.extend({
 			.on('mouseover', function(d, i) {
 				//Dim all blobs
 				parent.selectAll(".radarArea")
-					.transition(t)
+					// .transition(t)
 					.style("fill-opacity", 0.1);
 				//Bring back the hovered over blob
 				d3.select(this)
-					.transition(t)
+					// .transition(t)
 					.style("fill-opacity", 0.7);
 			})
 			.on('mouseout', () => {
 				//Bring back all blobs
 				parent.selectAll(".radarArea")
-					.transition(t)
+					// .transition(t)
 					.style("fill-opacity", cfg.opacityArea);
 			});
 
@@ -321,16 +321,20 @@ export default Component.extend({
 			.style("fill", "none")
 			.style("pointer-events", "all")
 			.on("mouseover", function(d, i) {
-				tooltip
-					.attr('x', this.cx.baseVal.value - 10)
+				tooltip.attr('x', this.cx.baseVal.value - 10)
 					.attr('y', this.cy.baseVal.value - 10)
-					.transition(t)
+					// .transition(t)
 					.style('display', 'block')
+					.style('opacity', '0.6')
 					.text(Format(d.value) + cfg.unit);
+				// .text(d.value)
+
+
 			})
 			.on("mouseout", function() {
-				tooltip.transition(t)
-					.style('display', 'none').text('');
+				tooltip.style('display', 'none').text('');
+				// .transition(t)
+				// .style('display', 'none').text('');
 			});
 
 		const tooltip = g.append("text")
