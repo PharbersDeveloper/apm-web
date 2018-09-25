@@ -1,0 +1,30 @@
+<div local-class="sort-container">
+    <div local-class="sort-conent">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    {{#each areaArray as |item|}}
+                        <div local-class="areaCard">
+                            {{#draggable-object content=item }}
+                                {{item.name}}
+                            {{/draggable-object}}
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                {{#each computeLevelArray as |item|}}
+                        <div local-class="sort">
+                            {{!-- dragOverAction=(action 'draggingOverTarget') dragOutAction=(action 'leftDragTarget') --}}
+                            {{#draggable-object-target leveid=item.id amount="1" action=(action 'dragResult')  overrideClass='dropTarget'}}
+                                <div class="col-md-10 col-lg-10 col-sm-10">{{item.name}}  {{item.selected.name}}</div>
+                                <div class="col-md-2 col-lg-2 col-sm-2 text-right" local-class="remove" {{action "remove" item.id}}>
+                                    <span>&times;</span>
+                                </div>
+                            {{/draggable-object-target}}
+                        </div>
+                    {{/each}} 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

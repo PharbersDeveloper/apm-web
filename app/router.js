@@ -29,12 +29,14 @@ Router.map(function () {
         this.route('resource');
         this.route('action-plan');
         this.route('upshot');
+        this.route('sort');
       });
     });
   });
   this.route('history-project');
   this.route('perfect-info');
   this.route('sign_up');
+  this.route('demo');
 });
 
 export default Router;
