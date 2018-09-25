@@ -28,6 +28,7 @@ Router.map(function () {
         this.route('analyze');
         this.route('resource');
         this.route('action-plan');
+        this.route('upshot');
       });
     });
   });

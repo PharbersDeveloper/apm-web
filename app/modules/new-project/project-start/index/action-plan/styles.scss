@@ -3,13 +3,11 @@
 		width: 1400px;
 	}
 }
-
 /*注释掉部分样式，原因是，修改了页面部分结构，在顶层使用了Bootstrap Container，不需要每个都加入，看到注释后可以删除了*/
 .action-plan-container {
 	// padding: 0;
 	// background: #FFFFFF;
 	// box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
-
 	.action-plan-radar {
 		margin-bottom: 10px;
 		background: #FFFFFF;
@@ -19,12 +17,12 @@
 	.action-plan-section {
 		margin-bottom: 10px;
 		padding: 6px 20px;
-		// font-size: 0;
+		font-size: 0;
 		background: #FFFFFF;
 		box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 
 		.title-section {
-            margin: 0;
+			margin: 0;
 			font-family: PingFangTC-Medium;
 			font-size: 14px;
 			color: #4A90E2;
@@ -36,15 +34,16 @@
 		}
 
 		.content-container {
-
 			.btn-area {
-                margin: 14px 0;
+				margin: 14px 0;
+
 				.btn-show {
 					margin-right: 10px;
-					padding: 15px 24px;
+					// padding: 0;
+					padding: 0 24px;
 					width: 160px;
 					height: 50px;
-
+					line-height: 50px;
 					font-family: PingFangSC-Regular;
 					font-size: 14px;
 					color: #767A80;
@@ -52,16 +51,32 @@
 					text-align: left;
 					background: #FFFFFF;
 					box-shadow: 0 2px 4px 0 #E2E2E2;
+					border: 0;
 					border-radius: 1px;
 
 					span:last-child {
 						float: right;
 					}
 				}
+
+				.btn-show:first-child {
+					span:last-child {
+						font-size: 24px;
+						color: #485465;
+						letter-spacing: 1px;
+					}
+				}
+
+				.btn-show:last-child {
+					span:last-child {
+						color: #485465;
+						letter-spacing: 1px;
+					}
+				}
 			}
 
 			.table-container {
-                margin: 12px 0;
+				margin: 12px 0;
 				font-family: PingFangSC-Regular;
 				font-size: 14px;
 				border-bottom: 1px solid #DFDFDF;
@@ -110,7 +125,7 @@
 
 			.show-plan {
 				span {
-                    padding: 0 10px;
+					padding: 0 10px;
 					font-family: PingFangSC-Regular;
 					font-size: 14px;
 					color: #767A80;

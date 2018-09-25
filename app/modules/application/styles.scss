@@ -2,14 +2,21 @@
 $btn-color: #70B6BD;
 $default-radius: 3px;
 
-body, html {
-    height: 100%;
-    background: #efeff0;
+body,
+html {
+	height: 100%;
+	background: #efeff0;
 }
 
 .application {
-    height: 100%;
-    width: 100%;
+	height: 100%;
+	width: 100%;
+}
+@media (min-width: 1400px) {
+	:global(.container) {
+		width: 1400px;
+		padding: 0;
+	}
 }
 
 :global(.nav-tabs > li) {
