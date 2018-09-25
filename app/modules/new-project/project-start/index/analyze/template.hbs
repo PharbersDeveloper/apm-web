@@ -1,0 +1,218 @@
+<div local-class="analyze-container">
+	<div local-class="analyze-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				<div class="table-responsive">
+					<table local-class="table-container" class="table">
+						<thead>
+							<tr>
+								<td>区域</td>
+								<td>市场规模</td>
+								<td>潜力贡献度</td>
+								<td>上次销售额</td>
+								<td>销售贡献度</td>
+								<td>贡献度系数</td>
+								<td>上期销售增长率</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>区域A</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+							</tr>
+							<tr>
+								<td>区域B</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+							</tr>
+							<tr>
+								<td>区域C</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+							</tr>
+							<tr>
+								<td>区域D</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+							</tr>
+							<tr>
+								<td>区域E</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								<td>{{input type="text" dir="rtl" disabled=true}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div local-class="analyze-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				 <p local-class="title-section">
+					 区域A名称
+					 <div local-class="btn-toggle" >
+						<span class="glyphicon glyphicon-trash"></span>
+						{{#if collapsed}}
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}} 
+						<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}} 
+					</div>					 					 
+                </p>
+				{{#bs-collapse local-class="content-container" collapsed=false}}
+					{{textarea rows=10 placeholder="hint" value = "" maxlength=300 autofocus=true}}
+				{{/bs-collapse}}
+			</div>
+		</div>
+	</div>
+
+	<div local-class="analyze-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				 <p local-class="title-section">
+					 区域B名称
+					 <div local-class="btn-toggle" >
+						<span class="glyphicon glyphicon-trash"></span>
+						{{#if collapsed}}
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}} 
+						<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}} 
+					</div>					 					 
+                </p>
+				{{#bs-collapse local-class="content-container" collapsed=false}}
+					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
+				{{/bs-collapse}}
+			</div>
+		</div>
+	</div>
+
+    <div local-class="analyze-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				 <p local-class="title-section">
+					 区域B名称
+					 <div local-class="btn-toggle" >
+						<span class="glyphicon glyphicon-trash"></span>
+						{{#if collapsed}}
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}} 
+						<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}} 
+					</div>					 					 
+                </p>
+				{{#bs-collapse local-class="content-container" collapsed=false}}
+					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
+				{{/bs-collapse}}
+			</div>
+		</div>
+	</div>
+
+    <div local-class="analyze-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				 <p local-class="title-section">
+					 区域B名称
+					 <div local-class="btn-toggle" >
+						<span class="glyphicon glyphicon-trash"></span>
+						{{#if collapsed}}
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}} 
+						<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}} 
+					</div>					 					 
+                </p>
+				{{#bs-collapse local-class="content-container" collapsed=false}}
+					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
+				{{/bs-collapse}}
+			</div>
+		</div>
+	</div>
+
+    <div local-class="analyze-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				 <p local-class="title-section">
+					 区域B名称
+					 <div local-class="btn-toggle" >
+						<span class="glyphicon glyphicon-trash"></span>
+						{{#if collapsed}}
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}} 
+						<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}} 
+					</div>					 					 
+                </p>
+				{{#bs-collapse local-class="content-container" collapsed=false}}
+					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
+				{{/bs-collapse}}
+			</div>
+		</div>
+	</div>
+
+    <div local-class="analyze-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				 <p local-class="title-section">
+					 区域B名称
+					 <div local-class="btn-toggle" >
+						<span class="glyphicon glyphicon-trash"></span>
+						{{#if collapsed}}
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}} 
+						<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}} 
+					</div>					 					 
+                </p>
+				{{#bs-collapse local-class="content-container" collapsed=false}}
+					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
+				{{/bs-collapse}}
+			</div>
+		</div>
+	</div>
+
+    <div local-class="analyze-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				 <p local-class="title-section">
+					 区域B名称
+					 <div local-class="btn-toggle" >
+						<span class="glyphicon glyphicon-trash"></span>
+						{{#if collapsed}}
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}} 
+						<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}} 
+					</div>					 					 
+                </p>
+				{{#bs-collapse local-class="content-container" collapsed=false}}
+					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
+				{{/bs-collapse}}
+			</div>
+		</div>
+	</div>
+
+</div>

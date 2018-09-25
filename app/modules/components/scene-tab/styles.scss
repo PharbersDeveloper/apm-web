@@ -37,6 +37,7 @@
 
     :global(.active) {
         background-color: #8090B9 !important; 
+        color:#fff !important;
     }
     :global(a.active) {
         color:#fff !important;
@@ -48,6 +49,7 @@
         line-height: 40px;
         text-align: center;
         border: none;
+        cursor: pointer;
         a {
             font-family: PingFangSC-Light;
             font-size: 13px;

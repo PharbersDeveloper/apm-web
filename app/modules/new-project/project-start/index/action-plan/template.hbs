@@ -1,22 +1,277 @@
-{{outlet}}
-<div local-class="action-plan-container" class="container">
-	<div local-class="action-plan-radar" class="col-md-12 col-lg-12 col-sm-12">
-	</div>
-	<div local-class="action-plan-section" class="col-md-12 col-lg-12 col-sm-12">
-		<p local-class="title-section"><span>区域A名称<span class="glyphicon glyphicon-list-alt"></span></span>
-			{{#bs-button active=notCollapsed onClick=(action "toggle")}}
-				{{#if collapsed}}
-					Show
-				{{else}}
-					Hide
-				{{/if}}
-			{{/bs-button}}
-		</p>
+<div local-class="action-plan-container">
+    <div local-class="action-plan-radar">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 text-center">
+                雷达图
+            </div>
+        </div>
+    </div>
 
-		{{#bs-collapse collapsed=collapsed}}
-			<div class="well">
-				<p>This is collapsible content</p>
-			</div>
-		{{/bs-collapse}}
-	</div>
+    <div local-class="action-plan-section">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <p local-class="title-section"><span>区域A名称<span class="glyphicon glyphicon-list-alt"></span></span>
+                    {{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
+                    {{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    {{else}} <span class="glyphicon glyphicon-triangle-top"></span>
+                    {{/if}} {{/bs-button}}
+                </p>
+
+                {{#bs-collapse local-class="content-container" collapsed=collapsed}}
+                <div local-class="btn-area">
+                    <button local-class="btn-show">
+                        <span>排序</span>
+                        <span>1</span>
+                    </button>
+                    <button local-class="btn-show">
+                        <span>代表</span>
+                        <span>小郭</span>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table local-class="table-container" class="table">
+                        <thead>
+                            <tr>
+                                <td> </td>
+                                <td>公司目标($)</td>
+                                <td>预测目标($)</td>
+                                <td>协访天数</td>
+                                <td>会议名额</td>
+                                <td>预算金额</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <p local-class="choose-plan">
+                    <span>行动计划-</span>
+                    <span>針對區域情況作出行動計畫優化區域有效性問題。（最多兩項）</span>
+
+                    <div local-class="checkbox-choose-plan" class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true">
+                            選擇行動計畫
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            {{#each readyChoose as |choose|}}
+                            <li>{{input type="checkbox" name=choose.text checked=choose.isChecked}}{{choose.text}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </p>
+                <p local-class="show-plan">
+                    {{#each planPaire as |plan|}}
+                    <span>{{plan.text}}</span>
+                    {{/each}}
+                </p>
+                {{/bs-collapse}}
+            </div>
+        </div>
+    </div>
+
+    <div local-class="action-plan-section">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <p local-class="title-section"><span>区域B名称<span class="glyphicon glyphicon-list-alt"></span></span>
+                    {{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
+                    {{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    {{else}} <span class="glyphicon glyphicon-triangle-top"></span>
+                    {{/if}} {{/bs-button}}
+                </p>
+
+                {{#bs-collapse local-class="content-container" collapsed=collapsed}}
+                <div local-class="btn-area">
+                    <button local-class="btn-show">
+                        <span>排序</span>
+                        <span>1</span>
+                    </button>
+                    <button local-class="btn-show">
+                        <span>代表</span>
+                        <span>小郭</span>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table local-class="table-container" class="table">
+                        <thead>
+                            <tr>
+                                <td> </td>
+                                <td>公司目标($)</td>
+                                <td>预测目标($)</td>
+                                <td>协访天数</td>
+                                <td>会议名额</td>
+                                <td>预算金额</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <p local-class="choose-plan">
+                    <span>行动计划-</span>
+                    <span>針對區域情況作出行動計畫優化區域有效性問題。（最多兩項）</span>
+
+                    <div local-class="checkbox-choose-plan" class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true">
+                            選擇行動計畫
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            {{#each readyChoose as |choose|}}
+                            <li>{{input type="checkbox" name=choose.text checked=choose.isChecked}}{{choose.text}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </p>
+                <p local-class="show-plan">
+                    {{#each planPaire as |plan|}}
+                    <span>{{plan.text}}</span>
+                    {{/each}}
+                </p>
+                {{/bs-collapse}}
+            </div>
+        </div>
+    </div>
+
+     <div local-class="action-plan-section">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <p local-class="title-section"><span>区C名称<span class="glyphicon glyphicon-list-alt"></span></span>
+                    {{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
+                    {{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    {{else}} <span class="glyphicon glyphicon-triangle-top"></span>
+                    {{/if}} {{/bs-button}}
+                </p>
+
+                {{#bs-collapse local-class="content-container" collapsed=collapsed}}
+                <div local-class="btn-area">
+                    <button local-class="btn-show">
+                        <span>排序</span>
+                        <span>1</span>
+                    </button>
+                    <button local-class="btn-show">
+                        <span>代表</span>
+                        <span>小郭</span>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table local-class="table-container" class="table">
+                        <thead>
+                            <tr>
+                                <td> </td>
+                                <td>公司目标($)</td>
+                                <td>预测目标($)</td>
+                                <td>协访天数</td>
+                                <td>会议名额</td>
+                                <td>预算金额</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+                            <tr>
+                                <td>1 </td>
+                                <td>652,000 </td>
+                                <td>541,000 </td>
+                                <td>52</td>
+                                <td>52</td>
+                                <td>52</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <p local-class="choose-plan">
+                    <span>行动计划-</span>
+                    <span>針對區域情況作出行動計畫優化區域有效性問題。（最多兩項）</span>
+
+                    <div local-class="checkbox-choose-plan" class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true">
+                            選擇行動計畫
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            {{#each readyChoose as |choose|}}
+                            <li>{{input type="checkbox" name=choose.text checked=choose.isChecked}}{{choose.text}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </p>
+                <p local-class="show-plan">
+                    {{#each planPaire as |plan|}}
+                    <span>{{plan.text}}</span>
+                    {{/each}}
+                </p>
+                {{/bs-collapse}}
+            </div>
+        </div>
+    </div>
+
 </div>
