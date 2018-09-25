@@ -48,7 +48,7 @@ export default Controller.extend({
         },
         remove(targetId) {
             this.get('levelArray').forEach(elem => {
-                if (elem.get('id') === targetId) {
+                if (elem.get('id') === targetId && elem.get('selected') !== null) {
                     this.get('areaArray').pushObject(elem.get('selected'));
                     elem.set('selected', null);
                 }

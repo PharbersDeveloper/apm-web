@@ -2,18 +2,27 @@
     <div local-class="sort-conent">
         <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
+                <p local-class="title-sort">重要度排序<span> -根据分析，寻找增长点，并已即将发生增长的可能性进行排序。</span></p>
+                <div class="row" local-class="tips-sort">
+                    <div class="col-md-6 col-lg-6 col-sm-6"></div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <p class="text-center">排序-请多动区域卡片进行排序</p>
+                    </div>
+                </div>
+                
                 <div class="col-md-6 col-lg-6 col-sm-6">
                     {{#each areaArray as |item|}}
                         <div local-class="areaCard">
                             {{#draggable-object content=item }}
-                                {{item.name}}
+                                <span>{{item.name}}</span>
+                                <span local-class="hintModal" class="glyphicon glyphicon-list-alt"></span>
                             {{/draggable-object}}
                         </div>
                     {{/each}}
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                 {{#each computeLevelArray as |item|}}
-                        <div local-class="sort">
+                        <div local-class="sortCard">
                             {{!-- dragOverAction=(action 'draggingOverTarget') dragOutAction=(action 'leftDragTarget') --}}
                             {{#draggable-object-target leveid=item.id amount="1" action=(action 'dragResult')  overrideClass='dropTarget'}}
                                 <div class="col-md-10 col-lg-10 col-sm-10">{{item.name}}  {{item.selected.name}}</div>
