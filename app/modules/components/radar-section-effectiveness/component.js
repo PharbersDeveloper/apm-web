@@ -2,33 +2,37 @@ import Component from '@ember/component';
 import { run } from '@ember/runloop';
 import { get } from '@ember/object';
 import d3 from 'd3';
+import { transition } from 'd3-transition';
 export default Component.extend({
 	tagName: 'div',
-	localClassName: 'radar-section-effectiveness',
 	classNames: ['radar-section-effectiveness', 'col-md-12', 'col-sm-12', 'col-xs-12'],
 	init() {
 		this._super(...arguments);
 		this.radarSectionData = [{
-				name: 'Allocated budget',
+				name: '区域A',
 				axes: [
-					{ axis: 'Sales', value: 42 },
-					{ axis: 'Marketing', value: 20 },
-					{ axis: 'Development', value: 60 },
-					{ axis: 'Customer Support', value: 26 },
-					{ axis: 'Information Technology', value: 35 },
-					{ axis: 'Administration', value: 20 }
+					{ axis: '产品知识', value: 42 },
+					{ axis: '目标拜访频次', value: 20 },
+					{ axis: '拜访次数', value: 60 },
+					{ axis: '实际工作天数', value: 26 },
+					{ axis: '工作积极性', value: 35 },
+					{ axis: '区域管理能力', value: 20 },
+					{ axis: '销售能力', value: 40 }
+
 				],
 				color: '#26AF32'
 			},
 			{
-				name: 'Actual Spending',
+				name: '区域平均',
 				axes: [
-					{ axis: 'Sales', value: 50 },
-					{ axis: 'Marketing', value: 45 },
-					{ axis: 'Development', value: 20 },
-					{ axis: 'Customer Support', value: 20 },
-					{ axis: 'Information Technology', value: 25 },
-					{ axis: 'Administration', value: 23 }
+					{ axis: '产品知识', value: 50 },
+					{ axis: '目标拜访频次', value: 45 },
+					{ axis: '拜访次数', value: 20 },
+					{ axis: '实际工作天数', value: 20 },
+					{ axis: '工作积极性', value: 25 },
+					{ axis: '区域管理能力', value: 23 },
+					{ axis: '销售能力', value: 44 }
+
 				],
 				color: '#762712'
 			}
@@ -42,7 +46,7 @@ export default Component.extend({
 			roundStrokes: false,
 			color: d3.scaleOrdinal().range(["#AFC52F", "#ff6600"]),
 			format: '.0f',
-			legend: { title: 'Organization XYZ', translateX: 100, translateY: 40 },
+			legend: { title: '图例', translateX: 100, translateY: 40 },
 			unit: '$'
 		};
 	},
@@ -249,6 +253,9 @@ export default Component.extend({
 			.attr("class", "radarWrapper");
 
 		//Append the backgrounds
+		let t = transition()
+			.duration(200)
+			.ease(d3.easeLinear);
 		blobWrapper
 			.append("path")
 			.attr("class", "radarArea")
@@ -258,17 +265,17 @@ export default Component.extend({
 			.on('mouseover', function(d, i) {
 				//Dim all blobs
 				parent.selectAll(".radarArea")
-					.transition().duration(200)
+					.transition(t)
 					.style("fill-opacity", 0.1);
 				//Bring back the hovered over blob
 				d3.select(this)
-					.transition().duration(200)
+					.transition(t)
 					.style("fill-opacity", 0.7);
 			})
 			.on('mouseout', () => {
 				//Bring back all blobs
 				parent.selectAll(".radarArea")
-					.transition().duration(200)
+					.transition(t)
 					.style("fill-opacity", cfg.opacityArea);
 			});
 
@@ -317,12 +324,12 @@ export default Component.extend({
 				tooltip
 					.attr('x', this.cx.baseVal.value - 10)
 					.attr('y', this.cy.baseVal.value - 10)
-					.transition()
+					.transition(t)
 					.style('display', 'block')
 					.text(Format(d.value) + cfg.unit);
 			})
 			.on("mouseout", function() {
-				tooltip.transition()
+				tooltip.transition(t)
 					.style('display', 'none').text('');
 			});
 
@@ -336,7 +343,9 @@ export default Component.extend({
 			.attr("dy", "0.35em");
 
 		if (cfg.legend !== false && typeof cfg.legend === "object") {
-			let legendZone = svg.append('g');
+			let legendZone = svg.append('g')
+				.attr('class', 'legendZone')
+				.attr('transform', `translate(80,${options.h-40})`);
 			let names = data.map(el => el.name);
 			if (cfg.legend.title) {
 				let title = legendZone.append("text")
