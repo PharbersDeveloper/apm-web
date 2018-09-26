@@ -28,6 +28,9 @@ module.exports = function(environment) {
 		ENV['ember-cli-mirage'] = {
             enabled: false
         };
+        ENV['ember-d3'] = {
+            bundle: true
+        };
 		// ENV.APP.LOG_RESOLVER = true;
 		// ENV.APP.LOG_ACTIVE_GENERATION = true;
 		// ENV.APP.LOG_TRANSITIONS = true;
