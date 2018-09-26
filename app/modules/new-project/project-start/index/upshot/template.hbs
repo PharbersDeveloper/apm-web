@@ -1,3 +1,39 @@
 {{outlet}}
-{{d3-line-multi-legend chooseData=chooseData}}
-{{multiline-section-share sectionData=sectionData}}
+<div  local-class="area-sales">
+    <h3>地区季度销售结果</h3>
+	{{d3-histogram-area-sales }}
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<table class="table table-striped" local-class="table-sales">
+			<thead>
+				<tr>
+					<td> </td>
+					<td>份额</td>
+					<td>销售额</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>最佳结果</td>
+					<td>26.33%</td>
+					<td>60,000</td>
+				</tr>
+				<tr>
+					<td>本季结果</td>
+					<td>26.33%</td>
+					<td>60,000</td>
+				</tr>
+				<tr>
+					<td>上季结果</td>
+					<td>26.33%</td>
+					<td>60,000</td>
+				</tr>
+				<tr>
+					<td>最差结果</td>
+					<td>26.33%</td>
+					<td>60,000</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+{{d3-line-multi-legend chooseData=chooseData}} {{multiline-section-share sectionData=sectionData}}

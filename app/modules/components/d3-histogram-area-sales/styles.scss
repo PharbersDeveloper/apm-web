@@ -1,0 +1,22 @@
+:global(.histogram-area-sales) {
+	margin: 15px 0;
+	height: 240px;
+	text-align: center;
+
+	:global .y .tick line {
+		stroke: none;
+	}
+
+	:global .x .tick line {
+		stroke: none;
+	}
+
+	:global .amount {
+		fill: #fff;
+		text-anchor: middle;
+	}
+
+	:global .x.axis .domain {
+		display: none;
+	}
+}

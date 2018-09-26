@@ -1,10 +1,6 @@
 import Component from '@ember/component';
-import {
-	run
-} from '@ember/runloop';
-import {
-	get
-} from '@ember/object';
+import { run } from '@ember/runloop';
+// import {get} from '@ember/object';
 import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
@@ -27,7 +23,7 @@ export default Component.extend({
 		var width = 900;
 		var height = 340;
 		var margin = 20;
-		var duration = 250;
+		// var duration = 250;
 
 		var lineOpacity = "0.25";
 		var lineOpacityHover = "0.85";
@@ -47,7 +43,7 @@ export default Component.extend({
 		let data = chooseData.map(function(item) {
 			let proditem = {};
 			proditem.name = item.name;
-			let inValues = item.values.map(function(iitem, iindex) {
+			let inValues = item.values.map(function(iitem) {
 				var valueItem = {};
 				valueItem.ym = parseDate(iitem.ym);
 				valueItem.unit = iitem.unit;
@@ -84,7 +80,7 @@ export default Component.extend({
 
 		var yScale = d3.scaleLinear()
 			.domain([yMin, yMax + yMax / 3])
-			.range([height - margin, 0]);
+			.range([height - margin, 0])
 
 		var color = d3.scaleOrdinal(d3.schemeCategory10);
 		/* Add SVG */
@@ -103,7 +99,7 @@ export default Component.extend({
 			.text("地区产品份额变化")
 			.attr("class", "title")
 			.attr("transform", "translate(-40,13)")
-			.attr("text-anchor", "start");
+			.attr("text-anchor", "start")
 
 		svg.append("g")
 			.attr("class", "grid")
