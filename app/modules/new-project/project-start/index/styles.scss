@@ -6,8 +6,9 @@
 
 .navigation {
 	background: #FDFDFD;
-	box-shadow: 0 1px 2px 0 rgba(162,162,162,0.50);
-	margin-bottom: 10px;
+    box-shadow: 0 1px 2px 0 rgba(162,162,162,0.50);
+    margin-top: 10px;
+	margin-bottom: 15px;
 
 	:global(.active) {
 		background-color: #859EE3 !important;

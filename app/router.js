@@ -30,6 +30,7 @@ Router.map(function () {
         this.route('action-plan');
         this.route('upshot');
         this.route('sort');
+        this.route('objective');
       });
     });
   });
