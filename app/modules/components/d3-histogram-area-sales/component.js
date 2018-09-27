@@ -86,6 +86,7 @@ export default Component.extend({
 			.attr("x", function(d) { return x(d.name); })
 			.attr("y", function(d) { return y(d.value); })
 			.attr("width", x.bandwidth())
+			// .attr("width", x.bandwidth())
 			.attr("height", function(d) { return height - y(d.value); })
 			.attr("fill", function(d) { return color(d.name); });
 

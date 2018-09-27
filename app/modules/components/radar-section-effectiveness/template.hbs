@@ -1,9 +1,6 @@
 {{yield}}
-<select local-class="choose-area" name="">
-    <option value="">区域A</option>
-    <option value="">区域B</option>
-    <option value="">区域C</option>
-    <option value="">区域D</option>
-    <option value="">区域E</option>
-
+<select local-class="choose-area" name="" onchange= {{action 'changeArea' value="target.value"}}>
+    {{#each totalArea as |area|}}
+        <option  value={{area.value}}>{{area.name}}</option>
+    {{/each}}
 </select>
