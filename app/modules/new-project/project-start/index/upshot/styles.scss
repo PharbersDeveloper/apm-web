@@ -1,0 +1,37 @@
+.area-sales {
+	margin: 15px 0;
+	background-color: #FFF;
+	height: 360px;
+	// padding: 0 15px;
+	h3 {
+		font-family: PingFangSC-Medium;
+		font-size: 14px;
+		color: #767A80;
+		letter-spacing: 2px;
+	}
+
+	.table-sales {
+		margin-top: 80px;
+		width: 80%;
+		font-family: PingFangSC-Regular;
+		color: #767A80;
+		text-align: center;
+
+		thead {
+			font-size: 12px;
+			letter-spacing: 1.71px;
+		}
+
+		tbody {
+			td:first-child {
+				font-size: 12px;
+				letter-spacing: 1.71px;
+			}
+
+			td:not(:first-child) {
+				font-size: 14px;
+				letter-spacing: 2px;
+			}
+		}
+	}
+}

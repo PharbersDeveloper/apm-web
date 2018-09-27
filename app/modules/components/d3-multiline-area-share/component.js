@@ -1,29 +1,25 @@
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
-// import {get} from '@ember/object';
+import { get } from '@ember/object';
 import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
-	classNames: ['multi-lines-choose', 'col-md-12', 'col-sm-12', 'col-xs-12'],
-	init() {
-		this._super(...arguments);
-	},
+	classNames: ['multiline-area-share', 'col-md-12', 'col-sm-12', 'col-xs-12'],
 
 	didReceiveAttrs() {
 		this._super(...arguments);
 		run.schedule('render', this, this.drawMultiLineChoose);
 	},
 	drawMultiLineChoose() {
-		d3.select('svg.much-lines').remove();
-		d3.select('.multi-lines-choose .legendContainer').remove();
+		d3.select('svg.area-share-areainfo').remove();
+		d3.select('.multiline-area-share .legendSectionContainer').remove();
 		let svgContainer = d3.select(this.element);
-		let svg = svgContainer.append("svg").attr('class', 'much-lines');
-		// let data = this.get('chooseData');
-		let chooseData = this.get('chooseData');
+		let svg = svgContainer.append("svg").attr('class', 'area-share-areainfo');
+		let sectionData = this.get('sectionData');
 		var width = 900;
 		var height = 340;
 		var margin = 20;
-		// var duration = 250;
+		var duration = 250;
 
 		var lineOpacity = "0.25";
 		var lineOpacityHover = "0.85";
@@ -40,10 +36,10 @@ export default Component.extend({
 		var parseDate = d3.timeParse("%Y%m");
 		let formatDateIntoYearMonth = d3.timeFormat('%y-%m');
 
-		let data = chooseData.map(function(item) {
+		let data = sectionData.map(function(item) {
 			let proditem = {};
 			proditem.name = item.name;
-			let inValues = item.values.map(function(iitem) {
+			let inValues = item.values.map(function(iitem, iindex) {
 				var valueItem = {};
 				valueItem.ym = parseDate(iitem.ym);
 				valueItem.unit = iitem.unit;
@@ -53,14 +49,8 @@ export default Component.extend({
 			proditem.values = inValues;
 
 			return proditem;
-		})
+		});
 
-		// data.forEach(function(d) {
-		//     d.values.forEach(function(dd) {
-		//         dd.ym = parseDate(dd.ym);
-		//         dd.value = +dd.value;
-		//     });
-		// });
 		/* Scale */
 		var xScale = d3.scaleTime()
 			.domain(d3.extent(data[0].values, d => d.ym))
@@ -80,7 +70,7 @@ export default Component.extend({
 
 		var yScale = d3.scaleLinear()
 			.domain([yMin, yMax + yMax / 3])
-			.range([height - margin, 0])
+			.range([height - margin, 0]);
 
 		var color = d3.scaleOrdinal(d3.schemeCategory10);
 		/* Add SVG */
@@ -89,17 +79,17 @@ export default Component.extend({
 			.attr('preserveAspectRatio', 'none')
 			.attr('viewBox', '-40 -10 950 380')
 			.append('g');
-		// .attr("transform", `translate(${margin}, ${margin})`);
+
 		function make_y_gridlines() {
 			return d3.axisLeft(yScale)
 				.ticks(7)
 		};
 		// svg.append('text')
 		svg.append("text")
-			.text("地区产品份额变化")
+			.text("各区域份额结果")
 			.attr("class", "title")
 			.attr("transform", "translate(-40,13)")
-			.attr("text-anchor", "start")
+			.attr("text-anchor", "start");
 
 		svg.append("g")
 			.attr("class", "grid")
@@ -139,9 +129,9 @@ export default Component.extend({
 			.style('stroke', (d, i) => color(i))
 			.style('opacity', lineOpacity)
 			.on("mouseover", function(d) {
-				d3.selectAll('.much-lines .line')
+				d3.selectAll('.area-share-areainfo .line')
 					.style('opacity', otherLinesOpacityHover);
-				d3.selectAll('.much-lines .circle')
+				d3.selectAll('.area-share-areainfo .circle')
 					.style('opacity', circleOpacityOnLineHover);
 				d3.select(this)
 					.style('opacity', lineOpacityHover)
@@ -149,9 +139,9 @@ export default Component.extend({
 					.style("cursor", "pointer");
 			})
 			.on("mouseout", function(d) {
-				d3.selectAll(".much-lines .line")
+				d3.selectAll(".area-share-areainfo .line")
 					.style('opacity', lineOpacity);
-				d3.selectAll('.much-lines .circle')
+				d3.selectAll('.area-share-areainfo .circle')
 					.style('opacity', circleOpacity);
 				d3.select(this)
 					.style("stroke-width", lineStroke)
@@ -203,7 +193,7 @@ export default Component.extend({
 
 		/* Add Axis into SVG */
 		var xAxis = d3.axisBottom(xScale).ticks(12).tickFormat(formatDateIntoYearMonth);
-		var yAxis = d3.axisLeft(yScale).ticks(7).tickFormat((d) => d + "%");
+		var yAxis = d3.axisLeft(yScale).ticks(7).tickFormat(function(d) { return d + "%" });;
 
 		svg.append("g")
 			.attr("class", "x axis")
@@ -220,24 +210,13 @@ export default Component.extend({
 			.attr("transform", "rotate(-90)")
 			// .attr("transform", "translate(0,20)")
 			.attr("fill", "#000")
-			.text("");
 		//绘制图例区域
-		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer');
-		var legendArea = legendContainer.append("svg")
-			// .attr('width', 90)
+		let legendSectionContainer = svgContainer.append('div').attr('class', 'legendSectionContainer');
+		var legendArea = legendSectionContainer.append("svg")
 			.attr('width', 100 * data.length)
-			// .attr('height', 30 * data.length);
 			.attr('height', 20)
-		// .attr("transform", "translate(0,0)");
-
+			.attr("transform", `translate(0,0)`);
 		//绑定数据，设置每个图例的位置
-		// var legend = legendArea.selectAll("g")
-		// 	.data(data)
-		// 	.enter()
-		// 	.append("g")
-		// 	.attr("transform", function(d, i) {
-		// 		return "translate(0," + i * 30 + ")";
-		// 	});
 		var legend = legendArea.selectAll("g")
 			.data(data)
 			.enter()
@@ -279,5 +258,4 @@ export default Component.extend({
 				return d.name;
 			});
 	}
-
 });

@@ -1,1 +1,6 @@
 {{yield}}
+<select local-class="choose-area" name="" onchange= {{action 'changeArea' value="target.value"}}>
+    {{#each totalArea as |area|}}
+        <option  value={{area.value}}>{{area.name}}</option>
+    {{/each}}
+</select>

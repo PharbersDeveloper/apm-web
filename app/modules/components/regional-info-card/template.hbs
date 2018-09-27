@@ -1,44 +1,105 @@
-<div local-class="content">
-    <div class="alert alert-dismissible" role="alert">
-    <div local-class="fork-area">
-        <button type="button" class="close" local-class="turn" {{action "close"}}>
-            <span local-class="clos" aria-hidden="true" >&times;</span>
-        </button>
-    </div>
-      <div local-class="con">
-          <div local-class="whole-tab">
-              {{#bs-tab as |tab|}}
-                {{#tab.pane title="整体"}}
-                    <div local-class="center">
-                        <div local-class="table">
-                           <h1>{{data.wholeTable}}</h1>
-                        </div>
-                        <div local-class="dashboard">
-                            <h1>{{data.dashboard}}</h1>
-                        </div>
-                    </div>
-                {{/tab.pane}}
-                {{#tab.pane title="区域A"}}
-                        {{regional-intro data=data}}
-                {{/tab.pane}}
-                {{#tab.pane title="区域B"}}
-                  <p>区域A</p>
-                {{/tab.pane}}
-                {{#tab.pane title="区域C"}}
-                  <p>区域A</p>
-                {{/tab.pane}}
-                {{#tab.pane title="区域D"}}
-                  <p>区域A</p>
-                {{/tab.pane}}
-                {{#tab.pane title="区域E"}}
-                  <p>区域A</p>
-                {{/tab.pane}}
-                {{#tab.pane title="区域F"}}
-                  <p>区域A</p>
-                {{/tab.pane}}
-              {{/bs-tab}}
-          </div>
-      </div>
-    </div>
+<div local-class="reginonal-info-container">
+	{{!-- <div class="container"> --}}
+		{{!-- <div class="" role="alert"> --}}
+		{{!-- close btn --}}
+		<button type="button" class="close" local-class="turn" {{action "close"}}>
+                <span local-class="clos" aria-hidden="true" >&times;</span>
+            </button>{{!-- content  --}}
+
+		{{!-- <div local-class="con"> --}}
+		{{#bs-tab local-class="reginonal-info-content" as |tab|}}
+			{{#tab.pane local-class="section-total" title="整体" }}
+            <div class="container">
+				{{d3-multiline-area-share sectionData=data.areaData}}
+				<div local-class="analyze-section" class="col-lg-12 col-md-12 col-sm-12">
+					<div class="table-responsive">
+						<table local-class="table-container" class="table">
+							<thead>
+								<tr>
+									<td>区域</td>
+									<td>市场规模</td>
+									<td>潜力贡献度</td>
+									<td>上次销售额</td>
+									<td>销售贡献度</td>
+									<td>贡献度系数</td>
+									<td>上期销售增长率</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>区域A</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								</tr>
+								<tr>
+									<td>区域B</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								</tr>
+								<tr>
+									<td>区域C</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								</tr>
+								<tr>
+									<td>区域D</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								</tr>
+								<tr>
+									<td>区域E</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+									<td>{{input type="text" dir="rtl" disabled=true}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+            </div>
+			{{/tab.pane}}
+			{{#tab.pane title="这是区域区域区域A" }}
+				{{regional-intro data=data}}
+			{{/tab.pane}}
+			{{#tab.pane title="区域B" }}
+				<p>区域A</p>
+			{{/tab.pane}}
+			{{#tab.pane title="区域C" }}
+				<p>区域A</p>
+			{{/tab.pane}}
+			{{#tab.pane title="区域D" }}
+				<p>区域A</p>
+			{{/tab.pane}}
+			{{#tab.pane title="区域E" }}
+				<p>区域A</p>
+			{{/tab.pane}}
+			{{#tab.pane title="区域F" }}
+				<p>区域A</p>
+			{{/tab.pane}}
+		{{/bs-tab}}
+		{{!-- </div> --}}
+		{{!-- end content --}}
+		{{!-- </div> --}}
+	{{!-- </div> --}}
+
 </div>
-{{yield}}
+{{!-- {{yield}} --}}

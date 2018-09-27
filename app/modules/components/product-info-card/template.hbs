@@ -1,29 +1,22 @@
 <div local-class="content">
-    <div class="alert alert-dismissible" role="alert">
-        <div local-class="fork-area">
-            <button type="button" class="close" local-class="turn" {{action "close"}}>
+	<div class="alert" role="alert">
+		<div local-class="fork-area">
+			<button type="button" class="close" local-class="turn" {{action "close"}}>
                 <span local-class="clos" aria-hidden="true" >&times;</span>
             </button>
-        </div>
-      <div local-class="con">
-          <div local-class="center">
-              {{!-- <div local-class="intro">
-                  <h1>{{data.medcine}}</h1>
-              </div> --}}
-              <div local-class="product-list">
-                  {{#each data.proList as |list|}}
-                    {{product-card data=list}}
-                  {{/each}}
-                  {{!-- {{product-card data=}} --}}
-                  {{!-- {{product-card}} --}}
-              </div>
-              <div local-class="table">
-                 <div local-class="tab-area">
-                     <h1>{{data.lineChart.title}}</h1>
-                 </div>
-              </div>
-          </div>
-      </div>
-    </div>
+		</div>
+		<div local-class="con">
+			<div local-class="center">
+				<div local-class="product-list">
+					{{#each data.proList as |list|}}
+						{{product-card data=list}}
+					{{/each}}
+				</div>
+
+				{{d3-multiline-prodshare prodData=data.prodData}}
+
+			</div>
+		</div>
+	</div>
 </div>
 {{yield}}

@@ -2,63 +2,37 @@ import Component from '@ember/component';
 import { run } from '@ember/runloop';
 import { get } from '@ember/object';
 import d3 from 'd3';
-import { transition } from 'd3-transition';
 export default Component.extend({
 	tagName: 'div',
 	classNames: ['radar-section-effectiveness', 'col-md-12', 'col-sm-12', 'col-xs-12'],
-	init() {
+
+	actions: {
+		changeArea(value) {
+			this.sendAction('changeArea', value);
+		}
+	},
+	didReceiveAttrs() {
 		this._super(...arguments);
-		this.radarSectionData = [{
-				name: '区域A',
-				axes: [
-					{ axis: '产品知识', value: 42 },
-					{ axis: '目标拜访频次', value: 20 },
-					{ axis: '拜访次数', value: 60 },
-					{ axis: '实际工作天数', value: 26 },
-					{ axis: '工作积极性', value: 35 },
-					{ axis: '区域管理能力', value: 20 },
-					{ axis: '销售能力', value: 40 }
-
-				],
-				color: '#26AF32'
-			},
-			{
-				name: '区域平均',
-				axes: [
-					{ axis: '产品知识', value: 50 },
-					{ axis: '目标拜访频次', value: 45 },
-					{ axis: '拜访次数', value: 20 },
-					{ axis: '实际工作天数', value: 20 },
-					{ axis: '工作积极性', value: 25 },
-					{ axis: '区域管理能力', value: 23 },
-					{ axis: '销售能力', value: 44 }
-
-				],
-				color: '#762712'
-			}
-		];
-		this.radarChartOptions = {
+		run.schedule('render', this, this.RadarChart);
+	},
+	RadarChart() {
+		let data = this.get('radarSectionData');
+		let _currentColor = data.map((item) => {
+			return item.color;
+		});
+		let radarChartOptions = {
 			w: 290,
 			h: 350,
 			margin: { top: 50, right: 80, bottom: 50, left: 80 },
 			maxValue: 60,
 			levels: 6,
 			roundStrokes: false,
-			color: d3.scaleOrdinal().range(["#AFC52F", "#ff6600"]),
+			color: d3.scaleOrdinal().range(_currentColor),
 			format: '.0f',
 			legend: { title: '图例', translateX: 100, translateY: 40 },
 			unit: '%'
 		};
-	},
-	didReceiveAttrs() {
-		this._super(...arguments);
-		// run.schedule('render', this, this.RadarChart());
-		run.schedule('render', this, this.RadarChart);
-
-	},
-	RadarChart() {
-		let data = this.get('radarSectionData');
-		let options = this.get('radarChartOptions')
+		let options = radarChartOptions;
 		const max = Math.max;
 		const sin = Math.sin;
 		const cos = Math.cos;
@@ -253,7 +227,7 @@ export default Component.extend({
 			.attr("class", "radarWrapper");
 
 		//Append the backgrounds
-		let t = transition()
+		let t = d3.transition()
 			.duration(200)
 			.ease(d3.easeLinear);
 		blobWrapper

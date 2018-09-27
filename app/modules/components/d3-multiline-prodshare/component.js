@@ -1,25 +1,21 @@
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
-// import {get} from '@ember/object';
 import d3 from 'd3';
+
 export default Component.extend({
 	tagName: 'div',
-	classNames: ['multi-lines-choose', 'col-md-12', 'col-sm-12', 'col-xs-12'],
-	init() {
-		this._super(...arguments);
-	},
+	classNames: ['multi-lines-choose-prod', 'col-md-12', 'col-sm-12', 'col-xs-12'],
 
 	didReceiveAttrs() {
 		this._super(...arguments);
 		run.schedule('render', this, this.drawMultiLineChoose);
 	},
 	drawMultiLineChoose() {
-		d3.select('svg.much-lines').remove();
-		d3.select('.multi-lines-choose .legendContainer').remove();
+		d3.select('svg.prod-share').remove();
+		d3.select('.multi-lines-choose-prod .legendContainer').remove();
 		let svgContainer = d3.select(this.element);
-		let svg = svgContainer.append("svg").attr('class', 'much-lines');
-		// let data = this.get('chooseData');
-		let chooseData = this.get('chooseData');
+		let svg = svgContainer.append("svg").attr('class', 'prod-share');
+		let prodData = this.get('prodData');
 		var width = 900;
 		var height = 340;
 		var margin = 20;
@@ -40,7 +36,7 @@ export default Component.extend({
 		var parseDate = d3.timeParse("%Y%m");
 		let formatDateIntoYearMonth = d3.timeFormat('%y-%m');
 
-		let data = chooseData.map(function(item) {
+		let data = prodData.map(function(item) {
 			let proditem = {};
 			proditem.name = item.name;
 			let inValues = item.values.map(function(iitem) {
@@ -96,7 +92,7 @@ export default Component.extend({
 		};
 		// svg.append('text')
 		svg.append("text")
-			.text("地区产品份额变化")
+			.text("产品份额竞争趋势")
 			.attr("class", "title")
 			.attr("transform", "translate(-40,13)")
 			.attr("text-anchor", "start")
@@ -139,9 +135,9 @@ export default Component.extend({
 			.style('stroke', (d, i) => color(i))
 			.style('opacity', lineOpacity)
 			.on("mouseover", function(d) {
-				d3.selectAll('.much-lines .line')
+				d3.selectAll('.prod-share .line')
 					.style('opacity', otherLinesOpacityHover);
-				d3.selectAll('.much-lines .circle')
+				d3.selectAll('.prod-share .circle')
 					.style('opacity', circleOpacityOnLineHover);
 				d3.select(this)
 					.style('opacity', lineOpacityHover)
@@ -149,9 +145,9 @@ export default Component.extend({
 					.style("cursor", "pointer");
 			})
 			.on("mouseout", function(d) {
-				d3.selectAll(".much-lines .line")
+				d3.selectAll(".prod-share .line")
 					.style('opacity', lineOpacity);
-				d3.selectAll('.much-lines .circle')
+				d3.selectAll('.prod-share .circle')
 					.style('opacity', circleOpacity);
 				d3.select(this)
 					.style("stroke-width", lineStroke)
@@ -213,7 +209,7 @@ export default Component.extend({
 
 		svg.append("g")
 			.attr("class", "y axis")
-			.attr("transform", "translate(0,30)")
+			.attr("transform", "translate(-10,30)")
 			.call(yAxis)
 			.append('text')
 			.attr("y", 15)
