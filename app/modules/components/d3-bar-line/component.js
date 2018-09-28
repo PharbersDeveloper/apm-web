@@ -4,12 +4,21 @@ import d3 from 'd3';
 
 export default Component.extend({
     tagName: 'div',
+    chartId: '',
+    backgroundColor: '#FFF',
+    laterThreeChangeBg: false,
+    title: '',
+
     classNames: ['col-md-12', 'col-sm-12', 'col-xs-12'],
     didReceiveAttrs() {
-        run.scheduleOnce('render', this, this.drawChart);
+        if (this.get('chartId') === '') {
+            throw 'chartId is null or undefinde, please set value';
+        } else {
+            run.scheduleOnce('render', this, this.drawChart);
+        }        
     },
     drawChart() {
-        // let objectiveChart = d3.select('svg.much-lines').remove();
+        d3.select(`#${this.get('chartId')}`).select('svg').remove();
         let dataset = [
             { key: 'W1', value: 32, value2: 16 },
             { key: 'W2', value: 26, value2: 20 },
@@ -41,9 +50,9 @@ export default Component.extend({
         xScale.domain(xDatas);
         yScale.domain([0, d3.max(values)]);
 
-        let svgContainer = d3.select('.objective-bar-line');
+        let svgContainer = d3.select(`#${this.get('chartId')}`);
         let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
-        let svg = svgContainer.append("svg")
+        let svg = svgContainer.append("svg").style('background-color', this.get('backgroundColor'))
             .attr('preserveAspectRatio', 'xMidYMid meet')
             .attr('viewBox', '0 0 960 420')
 
@@ -54,7 +63,7 @@ export default Component.extend({
             .attr('transform', 'translate(' + (width / 2) + ',' + (-margin.top / 2) + ')')
             .attr('text-anchor', 'middle')
             .attr('font-weight', 600)
-            .text('Simple Bar Chart');
+            .text(this.get('title'));
 
         g.append('g')
             .attr('class', 'axisX')
@@ -68,7 +77,7 @@ export default Component.extend({
 
         let chart = g.selectAll('bar')
             .data(dataset)
-            .enter().append('g') //.attr('class', '_g_1mas67');
+            .enter().append('g');
 
         chart.append('rect')
             .attr('class', '_bar_1mas67')
@@ -86,20 +95,23 @@ export default Component.extend({
             .attr('text-anchor', 'middle')
             .text(function (d) { return d.value; });
 
-        d3.selectAll('._container-g_1mas67')
-            .selectAll('g:nth-last-of-type(3)')
-            .select('rect')
-            .attr('class', '_bar2_1mas67')
-        d3.selectAll('._container-g_1mas67')
-            .selectAll('g:nth-last-of-type(2)')
-            .select('rect')
-            .attr('class', '_bar2_1mas67')
-        d3.selectAll('._container-g_1mas67')
-            .selectAll('g:last-of-type')
-            .select('rect')
-            .attr('class', '_bar2_1mas67')
-
-
+        if (this.get('laterThreeChangeBg')) {
+            d3.select(`#${this.get('chartId')}`)
+                .selectAll('._container-g_1mas67')
+                .selectAll('g:nth-last-of-type(3)')
+                .select('rect')
+                .attr('class', '_predict-bar_1mas67')
+            d3.select(`#${this.get('chartId')}`)
+                .selectAll('._container-g_1mas67')
+                .selectAll('g:nth-last-of-type(2)')
+                .select('rect')
+                .attr('class', '_predict-bar_1mas67')
+            d3.select(`#${this.get('chartId')}`)
+                .selectAll('._container-g_1mas67')
+                .selectAll('g:last-of-type')
+                .select('rect')
+                .attr('class', '_predict-bar_1mas67')
+        }
 
         let line = d3.line()
             .x(function (d) { return xScale(d.key); })
@@ -118,7 +130,7 @@ export default Component.extend({
 
         chart.on('mouseover', function (d) {
             tooltip.style("opacity", 1.0);
-            tooltip.html(d.key + "<br>" + "份额" + d.value2 + "%" + "<br>" + "销售额" + d.value)
+            tooltip.html(d.key + "<br>" + "份额：" + d.value2 + "%" + "<br>" + "销售额：" + d.value)
                 .style("left", (d3.event.offsetX + 20) + "px")
                 .style("top", (d3.event.offsetY) + "px")
 
