@@ -9,41 +9,9 @@
                         <p class="text-center">排序-请多动区域卡片进行排序</p>
                     </div>
                 </div>
+                {{sort-drag-drop areaArray=areaArray}}
                 
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                    {{#each areaArray as |item|}}
-                        <div local-class="areaCard">
-                            {{#draggable-object content=item }}
-                                <span>{{item.name}}</span>
-                                <span local-class="hintModal" class="glyphicon glyphicon-list-alt" {{action 'openTips'}}></span>
-                            {{/draggable-object}}
-                        </div>
-                    {{/each}}
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                {{#each computeLevelArray as |item|}}
-                        <div local-class="sortCard">
-                            {{!-- dragOverAction=(action 'draggingOverTarget') dragOutAction=(action 'leftDragTarget') --}}
-                            {{#draggable-object-target leveid=item.id amount="1" action=(action 'dragResult')  overrideClass='dropTarget'}}
-                                <div class="col-md-10 col-lg-10 col-sm-10">{{item.name}}  {{item.selected.name}}</div>
-                                <div class="col-md-2 col-lg-2 col-sm-2 text-right" local-class="remove" {{action "remove" item.id}}>
-                                    <span>&times;</span>
-                                </div>
-                            {{/draggable-object-target}}
-                        </div>
-                    {{/each}} 
-                </div>
             </div>
         </div>
     </div>
 </div>
-{{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
-    {{#modal.header}}
-        <h4 class="modal-title">
-            区域
-        </h4>
-    {{/modal.header}}
-    {{#modal.body}}
-        {{content-bound-helper content}}
-    {{/modal.body}}
-{{/bs-modal}}
