@@ -1,0 +1,36 @@
+.choose-plan {
+	height: 30px;
+	line-height: 30px;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+
+	.checkbox-choose-plan {
+		float: right;
+		display: inline-block;
+		letter-spacing: 2px;
+
+		button {
+			padding: 0;
+			width: 130px;
+			height: 30px;
+			line-height: 30px;
+			color: #FFF;
+			background: #7F92C9;
+			border-radius: 100px;
+		}
+
+		ul li {
+			color: #485465;
+		}
+	}
+}
+
+.show-plan {
+	span {
+		padding: 0 10px;
+		font-family: PingFangSC-Regular;
+		font-size: 14px;
+		color: #767A80;
+		letter-spacing: 2px;
+	}
+}

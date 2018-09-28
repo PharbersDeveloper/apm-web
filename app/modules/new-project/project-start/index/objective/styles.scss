@@ -1,51 +1,53 @@
 .objective-container {
-    font-family: PingFangSC-Regular;
-    font-size: 14px;
-    .objective-section {
-        margin-bottom: 10px;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+
+	.objective-section {
+		margin-bottom: 10px;
 		padding: 6px 20px;
 		background: #FFFFFF;
-        box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
-        
-        .title-objective {
-            height: 20px;
-            line-height: 20px;
-            font-size: 14px;
-            color: #000000;
-            letter-spacing: 1.5px;
-        }
+		box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 
-        .summary {
-            margin: 30px 0 20px 0;
-            border: 0;
-            box-shadow: 0 0 4px 0 rgba(173,173,173,0.50);
-            color: #767A80;
-            letter-spacing: 2px;
+		.title-objective {
+			height: 20px;
+			line-height: 20px;
+			font-size: 14px;
+			color: #000000;
+			letter-spacing: 1.5px;
+		}
 
-            div:first-child {
-                border-right: 1px solid #D0D0D0;
-            }
-        }
+		.summary {
+			margin: 30px 0 20px;
+			border: 0;
+			color: #767A80;
+			letter-spacing: 2px;
 
-        .btn-month-container {
-            padding: 0;
-            margin-bottom: 10px;
+			div {
+				box-shadow: 0 0 4px 0 rgba(173,173,173,0.50);
+				border-right: 1px solid #D0D0D0;
+			}
+		}
+
+		.btn-month-container {
+			padding: 0;
+			margin-bottom: 10px;
 			width: 100%;
 
 			.btn-month {
 				padding: 0;
 				height: 30px;
-				line-height: 30px;				
+				line-height: 30px;
 				letter-spacing: 1px;
 				background: #FFF;
+
 				&:global(.active) {
 					color: #FFF;
 					background-color: #859EE3;
 				}
 			}
-        }
-        
-        .table-container {
+		}
+
+		.table-container {
 			thead {
 				color: #767A80;
 				letter-spacing: 1px;
@@ -72,10 +74,11 @@
 					border: 0;
 
 					&:first-child {
-                        color: #4A90E2;
-                        span {
-                            cursor: pointer;
-                        }
+						color: #4A90E2;
+
+						span {
+							cursor: pointer;
+						}
 					}
 
 					input {
@@ -89,5 +92,5 @@
 				}
 			}
 		}
-    }
+	}
 }

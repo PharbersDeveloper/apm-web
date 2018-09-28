@@ -1,0 +1,22 @@
+{{yield}}
+<p local-class="choose-plan">
+    <span>行动计划-</span>
+    <span>針對區域情況作出行動計畫優化區域有效性問題。（最多兩項）</span>
+
+    <div local-class="checkbox-choose-plan" class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        選擇行動計畫
+        <span class="caret"></span>
+    </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            {{#each readyChoose as |choose|}}
+                <li>{{input type="checkbox" name=choose.text checked=choose.isChecked}}{{choose.text}}</li>
+            {{/each}}
+        </ul>
+    </div>
+</p>
+<p local-class="show-plan">
+    {{#each planPaire as |plan|}}
+        <span>{{plan.text}}</span>
+    {{/each}}
+</p>

@@ -1,23 +1,26 @@
 <div local-class="objective-container">
-    <div local-class="objective-section">
-        <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12">
-                {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true}}
-            </div>
-        </div>
-    </div>
+	<div local-class="objective-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				{{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true}}
+			</div>
+		</div>
+	</div>
 
-    <div local-class="objective-section">
-        <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12">
-                <p local-class="title-objective">设定目标<span>-为接下来三个月，各区域预测您期望达成目标，基于总体分析中您的分析，并参考公司指标，区域背景信息，竞争情况，做出您的目标设定。</span></p>
-                <div class="row" local-class="summary">
-                    <div class="col-md-2 col-lg-2 col-sm-2">
-                        <p>本季度总指标</p>
-                        <p>3,000,000</p>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-sm-2">您的预测指标</div>
-                    <div class="col-md-2 col-lg-2 col-sm-2">
+	<div local-class="objective-section">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				<p local-class="title-objective">设定目标<span>-为接下来三个月，各区域预测您期望达成目标，基于总体分析中您的分析，并参考公司指标，区域背景信息，竞争情况，做出您的目标设定。</span></p>
+				<div class="row" local-class="summary">
+					<div class="col-md-2 col-lg-2 col-sm-2">
+						<p>公司本季度总指标</p>
+						<p>3,000,000</p>
+					</div>
+					<div class="col-md-2 col-lg-2 col-sm-2">
+						<p>您的预测指标</p>
+						<p>3,000,000</p>
+					</div>
+					{{!-- <div class="col-md-2 col-lg-2 col-sm-2">
                         <p>季度</p>
                         <p>3,000,000</p>
                     </div>
@@ -32,61 +35,61 @@
                     <div class="col-md-2 col-lg-2 col-sm-2">
                         <p>18/01</p>
                         <p>500,000</p>
-                    </div>
-                </div>
+                    </div> --}}
+				</div>
 
-                {{#bs-button-group value=whichMonth type="radio" local-class="btn-month-container" class="container" onChange=(action (mut whichMonth)) as |bg|}}
+				{{!-- {{#bs-button-group value=whichMonth type="radio" local-class="btn-month-container" class="container" onChange=(action (mut whichMonth)) as |bg|}}
                     {{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1801" }}18/01{{/bg.button}}
                     {{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1802" }}18/02{{/bg.button}}
                     {{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1803" }}18/03{{/bg.button}}
-				{{/bs-button-group}}
+				{{/bs-button-group}} --}}
 
-                {{#if (eq whichMonth "1801")}}
-                    <div class="table-responsive">
-                        <table local-class="table-container" class="table">
-                            <thead>
-                                <tr>
-                                    <td>区域</td>
-                                    <td>排序</td>
-                                    <td>公司指标($)</td>
-                                    <td>预测指标($)</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>区域A <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}} ></span></td>
-                                    <td>1 </td>
-                                    <td>652,000 </td>
-                                    <td>{{input type="text" dir="rtl"}} </td>
-                                </tr>
-                                <tr>
-                                    <td>区域B <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}} ></span></td>
-                                    <td>2 </td>
-                                    <td>652,000 </td>
-                                    <td>{{input type="text" dir="rtl"}} </td>
-                                </tr>
-                                <tr>
-                                    <td>区域C <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}} ></span></td>
-                                    <td>3 </td>
-                                    <td>652,000 </td>
-                                    <td>{{input type="text" dir="rtl"}} </td>
-                                </tr>
-                                <tr>
-                                    <td>区域D <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}} ></span></td>
-                                    <td>4 </td>
-                                    <td>652,000 </td>
-                                    <td>{{input type="text" dir="rtl"}} </td>
-                                </tr>
-                                <tr>
-                                    <td>区域E <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}} ></span></td>
-                                    <td>5 </td>
-                                    <td>652,000 </td>
-                                    <td>{{input type="text" dir="rtl"}} </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                {{/if}}
+				{{!-- {{#if (eq whichMonth "1801")}} --}}
+				<div class="table-responsive">
+					<table local-class="table-container" class="table">
+						<thead>
+							<tr>
+								<td>区域</td>
+								<td>排序</td>
+								<td>公司指标($)</td>
+								<td>预测指标($)</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>区域A <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}}></span></td>
+								<td>1 </td>
+								<td>652,000 </td>
+								<td>{{input type="text" dir="rtl"}} </td>
+							</tr>
+							<tr>
+								<td>区域B <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}}></span></td>
+								<td>2 </td>
+								<td>652,000 </td>
+								<td>{{input type="text" dir="rtl"}} </td>
+							</tr>
+							<tr>
+								<td>区域C <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}}></span></td>
+								<td>3 </td>
+								<td>652,000 </td>
+								<td>{{input type="text" dir="rtl"}} </td>
+							</tr>
+							<tr>
+								<td>区域D <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}}></span></td>
+								<td>4 </td>
+								<td>652,000 </td>
+								<td>{{input type="text" dir="rtl"}} </td>
+							</tr>
+							<tr>
+								<td>区域E <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}}></span></td>
+								<td>5 </td>
+								<td>652,000 </td>
+								<td>{{input type="text" dir="rtl"}} </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				{{!-- {{/if}}
 
                 {{#if (eq whichMonth "1802")}}
                     <div class="table-responsive">
@@ -180,19 +183,19 @@
                             </tbody>
                         </table>
                     </div>
-                {{/if}}
-            </div>
+                {{/if}} --}}
+			</div>
 
-        </div>
-    </div>
+		</div>
+	</div>
 </div>
 {{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
-    {{#modal.header}}
-        <h4 class="modal-title">
+	{{#modal.header}}
+		<h4 class="modal-title">
             区域
         </h4>
-    {{/modal.header}}
-    {{#modal.body}}
-        {{content-bound-helper content}}
-    {{/modal.body}}
+	{{/modal.header}}
+	{{#modal.body}}
+		{{content-bound-helper content}}
+	{{/modal.body}}
 {{/bs-modal}}

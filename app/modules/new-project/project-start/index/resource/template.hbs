@@ -3,30 +3,36 @@
 		<div class="col-md-12 col-lg-12 col-sm-12">
 			<div local-class="resource-content">
 				<p local-class="title-resource">资源分配<span> -在资源有限的情况下，做出合适的投入计划，以达到目标。</span></p>
-				{{#bs-button-group value=whichMonth type="radio" local-class="btn-month-container" class="container"
+				{{!-- {{#bs-button-group value=whichMonth type="radio" local-class="btn-month-container" class="container"
 				onChange=(action (mut whichMonth)) as |bg|}}
 				{{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1801" }}1801{{/bg.button}}
 				{{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1802" }}1802{{/bg.button}}
 				{{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1803" }}1803{{/bg.button}}
 				{{/bs-button-group}}
-				{{#if (eq whichMonth "1801")}}
+				{{#if (eq whichMonth "1801")}} --}}
 				<div local-class="card-item-container" class="container">
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
+					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
 						<p local-class="title-card-item"><span>辅导协访天数</span><span>18/21</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=18 maxValue=21 type='info' }}
+							{{p.bar local-class="progress-bar" value=18 maxValue=21 type='info' }}
 						{{/bs-progress}}
 					</div>
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
-						<p local-class="title-card-item"><span>会议名额</span><span>13/20</span></p>
+					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
+						<p local-class="title-card-item"><span>全国会</span><span>13/20</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=13 maxValue=20 type='info' }}
+							{{p.bar local-class="progress-bar" value=13 maxValue=20 type='info' }}
 						{{/bs-progress}}
 					</div>
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
-						<p local-class="title-card-item"><span>预算</span><span>36598/100000</span></p>
+					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
+						<p local-class="title-card-item"><span>城市会</span><span>36598/100000</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=36598 maxValue=100000 type='info' }}
+							{{p.bar local-class="progress-bar" value=36598 maxValue=100000 type='info' }}
+						{{/bs-progress}}
+					</div>
+					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
+						<p local-class="title-card-item"><span>科室会</span><span>36598/100000</span></p>
+						{{#bs-progress local-class="progress" as |p|}}
+							{{p.bar local-class="progress-bar" value=36598 maxValue=100000 type='info' }}
 						{{/bs-progress}}
 					</div>
 				</div>
@@ -39,8 +45,9 @@
 								<td>公司指标($)</td>
 								<td>预测指标($)</td>
 								<td>协访天数</td>
-								<td>会议名额</td>
-								<td>预算金额</td>
+								<td>全国会</td>
+								<td>城市会</td>
+								<td>科室会</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -49,6 +56,7 @@
 								<td>1 </td>
 								<td>652,000 </td>
 								<td>541,000 </td>
+								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
@@ -61,12 +69,14 @@
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
+								<td>{{input type="text" dir="rtl"}} </td>
 							</tr>
 							<tr>
 								<td>区域C <span class="glyphicon glyphicon-list-alt"></span></td>
 								<td>1 </td>
 								<td>652,000 </td>
 								<td>541,000 </td>
+								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
@@ -79,6 +89,7 @@
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
+								<td>{{input type="text" dir="rtl"}} </td>
 							</tr>
 							<tr>
 								<td>区域E <span class="glyphicon glyphicon-list-alt"></span></td>
@@ -88,11 +99,12 @@
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
+								<td>{{input type="text" dir="rtl"}} </td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				{{else if (eq whichMonth "1802")}}
+				{{!-- {{else if (eq whichMonth "1802")}}
 				<div local-class="card-item-container" class="container">
 					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
 						<p local-class="title-card-item"><span>辅导协访天数</span><span>02/21</span></p>
@@ -258,7 +270,7 @@
 						</tbody>
 					</table>
 				</div>
-				{{/if}}
+				{{/if}} --}}
 			</div>
 		</div>
 	</div>
