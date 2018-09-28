@@ -9,7 +9,6 @@ export default Component.extend({
     laterThreeChangeBg: false,
     title: '',
 
-    classNames: ['col-md-12', 'col-sm-12', 'col-xs-12'],
     didReceiveAttrs() {
         if (this.get('chartId') === '') {
             throw 'chartId is null or undefinde, please set value';
@@ -75,16 +74,47 @@ export default Component.extend({
             .attr('class', 'axisY')
             .call(d3.axisLeft(yScale).ticks(10));
 
-        let chart = g.selectAll('bar')
+            let chart = g.selectAll('bar')
             .data(dataset)
             .enter().append('g');
 
+        /**
+         * 渐变开始
+         */
+        var colorRange = ['#EFA08D', '#F0BC89', '#F0DB84', '#E5F17F', '#C0F17A', '#70F272', '#6BF297', '#61F3E9']
+    
+        var color = d3.scaleLinear().range(colorRange).domain([1, 2, 3, 4, 5, 6, 7, 8]);
+
+        var defs = svg.append("defs")
+
+        var linearGradient = defs.append("linearGradient")
+                                .attr("id","linearColor")
+                                .attr("x1","0%")
+                                .attr("y1","0%")
+                                .attr("x2","100%")
+                                .attr("y2","0%");
+
+        linearGradient.append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color",color(1));
+                
+        linearGradient.append("stop")
+            .attr("offset", "14.28%")
+            .attr("stop-color",color(2));
+        linearGradient.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color",color(8));
+
+        /**
+         * 渐变结束
+         */
         chart.append('rect')
-            .attr('class', '_bar_1mas67')
-            .attr('x', function (d) { return xScale(d.key); })
             .attr('height', function (d) { return height - yScale(d.value); })
+            .attr('x', function (d) { return xScale(d.key); })
             .attr('y', function (d) { return yScale(d.value); })
-            .attr('width', xScale.bandwidth() / 2);
+            .attr('width', xScale.bandwidth() / 2)
+            .attr('class', '_bar_1mas67')
+            // .style("fill","url(#" + linearGradient.attr("id") + ")");
 
         chart.append('text')
             .attr('class', '_barText_1mas67')
@@ -121,7 +151,7 @@ export default Component.extend({
         g.append("path")
             .datum(dataset)
             .attr("fill", "none")
-            .attr("stroke", "steelblue")
+            .attr("stroke", "#FF8190")
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
             .attr("transform", "translate(" + xScale.bandwidth() / 4 + ",0)")
@@ -139,6 +169,70 @@ export default Component.extend({
             tooltip.style("opacity", 0.0);
             d3.select(this).attr('opacity', 1)
         });
+
+        //绘制图例区域
+		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer');
+		var legendArea = legendContainer.append("svg")
+            .attr('preserveAspectRatio', 'xMidYMid meet')
+            .attr('viewBox', '0 0 960 20')
+            .attr("transform", function(d, i) {
+				return "translate(" + 900 / 2 + ", 0)";
+            });
+        let legendData = ["份额", "销售额"];
+        if (this.get('laterThreeChangeBg')) {
+            legendData = ["份额", "销售额", "预测销售额"];
+        }
+            
+		var legend = legendArea.selectAll("g")
+			.data(legendData)
+			.enter()
+			.append("g")
+			.attr("transform", function(d, i) {
+				return "translate(" + i * 100 + ",0)";
+            });
+
+		//添加图例的矩形色块
+		legend.append("rect")
+			.attr("x", 10)
+			.attr("y", 5)
+			.attr('width', function(d, i) {
+                if (d == '份额') {
+                    return 20;
+                }  else {
+                    return 10;
+                }
+            })
+			.attr('height', function(d, i) {
+                if (d == '份额') {
+                    return 5;
+                }  else {
+                    return 30;
+                }
+            })
+			.style("fill", function(d, i) {
+                if (d == '份额') {
+                    return '#FA6F80';
+                } else if (d == '销售额') {
+                    return '#4A90E2';
+                } else {
+                    return '#F5A623';
+                }
+			}).attr("transform", function(d, i) {
+                if (d == '份额') {
+                    return "translate(0 ,5)";
+                }
+            });
+
+		//添加图例文字
+		legend.append("text")
+			.attr("x", 40)
+			.attr("y", 12)
+			.style("fill", '#485465')
+			.style('font-size', '12px')
+			.attr("dy", ".35em")
+			.text(function(d, i) {
+				return d;
+			});
 
     }
 });

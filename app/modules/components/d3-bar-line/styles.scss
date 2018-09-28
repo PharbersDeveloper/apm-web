@@ -1,3 +1,6 @@
+.objective-bar-line {
+    background-color: #FFF;   
+}
 .tooltip {
     position: absolute;
     width: 100px;
@@ -10,6 +13,7 @@
 .container-g {
     .bar {
         fill: #8D9ECD; 
+        // fill: url("#linearColor")
     }
 
     .predict-bar {
