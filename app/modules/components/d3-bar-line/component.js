@@ -67,7 +67,7 @@ export default Component.extend({
 
         g.append('g')
             .attr('class', 'axisX')
-            .attr('transform', 'translate(0,' + height + ')')
+            .attr('transform', 'translate(-14,' + height + ')')
             .call(d3.axisBottom(xScale))
             .attr('font-weight', 'bold');
 
@@ -84,13 +84,13 @@ export default Component.extend({
             .attr('x', function (d) { return xScale(d.key); })
             .attr('height', function (d) { return height - yScale(d.value); })
             .attr('y', function (d) { return yScale(d.value); })
-            .attr('width', xScale.bandwidth());
+            .attr('width', xScale.bandwidth() / 2);
 
         chart.append('text')
             .attr('class', '_barText_1mas67')
             .attr('x', function (d) { return xScale(d.key); })
             .attr('y', function (d) { return yScale(d.value); })
-            .attr('dx', xScale.bandwidth() / 2)
+            .attr('dx', xScale.bandwidth() / 4)
             .attr('dy', 20)
             .attr('text-anchor', 'middle')
             .text(function (d) { return d.value; });
@@ -124,7 +124,7 @@ export default Component.extend({
             .attr("stroke", "steelblue")
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
-            .attr("transform", "translate(" + xScale.bandwidth() / 2 + ",0)")
+            .attr("transform", "translate(" + xScale.bandwidth() / 4 + ",0)")
             .attr("stroke-width", 1.5)
             .attr("d", line);
 
