@@ -21,110 +21,123 @@
 	<div local-class="sub-tab">
 		{{#bs-tab as |tab|}}
 			{{#tab.pane title="代表与执行" }}
-				{{!-- <div local-class="analyze"> --}}
-				{{!-- <h1>{{data.analyze}}</h1> --}}
-				{{!-- </div> --}}
+			
+				{{radar-section-effectiveness radarSectionData=radarData totalArea=totalArea changeArea=(action 'changeArea')}}
+
 				<div local-class="represent">
 					{{charge-represent data=data.represent}}
 				</div>
 				<div local-class="action">
-					<p local-class="title-action">{{data.action}}</p>
+					<p local-class="title-action">行动KPI</p>
+					<div class="table-responsive" local-class="table-action">
+						<table class="table table-striped" local-class="table-sales">
+							<thead>
+								<tr>
+									<td> 年/月</td>
+									<td>17/07</td>
+									<td>17/08</td>
+									<td>17/09</td>
+									<td>17/10</td>
+									<td>17/11</td>
+									<td>17/12</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>目标医生拜访频率</td>
+									<td>26.33%</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>6</td>
+								</tr>
+								<tr>
+									<td>实地工作天数</td>
+									<td>26</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>6</td>
+								</tr>
+								<tr>
+									<td>拜访次数</td>
+									<td>26.33%</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>6</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
-					<table class="table table-striped" local-class="table-sales">
-						<thead>
-							<tr>
-								<td> 年/月</td>
-								<td>17/07</td>
-								<td>17/08</td>
-								<td>17/09</td>
-								<td>17/10</td>
-								<td>17/11</td>
-								<td>17/12</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>目标医生拜访频率</td>
-								<td>26.33%</td>
-								<td>60</td>
-								<td>60</td>
-								<td>60</td>
-								<td>60</td>
-								<td>6</td>
-							</tr>
-							<tr>
-								<td>实地工作天数</td>
-								<td>26</td>
-								<td>60</td>
-								<td>60</td>
-								<td>60</td>
-								<td>60</td>
-								<td>6</td>
-							</tr>
-							<tr>
-								<td>拜访次数</td>
-								<td>26.33%</td>
-								<td>60</td>
-								<td>60</td>
-								<td>60</td>
-								<td>60</td>
-								<td>6</td>
-							</tr>
-						</tbody>
-					</table>
 				</div>
 				<div local-class="report">
 					{{represent-report data=data.report}}
 				</div>
 			{{/tab.pane}}
-			{{#tab.pane title="历史销售" }}
+			{{#tab.pane title="區域销售情況" }}
 				<div local-class="analyze">
-					<h1>{{data.result.title}}</h1>
-                    {{d3-bar-line chartId="area-sales-chart" laterThreeChangeBg=false}}
-                    <div local-class="table-content">
-                        <table class="table table-striped" local-class="table-sales">
-    						<thead>
-    							<tr>
-    								<td> 年/月</td>
-    								<td>17/07</td>
-    								<td>17/08</td>
-    								<td>17/09</td>
-    								<td>17/10</td>
-    								<td>17/11</td>
-    								<td>17/12</td>
-    							</tr>
-    						</thead>
-    						<tbody>
-    							<tr>
-    								<td>目标医生拜访频率</td>
-    								<td>26.33%</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>6</td>
-    							</tr>
-    							<tr>
-    								<td>实地工作天数</td>
-    								<td>26</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>6</td>
-    							</tr>
-    							<tr>
-    								<td>拜访次数</td>
-    								<td>26.33%</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>60</td>
-    								<td>6</td>
-    							</tr>
-    						</tbody>
-    					</table>
-                    </div>
+
+					{{d3-bar-line chartId="area-sales-chart" laterThreeChangeBg=false}}
+
+					<div local-class="table-content">
+						<p>公司产品历史销售数据</p>
+						<table class="table table-striped" local-class="table-sales">
+							<thead>
+								<tr>
+									<td> </td>
+									<td>17/01</td>
+									<td>17/02</td>
+									<td>17/03</td>
+									<td>17/04</td>
+									<td>17/05</td>
+									<td>17/06</td>
+									<td>17/07</td>
+									<td>17/08</td>
+									<td>17/09</td>
+									<td>17/10</td>
+									<td>17/11</td>
+									<td>17/12</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>销售额(K)</td>
+									<td>26</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>6</td>
+									<td>26</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>6</td>
+								</tr>
+								<tr>
+									<td>份额(%)</td>
+									<td>26</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>6</td>
+									<td>26</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>60</td>
+									<td>6</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
 				</div>
 			{{/tab.pane}}

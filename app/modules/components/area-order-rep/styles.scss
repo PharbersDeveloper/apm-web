@@ -1,0 +1,39 @@
+.btn-area {
+	margin: 14px 0;
+
+	.btn-show {
+		margin-right: 10px;
+		// padding: 0;
+		padding: 0 24px;
+		width: 160px;
+		height: 50px;
+		line-height: 50px;
+		font-size: 14px;
+		color: #767A80;
+		letter-spacing: 2px;
+		text-align: left;
+		background: #FFFFFF;
+		box-shadow: 0 2px 4px 0 #E2E2E2;
+		border: 0;
+		border-radius: 1px;
+
+		span:last-child {
+			float: right;
+		}
+	}
+
+	.btn-show:first-child {
+		span:last-child {
+			font-size: 24px;
+			color: #485465;
+			letter-spacing: 1px;
+		}
+	}
+
+	.btn-show:last-child {
+		span:last-child {
+			color: #485465;
+			letter-spacing: 1px;
+		}
+	}
+}

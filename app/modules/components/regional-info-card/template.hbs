@@ -11,7 +11,7 @@
 			{{#tab.pane local-class="section-total" title="整体" }}
             <div class="container">
 				{{!-- {{d3-multiline-area-share sectionData=data.areaData}} --}}
-				{{d3-line-multi-legend chooseData=data.areaData title="各区域份额结果" class="pre-area-share"}} 
+				{{d3-line-multi-legend chooseData=data.areaData title="各区域份额结果" class="pre-area-share"}}
 
 				<div local-class="analyze-section" class="col-lg-12 col-md-12 col-sm-12">
 					<div class="table-responsive">
@@ -83,19 +83,19 @@
 				{{regional-intro data=data}}
 			{{/tab.pane}}
 			{{#tab.pane title="区域B" }}
-				<p>区域A</p>
+				{{regional-intro data=data}}
 			{{/tab.pane}}
 			{{#tab.pane title="区域C" }}
-				<p>区域A</p>
+				{{regional-intro data=data}}
 			{{/tab.pane}}
 			{{#tab.pane title="区域D" }}
-				<p>区域A</p>
+				{{regional-intro data=data}}
 			{{/tab.pane}}
 			{{#tab.pane title="区域E" }}
-				<p>区域A</p>
+				{{regional-intro data=data}}
 			{{/tab.pane}}
 			{{#tab.pane title="区域F" }}
-				<p>区域A</p>
+				{{regional-intro data=data}}
 			{{/tab.pane}}
 		{{/bs-tab}}
 		{{!-- </div> --}}

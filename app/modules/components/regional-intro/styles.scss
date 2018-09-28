@@ -99,7 +99,6 @@
 
 				a {
 					background-color: #FFF;
-					// border: 1px solid #fff;
 				}
 			}
 		}
@@ -108,7 +107,36 @@
 			font-size: 12px;
 
 			.table-content {
+				margin-top: 10px;
+				padding: 18px 10px;
 				background-color: #FFF;
+
+				p {
+					margin: 0;
+					height: 20px;
+					line-height: 20px;
+					font-size: 14px;
+					color: #485465;
+					letter-spacing: 2px;
+				}
+
+				table {
+					thead tr td {
+						font-size: 12px;
+						letter-spacing: 1px;
+						border-bottom: 1px solid rgba(111,109,204,0.10);
+						color: #4A4A4A;
+					}
+
+					tbody tr td {
+						height: 40px;
+						line-height: 40px;
+						border: 0;
+						font-size: 12px;
+						color: #485465;
+						letter-spacing: 1.71px;
+					}
+				}
 			}
 		}
 
@@ -121,13 +149,39 @@
 			padding: 10px;
 			font-size: 12px;
 			margin-top: 10px;
-			height: 230px;
+			// height: 230px;
 			background: #fff;
 
 			.title-action {
 				font-size: 14px;
 				color: #485465;
 				letter-spacing: 2px;
+			}
+
+			.table-action {
+				padding: 0 20px;
+
+				.table-sales {
+					thead {
+						tr td {
+							font-size: 12px;
+							color: #485465;
+							letter-spacing: 1.71px;
+							border-bottom: 1px solid rgba(111,109,204,0.10);
+						}
+					}
+
+					tbody {
+						tr td {
+							height: 40px;
+							line-height: 40px;
+							border: 0;
+							font-size: 12px;
+							color: #485465;
+							letter-spacing: 1.71px;
+						}
+					}
+				}
 			}
 
 			tr {
