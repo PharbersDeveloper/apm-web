@@ -17,7 +17,7 @@ export default Component.extend({
         }        
     },
     drawChart() {
-        d3.select(`#${this.get('chartId')}`).select('svg').remove();
+        d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
         let dataset = [
             { key: 'W1', value: 32, value2: 16 },
             { key: 'W2', value: 26, value2: 20 },
