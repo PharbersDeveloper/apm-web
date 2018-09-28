@@ -10,7 +10,9 @@
 		{{#bs-tab local-class="reginonal-info-content" as |tab|}}
 			{{#tab.pane local-class="section-total" title="整体" }}
             <div class="container">
-				{{d3-multiline-area-share sectionData=data.areaData}}
+				{{!-- {{d3-multiline-area-share sectionData=data.areaData}} --}}
+				{{d3-line-multi-legend chooseData=data.areaData title="各区域份额结果" class="pre-area-share"}} 
+
 				<div local-class="analyze-section" class="col-lg-12 col-md-12 col-sm-12">
 					<div class="table-responsive">
 						<table local-class="table-container" class="table">
