@@ -4,18 +4,19 @@ import { run } from '@ember/runloop';
 import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
-	classNames: ['multi-lines-choose', 'col-md-12', 'col-sm-12', 'col-xs-12'],
-	init() {
-		this._super(...arguments);
-	},
+	// classNames: ['multi-lines-choose', 'col-md-12', 'col-sm-12', 'col-xs-12'],
+	classNames: ['multilines'],
 
 	didReceiveAttrs() {
 		this._super(...arguments);
 		run.schedule('render', this, this.drawMultiLineChoose);
 	},
 	drawMultiLineChoose() {
-		d3.select('svg.much-lines').remove();
-		d3.select('.multi-lines-choose .legendContainer').remove();
+		let localClass = this.get('class');
+		let title = this.get('title');
+		d3.select('.' + localClass + ' svg.much-lines').remove();
+		// d3.select('.' + localClass + ' svg').remove();
+		d3.select('.' + localClass + ' .legendContainer').remove();
 		let svgContainer = d3.select(this.element);
 		let svg = svgContainer.append("svg").attr('class', 'much-lines');
 		// let data = this.get('chooseData');
@@ -96,7 +97,7 @@ export default Component.extend({
 		};
 		// svg.append('text')
 		svg.append("text")
-			.text("地区产品份额变化")
+			.text(title)
 			.attr("class", "title")
 			.attr("transform", "translate(-40,13)")
 			.attr("text-anchor", "start")
