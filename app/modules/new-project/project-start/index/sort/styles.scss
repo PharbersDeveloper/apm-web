@@ -1,6 +1,6 @@
 .sort-conent {
     padding: 18px 20px;
-	background: #FFFFFF;
+	background: #FFF;
     box-shadow: 0 0 4px 0 rgba(210,210,210,0.50);
     font-family: PingFangSC-Regular;
 
@@ -20,36 +20,5 @@
     .tips-sort {
         margin-top: 20px;
         margin-bottom: 20px;
-    }
-
-    .areaCard {
-        padding: 0 10px;
-        margin: 10px auto;
-        height: 40px;
-        line-height: 40px;
-        border: 0;
-        border-radius: 5px;
-        background-color: #F6F6F6;
-        box-shadow: 0 1px 4px 0 rgba(173,173,173,0.5);
-        color: #4A90E2;
-        cursor: move;
-        .hintModal {
-            margin-left: 10px;
-            cursor: pointer;
-        }
-    }
-
-    .sortCard {
-        padding: 0 10px;
-        margin: 10px auto;
-        height: 40px;
-        line-height: 40px;
-        border: 0;
-        border-radius: 5px;
-        background-color: #F6F6F6;
-        box-shadow: 0 1px 4px 0 rgba(173,173,173,0.5); 
-        .remove {
-            cursor: pointer;
-        }
     }
 }
