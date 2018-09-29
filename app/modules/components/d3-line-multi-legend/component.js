@@ -1,10 +1,8 @@
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
-// import {get} from '@ember/object';
 import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
-	// classNames: ['multi-lines-choose', 'col-md-12', 'col-sm-12', 'col-xs-12'],
 	classNames: ['multilines'],
 
 	didReceiveAttrs() {
