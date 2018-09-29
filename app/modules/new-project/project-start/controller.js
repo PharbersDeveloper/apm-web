@@ -54,8 +54,9 @@ export default Controller.extend({
 				sort: '仿制药',
 				des: '岭南制药是一家國內仿制药公司，其公司的产品一向以低价为其营销重点，在心血管领域的产品为Visas。该产品在某些特定地区，与一些支付能力比较低的地区，Visas的份额不算太低；但是由于其药物质量还未受大部分医生与患者的信任，它在整体市场中的份额很低。',
 			}, ],
+
 			prodData: [{
-				name: "产品A",
+				name: "产品一",
 				values: [{ ym: "201801", value: 50 },
 					{ ym: "201802", value: 190 },
 					{ ym: "201803", value: 180 },
@@ -70,7 +71,7 @@ export default Controller.extend({
 					{ ym: "201812", value: 120 }
 				]
 			}, {
-				name: "竞品A",
+				name: "竞品一",
 				values: [{ ym: "201801", value: 150 },
 					{ ym: "201802", value: 160 },
 					{ ym: "201803", value: 120 },
@@ -85,7 +86,7 @@ export default Controller.extend({
 					{ ym: "201812", value: 130 }
 				]
 			}, {
-				name: "竞品B",
+				name: "竞品二",
 				values: [{ ym: "201801", value: 250 },
 					{ ym: "201802", value: 260 },
 					{ ym: "201803", value: 220 },

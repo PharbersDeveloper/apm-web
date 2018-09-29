@@ -1,6 +1,6 @@
 <div local-class="action-plan-container">
 	<div local-class="action-plan-radar">
-		{{radar-section-effectiveness  gradient="glowplan" radarSectionData=radarData totalArea=totalArea }}
+		{{radar-section-effectiveness  gradient="glowplan" radarSectionData=radarData totalArea=totalArea  changeArea=(action 'changeArea')}}
 	</div>
 
 	{{area-plan-info }}

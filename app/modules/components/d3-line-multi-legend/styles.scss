@@ -21,6 +21,12 @@
 		stroke-width: 0;
 	}
 
+	:global .grid text {
+		font-size: 10px;
+		fill: #485465;
+		letter-spacing: 1.43px;
+	}
+
 	:global .line {
 		stroke-width: 2;
 		fill: none;
@@ -38,6 +44,11 @@
 		font-size: 10px;
 		fill: #485465;
 		letter-spacing: 1.43px;
+	}
+
+	:global .y.axis .tick text {
+		fill: none;
+		stroke: none;
 	}
 
 	:global .axis path {

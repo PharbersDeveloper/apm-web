@@ -1,26 +1,41 @@
 .objective-bar-line {
-    background-color: #FFF;   
+	position: relative;
+	background-color: #FFF;
+
+	.choose-area {
+		position: absolute;
+		left: 40px;
+		top: 20px;
+		width: 230px;
+		height: 30px;
+		background: #F1F1F1;
+		border-radius: 2px;
+		font-family: PingFangTC-Regular;
+		font-size: 14px;
+		color: #485465;
+		letter-spacing: 1.17px;
+	}
 }
+
 .tooltip {
-    position: absolute;
-    width: 100px;
-    border-style: solid; 
-    border-width: 1px;
-    background-color: #FFF;
-    border-radius: 5px;
+	position: absolute;
+	width: 100px;
+	border-style: solid;
+	border-width: 1px;
+	background-color: #FFF;
+	border-radius: 5px;
 }
 
 .container-g {
-    .bar {
-        fill: #8D9ECD; 
-        // fill: url("#linearColor")
-    }
+	.bar {
+		fill: #8D9ECD;
+	}
 
-    .predict-bar {
-        fill: #FFE68C;
-    }
+	.predict-bar {
+		fill: #FFE68C;
+	}
 }
 
 .barText {
-    fill: #FFFFFF;
+	fill: #FFFFFF;
 }

@@ -142,7 +142,6 @@ export default Component.extend({
 		/////////////////////////////////////////////////////////
 
 		//Filter for the outside glow
-		console.log(this.get('gradient'));
 		let glow = this.get('gradient');
 		let filter = g.append('defs').append('filter').attr('id', glow),
 			feGaussianBlur = filter.append('feGaussianBlur').attr('stdDeviation', '2.5').attr('result', 'coloredBlur'),
