@@ -2,7 +2,7 @@
 	<div local-class="objective-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				{{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true}}
+				{{d3-bar-line chartId="objective-chart" totalArea=totalArea laterThreeChangeBg=true changeArea=(action 'changeArea')}}
 			</div>
 		</div>
 	</div>
