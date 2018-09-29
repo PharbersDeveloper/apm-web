@@ -21,9 +21,10 @@
 	<div local-class="sub-tab">
 		{{#bs-tab as |tab|}}
 			{{#tab.pane title="代表与执行" }}
-			
-				{{radar-section-effectiveness radarSectionData=radarData totalArea=totalArea changeArea=(action 'changeArea')}}
 
+				{{radar-section-effectiveness gradient="glowarea" selectArea=false radarSectionData=radarData totalArea=totalArea changeArea=(action 'changeArea')}}
+
+				{{!-- {{d3-radar-area-effectiveness radarSectionData=radarData totalArea=totalArea changeArea=(action 'changeArea')}} --}}
 				<div local-class="represent">
 					{{charge-represent data=data.represent}}
 				</div>

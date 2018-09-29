@@ -4,20 +4,22 @@ import { get } from '@ember/object';
 import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
-	// classNames: ['radar-section-effectiveness', 'col-md-12', 'col-sm-12', 'col-xs-12'],
 	classNames: ['radar-section-effectiveness', ],
-
-
+	selectArea: true,
 	actions: {
 		changeArea(value) {
 			this.sendAction('changeArea', value);
 		}
 	},
+
 	didReceiveAttrs() {
 		this._super(...arguments);
 		run.schedule('render', this, this.RadarChart);
 	},
+
 	RadarChart() {
+		// let localClass = this.get('class');
+		// d3.select('.' + localClass + ' svg').remove();
 		let data = this.get('radarSectionData');
 		let _currentColor = data.map((item) => {
 			return item.color;
@@ -123,7 +125,7 @@ export default Component.extend({
 
 
 		//Remove whatever chart with the same id/class was present before
-		parent.select("svg").remove();
+		parent.selectAll("svg").remove();
 
 		//Initiate the radar chart SVG
 		let svg = parent.append("svg")
@@ -140,7 +142,9 @@ export default Component.extend({
 		/////////////////////////////////////////////////////////
 
 		//Filter for the outside glow
-		let filter = g.append('defs').append('filter').attr('id', 'glow'),
+		console.log(this.get('gradient'));
+		let glow = this.get('gradient');
+		let filter = g.append('defs').append('filter').attr('id', glow),
 			feGaussianBlur = filter.append('feGaussianBlur').attr('stdDeviation', '2.5').attr('result', 'coloredBlur'),
 			feMerge = filter.append('feMerge'),
 			feMergeNode_1 = feMerge.append('feMergeNode').attr('in', 'coloredBlur'),
@@ -163,7 +167,7 @@ export default Component.extend({
 			.style("fill", "#CDCDCD")
 			.style("stroke", "#CDCDCD")
 			.style("fill-opacity", cfg.opacityCircles)
-			.style("filter", "url(#glow)");
+			.style("filter", "url(#" + glow + ")");
 
 		//Text indicating at what % each level is
 		axisGrid.selectAll(".axisLabel")
@@ -262,7 +266,7 @@ export default Component.extend({
 			.style("stroke-width", cfg.strokeWidth + "px")
 			.style("stroke", (d, i) => cfg.color(i))
 			.style("fill", "none")
-			.style("filter", "url(#glow)");
+			.style("filter", "url(#" + glow + ")");
 
 		//Append the circles
 		blobWrapper.selectAll(".radarCircle")
