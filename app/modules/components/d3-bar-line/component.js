@@ -8,11 +8,6 @@ export default Component.extend({
 	backgroundColor: '#FFF',
 	laterThreeChangeBg: false,
 	title: '',
-	actions: {
-		changeArea(value) {
-			this.sendAction('changeArea', value);
-		}
-	},
 
 	didReceiveAttrs() {
 		if (this.get('chartId') === '') {

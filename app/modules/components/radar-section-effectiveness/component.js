@@ -5,12 +5,6 @@ import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
 	classNames: ['radar-section-effectiveness', ],
-	selectArea: true,
-	actions: {
-		changeArea(value) {
-			this.sendAction('changeArea', value);
-		}
-	},
 
 	didReceiveAttrs() {
 		this._super(...arguments);

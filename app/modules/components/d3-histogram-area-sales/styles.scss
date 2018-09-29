@@ -4,11 +4,24 @@
 	text-align: center;
 
 	:global .y .tick line {
-		stroke: none;
+		stroke: #979797;
 	}
 
 	:global .x .tick line {
-		// stroke: none;
+		stroke: #979797;
+	}
+
+	:global .x .tick text {
+		font-family: PingFangSC-Regular;
+		font-size: 12px;
+		fill: #767A80;
+		letter-spacing: 1.71px;
+		stroke: #767A80;
+		font-weight: 100;
+	}
+
+	:global .domain {
+		stroke: #979797;
 	}
 
 	:global .amount {

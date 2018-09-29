@@ -1,8 +1,19 @@
 <div local-class="objective-container">
+	<div class="next-step">
+		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
+		{{#bs-button class="btn-next"}}
+			下一步
+		{{/bs-button}}
+	</div>
 	<div local-class="objective-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				{{d3-bar-line chartId="objective-chart" totalArea=totalArea laterThreeChangeBg=true changeArea=(action 'changeArea')}}
+				<select local-class="choose-area" onchange= {{action 'changeArea' value="target.value"}}>
+				    {{#each totalArea as |area|}}
+				        <option  value={{area.value}}>{{area.name}}</option>
+				    {{/each}}
+				</select>
+				{{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true changeArea=(action 'changeArea')}}
 			</div>
 		</div>
 	</div>
