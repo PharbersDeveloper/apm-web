@@ -81,29 +81,22 @@ export default Component.extend({
         /**
          * 渐变开始
          */
-        var colorRange = ['#EFA08D', '#F0BC89', '#F0DB84', '#E5F17F', '#C0F17A', '#70F272', '#6BF297', '#61F3E9']
-    
-        var color = d3.scaleLinear().range(colorRange).domain([1, 2, 3, 4, 5, 6, 7, 8]);
-
         var defs = svg.append("defs")
 
         var linearGradient = defs.append("linearGradient")
-                                .attr("id","linearColor")
-                                .attr("x1","0%")
-                                .attr("y1","0%")
-                                .attr("x2","100%")
-                                .attr("y2","0%");
+                                .attr("id", this.get('chartId') + "linearColor")
+                                .attr("x1", "0%")
+                                .attr("y1", "0%")
+                                .attr("x2", "0%")
+                                .attr("y2", "100%");
 
         linearGradient.append("stop")
             .attr("offset", "0%")
-            .attr("stop-color",color(1));
+            .attr("stop-color", '#FFE68C');
                 
         linearGradient.append("stop")
-            .attr("offset", "14.28%")
-            .attr("stop-color",color(2));
-        linearGradient.append("stop")
             .attr("offset", "100%")
-            .attr("stop-color",color(8));
+            .attr("stop-color", '#E9A782');
 
         /**
          * 渐变结束
@@ -114,7 +107,6 @@ export default Component.extend({
             .attr('y', function (d) { return yScale(d.value); })
             .attr('width', xScale.bandwidth() / 2)
             .attr('class', '_bar_1mas67')
-            // .style("fill","url(#" + linearGradient.attr("id") + ")");
 
         chart.append('text')
             .attr('class', '_barText_1mas67')
@@ -130,17 +122,20 @@ export default Component.extend({
                 .selectAll('._container-g_1mas67')
                 .selectAll('g:nth-last-of-type(3)')
                 .select('rect')
-                .attr('class', '_predict-bar_1mas67')
+                .style("fill","url(#" + this.get('chartId') + "linearColor" + ")");
+                // .attr('class', '_predict-bar_1mas67')
             d3.select(`#${this.get('chartId')}`)
                 .selectAll('._container-g_1mas67')
                 .selectAll('g:nth-last-of-type(2)')
                 .select('rect')
-                .attr('class', '_predict-bar_1mas67')
+                .style("fill","url(#" + this.get('chartId') + "linearColor" + ")");
+                // .attr('class', '_predict-bar_1mas67')
             d3.select(`#${this.get('chartId')}`)
                 .selectAll('._container-g_1mas67')
                 .selectAll('g:last-of-type')
                 .select('rect')
-                .attr('class', '_predict-bar_1mas67')
+                .style("fill","url(#" + this.get('chartId') + "linearColor" + ")");
+                // .attr('class', '_predict-bar_1mas67')
         }
 
         let line = d3.line()
@@ -176,7 +171,7 @@ export default Component.extend({
             .attr('preserveAspectRatio', 'xMidYMid meet')
             .attr('viewBox', '0 0 960 20')
             .attr("transform", function(d, i) {
-				return "translate(" + 900 / 2 + ", 0)";
+				return "translate(" + 800 / 2 + ", 0)";
             });
         let legendData = ["份额", "销售额"];
         if (this.get('laterThreeChangeBg')) {
