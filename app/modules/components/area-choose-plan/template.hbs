@@ -9,14 +9,16 @@
         <span class="caret"></span>
     </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            {{#each readyChoose as |choose|}}
+            {{#each planPaireComputed as |choose|}}
                 <li>{{input type="checkbox" name=choose.text checked=choose.isChecked}}{{choose.text}}</li>
             {{/each}}
         </ul>
     </div>
 </p>
 <p local-class="show-plan">
-    {{#each planPaire as |plan|}}
-        <span>{{plan.text}}</span>
+    {{#each planPaireComputed as |plan|}}
+        {{#if plan.isChecked}}
+            <span>{{plan.text}}</span>
+        {{/if}}
     {{/each}}
 </p>

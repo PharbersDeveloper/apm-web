@@ -1,5 +1,6 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, set } from '@ember/object';
+import { later } from '@ember/runloop';
 
 export default Component.extend({
 	init() {
@@ -18,24 +19,20 @@ export default Component.extend({
 			{ text: "加强进药准入工作", isChecked: false },
 			{ text: "对低级别代表进行辅导", isChecked: false },
 		])
-	},
-	planPaire: computed('readyChoose.@each.isChecked', function() {
-		let chooses = this.get('readyChoose');
-		console.log('before deal');
-		console.log(chooses);
-		let planPaire = chooses.filterBy('isChecked', true);
-		let dealPlan = planPaire;
-		if (planPaire.length > 2) {
-			let booleanChooses = chooses.map((choose) => {
-				return choose.isChecked;
-			});
-			let index = booleanChooses.indexOf(true);
-			Ember.set(chooses[index], 'isChecked', false);
-			console.log('deal done');
-			console.log(chooses);
-			this.set('readyChoose', chooses);
-			dealPlan.shift()
-		};
-		return dealPlan;
-	}),
+    },
+    planPaireComputed: computed('readyChoose.@each.isChecked', function() {
+        let chooses = this.get('readyChoose');
+        let planPaire = chooses.filterBy('isChecked', true);
+        if (planPaire.length > 2) {
+            later(this, function() {
+                set(planPaire.firstObject, 'isChecked', false)
+                // planPaire.firstObject.set('isChecked', false)
+                // planPaire.firstObject.set('text', planPaire.firstObject.get('text'))
+                console.info(planPaire)
+            }, 100);
+            
+            
+        }
+        return chooses;
+}),
 });
