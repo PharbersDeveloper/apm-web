@@ -1,0 +1,26 @@
+{{yield}}
+<div local-class="analyze-section">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <p local-class="title-section">
+                区域A名称
+                <div local-class="toggle-area">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    {{!-- {{#if collapsed}}
+                        <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    {{else}}
+                        <span class="glyphicon glyphicon-triangle-top"></span>
+                    {{/if}} --}}
+                    {{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
+    					{{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
+    					{{else}}<span class="glyphicon glyphicon-triangle-top"></span>
+    					{{/if}}
+    				{{/bs-button}}
+                </div>
+            </p>
+            {{#bs-collapse local-class="content-container" collapsed=collapsed}}
+                {{textarea rows=10 placeholder="hint" value = "" maxlength=300 autofocus=true}}
+            {{/bs-collapse}}
+        </div>
+    </div>
+</div>

@@ -19,8 +19,19 @@
 			border-radius: 100px;
 		}
 
-		ul li {
-			color: #485465;
+		ul {
+			width: 190px;
+			left: -30px;
+
+			li {
+				color: #485465;
+
+				input {
+					margin: 0 5px;
+					height: 15px;
+					width: 15px;
+				}
+			}
 		}
 	}
 }

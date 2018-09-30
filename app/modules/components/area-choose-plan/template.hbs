@@ -3,12 +3,11 @@
     <span>行动计划-</span>
     <span>针对区域情況作出行动计划优化区域有效性问题。（最多两项）</span>
 
-    <div local-class="checkbox-choose-plan" class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        选择行动计划
-        <span class="caret"></span>
-    </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <div local-class="checkbox-choose-plan" class="dropup">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            选择行动计划<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
             {{#each planPaireComputed as |choose|}}
                 <li>{{input type="checkbox" name=choose.text checked=choose.isChecked}}{{choose.text}}</li>
             {{/each}}

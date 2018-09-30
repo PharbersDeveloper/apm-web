@@ -322,7 +322,7 @@ export default Component.extend({
 		if (cfg.legend !== false && typeof cfg.legend === "object") {
 			let legendZone = svg.append('g')
 				.attr('class', 'legendZone')
-				.attr('transform', `translate(80,${options.h-40})`);
+				.attr('transform', `translate(60,${options.h-40})`);
 			let names = data.map(el => el.name);
 			if (cfg.legend.title) {
 				let title = legendZone.append("text")
