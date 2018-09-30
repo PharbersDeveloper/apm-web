@@ -6,13 +6,13 @@ export default Controller.extend({
     actions: {
         skip(component) {
             component.set('startTip', false);
-            this.transitionToRoute('new-project.project-start.index.analyze')
+            this.transitionToRoute('new-project.project-start.index.analyze', component.get('projectid'))
             
         },
         goScenarioDescribe(component) {
             component.set('startTip', false);
             this.get('introduced').set('isSelectedName', 'showScenario');
-            this.transitionToRoute('new-project.project-start.index.analyze');
+            this.transitionToRoute('new-project.project-start.index.analyze', component.get('projectid'))
         }
     }
 });

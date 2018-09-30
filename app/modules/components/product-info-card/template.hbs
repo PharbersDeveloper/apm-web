@@ -8,12 +8,12 @@
 		<div local-class="con">
 			<div local-class="center">
 				<div local-class="product-list">
-					{{#each data.proList as |list|}}
-						{{product-card data=list}}
+					{{#each data.medicines as |medicine|}}
+						{{product-card data=medicine}}
 					{{/each}}
 				</div>
 
-				{{d3-line-multi-legend chooseData=data.prodData title="产品份额竞争趋势" class="multiline-prods-share"}}
+				{{!-- {{d3-line-multi-legend chooseData=data.prodData title="产品份额竞争趋势" class="multiline-prods-share"}} --}}
 
 			</div>
 		</div>

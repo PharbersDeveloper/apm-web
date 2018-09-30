@@ -1,11 +1,6 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 
 export default Component.extend({
-	str: true,
-	titleone: computed('params.[]', function() {
-		// console.log(this.params[0]);
-	}),
 	actions: {
 		skip() {
 			this.sendAction('skip', this);
@@ -13,9 +8,11 @@ export default Component.extend({
 		goScenarioDescribe() {
 			this.sendAction('goScenarioDescribe', this);
 		},
-		sendTitle(title) {
+		sendTitle(title, content, projectid) {
 			this.set('startTip', true);
-			this.set('newtitle', title);
+            this.set('newtitle', title);
+            this.set('content', content);
+            this.set('projectid', projectid)
 		}
 	}
 });

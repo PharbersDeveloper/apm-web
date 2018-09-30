@@ -8,11 +8,9 @@
       <div local-class="con">
           <div local-class="center">
               <div local-class="con-area">
-                  <img src="" alt="">
+                  <img src={{data.image}} alt="">
                   <div local-class="article">
-                      {{#each content as |item|}}
-                        <p>{{item.con}}</p>
-                      {{/each}}
+                    {{data.content}}  
                   </div>
               </div>
           </div>

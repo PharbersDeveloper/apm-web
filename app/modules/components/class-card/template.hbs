@@ -1,19 +1,17 @@
 {{#each data as |project|}}
-<div class="col-md-4">
-    <div local-class="content">
-        <div local-class="title">
-            <p local-class="name">{{project.title}}</p>
-            {{#if project.str}}
-                <p local-class="time">{{project.time}}</p>
-            {{/if}}
-
-        </div>
-        <div local-class="btn">
-            {{#bs-button onClick=(action 'sendTitle' project.title) local-class="start"}}Start{{/bs-button}}
-
+    <div class="col-md-4">
+        <div local-class="content">
+            <div local-class="title">
+                <p local-class="name">{{project.name}}</p>
+                {{#unless project.state}}
+                    <p local-class="time">即将推出</p>
+                {{/unless}}
+            </div>
+            <div local-class="btn">
+                {{#bs-button onClick=(action 'sendTitle' project.name project.prompt project.id) local-class="start"}}Start{{/bs-button}}
+            </div>
         </div>
     </div>
-</div>
 {{/each}}
 <div local-class="modal-dialog">
     {{#bs-modal backdropClose=false open=startTip onHidden=(action (mut startTip) false) as |modal|}}
@@ -22,7 +20,7 @@
                 <div local-class="con">
                     <p local-class="part-title">您好！</p>
                     <p local-class="part-2">{{newtitle}}即将开始</p>
-                    <p>在开始前我们建议你先了解课程所模拟的场景信息。</p>
+                    <p>{{content-bound-helper content}}</p>
                 </div>
             </div>
         {{/modal.body}}
