@@ -11,7 +11,6 @@ export default Component.extend({
 	},
 	drawMultiLineChoose() {
 		let localClass = this.get('class');
-		console.log(localClass);
 		let title = this.get('title');
 		d3.select('.' + localClass + ' svg.much-lines').remove();
 		// d3.select('.' + localClass + ' svg').remove();
@@ -128,7 +127,7 @@ export default Component.extend({
 					.text(d.name)
 					.attr("text-anchor", "middle")
 					.attr("x", (width - margin) / 2)
-					.attr("y", 5);
+					.attr("y", 30);
 			})
 			.on("mouseout", function(d) {
 				svg.select(".title-text").remove();

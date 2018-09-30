@@ -18,12 +18,12 @@
 			{{/each}}
 		</div>
 	</div>
-	
+
 	<div local-class="sub-tab">
 		{{#bs-tab as |tab|}}
 			{{#tab.pane title="代表与执行" }}
 
-				{{radar-section-effectiveness gradient="glowarea" selectArea=false radarSectionData=radarData totalArea=totalArea}}
+				{{radar-section-effectiveness gradient="glowarea" radarSectionData=radarData}}
 
 				<div local-class="represent">
 					{{charge-represent data=data.represent}}

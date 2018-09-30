@@ -32,14 +32,5 @@ export default Component.extend({
 				color: '#762712'
 			}
 		];
-		this.totalArea = [
-			{ name: "区域A", value: 'A' },
-			{ name: "区域B", value: 'B' },
-			{ name: "区域C", value: 'C' },
-			{ name: "区域D", value: 'D' },
-			{ name: "区域E", value: 'E' },
-			{ name: "区域F", value: 'F' },
-			{ name: "区域G", value: 'G' },
-		]
 	},
 });

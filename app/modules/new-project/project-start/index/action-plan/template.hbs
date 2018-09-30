@@ -1,6 +1,17 @@
 <div local-class="action-plan-container">
+	<div class="next-step">
+		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
+		{{#bs-button class="btn-next"}}
+			下一步
+		{{/bs-button}}
+	</div>
 	<div local-class="action-plan-radar">
-		{{radar-section-effectiveness  gradient="glowplan" radarSectionData=radarData totalArea=totalArea  changeArea=(action 'changeArea')}}
+		<select local-class="choose-area" onchange= {{action 'changeArea' value="target.value"}}>
+		    {{#each totalArea as |area|}}
+		        <option  value={{area.value}}>{{area.name}}</option>
+		    {{/each}}
+		</select>
+		{{radar-section-effectiveness  gradient="glowplan" radarSectionData=radarData changeArea=(action 'changeArea')}}
 	</div>
 
 	{{area-plan-info }}

@@ -6,7 +6,7 @@ export default Component.extend({
 	classNames: ['histogram-area-sales', 'col-lg-6', 'col-md-6', 'col-sm-6', 'col-xs-12'],
 	init() {
 		this._super(...arguments);
-		this.data = [{id: "1", name: "最差结果", value: 61 }, {id: "2", name: "上季", value: 78 }, {id: "3", name: "本季", value: 28 }, {id: "4", name: "最佳结果", value: 35 }];
+		this.data = [{ id: "1", name: "最差结果", value: 61 }, { id: "2", name: "上季", value: 78 }, { id: "3", name: "本季", value: 28 }, { id: "4", name: "最佳结果", value: 35 }];
 	},
 	didReceiveAttrs() {
 		this._super(...arguments);
@@ -57,12 +57,13 @@ export default Component.extend({
 			.attr('class', 'x axis')
 			.attr('transform', 'translate(15,' + height + ')')
 			.call(x_axis);
-		svg.append('g')
+		let yg = svg.append('g')
 			.attr('class', 'y axis')
 			.attr('transform', 'translate(15,0)')
-            .call(y_axis);
-            
-        // yg.selectAll('text').
+			.call(y_axis);
+		yg.selectAll('line').attr('x2', 6);
+
+		// yg.selectAll('text').
 
 		// let color = d3.scaleOrdinal(['#EA919E', '#A5A8CF', '#A5A8CF', '#FBBF9E'])
 
@@ -85,45 +86,45 @@ export default Component.extend({
 		amount
 			// .transition()
 			.attr("y", function(d) { return y(d.value); })
-            .text(function(d) { return d.value; });
+			.text(function(d) { return d.value; });
 
-        // 渐变开始
-        var colorRange = ['#FCA0A8', '#EA919E', '#A5A8CF', '#6177B4', '#A5A8CF', '#6177B4', '#F5D561', '#FBBF9E']
-        var color = d3.scaleLinear().range(colorRange).domain([0, 1, 2, 3, 4, 5, 6, 7]);
-        
-        var defs = svg.append("defs")
-        //添加多个linearGradient
-        areaSalesData.forEach((elem, index) => {
-            var linearGradient = defs.append("linearGradient")
-                                    .attr("id", elem.id + "-linearColor")
-                                    .attr("x1", "0%")
-                                    .attr("y1", "0%")
-                                    .attr("x2", "0%")
-                                    .attr("y2", "100%");
+		// 渐变开始
+		var colorRange = ['#FCA0A8', '#EA919E', '#A5A8CF', '#6177B4', '#A5A8CF', '#6177B4', '#F5D561', '#FBBF9E']
+		var color = d3.scaleLinear().range(colorRange).domain([0, 1, 2, 3, 4, 5, 6, 7]);
 
-            linearGradient.append("stop")
-                .attr("offset", "0%")
-                .attr("stop-color", color(index * 2));
-                    
-            linearGradient.append("stop")
-                .attr("offset", "100%")
-                .attr("stop-color", color(index * 2 + 1 )); 
-        });
-        // 渐变结束
+		var defs = svg.append("defs")
+		//添加多个linearGradient
+		areaSalesData.forEach((elem, index) => {
+			var linearGradient = defs.append("linearGradient")
+				.attr("id", elem.id + "-linearColor")
+				.attr("x1", "0%")
+				.attr("y1", "0%")
+				.attr("x2", "0%")
+				.attr("y2", "100%");
+
+			linearGradient.append("stop")
+				.attr("offset", "0%")
+				.attr("stop-color", color(index * 2));
+
+			linearGradient.append("stop")
+				.attr("offset", "100%")
+				.attr("stop-color", color(index * 2 + 1));
+		});
+		// 渐变结束
 
 		// enter
-        bar.enter().append("rect")
-            .attr('transform', 'translate(15,0)')
+		bar.enter().append("rect")
+			.attr('transform', 'translate(15,0)')
 			.attr("class", "bar")
 			.attr("x", function(d) { return x(d.name) + 37; })
 			.attr("y", function(d) { return y(d.value); })
 			// .attr("width", x.bandwidth())
 			.attr("width", 40)
-            .attr("height", function(d) { return height - y(d.value); })
-            .style("fill",function(d) {return "url(#" + d.id + "-linearColor" + ")"});
+			.attr("height", function(d) { return height - y(d.value); })
+			.style("fill", function(d) { return "url(#" + d.id + "-linearColor" + ")" });
 
-        amount.enter().append("text")
-            .attr('transform', 'translate(15,0)')
+		amount.enter().append("text")
+			.attr('transform', 'translate(15,0)')
 			.attr("class", "amount")
 			.attr("x", function(d) { return x(d.name) + x.bandwidth() / 2; })
 			.attr("y", function(d) { return y(d.value); })

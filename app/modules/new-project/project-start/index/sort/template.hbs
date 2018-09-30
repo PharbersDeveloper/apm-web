@@ -1,4 +1,10 @@
 <div local-class="sort-container">
+    <div class="next-step">
+		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
+		{{#bs-button class="btn-next"}}
+			下一步
+		{{/bs-button}}
+	</div>
     <div local-class="sort-conent">
         <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
@@ -10,7 +16,7 @@
                     </div>
                 </div>
                 {{sort-drag-drop areaArray=areaArray}}
-                
+
             </div>
         </div>
     </div>

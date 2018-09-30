@@ -6,10 +6,9 @@
 
 .navigation {
 	background: #FDFDFD;
-    box-shadow: 0 1px 2px 0 rgba(162,162,162,0.50);
-    margin-top: 10px;
-	margin-bottom: 15px;
-
+	box-shadow: 0 1px 2px 0 rgba(162,162,162,0.50);
+	margin-top: 10px;
+	// margin-bottom: 15px;
 	:global(.active) {
 		background-color: #859EE3 !important;
 	}
@@ -33,5 +32,25 @@
 			letter-spacing: 2px;
 			border: 0 !important;
 		}
+	}
+}
+
+:global(.next-step) {
+	margin: 10px 0;
+	text-align: right;
+
+	:global(.btn-next) {
+		padding: 0;
+		width: 100px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		font-family: PingFangSC-Semibold;
+		font-size: 14px;
+		letter-spacing: 2.15px;
+		box-shadow: 0 2px 4px 0 rgba(210,210,210,0.50);
+		border-radius: 100px;
+		color: #FFF;
+		background: #7F92C9;
 	}
 }

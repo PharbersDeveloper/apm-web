@@ -1,4 +1,10 @@
 <div local-class="analyze-container">
+	<div class="next-step">
+		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
+		{{#bs-button class="btn-next"}}
+			下一步
+		{{/bs-button}}
+	</div>
 	<div local-class="analyze-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
@@ -10,17 +16,17 @@
 	<div local-class="analyze-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				 <p local-class="title-section">
-					 区域A名称
-					 <div local-class="btn-toggle" >
+				<p local-class="title-section">
+					区域A名称
+					<div local-class="btn-toggle">
 						<span class="glyphicon glyphicon-trash"></span>
 						{{#if collapsed}}
-						<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}} 
-						<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}} 
-					</div>					 					 
-                </p>
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}}
+					</div>
+				</p>
 				{{#bs-collapse local-class="content-container" collapsed=false}}
 					{{textarea rows=10 placeholder="hint" value = "" maxlength=300 autofocus=true}}
 				{{/bs-collapse}}
@@ -31,17 +37,17 @@
 	<div local-class="analyze-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				 <p local-class="title-section">
-					 区域B名称
-					 <div local-class="btn-toggle" >
+				<p local-class="title-section">
+					区域B名称
+					<div local-class="btn-toggle">
 						<span class="glyphicon glyphicon-trash"></span>
 						{{#if collapsed}}
-						<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}} 
-						<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}} 
-					</div>					 					 
-                </p>
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}}
+					</div>
+				</p>
 				{{#bs-collapse local-class="content-container" collapsed=false}}
 					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
 				{{/bs-collapse}}
@@ -49,20 +55,20 @@
 		</div>
 	</div>
 
-    <div local-class="analyze-section">
+	<div local-class="analyze-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				 <p local-class="title-section">
-					 区域B名称
-					 <div local-class="btn-toggle" >
+				<p local-class="title-section">
+					区域B名称
+					<div local-class="btn-toggle">
 						<span class="glyphicon glyphicon-trash"></span>
 						{{#if collapsed}}
-						<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}} 
-						<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}} 
-					</div>					 					 
-                </p>
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}}
+					</div>
+				</p>
 				{{#bs-collapse local-class="content-container" collapsed=false}}
 					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
 				{{/bs-collapse}}
@@ -70,20 +76,20 @@
 		</div>
 	</div>
 
-    <div local-class="analyze-section">
+	<div local-class="analyze-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				 <p local-class="title-section">
-					 区域B名称
-					 <div local-class="btn-toggle" >
+				<p local-class="title-section">
+					区域B名称
+					<div local-class="btn-toggle">
 						<span class="glyphicon glyphicon-trash"></span>
 						{{#if collapsed}}
-						<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}} 
-						<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}} 
-					</div>					 					 
-                </p>
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}}
+					</div>
+				</p>
 				{{#bs-collapse local-class="content-container" collapsed=false}}
 					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
 				{{/bs-collapse}}
@@ -91,20 +97,20 @@
 		</div>
 	</div>
 
-    <div local-class="analyze-section">
+	<div local-class="analyze-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				 <p local-class="title-section">
-					 区域B名称
-					 <div local-class="btn-toggle" >
+				<p local-class="title-section">
+					区域B名称
+					<div local-class="btn-toggle">
 						<span class="glyphicon glyphicon-trash"></span>
 						{{#if collapsed}}
-						<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}} 
-						<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}} 
-					</div>					 					 
-                </p>
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}}
+					</div>
+				</p>
 				{{#bs-collapse local-class="content-container" collapsed=false}}
 					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
 				{{/bs-collapse}}
@@ -112,20 +118,20 @@
 		</div>
 	</div>
 
-    <div local-class="analyze-section">
+	<div local-class="analyze-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				 <p local-class="title-section">
-					 区域B名称
-					 <div local-class="btn-toggle" >
+				<p local-class="title-section">
+					区域B名称
+					<div local-class="btn-toggle">
 						<span class="glyphicon glyphicon-trash"></span>
 						{{#if collapsed}}
-						<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}} 
-						<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}} 
-					</div>					 					 
-                </p>
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}}
+					</div>
+				</p>
 				{{#bs-collapse local-class="content-container" collapsed=false}}
 					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
 				{{/bs-collapse}}
@@ -133,20 +139,20 @@
 		</div>
 	</div>
 
-    <div local-class="analyze-section">
+	<div local-class="analyze-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				 <p local-class="title-section">
-					 区域B名称
-					 <div local-class="btn-toggle" >
+				<p local-class="title-section">
+					区域B名称
+					<div local-class="btn-toggle">
 						<span class="glyphicon glyphicon-trash"></span>
 						{{#if collapsed}}
-						<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}} 
-						<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}} 
-					</div>					 					 
-                </p>
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}}
+					</div>
+				</p>
 				{{#bs-collapse local-class="content-container" collapsed=false}}
 					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
 				{{/bs-collapse}}

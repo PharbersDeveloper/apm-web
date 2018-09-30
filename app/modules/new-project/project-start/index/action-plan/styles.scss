@@ -9,9 +9,25 @@
 	// background: #FFFFFF;
 	// box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
 	.action-plan-radar {
+		position: relative;
 		margin-bottom: 10px;
 		background: #FFFFFF;
 		box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
+
+		.choose-area {
+			position: absolute;
+			right: 40px;
+			top: 20px;
+			z-index: 1;
+			width: 230px;
+			height: 30px;
+			background: #F1F1F1;
+			border-radius: 2px;
+			font-family: PingFangTC-Regular;
+			font-size: 14px;
+			color: #485465;
+			letter-spacing: 1.17px;
+		}
 	}
 
 	.action-plan-section {

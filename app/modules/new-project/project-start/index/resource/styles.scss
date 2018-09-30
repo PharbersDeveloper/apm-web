@@ -1,16 +1,9 @@
-@media (min-width: 1400px) {
-	.resource-container {
-		width: 1400px;
-	}
-}
-
 .resource-container {
-	padding: 18px 20px;
-	background: #FFFFFF;
-	box-shadow: 0 0 4px 0 rgba(210,210,210,0.50);
-
 	.resource-content {
-		padding: 0;
+		padding: 18px 20px;
+		background: #FFFFFF;
+		box-shadow: 0 0 4px 0 rgba(210,210,210,0.50);
+		// padding: 0;
 		font-size: 0;
 
 		.title-resource {
