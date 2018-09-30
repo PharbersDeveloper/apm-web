@@ -1,0 +1,47 @@
+.analyze-section {
+	margin-bottom: 10px;
+	padding: 6px 20px;
+	background: #FFFFFF;
+	box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
+
+	textarea {
+		padding: 10px;
+		resize: none;
+		width: 100%;
+		border: 0;
+		background: #F9F9F9;
+		border-radius: 10px;
+	}
+
+	.title-section {
+		margin: 10px auto;
+		font-family: PingFangTC-Medium;
+		font-size: 14px;
+		color: #4A90E2;
+		letter-spacing: 1.5px;
+
+		.toggle-area {
+			color: #767A80;
+			float: right;
+
+			.btn-toggle {
+				padding: 0;
+				border: 0;
+				font-size: 20px;
+				color: #c0c0c0;
+
+				&:hover {
+					background-color: transparent;
+				}
+
+				&:focus {
+					background-color: transparent;
+				}
+			}
+
+			span {
+				margin: 0 10px;
+			}
+		}
+	}
+}
