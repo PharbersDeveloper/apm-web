@@ -8,11 +8,11 @@ export default Component.extend({
 		goScenarioDescribe() {
 			this.sendAction('goScenarioDescribe', this);
 		},
-		sendTitle(title, content, projectid) {
+		sendTitle(title, content, courseid) {
 			this.set('startTip', true);
             this.set('newtitle', title);
             this.set('content', content);
-            this.set('projectid', projectid)
+            this.set('courseid', courseid)
 		}
 	}
 });

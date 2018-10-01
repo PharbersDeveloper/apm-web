@@ -15,5 +15,5 @@ export default DS.Model.extend({
     prod_features: DS.attr('string'),
     target_department: DS.attr('string'),
     prod_describe: DS.attr('string'),
-    compete: DS.attr('boolean')
+    compete: DS.attr('boolean', { defaultValue: true})
 });

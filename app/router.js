@@ -17,7 +17,7 @@ Ember.Route.reopen({
 Router.map(function () {
     this.route('project-sort');
     this.route('new-project', function () {
-        this.route('project-start', { path: '/project-start/:id'}, function () {
+        this.route('project-start', { path: '/project-start/:courseid/:paperid'}, function () {
             this.route('index', { path: '/' }, function () {
                 this.route('analyze');
                 this.route('resource');

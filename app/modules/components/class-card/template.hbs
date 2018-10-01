@@ -1,14 +1,14 @@
-{{#each data as |project|}}
+{{#each data as |course|}}
     <div class="col-md-4">
         <div local-class="content">
             <div local-class="title">
-                <p local-class="name">{{project.name}}</p>
-                {{#unless project.state}}
+                <p local-class="name">{{course.name}}</p>
+                {{#unless course.state}}
                     <p local-class="time">即将推出</p>
                 {{/unless}}
             </div>
             <div local-class="btn">
-                {{#bs-button onClick=(action 'sendTitle' project.name project.prompt project.id) local-class="start"}}Start{{/bs-button}}
+                {{#bs-button onClick=(action 'sendTitle' course.name course.prompt course.id) local-class="start"}}Start{{/bs-button}}
             </div>
         </div>
     </div>
