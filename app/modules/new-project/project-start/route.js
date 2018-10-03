@@ -113,12 +113,24 @@ export default Route.extend({
         }
         controller.set('ProductModel', productInfo);
     },
+    areaInfo(courseid, controller) {
+        // 获取所有区域名称与基本信息
+        let req = this.store.createRecord('request', { res: 'bind_course_goods' });
+        req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
+            key: 'course_id',
+            val: courseid,
+        }))
+        let conditions = this.store.object2JsonApi('request', req);
+        this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
+        
+    },
     model(ids) {
         let projectController = this.controllerFor('new-project.project-start');
         //场景介绍
         later(this, function () {
             this.scenarioInfo(ids.courseid, projectController)
             this.productInfo(ids.courseid, projectController)
+            // this.areaInfo(ids.courseid, projectController)
         }, 100)
 
     }
