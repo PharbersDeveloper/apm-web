@@ -115,7 +115,7 @@ export default Route.extend({
     },
     areaInfo(courseid, controller) {
         // 获取所有区域名称与基本信息
-        let req = this.store.createRecord('request', { res: 'bind_course_goods' });
+        let req = this.store.createRecord('request', { res: 'bind_course_region' });
         req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
             key: 'course_id',
             val: courseid,
@@ -130,7 +130,7 @@ export default Route.extend({
         later(this, function () {
             this.scenarioInfo(ids.courseid, projectController)
             this.productInfo(ids.courseid, projectController)
-            // this.areaInfo(ids.courseid, projectController)
+            this.areaInfo(ids.courseid, projectController)
         }, 100)
 
     }
