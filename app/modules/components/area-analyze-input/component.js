@@ -6,5 +6,8 @@ export default Component.extend({
 		toggle() {
 			this.toggleProperty('collapsed')
 		},
+		keyUp() {
+			this.sendAction('saveToLocalStorage');
+		}
 	}
 });

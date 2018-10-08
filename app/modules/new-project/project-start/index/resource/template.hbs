@@ -1,7 +1,7 @@
 <div local-class="resource-container">
 	<div class="next-step">
 		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
-		{{#bs-button class="btn-next"}}
+		{{#bs-button class="btn-next" }}
 			下一步
 		{{/bs-button}}
 	</div>
@@ -57,17 +57,20 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>区域A <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
+							{{#each newRegionData as |region index|}}
+								<tr>
+									<td>{{region.name}}<span class="glyphicon glyphicon-list-alt"></span></td>
+									<td>{{index}} </td>
+									<td>652,000 </td>
+									<td>{{region.forecast}}</td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.covisit dir="rtl"}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.nationMeeting dir="rtl"}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.cityMeeting dir="rtl"}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.departmentMeeting dir="rtl"}} </td>
+								</tr>
+							{{/each}}
+
+							{{!-- <tr>
 								<td>区域B <span class="glyphicon glyphicon-list-alt"></span></td>
 								<td>1 </td>
 								<td>652,000 </td>
@@ -106,7 +109,7 @@
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
 								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
+							</tr> --}}
 						</tbody>
 					</table>
 				</div>

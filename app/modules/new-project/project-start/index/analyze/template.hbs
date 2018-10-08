@@ -1,168 +1,34 @@
 <div local-class="analyze-container">
 	<div class="next-step">
-		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
-		{{#bs-button class="btn-next"}}
+		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
 			下一步
 		{{/bs-button}}
 	</div>
 	<div local-class="analyze-section">
 		{{!-- <div class="row"> --}}
 			{{!-- <div class="col-md-12 col-lg-12 col-sm-12"> --}}
-				{{area-base-info-table}}
+				{{area-base-info-table }}
 			{{!-- </div> --}}
 		{{!-- </div> --}}
 	</div>
-	{{area-analyze-input }}
-	{{area-analyze-input }}
-	{{area-analyze-input }}
-	{{area-analyze-input }}
-	{{area-analyze-input }}
-
-	{{!-- <div local-class="analyze-section">
-		<div class="row">
-			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-section">
-					区域A名称
-					<div local-class="btn-toggle">
-						<span class="glyphicon glyphicon-trash"></span>
-						{{#if collapsed}}
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}}
-							<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}}
-					</div>
-				</p>
-				{{#bs-collapse local-class="content-container" collapsed=false}}
-					{{textarea rows=10 placeholder="hint" value = "" maxlength=300 autofocus=true}}
-				{{/bs-collapse}}
-			</div>
-		</div>
-	</div> --}}
-
-	{{!-- <div local-class="analyze-section">
-		<div class="row">
-			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-section">
-					区域B名称
-					<div local-class="btn-toggle">
-						<span class="glyphicon glyphicon-trash"></span>
-						{{#if collapsed}}
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}}
-							<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}}
-					</div>
-				</p>
-				{{#bs-collapse local-class="content-container" collapsed=false}}
-					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
-				{{/bs-collapse}}
-			</div>
-		</div>
-	</div> --}}
-
-	{{!-- <div local-class="analyze-section">
-		<div class="row">
-			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-section">
-					区域B名称
-					<div local-class="btn-toggle">
-						<span class="glyphicon glyphicon-trash"></span>
-						{{#if collapsed}}
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}}
-							<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}}
-					</div>
-				</p>
-				{{#bs-collapse local-class="content-container" collapsed=false}}
-					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
-				{{/bs-collapse}}
-			</div>
-		</div>
-	</div> --}}
-
-	{{!-- <div local-class="analyze-section">
-		<div class="row">
-			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-section">
-					区域B名称
-					<div local-class="btn-toggle">
-						<span class="glyphicon glyphicon-trash"></span>
-						{{#if collapsed}}
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}}
-							<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}}
-					</div>
-				</p>
-				{{#bs-collapse local-class="content-container" collapsed=false}}
-					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
-				{{/bs-collapse}}
-			</div>
-		</div>
-	</div> --}}
-
-	{{!-- <div local-class="analyze-section">
-		<div class="row">
-			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-section">
-					区域B名称
-					<div local-class="btn-toggle">
-						<span class="glyphicon glyphicon-trash"></span>
-						{{#if collapsed}}
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}}
-							<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}}
-					</div>
-				</p>
-				{{#bs-collapse local-class="content-container" collapsed=false}}
-					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
-				{{/bs-collapse}}
-			</div>
-		</div>
-	</div> --}}
-
-	{{!-- <div local-class="analyze-section">
-		<div class="row">
-			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-section">
-					区域B名称
-					<div local-class="btn-toggle">
-						<span class="glyphicon glyphicon-trash"></span>
-						{{#if collapsed}}
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}}
-							<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}}
-					</div>
-				</p>
-				{{#bs-collapse local-class="content-container" collapsed=false}}
-					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
-				{{/bs-collapse}}
-			</div>
-		</div>
-	</div> --}}
-
-	{{!-- <div local-class="analyze-section">
-		<div class="row">
-			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-section">
-					区域B名称
-					<div local-class="btn-toggle">
-						<span class="glyphicon glyphicon-trash"></span>
-						{{#if collapsed}}
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
-						{{else}}
-							<span class="glyphicon glyphicon-triangle-top"></span>
-						{{/if}}
-					</div>
-				</p>
-				{{#bs-collapse local-class="content-container" collapsed=false}}
-					{{textarea rows=10 cols=150 placeholder="hint" value = "" maxlength=300 autofocus=true}}
-				{{/bs-collapse}}
-			</div>
-		</div>
-	</div> --}}
-
+	{{#each model as |region|}}
+		{{area-analyze-input data=region keyUp=(action 'saveToLocalStorage')}}
+	{{/each}}
+	{{!-- {{area-analyze-input }} --}}
 </div>
+{{#bs-modal open=notesEmpty onHidden=(action (mut notesEmpty) false) as |modal|}}
+  {{#modal.header}}
+    <h4 class="modal-title">
+      <span></span>提示
+      {{!-- <div class="badge">2</div> --}}
+    </h4>
+  {{/modal.header}}
+  {{#modal.body}}
+	<p>请填写完成 {{emptyNotesRegion}} 的内容！</p>
+  {{/modal.body}}
+  {{#modal.footer}}
+    {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
+    {{!-- {{#bs-button type="danger"}}Delete{{/bs-button}} --}}
+    {{!-- {{#bs-button type="success" onClick=(action modal.submit)}}继续填写{{/bs-button}} --}}
+  {{/modal.footer}}
+{{/bs-modal}}

@@ -1,7 +1,7 @@
 <div local-class="objective-container">
 	<div class="next-step">
 		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
-		{{#bs-button class="btn-next"}}
+		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
 			下一步
 		{{/bs-button}}
 	</div>
@@ -9,11 +9,10 @@
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
 				<select local-class="choose-area" onchange= {{action 'changeArea' value="target.value"}}>
-				    {{#each totalArea as |area|}}
-				        <option  value={{area.value}}>{{area.name}}</option>
+				    {{#each regionData as |area|}}
+				        <option  value={{area.id}}>{{area.name}}</option>
 				    {{/each}}
-				</select>
-				{{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true changeArea=(action 'changeArea')}}
+				</select> {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true changeArea=(action 'changeArea')}}
 			</div>
 		</div>
 	</div>
@@ -29,24 +28,9 @@
 					</div>
 					<div class="col-md-2 col-lg-2 col-sm-2">
 						<p>您的预测指标</p>
-						<p>3,000,000</p>
+						<p>{{totalForecast}}</p>
 					</div>
-					{{!-- <div class="col-md-2 col-lg-2 col-sm-2">
-                        <p>季度</p>
-                        <p>3,000,000</p>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-sm-2">
-                        <p>18/01</p>
-                        <p>1,000,000</p>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-sm-2">
-                        <p>18/01</p>
-                        <p>1,500,000</p>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-sm-2">
-                        <p>18/01</p>
-                        <p>500,000</p>
-                    </div> --}}
+
 				</div>
 
 				{{!-- {{#bs-button-group value=whichMonth type="radio" local-class="btn-month-container" class="container" onChange=(action (mut whichMonth)) as |bg|}}
@@ -67,7 +51,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							{{#each newRegionData as |region index|}}
+								<tr>
+									<td>{{region.name}} <span class="glyphicon glyphicon-list-alt" {{action 'openTips' region}}></span></td>
+									<td>{{index}}</td>
+									<td>652,000 </td>
+									<td>{{input type="text" value=region.forecast dir="rtl"}} </td>
+								</tr>
+							{{/each}}
+							{{!-- <tr>
 								<td>区域A <span class="glyphicon glyphicon-list-alt" {{action 'openTips'}}></span></td>
 								<td>1 </td>
 								<td>652,000 </td>
@@ -96,7 +88,7 @@
 								<td>5 </td>
 								<td>652,000 </td>
 								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
+							</tr> --}}
 						</tbody>
 					</table>
 				</div>
@@ -203,10 +195,13 @@
 {{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
 	{{#modal.header}}
 		<h4 class="modal-title">
-            区域
+            <span></span>提示
         </h4>
 	{{/modal.header}}
 	{{#modal.body}}
 		{{content-bound-helper content}}
 	{{/modal.body}}
+	{{#modal.footer}}
+	  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
+	{{/modal.footer}}
 {{/bs-modal}}

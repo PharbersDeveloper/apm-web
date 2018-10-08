@@ -7160,9 +7160,9 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
 
-pharbers-route-addon@*:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/pharbers-route-addon/-/pharbers-route-addon-1.0.1.tgz#63ba1dfe6f9957e4d8f18a56a7c7b14c58c9a624"
+pharbers-route-addon@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/pharbers-route-addon/-/pharbers-route-addon-1.0.2.tgz#929c7fc6abe3b1ee7d3488e83442c8a51a1653f5"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-cookies "^0.3.1"
