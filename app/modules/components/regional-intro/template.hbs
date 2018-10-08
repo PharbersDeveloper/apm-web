@@ -2,19 +2,29 @@
 	<div local-class="content">
 		<div local-class="top">
 			<div local-class="head">
-				<p local-class="title">{{data.areaInfo.title}}</p>
-				<img src="" alt="">
+				<p local-class="title">{{data.name}}</p>
+				<img src={{data.image}} alt="">
 			</div>
 			<div local-class="intro">
-				<p>{{data.areaInfo.des}}</p>
+				<p>{{data.describe}}</p>
 			</div>
 		</div>
 		<div local-class="bottom">
-			{{#each data.areaInfo.cards as |card|}}
-				<div local-class="card">
-					<p local-class="headline">{{card.headline}}</p>
-					<p local-class="num">{{card.num}}</p>
-				</div>
+			{{#each regionCards as |card|}}
+                {{#if (eq data.id card.region_id)}}
+                    <div local-class="card">
+                        <p local-class="headline">市场规模</p>
+                        <p local-class="num">{{card.sales.potential}}</p>
+                    </div>
+                    <div local-class="card">
+                        <p local-class="headline">上月销售额</p>
+                        <p local-class="num">{{card.sales.sales}}</p>
+                    </div>
+                    <div local-class="card">
+                        <p local-class="headline">上月达成率%</p>
+                        <p local-class="num">{{card.sales.achieve_rate}}</p>
+                    </div>
+                {{/if}}
 			{{/each}}
 		</div>
 	</div>
@@ -23,15 +33,15 @@
 		{{#bs-tab as |tab|}}
 			{{#tab.pane title="代表与执行" }}
 
-				{{radar-section-effectiveness gradient="glowarea" radarSectionData=radarData}}
+				{{!-- {{radar-section-effectiveness gradient="glowarea" radarSectionData=radarData}} --}}
 
 				<div local-class="represent">
-					{{charge-represent data=data.represent}}
+					{{!-- {{charge-represent data=data.represent}} --}}
 				</div>
 				<div local-class="action">
 					<p local-class="title-action">行动KPI</p>
 					<div class="table-responsive" local-class="table-action">
-						<table class="table table-striped" local-class="table-sales">
+						{{!-- <table class="table table-striped" local-class="table-sales">
 							<thead>
 								<tr>
 									<td> 年/月</td>
@@ -72,16 +82,15 @@
 									<td>6</td>
 								</tr>
 							</tbody>
-						</table>
+						</table> --}}
 					</div>
-
 				</div>
 				<div local-class="report">
 					{{represent-report data=data.report}}
 				</div>
 			{{/tab.pane}}
 			{{#tab.pane title="區域销售情況" }}
-				<div local-class="analyze">
+				{{!-- <div local-class="analyze">
 					{{d3-bar-line chartId="area-sales-chart" laterThreeChangeBg=false}}
 
 					<div local-class="table-content">
@@ -138,11 +147,8 @@
 							</tbody>
 						</table>
 					</div>
-
-				</div>
+				</div> --}}
 			{{/tab.pane}}
 		{{/bs-tab}}
 	</div>
 </div>
-
-{{yield}}

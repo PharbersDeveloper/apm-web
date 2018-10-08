@@ -5,6 +5,6 @@ export default Route.extend({
         /**
          * 查询课程\场景 卡片
          */
-        this.store.queryMultipleObject('/api/v1/courseLst/0', 'course', {})
+        return this.store.queryMultipleObject('/api/v1/courseLst/0', 'course', {})
     }
 });
