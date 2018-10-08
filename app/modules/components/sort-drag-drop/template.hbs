@@ -4,7 +4,7 @@
         <div local-class="areaCard">
             {{#draggable-object content=item }}
                 <span>{{item.name}}</span>
-                <span local-class="hintModal" class="glyphicon glyphicon-list-alt" {{action 'openTips'}}></span>
+                <span local-class="hintModal" class="glyphicon glyphicon-list-alt" {{action 'openTips' item}}></span>
             {{/draggable-object}}
         </div>
     {{/each}}
@@ -25,10 +25,10 @@
 {{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
     {{#modal.header}}
         <h4 class="modal-title">
-            区域
+            {{currentRegion.name}}
         </h4>
     {{/modal.header}}
     {{#modal.body}}
-        {{content-bound-helper content}}
+        {{content-bound-helper currentRegion.notes}}
     {{/modal.body}}
 {{/bs-modal}}

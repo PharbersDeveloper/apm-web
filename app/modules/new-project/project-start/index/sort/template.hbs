@@ -1,23 +1,46 @@
 <div local-class="sort-container">
-    <div class="next-step">
+	<div class="next-step">
 		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
-		{{#bs-button class="btn-next"}}
+		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
 			下一步
 		{{/bs-button}}
 	</div>
-    <div local-class="sort-conent">
-        <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12">
-                <p local-class="title-sort">重要度排序<span> -根据分析，寻找增长点，并已即将发生增长的可能性进行排序。</span></p>
-                <div class="row" local-class="tips-sort">
-                    <div class="col-md-6 col-lg-6 col-sm-6"></div>
-                    <div class="col-md-6 col-lg-6 col-sm-6">
-                        <p class="text-center">排序-请多动区域卡片进行排序</p>
-                    </div>
-                </div>
-                {{sort-drag-drop areaArray=areaArray}}
-
-            </div>
-        </div>
-    </div>
+	<div local-class="sort-conent">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				<p local-class="title-sort">重要度排序<span> -根据分析，寻找增长点，并已即将发生增长的可能性进行排序。</span></p>
+				<div class="row" local-class="tips-sort">
+					<div class="col-md-6 col-lg-6 col-sm-6"></div>
+					<div class="col-md-6 col-lg-6 col-sm-6">
+						<p class="text-center">排序-请多动区域卡片进行排序</p>
+					</div>
+				</div>
+				{{sort-drag-drop areaArray=model}}
+			</div>
+		</div>
+	</div>
 </div>
+
+{{#bs-modal open=resortModal onSubmit=(action 'toObjective') onHidden=(action (mut resortModal) false) as |modal|}}
+	{{#modal.header}}
+		<h4 class="modal-title">
+      <span></span>提示
+      {{!-- <div class="badge">2</div> --}}
+    </h4>
+	{{/modal.header}}
+	{{#modal.body}}
+		<p>{{resortMOdalContent}}</p>
+	{{/modal.body}}
+	{{#modal.footer}}
+		{{!-- {{#bs-button onClick=(action modal.close)}}取消{{/bs-button}} --}}
+		{{!-- {{#bs-button type="danger"}}Delete{{/bs-button}} --}}
+		{{#if isAllResort}}
+			{{#bs-button onClick=(action modal.close)}}取消{{/bs-button}}
+			{{#bs-button type="success" onClick=(action modal.submit)}}下一步{{/bs-button}}
+		{{else}}
+			{{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
+
+		{{/if}}
+		{{!-- {{#bs-button type="success" onClick=(action modal.submit)}}下一步{{/bs-button}} --}}
+	{{/modal.footer}}
+{{/bs-modal}}
