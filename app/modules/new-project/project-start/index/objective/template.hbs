@@ -54,7 +54,7 @@
 							{{#each newRegionData as |region index|}}
 								<tr>
 									<td>{{region.name}} <span class="glyphicon glyphicon-list-alt" {{action 'openTips' region}}></span></td>
-									<td>{{index}}</td>
+									<td>{{index-to-normal index}}</td>
 									<td>652,000 </td>
 									<td>{{input type="text" value=region.forecast dir="rtl"}} </td>
 								</tr>

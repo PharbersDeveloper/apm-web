@@ -6,5 +6,11 @@ export default Component.extend({
 		toggle() {
 			this.toggleProperty('collapsed')
 		},
+		openTips(data) {
+			this.set('tipModal', true);
+			this.set('tipsTitle', data.name);
+			this.set('content', data.notes);
+
+		}
 	}
 });

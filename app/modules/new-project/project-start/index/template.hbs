@@ -1,17 +1,35 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-12 col-lg-12 col-sm-12">
-            <div local-class='navigation'>
-                {{#bs-nav type="tabs" justified=true as |nav|}}
-                    {{#nav.item}}{{#nav.link-to "new-project.project-start.index.analyze"}}总体分析{{/nav.link-to}}{{/nav.item}}
-                    {{#nav.item}}{{#nav.link-to "new-project.project-start.index.sort"}}排序{{/nav.link-to}}{{/nav.item}}
-                    {{#nav.item}}{{#nav.link-to "new-project.project-start.index.objective"}}目标设定{{/nav.link-to}}{{/nav.item}}
-                    {{#nav.item}}{{#nav.link-to "new-project.project-start.index.resource"}}资源分配{{/nav.link-to}}{{/nav.item}}
-                    {{#nav.item}}{{#nav.link-to "new-project.project-start.index.action-plan"}}行动计划{{/nav.link-to}}{{/nav.item}}
-                    {{#nav.item}}{{#nav.link-to "new-project.project-start.index.upshot"}}结果{{/nav.link-to}}{{/nav.item}}
-                {{/bs-nav}}
-            </div>
-        </div>
-    </div>
-    {{outlet}}
+	<div class="row">
+		<div class="col-md-12 col-lg-12 col-sm-12">
+			<div local-class='navigation'>
+				{{#bs-nav type="tabs" justified=true as |nav|}}
+					{{#nav.item}}
+						{{#nav.link-to "new-project.project-start.index.analyze" disabled=true}}总体分析{{/nav.link-to}}
+                        {{!-- <span>总体分析</span> --}}
+					{{/nav.item}}
+					{{#nav.item}}
+						{{#nav.link-to "new-project.project-start.index.sort" disabled=true}}排序{{/nav.link-to}}
+                        {{!-- <span>排序</span> --}}
+					{{/nav.item}}
+					{{#nav.item}}
+						{{#nav.link-to "new-project.project-start.index.objective" disabled=true}}目标设定{{/nav.link-to}}
+                        {{!-- <span>目标设定</span> --}}
+					{{/nav.item}}
+					{{#nav.item}}
+						{{#nav.link-to "new-project.project-start.index.resource" disabled=true}}资源分配{{/nav.link-to}}
+                        {{!-- <span>资源分配</span> --}}
+					{{/nav.item}}
+					{{#nav.item}}
+						{{#nav.link-to "new-project.project-start.index.action-plan" disabled=true}}行动计划{{/nav.link-to}}
+                        {{!-- <span>行动计划</span> --}}
+					{{/nav.item}}
+					{{#nav.item}}
+						{{#nav.link-to "new-project.project-start.index.upshot" disabled=true}}结果{{/nav.link-to}}
+                        {{!-- <span>结果</span> --}}
+					{{/nav.item}}
+				{{/bs-nav}}
+			</div>
+		</div>
+	</div>
+	{{outlet}}
 </div>

@@ -8,6 +8,8 @@ export default Controller.extend({
 			let isAllResort = resortRegion.every((item) => {
 				return item.selected !== null
 			});
+			console.log('in nextStep in sort route');
+			console.log(resortRegion);
 			// console.log(isAllResort);
 			this.set('isAllResort', isAllResort);
 			if (isAllResort) {

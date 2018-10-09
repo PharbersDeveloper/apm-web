@@ -14,9 +14,42 @@ export default Component.extend({
 	areaArray: [],
 	init() {
 		this._super(...arguments);
+		this.set('existSort', JSON.parse(localStorage.getItem('regionResort')));
 	},
-	computeLevelArray: computed('levelArray.[]', function() {
-		return this.get('levelArray')
+	computeLevelArray: computed('levelArray.[]', 'existSort.[]', function() {
+		// console.log(this.get('existSort'));
+		// console.log('in the component');
+		let existSort = this.get('existSort');
+		let areaArray = this.get('areaArray');
+		if (existSort) {
+			this.get('levelArray').forEach((ele) => {
+				existSort.forEach((sort) => {
+					if (sort.selected !== null) {
+						if (ele.get('id') === sort.id) {
+							ele.set('selected', sort.selected);
+							areaArray.forEach((item) => {
+								// console.log(item);
+								// console.log(sort.selected.data.id)
+								if (item.data.id == sort.selected.data.id) {
+									this.get('areaArray').removeObject(item);
+								}
+							})
+
+						}
+					}
+				})
+			});
+			// return this.
+		}
+		return this.get('levelArray');
+	}),
+	computeareaArray: computed('areaArray.[]', function() {
+
+		let areaArray = this.get('areaArray');
+		let levelArray = this.get('computeLevelArray')
+
+
+		return areaArray;
 	}),
 	actions: {
 		dragResult(obj, ops) {
@@ -28,7 +61,6 @@ export default Component.extend({
 					}
 				}
 			});
-			// console.log(this.get('levelArray'))
 			localStorage.setItem('regionResort', JSON.stringify(this.get('levelArray')));
 		},
 		remove(targetId) {

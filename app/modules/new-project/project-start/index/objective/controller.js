@@ -4,14 +4,20 @@ import { computed } from '@ember/object';
 export default Controller.extend({
 	init() {
 		this._super(...arguments);
-		// console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		// this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
 		this.set('regionData', this.store.peekAll('region'));
 	},
 
 	totalForecast: computed('regionData.@each.forecast', function() {
 		let total = 0;
-		let region = this.store.peekAll('region')
+		let region = this.store.peekAll('region');
+		let singleRegionJsonApi = null;
+		let regionLocalStorage = region.map((item) => {
+			singleRegionJsonApi = '';
+			singleRegionJsonApi = this.store.object2JsonApi('region', item, false);
+			return singleRegionJsonApi
+		});
+		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 		region.forEach((item) => {
 			total += Number(item.forecast) || 0;
 		});
@@ -23,7 +29,7 @@ export default Controller.extend({
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
 			region.forEach((ele) => {
-				if (item.selected.id === ele.id) {
+				if (item.selected.data.id === ele.id) {
 					singleRegion = ele;
 				}
 			})
