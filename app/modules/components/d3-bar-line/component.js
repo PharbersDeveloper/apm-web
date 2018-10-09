@@ -7,41 +7,42 @@ export default Component.extend({
 	chartId: '',
 	backgroundColor: '#FFF',
 	laterThreeChangeBg: false,
-	title: '',
+    title: '',
+    dataset: [],
 
 	didReceiveAttrs() {
 		if (this.get('chartId') === '') {
 			throw 'chartId is null or undefinde, please set value';
 		} else {
-			run.scheduleOnce('render', this, this.drawChart);
+            if(this.dataset) run.scheduleOnce('render', this, this.drawChart);
 		}
 	},
 	drawChart() {
 		d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
-		let dataset = [
-			{ key: 'W1', value: 32, value2: 16 },
-			{ key: 'W2', value: 26, value2: 20 },
-			{ key: 'W3', value: 45, value2: 40 },
-			{ key: 'W4', value: 38, value2: 35 },
-			{ key: 'W5', value: 53, value2: 24 },
-			{ key: 'W6', value: 48, value2: 18 },
-			{ key: 'W7', value: 42, value2: 12 },
-			{ key: 'W8', value: 34, value2: 15 },
-			{ key: 'W9', value: 37, value2: 23 },
-			{ key: 'W10', value: 36, value2: 24 },
-			{ key: 'W11', value: 34, value2: 12 },
-			{ key: 'W12', value: 32, value2: 18 },
-			{ key: 'W13', value: 20, value2: 26 },
-			{ key: 'W14', value: 19, value2: 36 },
-			{ key: 'W15', value: 28, value2: 26 },
-		];
+		// let dataset = [
+		// 	{ key: 'W1', value: 32, value2: 16 },
+		// 	{ key: 'W2', value: 26, value2: 20 },
+		// 	{ key: 'W3', value: 45, value2: 40 },
+		// 	{ key: 'W4', value: 38, value2: 35 },
+		// 	{ key: 'W5', value: 53, value2: 24 },
+		// 	{ key: 'W6', value: 48, value2: 18 },
+		// 	{ key: 'W7', value: 42, value2: 12 },
+		// 	{ key: 'W8', value: 34, value2: 15 },
+		// 	{ key: 'W9', value: 37, value2: 23 },
+		// 	{ key: 'W10', value: 36, value2: 24 },
+		// 	{ key: 'W11', value: 34, value2: 12 },
+		// 	{ key: 'W12', value: 32, value2: 18 },
+		// 	{ key: 'W13', value: 20, value2: 26 },
+		// 	{ key: 'W14', value: 19, value2: 36 },
+		// 	{ key: 'W15', value: 28, value2: 26 },
+		// ];
 
 		let width = 900;
 		let height = 340;
 		let margin = { top: 50, right: 20, bottom: 30, left: 30 };
 
-		let xDatas = dataset.map(elem => elem.key);
-		let values = dataset.map(elem => elem.value);
+		let xDatas = this.dataset.map(elem => elem.key);
+		let values = this.dataset.map(elem => elem.value);
 
 		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 			yScale = d3.scaleLinear().rangeRound([height, 0]);
@@ -75,7 +76,7 @@ export default Component.extend({
 			.call(d3.axisLeft(yScale).ticks(10));
 
 		let chart = g.selectAll('bar')
-			.data(dataset)
+			.data(this.dataset)
 			.enter().append('g');
 
 		/**
@@ -144,7 +145,7 @@ export default Component.extend({
 
 		// Line
 		g.append("path")
-			.datum(dataset)
+			.datum(this.dataset)
 			.attr("fill", "none")
 			.attr("stroke", "#FF8190")
 			.attr("stroke-linejoin", "round")

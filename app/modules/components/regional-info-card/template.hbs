@@ -76,26 +76,8 @@
 			{{/tab.pane}}
             {{#each data.info as |item|}}
                 {{#tab.pane title=item.name }}
-			    	{{regional-intro data=item regionCards=data.cards}}
+			    	{{regional-intro data=item regionCards=data.cards radarData=data.radarData represents=data.represents kpi=data.kpi reports=data.reports salesBar=data.salesBar}}
 			    {{/tab.pane}} 
             {{/each}}
-			{{!-- {{#tab.pane title="这是区域区域区域A" }}
-				{{regional-intro data=data}}
-			{{/tab.pane}}
-			{{#tab.pane title="区域B" }}
-				{{regional-intro data=data}}
-			{{/tab.pane}}
-			{{#tab.pane title="区域C" }}
-				{{regional-intro data=data}}
-			{{/tab.pane}}
-			{{#tab.pane title="区域D" }}
-				{{regional-intro data=data}}
-			{{/tab.pane}}
-			{{#tab.pane title="区域E" }}
-				{{regional-intro data=data}}
-			{{/tab.pane}}
-			{{#tab.pane title="区域F" }}
-				{{regional-intro data=data}}
-			{{/tab.pane}} --}}
 		{{/bs-tab}}
 </div>
