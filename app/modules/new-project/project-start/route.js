@@ -20,7 +20,7 @@ export default Route.extend({
         }
         controller.set('ScenarioModel', data);
     },
-    productInfo(courseid, controller) {
+    productInfo(ids, controller) {
 
         function _conditions(request, anyConditions) {
             anyConditions.forEach((elem, index) => {
@@ -40,7 +40,7 @@ export default Route.extend({
             })
         });
 
-        let eqValues = [{ type: 'eqcond', key: 'course_id', val: courseid }]
+        let eqValues = [{ type: 'eqcond', key: 'course_id', val: ids.courseid }]
 
         let conditions = _conditions(req, eqValues);
         let medicines = [];
@@ -49,7 +49,7 @@ export default Route.extend({
         /**
          * 备注：Promise的链式调用，未做catch处理
          */
-        this.store.queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
+        return this.store.queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
             .then(data => { // 处理公司产品
                 data.forEach(elem => {
                     elem.set('compete', false)
@@ -68,7 +68,7 @@ export default Route.extend({
                         })
                     });
                     let eqValues = [
-                        { type: 'eqcond', key: 'course_id', val: courseid },
+                        { type: 'eqcond', key: 'course_id', val: ids.courseid },
                         { type: 'eqcond', key: 'goods_id', val: reval.id },
                     ]
                     let conditions = _conditions(req, eqValues);
@@ -94,7 +94,7 @@ export default Route.extend({
                 });
                 let promiseArray = data.map(elem => {
                     let eqValues = [
-                        { type: 'eqcond', key: 'course_id', val: courseid },
+                        { type: 'eqcond', key: 'course_id', val: ids.courseid },
                         { type: 'eqcond', key: 'goods_id', val: elem.id },
                         { type: 'gtecond', key: 'ym', val: '17-01' },
                         { type: 'ltecond', key: 'ym', val: '17-12' },
@@ -133,6 +133,8 @@ export default Route.extend({
                 let medicineCompete = this.groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
                 d3Data(medicineCompany)
                 d3Data(medicineCompete)
+                this.areaInfo(ids.courseid, controller)
+                return ids
             })
             .finally( () => {
                 let productInfo = {
@@ -140,8 +142,17 @@ export default Route.extend({
                     lineData
                 }
                 controller.set('ProductModel', productInfo);
-                this.areaInfo(courseid, controller)
             })
+    },
+    // TODO 思路错误，导致这种畸形代码，我先想一下
+    areaBaseInfo(courseid){
+        let req = this.store.createRecord('request', { res: 'bind_course_region' });
+        req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
+            key: 'course_id',
+            val: courseid,
+        }))
+        let conditions = this.store.object2JsonApi('request', req);
+        this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
     },
     areaInfo(courseid, controller) {
         let regionBaseInfo = {}
@@ -342,7 +353,7 @@ export default Route.extend({
                 regionBaseInfo.reports = reports
                 return null
             })
-            .then(() => { // 
+            .then(() => { // 柱状图
                 function d3Data(medicineArrayObject) {
                     return Object.keys(medicineArrayObject).map(key => {
                         return {
@@ -360,6 +371,49 @@ export default Route.extend({
                 let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
                 let medicineByRegion = this.groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
                 regionBaseInfo.salesBar = d3Data(medicineByRegion)
+                return null;
+            })
+            .then(() => {
+                let that = this;
+                function d3Data(medicineArrayObject) {
+                    return Object.keys(medicineArrayObject).map(key => {
+                        return {
+                            name: that.store.peekRecord('region', key).name,
+                            values: medicineArrayObject[key].map(elem => {
+                                return {
+                                    ym: elem.ym,
+                                    value: elem.sales.share,
+                                }
+                            })
+                        }
+                    })
+                }
+                function tableData(arrayObjec) {
+                    return Object.keys(arrayObjec).map(key => {
+                        let potential = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
+                        let potential_contri = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
+                        let sales = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
+                        let sales_contri = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
+                        let contri_index = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
+                        let sales_growth = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
+                        return {
+                            name: that.store.peekRecord('region', key).name,
+                            potential,
+                            potential_contri,
+                            sales,
+                            sales_contri,
+                            contri_index,
+                            sales_growth 
+                        }
+                    })
+                }
+                let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
+                // TODO 这块有疑问 是所有区域还是只有本公司产品？
+                let medicineByRegion = this.groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
+                regionBaseInfo.overall = {
+                    lineData: d3Data(medicineByRegion),
+                    tableData: tableData(medicineByRegion).reverse()
+                }
             })
             .finally(() => {
                 controller.set('AreaModel', regionBaseInfo);
@@ -370,14 +424,9 @@ export default Route.extend({
         let projectController = this.controllerFor('new-project.project-start');
         // 场景介绍
         this.scenarioInfo(ids.courseid, projectController)
-        this.productInfo(ids.courseid, projectController)
         // this.areaInfo(ids.courseid, projectController)
-
-        return {
-            ids,
-            // 'scenario':  this.scenarioInfo(ids.courseid, projectController),
-            // 'product': this.productInfo(ids.courseid, projectController),
-            // 'area': this.areaInfo(ids.courseid, projectController)
-        }
+        this.areaBaseInfo(ids.courseid)
+        
+        return this.productInfo(ids, projectController)
     }
 });
