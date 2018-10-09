@@ -6,8 +6,8 @@ export default Component.extend({
 	classNames: ['multilines'],
 
 	didReceiveAttrs() {
-		this._super(...arguments);
-		run.schedule('render', this, this.drawMultiLineChoose);
+        this._super(...arguments);
+        if (this.get('chooseData')) run.schedule('render', this, this.drawMultiLineChoose);
 	},
 	drawMultiLineChoose() {
 		let localClass = this.get('class');
@@ -36,7 +36,7 @@ export default Component.extend({
 		let circleRadiusHover = 4;
 
 		/* Format Data */
-		let parseDate = d3.timeParse("%Y%m");
+		let parseDate = d3.timeParse("%y-%m");
 		let formatDateIntoYearMonth = d3.timeFormat('%y-%m');
 
 		let data = chooseData.map(function(item) {
