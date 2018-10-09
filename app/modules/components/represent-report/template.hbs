@@ -1,11 +1,11 @@
 <div local-class="content">
     <div local-class="title">
-        <p>{{data.title}}</p>
+        <p>代表业务报告</p>
     </div>
     <div local-class="lists">
-        {{#each data.list as |list|}}
+        {{#each data as |list|}}
             <div local-class="list">
-                <p local-class="headline">{{list.headline}}</p>
+                <p local-class="headline">{{list.title}}</p>
                 <p local-class="des">{{list.des}}</p>
             </div>
         {{/each}}

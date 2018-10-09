@@ -1,29 +1,29 @@
 <div local-class="content">
     <div local-class="title">
-        <p>{{data.title}}</p>
+        <p>负责代表</p>
     </div>
     <div local-class="head">
-        <img src="" alt="">
+        <img src={{data.rep_image}} alt="">
         <div local-class="label">
-            <p local-class="name">{{data.name}}</p>
+            <p local-class="name">{{data.rep_name}}</p>
             <p local-class="feature">{{data.feature}}</p>
             <div local-class="advantage"><span local-class="tit">优&nbsp;&nbsp;&nbsp;势:</span>
-                {{#each data.advantage as |advantage|}}
-                    <span>{{advantage.adv}}</span>
+                {{#each data.advantage_c as |advantage|}}
+                    <span>{{advantage}}</span>
                 {{/each}}
             </div>
             <div local-class="disadvantage"><span local-class="tit">待提高:</span>
-                {{#each data.disadvantage as |disadvantage|}}
-                    <span>{{disadvantage.dis}}</span>
+                {{#each data.weakness_c as |disadvantage|}}
+                    <span>{{disadvantage}}</span>
                 {{/each}}
             </div>
         </div>
     </div>
     <div local-class="point">
-        {{#each data.cards as |card|}}
+        {{#each data.pointCards as |card|}}
             <div local-class="card">
                 <div local-class="headline">
-                    <p>{{card.headline}}</p>
+                    <p>{{card.title}}</p>
                 </div>
                 <div local-class="num">
                     <p>{{card.num}}</p>
