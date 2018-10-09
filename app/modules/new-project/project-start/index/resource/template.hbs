@@ -1,7 +1,6 @@
 <div local-class="resource-container">
 	<div class="next-step">
-		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
-		{{#bs-button class="btn-next" }}
+		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
 			下一步
 		{{/bs-button}}
 	</div>
@@ -59,8 +58,8 @@
 						<tbody>
 							{{#each newRegionData as |region index|}}
 								<tr>
-									<td>{{region.name}}<span class="glyphicon glyphicon-list-alt"></span></td>
-									<td>{{index}} </td>
+									<td>{{region.name}}<span class="glyphicon glyphicon-list-alt" {{action 'openTips' region}}></span></td>
+									<td>{{index-to-normal index}} </td>
 									<td>652,000 </td>
 									<td>{{region.forecast}}</td>
 									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.covisit dir="rtl"}} </td>
@@ -284,3 +283,16 @@
 		</div>
 	</div>
 </div>
+{{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
+	{{#modal.header}}
+		<h4 class="modal-title">
+            <span></span>{{tipsTitle}}
+        </h4>
+	{{/modal.header}}
+	{{#modal.body}}
+		{{content-bound-helper content}}
+	{{/modal.body}}
+	{{#modal.footer}}
+	  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
+	{{/modal.footer}}
+{{/bs-modal}}

@@ -5,6 +5,7 @@ import {
 } from '@ember/object';
 
 export default Controller.extend({
+	collapsed: false,
 	init() {
 		this._super(...arguments);
 		this.readyChoose = [{
@@ -87,15 +88,11 @@ export default Controller.extend({
 				color: '#762712'
 			}
 		];
-		this.totalArea = [
-			{ name: "区域A", value: 'A' },
-			{ name: "区域B", value: 'B' },
-			{ name: "区域C", value: 'C' },
-			{ name: "区域D", value: 'D' },
-			{ name: "区域E", value: 'E' },
-			{ name: "区域F", value: 'F' },
-			{ name: "区域G", value: 'G' },
-		]
+
+		this.set('region', this.store.peekAll('region'));
+
+		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
+
 	},
 	planPaire: computed('readyChoose.@each.isChecked', function() {
 		let chooses = this.get('readyChoose');
@@ -112,43 +109,70 @@ export default Controller.extend({
 		};
 		return dealPlan;
 	}),
-	collapsed: false,
+	resortRegionModel: computed('regionResort', function() {
+		let regionResort = this.get('regionResort');
+		let region = this.store.peekAll('region');
+		let newRegion = regionResort.map((item) => {
+			let singleRegion = null;
+			region.forEach((ele) => {
+				if (item.selected.data.id === ele.id) {
+					singleRegion = ele;
+				}
+			})
+			return singleRegion
+		});
+		return newRegion;
+	}),
 	actions: {
 		toggle() {
 			this.toggleProperty('collapsed')
 		},
-		changeArea(value) {
-			let BAreaData = [{
-					name: '区域B',
-					axes: [
-						{ axis: '产品知识', value: 32 },
-						{ axis: '目标拜访频次', value: 33 },
-						{ axis: '拜访次数', value: 50 },
-						{ axis: '实际工作天数', value: 46 },
-						{ axis: '工作积极性', value: 55 },
-						{ axis: '区域管理能力', value: 40 },
-						{ axis: '销售能力', value: 32 }
-
-					],
-					color: '#ff6600'
-				},
-				{
-					name: '区域平均',
-					axes: [
-						{ axis: '产品知识', value: 50 },
-						{ axis: '目标拜访频次', value: 45 },
-						{ axis: '拜访次数', value: 20 },
-						{ axis: '实际工作天数', value: 20 },
-						{ axis: '工作积极性', value: 25 },
-						{ axis: '区域管理能力', value: 23 },
-						{ axis: '销售能力', value: 44 }
-
-					],
-					color: '#762712'
-				}
-			];
-			if (value === 'B') {
-				this.set('radarData', BAreaData);
+		changeArea(id) {
+			console.log(id)
+			// let BAreaData = [{
+			// 		name: '区域B',
+			// 		axes: [
+			// 			{ axis: '产品知识', value: 32 },
+			// 			{ axis: '目标拜访频次', value: 33 },
+			// 			{ axis: '拜访次数', value: 50 },
+			// 			{ axis: '实际工作天数', value: 46 },
+			// 			{ axis: '工作积极性', value: 55 },
+			// 			{ axis: '区域管理能力', value: 40 },
+			// 			{ axis: '销售能力', value: 32 }
+			//
+			// 		],
+			// 		color: '#ff6600'
+			// 	},
+			// 	{
+			// 		name: '区域平均',
+			// 		axes: [
+			// 			{ axis: '产品知识', value: 50 },
+			// 			{ axis: '目标拜访频次', value: 45 },
+			// 			{ axis: '拜访次数', value: 20 },
+			// 			{ axis: '实际工作天数', value: 20 },
+			// 			{ axis: '工作积极性', value: 25 },
+			// 			{ axis: '区域管理能力', value: 23 },
+			// 			{ axis: '销售能力', value: 44 }
+			//
+			// 		],
+			// 		color: '#762712'
+			// 	}
+			// ];
+			// if (value === 'B') {
+			// 	this.set('radarData', BAreaData);
+			// }
+		},
+		nextStep() {
+			let region = this.get('region');
+			let isActionplanEmpty = region.every((item) => {
+				return item.actionplan
+			});
+			if (isActionplanEmpty) {
+				this.transitionToRoute('new-project.project-start.index.upshot')
+			} else {
+				this.set('tipModal', true);
+				this.set('tipsTitle', '提示');
+				this.set('content', '选择全部的行动计划，并保证最多两项！')
 			}
 		}
 	}

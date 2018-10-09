@@ -9,5 +9,6 @@ export default DS.Model.extend({
 	covisit: DS.attr('string', { defaultValue: '' }),
 	nationMeeting: DS.attr('string', { defaultValue: '' }),
 	cityMeeting: DS.attr('string', { defaultValue: '' }),
-	departmentMeeting: DS.attr('string', { defaultValue: '' })
+	departmentMeeting: DS.attr('string', { defaultValue: '' }),
+	actionplan: DS.attr('string', { defaultValue: '' })
 });

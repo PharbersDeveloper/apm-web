@@ -2,7 +2,7 @@
 <div local-class="action-plan-section">
 	<div class="row">
 		<div class="col-md-12 col-lg-12 col-sm-12">
-			<p local-class="title-section"><span>区域A名称<span class="glyphicon glyphicon-list-alt"></span></span>
+			<p local-class="title-section"><span {{action 'openTips' data}}>{{data.name}}<span class="glyphicon glyphicon-list-alt" ></span></span>
 				{{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
 					{{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
 					{{else}}<span class="glyphicon glyphicon-triangle-top"></span>
@@ -11,10 +11,23 @@
 			</p>
 
 			{{#bs-collapse local-class="content-container" collapsed=collapsed}}
-				{{area-order-rep}}
-				{{area-table}}
-                {{area-choose-plan}}
+				{{area-order-rep data=data index=index}}
+				{{area-table data=data}}
+                {{area-choose-plan data=data}}
 			{{/bs-collapse}}
 		</div>
 	</div>
 </div>
+{{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
+	{{#modal.header}}
+		<h4 class="modal-title">
+            <span></span>{{tipsTitle}}
+        </h4>
+	{{/modal.header}}
+	{{#modal.body}}
+		{{content-bound-helper content}}
+	{{/modal.body}}
+	{{#modal.footer}}
+	  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
+	{{/modal.footer}}
+{{/bs-modal}}

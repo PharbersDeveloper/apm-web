@@ -1,9 +1,9 @@
 {{!-- {{yield}} --}}
 <div class="col-md-6 col-lg-6 col-sm-6">
-    {{#each areaArray as |item|}}
+    {{#each computeareaArray as |item|}}
         <div local-class="areaCard">
             {{#draggable-object content=item }}
-                <span>{{item.name}}</span>
+                <span>{{item.data.attributes.name}}</span>
                 <span local-class="hintModal" class="glyphicon glyphicon-list-alt" {{action 'openTips' item}}></span>
             {{/draggable-object}}
         </div>
@@ -13,7 +13,7 @@
     {{#each computeLevelArray as |item|}}
         <div local-class="sortCard">
             {{#draggable-object-target leveid=item.id amount="1" action=(action 'dragResult') overrideClass='dropTarget'}}
-                <div class="col-md-10 col-lg-10 col-sm-10">{{item.name}} {{item.selected.name}}</div>
+                <div class="col-md-10 col-lg-10 col-sm-10">{{item.name}} {{item.selected.data.attributes.name}}</div>
                 <div class="col-md-2 col-lg-2 col-sm-2 text-right" local-class="remove" {{action "remove" item.id}}>
                     <span>&times;</span>
                 </div>
@@ -25,10 +25,13 @@
 {{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
     {{#modal.header}}
         <h4 class="modal-title">
-            {{currentRegion.name}}
+            {{currentRegion.data.attributes.name}}
         </h4>
     {{/modal.header}}
     {{#modal.body}}
-        {{content-bound-helper currentRegion.notes}}
+        {{content-bound-helper currentRegion.data.attributes.notes}}
     {{/modal.body}}
+    {{#modal.footer}}
+        {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
+    {{/modal.footer}}
 {{/bs-modal}}
