@@ -40,19 +40,57 @@ export default Controller.extend({
 	actions: {
 		nextStep() {
 			let region = this.set('region', this.store.peekAll('region'));
+			let params = this.get('params');
 			let isForecastEmpty = region.every((item) => {
 				return item.forecast.length > 0
 			});
+			this.set('isForecastEmpty', isForecastEmpty);
 			if (isForecastEmpty) {
-				this.transitionToRoute('new-project.project-start.index.resource')
+				let promiseArray = region.map((reg) => {
+					let req = this.store.createRecord('request', {
+						res: 'paperinput',
+					});
+					// console.log(Number(reg.forecast));
+					let eqValues = [
+						{ key: 'paper_id', type: 'eqcond', val: params.paperid },
+						{ key: 'region_id', type: 'eqcond', val: reg.id },
+						{ key: 'predicted_target', type: 'upcond', val: Number(reg.forecast) }
+					];
+					eqValues.forEach((item) => {
+						req.get(item.type).pushObject(this.store.createRecord(item.type, {
+							key: item.key,
+							val: item.val,
+						}))
+					});
+					let jsonReq = this.store.object2JsonApi('request', req);
+					return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
+				});
+
+				Promise.all(promiseArray).then((res) => {
+					this.set('tipsModal', true);
+					this.set('tipsTitle', '提示');
+					this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+				}).catch((error) => {
+					console.error(error);
+				});
+
+				// this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+				// this.transitionToRoute('new-project.project-start.index.resource')
 			} else {
-				this.set('tipModal', true);
-				this.set('content', '请填写全部的预测数据')
+				this.set('tipsModal', true);
+				this.set('tipsTitle', '提示');
+				this.set('tipsContent', '请填写全部的预测数据')
 			}
 		},
+		toResource() {
+			this.transitionToRoute('new-project.project-start.index.resource')
+		},
 		openTips(region) {
-			this.set('tipModal', true);
-			this.set('content', region.notes)
+			this.set('tipsModal', true);
+			this.set('tipsTitle', region.name);
+			this.set('tipsContent', region.notes);
 		},
 		changeArea(value) {
 			alert('Are you sure to change Area?');

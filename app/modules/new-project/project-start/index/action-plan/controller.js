@@ -167,13 +167,21 @@ export default Controller.extend({
 			let isActionplanEmpty = region.every((item) => {
 				return item.actionplan
 			});
+			this.set('isActionplanEmpty', isActionplanEmpty);
 			if (isActionplanEmpty) {
-				this.transitionToRoute('new-project.project-start.index.upshot')
-			} else {
-				this.set('tipModal', true);
 				this.set('tipsTitle', '提示');
-				this.set('content', '选择全部的行动计划，并保证最多两项！')
+				this.set('tipsModal', true);
+				this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+				// this.transitionToRoute('new-project.project-start.index.upshot')
+			} else {
+				this.set('tipsModal', true);
+				this.set('tipsTitle', '提示');
+				this.set('tipsContent', '选择全部的行动计划，并保证最多两项！')
 			}
+		},
+		toUpshot() {
+			this.transitionToRoute('new-project.project-start.index.upshot')
+
 		}
 	}
 });
