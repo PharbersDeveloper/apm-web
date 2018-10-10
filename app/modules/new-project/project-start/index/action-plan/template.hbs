@@ -7,7 +7,7 @@
 	</div>
 	<div local-class="action-plan-radar">
 		<select local-class="choose-area" onchange= {{action 'changeArea' value="target.value"}}>
-		    {{#each region as |area|}}
+		    {{#each model as |area|}}
 		        <option  value={{area.id}}>{{area.name}}</option>
 		    {{/each}}
 		</select>
@@ -17,19 +17,7 @@
 		{{area-plan-info data=region index=index}}
 	{{/each}}
 </div>
-{{!-- {{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
-	{{#modal.header}}
-		<h4 class="modal-title">
-            <span></span>{{tipsTitle}}
-        </h4>
-	{{/modal.header}}
-	{{#modal.body}}
-		{{content-bound-helper content}}
-	{{/modal.body}}
-	{{#modal.footer}}
-	  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
-	{{/modal.footer}}
-{{/bs-modal}} --}}
+
 {{#bs-modal open=tipsModal onSubmit=(action 'toUpshot') onHidden=(action (mut tipsModal) false) as |modal|}}
 	{{#modal.header}}
 		<h4 class="modal-title">

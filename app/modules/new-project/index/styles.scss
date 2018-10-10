@@ -6,6 +6,10 @@
 		padding-top: 45px;
 
 		.title {
+			a:hover {
+				text-decoration: none;
+			}
+
 			span {
 				margin-right: 15px;
 				color: #4A64AC;
