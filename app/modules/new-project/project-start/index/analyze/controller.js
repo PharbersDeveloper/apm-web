@@ -4,7 +4,6 @@ export default Controller.extend({
 	init() {
 		this._super(...arguments);
 		let totalRegion = JSON.parse(localStorage.getItem('totalRegion'));
-		console.log(totalRegion);
 		if (totalRegion) {
 			totalRegion.forEach((item) => {
 				this.store.pushPayload('region', item);
@@ -44,7 +43,7 @@ export default Controller.extend({
 				Promise.all(promiseArray).then((res) => {
 					this.transitionToRoute('new-project.project-start.index.sort')
 				}).catch((error) => {
-					console.log(error);
+					console.error(error);
 				});
 			} else {
 				this.set('notesEmpty', true);
@@ -55,6 +54,7 @@ export default Controller.extend({
 			let region = this.store.peekAll('region');
 			let singleRegionJsonApi = null;
 			let regionLocalStorage = region.map((item) => {
+                // TODO 王森 这是啥意思啊？没看明白
 				singleRegionJsonApi = '';
 				singleRegionJsonApi = this.store.object2JsonApi('region', item, false);
 				return singleRegionJsonApi

@@ -5,13 +5,9 @@
 		{{/bs-button}}
 	</div>
 	<div local-class="analyze-section">
-		{{!-- <div class="row"> --}}
-			{{!-- <div class="col-md-12 col-lg-12 col-sm-12"> --}}
-				{{area-base-info-table }}
-			{{!-- </div> --}}
-		{{!-- </div> --}}
+		{{area-base-info-table data=model.tableData}}
 	</div>
-	{{#each model as |region|}}
+	{{#each model.regionList as |region|}}
 		{{area-analyze-input data=region keyUp=(action 'saveToLocalStorage')}}
 	{{/each}}
 	{{!-- {{area-analyze-input }} --}}
