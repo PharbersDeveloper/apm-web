@@ -40,8 +40,6 @@ export default Controller.extend({
 			this.set('content', region.notes);
 		},
 		nextStep() {
-			// this.set('tipsModal', true);
-			// this.set('content', '请填写全部的数据！');
 			let region = this.set('region', this.store.peekAll('region'));
 			let params = this.get('params');
 			let iscoVisitEmpty = region.every((item) => {
