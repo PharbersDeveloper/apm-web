@@ -1,6 +1,5 @@
 <div local-class="objective-container">
 	<div class="next-step">
-		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
 		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
 			下一步
 		{{/bs-button}}
@@ -9,10 +8,11 @@
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
 				<select local-class="choose-area" onchange= {{action 'changeArea' value="target.value"}}>
-				    {{#each regionData as |area|}}
-				        <option  value={{area.id}}>{{area.name}}</option>
+				    {{#each regionData as |area index|}}
+				        <option value={{area.id}}>{{area.name}}</option>
 				    {{/each}}
-				</select> {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true changeArea=(action 'changeArea')}}
+				</select> 
+                {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true dataset=barData }}
 			</div>
 		</div>
 	</div>
@@ -32,14 +32,6 @@
 					</div>
 
 				</div>
-
-				{{!-- {{#bs-button-group value=whichMonth type="radio" local-class="btn-month-container" class="container" onChange=(action (mut whichMonth)) as |bg|}}
-                    {{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1801" }}18/01{{/bg.button}}
-                    {{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1802" }}18/02{{/bg.button}}
-                    {{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1803" }}18/03{{/bg.button}}
-				{{/bs-button-group}} --}}
-
-				{{!-- {{#if (eq whichMonth "1801")}} --}}
 				<div class="table-responsive">
 					<table local-class="table-container" class="table">
 						<thead>
@@ -55,7 +47,11 @@
 								<tr>
 									<td>{{region.name}} <span class="glyphicon glyphicon-list-alt" {{action 'openTips' region}}></span></td>
 									<td>{{index-to-normal index}}</td>
-									<td>652,000 </td>
+                                    {{#each regionCompanyTargets as |item|}}
+                                        {{#if (eq region.id item.region_id)}}
+                                            <td>{{item.company_targe}}</td>
+                                        {{/if}}
+                                    {{/each}}
 									<td>{{input type="text" value=region.forecast dir="rtl"}} </td>
 								</tr>
 							{{/each}}

@@ -1,17 +1,7 @@
 import Route from '@ember/routing/route';
-import { later } from '@ember/runloop';
+import { groupBy } from '../../phtool/tool';
 
 export default Route.extend({
-    groupBy(objectArray, property) {
-        return objectArray.reduce(function(acc, obj) {
-            var key = obj[property];
-            if (!acc[key]) {
-                acc[key] = [];
-            }
-            acc[key].push(obj);
-            return acc;
-        }, {});
-    },
     scenarioInfo(courseid, controller) {
         let courseRecord = this.store.peekRecord('course', courseid);
         let data = {
@@ -112,7 +102,7 @@ export default Route.extend({
                 let that = this;
                 function d3Data(medicineArrayObject) {
                     Object.keys(medicineArrayObject).forEach(key => {
-                        let temp = that.groupBy(medicineArrayObject[key], 'ym');
+                        let temp = groupBy(medicineArrayObject[key], 'ym');
                         let record = that.store.peekRecord('medicine', key);
                         let values = Object.keys(temp).map(elem => {
                             let sum = temp[elem].reduce((acc, cur) => acc + cur.sales.share, 0);
@@ -129,10 +119,8 @@ export default Route.extend({
                 }
                 let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
 
-                let medicineCompany = this.groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'goods_id');
-                let medicineCompete = this.groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
-                d3Data(medicineCompany)
-                d3Data(medicineCompete)
+                let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
+                d3Data(medicineAll)
                 this.areaInfo(ids.courseid, controller)
                 return ids
             })
@@ -369,11 +357,11 @@ export default Route.extend({
                     })
                 }
                 let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
-                let medicineByRegion = this.groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
+                let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
                 regionBaseInfo.salesBar = d3Data(medicineByRegion)
                 return null;
             })
-            .then(() => {
+            .then(() => { // 整体
                 let that = this;
                 function d3Data(medicineArrayObject) {
                     return Object.keys(medicineArrayObject).map(key => {
@@ -390,12 +378,12 @@ export default Route.extend({
                 }
                 function tableData(arrayObjec) {
                     return Object.keys(arrayObjec).map(key => {
-                        let potential = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
-                        let potential_contri = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
-                        let sales = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
-                        let sales_contri = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
-                        let contri_index = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
-                        let sales_growth = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
+                        let potential = arrayObjec[key].lastObject.sales.potential.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
+                        let potential_contri = arrayObjec[key].lastObject.sales.potential_contri.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
+                        let sales = arrayObjec[key].lastObject.sales.sales.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
+                        let sales_contri = arrayObjec[key].lastObject.sales.sales_contri.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
+                        let contri_index = arrayObjec[key].lastObject.sales.contri_index.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
+                        let sales_growth = arrayObjec[key].lastObject.sales.sales_growth.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
                         return {
                             name: that.store.peekRecord('region', key).name,
                             potential,
@@ -409,9 +397,9 @@ export default Route.extend({
                 }
                 let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
                 // TODO 这块有疑问 是所有区域还是只有本公司产品？
-                let medicineByRegion = this.groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
+                let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
                 regionBaseInfo.overall = {
-                    lineData: d3Data(medicineByRegion),
+                    lineData: d3Data(medicineByRegion).reverse(),
                     tableData: tableData(medicineByRegion).reverse()
                 }
             })

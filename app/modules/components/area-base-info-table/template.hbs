@@ -15,12 +15,18 @@
             {{#each data as |item|}}
                 <tr>
                     <td>{{item.name}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.potential}}</td>
+                    {{!-- <td>{{input type="text" dir="rtl" disabled=true value=item.potential}}</td>
                     <td>{{input type="text" dir="rtl" disabled=true value=item.potential_contri}}</td>
                     <td>{{input type="text" dir="rtl" disabled=true value=item.sales}}</td>
                     <td>{{input type="text" dir="rtl" disabled=true value=item.sales_contri}}</td>
                     <td>{{input type="text" dir="rtl" disabled=true value=item.contri_index}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.sales_growth}}</td>
+                    <td>{{input type="text" dir="rtl" disabled=true value=item.sales_growth}}</td> --}}
+                    <td>{{item.potential}}</td>
+                    <td>{{item.potential_contri}}</td>
+                    <td>{{item.sales}}</td>
+                    <td>{{item.sales_contri}}</td>
+                    <td>{{item.contri_index}}</td>
+                    <td>{{item.sales_growth}}</td>
                 </tr>
             {{/each}}
         </tbody>
