@@ -3,7 +3,8 @@ import { run } from '@ember/runloop';
 import { get } from '@ember/object';
 import d3 from 'd3';
 export default Component.extend({
-	tagName: 'div',
+    tagName: 'div',
+    gradient: '',
 	classNames: ['radar-section-effectiveness', ],
 
 	didReceiveAttrs() {
@@ -12,8 +13,6 @@ export default Component.extend({
 	},
 
 	RadarChart() {
-		// let localClass = this.get('class');
-		// d3.select('.' + localClass + ' svg').remove();
 		let data = this.get('radarSectionData');
 		let _currentColor = data.map((item) => {
 			return item.color;
