@@ -14,19 +14,21 @@ export default Controller.extend({
 		nextStep() {
 			let emptyNotesRegion = "";
 			let region = this.store.peekAll('region');
+			let params = this.get('params');
 			let isNoteEmpty = region.every(function(item) {
 				if (item.notes.length === 0) {
 					emptyNotesRegion = item.name
 				}
 				return item.notes.length > 0
 			});
+			this.set('isNoteEmpty', isNoteEmpty);
 			if (isNoteEmpty) {
 				let promiseArray = region.map((reg) => {
 					let req = this.store.createRecord('request', {
-						res: 'paper_input',
+						res: 'paperinput',
 					});
 					let eqValues = [
-						{ key: 'paper_id', type: 'eqcond', val: '5bb05f8fed925c04e5a853e2' },
+						{ key: 'paper_id', type: 'eqcond', val: params.paperid },
 						{ key: 'region_id', type: 'eqcond', val: reg.id },
 						{ key: 'hint', type: 'upcond', val: reg.notes }
 					];
@@ -41,23 +43,26 @@ export default Controller.extend({
 				});
 
 				Promise.all(promiseArray).then((res) => {
-					this.transitionToRoute('new-project.project-start.index.sort')
+					this.set('notesEmpty', true);
+					this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+					// this.transitionToRoute('new-project.project-start.index.sort');
 				}).catch((error) => {
 					console.error(error);
 				});
 			} else {
 				this.set('notesEmpty', true);
-				this.set('emptyNotesRegion', emptyNotesRegion)
+				this.set('tipsContent', '请填写完成 ' + emptyNotesRegion + ' 的内容！');
 			}
+		},
+		toSort() {
+			this.transitionToRoute('new-project.project-start.index.sort')
 		},
 		saveToLocalStorage() {
 			let region = this.store.peekAll('region');
 			let singleRegionJsonApi = null;
 			let regionLocalStorage = region.map((item) => {
-                // TODO 王森 这是啥意思啊？没看明白
-				singleRegionJsonApi = '';
 				singleRegionJsonApi = this.store.object2JsonApi('region', item, false);
-				return singleRegionJsonApi
+				return singleRegionJsonApi;
 			});
 			localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 		}

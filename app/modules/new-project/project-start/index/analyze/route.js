@@ -29,6 +29,8 @@ export default Route.extend({
         // TODO 这块有疑问 是所有区域还是只有本公司产品？
         let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
         console.info(this.modelFor('new-project.project-start'))
+		let paramsController = this.modelFor('new-project.project-start');
+		this.controllerFor('new-project.project-start.index.analyze').set('params', paramsController);
 		return {
             regionList,
             tableData: tableData(medicineByRegion).reverse()

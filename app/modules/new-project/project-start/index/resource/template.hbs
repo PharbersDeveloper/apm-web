@@ -8,13 +8,7 @@
 		<div class="col-md-12 col-lg-12 col-sm-12">
 			<div local-class="resource-content">
 				<p local-class="title-resource">资源分配<span> -在资源有限的情况下，做出合适的投入计划，以达到目标。</span></p>
-				{{!-- {{#bs-button-group value=whichMonth type="radio" local-class="btn-month-container" class="container"
-				onChange=(action (mut whichMonth)) as |bg|}}
-				{{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1801" }}1801{{/bg.button}}
-				{{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1802" }}1802{{/bg.button}}
-				{{#bg.button local-class="btn-month" class="col-lg-4 col-md-4 col-sm-4" value="1803" }}1803{{/bg.button}}
-				{{/bs-button-group}}
-				{{#if (eq whichMonth "1801")}} --}}
+
 				<div local-class="card-item-container" class="container">
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
 						<p local-class="title-card-item"><span>辅导协访天数</span><span>18/21</span></p>
@@ -58,7 +52,7 @@
 						<tbody>
 							{{#each newRegionData as |region index|}}
 								<tr>
-									<td>{{region.name}}<span class="glyphicon glyphicon-list-alt" {{action 'openTips' region}}></span></td>
+									<td><span  {{action 'openTips' region}}>{{region.name}}<span class="glyphicon glyphicon-list-alt"></span></span> </td>
 									<td>{{index-to-normal index}} </td>
 									<td>652,000 </td>
 									<td>{{region.forecast}}</td>
@@ -68,231 +62,29 @@
 									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.departmentMeeting dir="rtl"}} </td>
 								</tr>
 							{{/each}}
+						</tbody>
+					</table>
+				</div>
 
-							{{!-- <tr>
-								<td>区域B <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域C <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域D <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域E <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr> --}}
-						</tbody>
-					</table>
-				</div>
-				{{!-- {{else if (eq whichMonth "1802")}}
-				<div local-class="card-item-container" class="container">
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
-						<p local-class="title-card-item"><span>辅导协访天数</span><span>02/21</span></p>
-						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=02 maxValue=21 type='info' }}
-						{{/bs-progress}}
-					</div>
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
-						<p local-class="title-card-item"><span>会议名额</span><span>13/20</span></p>
-						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=13 maxValue=20 type='info' }}
-						{{/bs-progress}}
-					</div>
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
-						<p local-class="title-card-item"><span>预算</span><span>5400/100000</span></p>
-						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=5400 maxValue=100000 type='info' }}
-						{{/bs-progress}}
-					</div>
-				</div>
-				<div class="table-responsive">
-					<table local-class="table-container" class="table">
-						<thead>
-							<tr>
-								<td>区域</td>
-								<td>排序</td>
-								<td>公司指标($)</td>
-								<td>预测指标($)</td>
-								<td>协访天数</td>
-								<td>会议名额</td>
-								<td>预算金额</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>区域A <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域B <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域C <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域D <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域E <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				{{else if (eq whichMonth "1803")}}
-				<div local-class="card-item-container" class="container">
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
-						<p local-class="title-card-item"><span>辅导协访天数</span><span>02/21</span></p>
-						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=09 maxValue=21 type='info' }}
-						{{/bs-progress}}
-					</div>
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
-						<p local-class="title-card-item"><span>会议名额</span><span>6/20</span></p>
-						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=6 maxValue=20 type='info' }}
-						{{/bs-progress}}
-					</div>
-					<div local-class="card-item" class="col-lg-4 col-md-4 col-sm-4">
-						<p local-class="title-card-item"><span>预算</span><span>88800/100000</span></p>
-						{{#bs-progress local-class="progress" as |p|}}
-						{{p.bar local-class="progress-bar" value=88800 maxValue=100000 type='info' }}
-						{{/bs-progress}}
-					</div>
-				</div>
-				<div class="table-responsive">
-					<table local-class="table-container" class="table">
-						<thead>
-							<tr>
-								<td>区域</td>
-								<td>排序</td>
-								<td>公司指标($)</td>
-								<td>预测指标($)</td>
-								<td>协访天数</td>
-								<td>会议名额</td>
-								<td>预算金额</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>区域A <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域B <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域C <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域D <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-							<tr>
-								<td>区域E <span class="glyphicon glyphicon-list-alt"></span></td>
-								<td>1 </td>
-								<td>652,000 </td>
-								<td>541,000 </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-								<td>{{input type="text" dir="rtl"}} </td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				{{/if}} --}}
 			</div>
 		</div>
 	</div>
 </div>
-{{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
+{{#bs-modal open=tipsModal onSubmit=(action 'toActionPlan') onHidden=(action (mut tipsModal) false) as |modal|}}
 	{{#modal.header}}
 		<h4 class="modal-title">
             <span></span>{{tipsTitle}}
         </h4>
 	{{/modal.header}}
 	{{#modal.body}}
-		{{content-bound-helper content}}
+		{{content-bound-helper tipsContent}}
 	{{/modal.body}}
 	{{#modal.footer}}
-	  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
+	{{#if iscoVisitEmpty}}
+		{{#bs-button onClick=(action modal.close)}}取消{{/bs-button}}
+		{{#bs-button type="success" onClick=(action modal.submit)}}下一步{{/bs-button}}
+	{{else}}
+		{{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
+	{{/if}}
 	{{/modal.footer}}
 {{/bs-modal}}
