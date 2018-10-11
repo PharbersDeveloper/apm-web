@@ -34,7 +34,7 @@
 			{{#tab.pane title="代表与执行" }}
                 {{#each radarData as |item|}}
                     {{#if (eq item.region_id data.id)}}
-                        {{radar-section-effectiveness gradient="glowarea" radarSectionData=item.data}}
+                        {{radar-section-effectiveness gradient=(concat 'glowarea' data.id) radarSectionData=item.data}}
                     {{/if}}
                 {{/each}}
 
