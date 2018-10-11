@@ -58,8 +58,6 @@ export default Route.extend({
             controller.set('areaBarData', areaBarData);
             controller.set('barData', areaBarData.find(elem => elem.region_id === controller.get('initSelectedRegionId')).data)
 
-
-
             return areaBarData
         })
     },

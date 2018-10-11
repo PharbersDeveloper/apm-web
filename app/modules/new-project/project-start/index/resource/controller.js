@@ -7,10 +7,6 @@ export default Controller.extend({
 		this._super(...arguments);
 		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
 		this.set('region', this.store.peekAll('region'));
-		this.set('totalcoVisit', 20);
-		this.set('totalNationMeeting', 20);
-		this.set('totalCityMeeting', 20);
-		this.set('totalDepartMeeting', 20);
 
 	},
 	newRegionData: computed('regionResort', function() {

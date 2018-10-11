@@ -11,25 +11,25 @@
 
 				<div local-class="card-item-container" class="container">
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
-						<p local-class="title-card-item"><span>辅导协访天数</span><span>共16天</span></p>
+						<p local-class="title-card-item"><span>辅导协访天数</span><span>共{{allotData.field_work_days}}天</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
 							{{p.bar local-class="progress-bar" showLabel=true value=coVisit maxValue=100 type='info' }}
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
-						<p local-class="title-card-item"><span>全国会名额</span><span>共100个</span></p>
+						<p local-class="title-card-item"><span>全国会名额</span><span>共{{allotData.national_meeting}}个</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
 							{{p.bar local-class="progress-bar" showLabel=true value=nationMeeting maxValue=100 type='info' }}
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
-						<p local-class="title-card-item"><span>城市会名额</span><span>共43个</span></p>
+						<p local-class="title-card-item"><span>城市会名额</span><span>共{{allotData.city_meeting}}个</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
 							{{p.bar local-class="progress-bar" showLabel=true value=cityMeeting maxValue=100 type='info' }}
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
-						<p local-class="title-card-item"><span>科室会名额</span><span>共34个</span></p>
+						<p local-class="title-card-item"><span>科室会名额</span><span>共{{allotData.depart_meeting}}个</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
 							{{p.bar local-class="progress-bar" showLabel=true value=departmentMeeting maxValue=100 type='info' }}
 						{{/bs-progress}}
@@ -50,12 +50,20 @@
 							</tr>
 						</thead>
 						<tbody>
+                            {{log model}}
 							{{#each newRegionData as |region index|}}
+                                
 								<tr>
 									<td>{{index-to-normal index}} </td>
 									<td><span {{action 'openTips' region}}>{{region.name}}<span class="glyphicon glyphicon-list-alt"></span></span>
 									</td>
-									<td>652,000 </td>
+									<td>
+                                        {{#each model as |item|}}
+                                            {{#if (eq item.region_id region.id)}}
+                                                {{item.company_targe}}
+                                            {{/if}}
+                                        {{/each}}
+                                    </td>
 									<td>{{region.forecast}}</td>
 									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.covisit dir="rtl"}} </td>
 									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.nationMeeting dir="rtl"}} </td>
