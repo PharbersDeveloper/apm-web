@@ -1,12 +1,17 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
+import { set } from '@ember/object';
 
 export default Controller.extend({
-	whichMonth: '1801',
 	init() {
 		this._super(...arguments);
 		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
-		this.set('regionData', this.store.peekAll('region'));
+		this.set('region', this.store.peekAll('region'));
+		this.set('totalcoVisit', 20);
+		this.set('totalNationMeeting', 20);
+		this.set('totalCityMeeting', 20);
+		this.set('totalDepartMeeting', 20);
+
 	},
 	newRegionData: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');
@@ -21,6 +26,64 @@ export default Controller.extend({
 			return singleRegion
 		});
 		return newRegion;
+	}),
+
+	coVisit: computed('region.@each.covisit', function() {
+		let region = this.get('region');
+		let covisit = 0;
+		region.forEach((item) => {
+			if (item.covisit > 100) {
+				this.set('tipsModal', true);
+				this.set('tipsTitle', '提示');
+				this.set('tipsContent', '单个协访天数数据不能超过100%');
+				set(item, 'covisit', '');
+			}
+			covisit += Number(item.covisit);
+		})
+		return covisit;
+	}),
+	nationMeeting: computed('region.@each.nationMeeting', function() {
+		let region = this.get('region');
+		let nationMeeting = 0;
+		region.forEach((item) => {
+			if (item.nationMeeting > 100) {
+				this.set('tipsModal', true);
+				this.set('tipsTitle', '提示');
+				this.set('tipsContent', '单个全国会数据不能超过100%');
+				set(item, 'nationMeeting', '');
+			}
+			nationMeeting += Number(item.nationMeeting);
+		});
+		return nationMeeting;
+	}),
+	cityMeeting: computed('region.@each.cityMeeting', function() {
+		let region = this.get('region');
+		let cityMeeting = 0;
+		let total = this.get('totalCityMeeting');
+		region.forEach((item) => {
+			if (item.cityMeeting > 100) {
+				this.set('tipsModal', true);
+				this.set('tipsTitle', '提示');
+				this.set('tipsContent', '单个城市会数据不能超过100%');
+				set(item, 'cityMeeting', '');
+			}
+			cityMeeting += Number(item.cityMeeting);
+		})
+		return cityMeeting;
+	}),
+	departmentMeeting: computed('region.@each.departmentMeeting', function() {
+		let region = this.get('region');
+		let departmentMeeting = 0;
+		region.forEach((item) => {
+			if (item.departmentMeeting > 100) {
+				this.set('tipsModal', true);
+				this.set('tipsTitle', '提示');
+				this.set('tipsContent', '单个科室会数据不能超过100%');
+				set(item, 'departmentMeeting', '');
+			}
+			departmentMeeting += Number(item.departmentMeeting);
+		})
+		return departmentMeeting;
 	}),
 	actions: {
 		saveToLocalStorage() {
@@ -37,59 +100,68 @@ export default Controller.extend({
 		openTips(region) {
 			this.set('tipsModal', true);
 			this.set('tipsTitle', region.name);
-			this.set('content', region.notes);
+			this.set('tipsContent', region.notes);
 		},
 		nextStep() {
-			let region = this.set('region', this.store.peekAll('region'));
-			let params = this.get('params');
+			let region = this.get('region');
 			let iscoVisitEmpty = region.every((item) => {
 				return item.covisit.length > 0 && item.nationMeeting.length > 0 &&
 					item.cityMeeting.length > 0 && item.departmentMeeting.length > 0;
 			});
 			this.set('iscoVisitEmpty', iscoVisitEmpty);
 			if (iscoVisitEmpty) {
-				let promiseArray = region.map((reg) => {
-					let req = this.store.createRecord('request', {
-						res: 'paperinput',
-					});
-					let eqValues = [
-						{ key: 'paper_id', type: 'eqcond', val: params.paperid },
-						{ key: 'region_id', type: 'eqcond', val: reg.id },
-						{ key: 'field_work_days', type: 'upcond', val: Number(reg.covisit) },
-						{ key: 'national_meeting', type: 'upcond', val: Number(reg.nationMeeting) },
-						{ key: 'city_meeting', type: 'upcond', val: Number(reg.cityMeeting) },
-						{ key: 'depart_meeting', type: 'upcond', val: Number(reg.departmentMeeting) },
-					];
-					eqValues.forEach((item) => {
-						req.get(item.type).pushObject(this.store.createRecord(item.type, {
-							key: item.key,
-							val: item.val,
-						}))
-					});
-					let jsonReq = this.store.object2JsonApi('request', req);
-					return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
-				});
-
-				Promise.all(promiseArray).then((res) => {
+				let [_totalCoVisit, _totalNationMeeting, _totalCityMeeting, _totalDepartMeeting] = [this.get('coVisit'), this.get('nationMeeting'), this.get('cityMeeting'), this.get('departmentMeeting')];
+				if (_totalCoVisit > 100 || _totalNationMeeting > 100 ||
+					_totalCityMeeting > 100 || _totalDepartMeeting > 100) {
+					this.set('iscoVisitEmpty', false);
+					this.set('tipsModal', true);
+					this.set('tipsTitle', '提示');
+					this.set('tipsContent', '当前输入的总值超出了100%，请检查后重新填写');
+				} else {
 					this.set('tipsModal', true);
 					this.set('tipsTitle', '提示');
 					this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
-				}).catch((error) => {
-					console.error(error);
-				});
-
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('content', '确认进入下一步后，将不可修改当前内容。');
-				// this.transitionToRoute('new-project.project-start.index.action-plan');
+				}
 			} else {
 				this.set('tipsModal', true);
 				this.set('tipsTitle', '提示');
-				this.set('content', '请填写全部的预测数据');
+				this.set('tipsContent', '请填写全部的预测数据');
 			}
 		},
 		toActionPlan() {
-			this.transitionToRoute('new-project.project-start.index.action-plan');
+			let region = this.get('region');
+			let params = this.get('params');
+			let promiseArray = region.map((reg) => {
+				let req = this.store.createRecord('request', {
+					res: 'paperinput',
+				});
+				let eqValues = [
+					{ key: 'paper_id', type: 'eqcond', val: params.paperid },
+					{ key: 'region_id', type: 'eqcond', val: reg.id },
+					{ key: 'field_work_days', type: 'upcond', val: Number(reg.covisit) },
+					{ key: 'national_meeting', type: 'upcond', val: Number(reg.nationMeeting) },
+					{ key: 'city_meeting', type: 'upcond', val: Number(reg.cityMeeting) },
+					{ key: 'depart_meeting', type: 'upcond', val: Number(reg.departmentMeeting) },
+				];
+				eqValues.forEach((item) => {
+					req.get(item.type).pushObject(this.store.createRecord(item.type, {
+						key: item.key,
+						val: item.val,
+					}))
+				});
+				let jsonReq = this.store.object2JsonApi('request', req);
+				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
+			});
+
+			Promise.all(promiseArray).then((res) => {
+				this.transitionToRoute('new-project.project-start.index.action-plan');
+				// this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+			}).catch((error) => {
+				console.error(error);
+			});
+			// this.transitionToRoute('new-project.project-start.index.action-plan');
 		}
 	}
 });

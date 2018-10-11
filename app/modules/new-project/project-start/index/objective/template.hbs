@@ -11,7 +11,7 @@
 				    {{#each regionData as |area index|}}
 				        <option value={{area.id}}>{{area.name}}</option>
 				    {{/each}}
-				</select> 
+				</select>
                 {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true dataset=barData }}
 			</div>
 		</div>
@@ -24,10 +24,10 @@
 				<div class="row" local-class="summary">
 					<div class="col-md-2 col-lg-2 col-sm-2">
 						<p>公司本季度总指标</p>
-						<p>3,000,000</p>
+						<p>{{totalCompanyTarget}}</p>
 					</div>
 					<div class="col-md-2 col-lg-2 col-sm-2">
-						<p>您的预测指标</p>
+						<p>您的预测总指标</p>
 						<p>{{totalForecast}}</p>
 					</div>
 
@@ -36,8 +36,8 @@
 					<table local-class="table-container" class="table">
 						<thead>
 							<tr>
-								<td>区域</td>
 								<td>排序</td>
+								<td>区域</td>
 								<td>公司指标($)</td>
 								<td>预测指标($)</td>
 							</tr>
@@ -45,8 +45,8 @@
 						<tbody>
 							{{#each newRegionData as |region index|}}
 								<tr>
-									<td>{{region.name}} <span class="glyphicon glyphicon-list-alt" {{action 'openTips' region}}></span></td>
 									<td>{{index-to-normal index}}</td>
+									<td><span {{action 'openTips' region}}>{{region.name}} <span class="glyphicon glyphicon-list-alt" ></span></span></td>
                                     {{#each regionCompanyTargets as |item|}}
                                         {{#if (eq region.id item.region_id)}}
                                             <td>{{item.company_targe}}</td>
@@ -55,7 +55,6 @@
 									<td>{{input type="text" value=region.forecast dir="rtl"}} </td>
 								</tr>
 							{{/each}}
-
 						</tbody>
 					</table>
 				</div>

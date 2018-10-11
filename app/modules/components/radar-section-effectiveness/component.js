@@ -3,8 +3,8 @@ import { run } from '@ember/runloop';
 import { get } from '@ember/object';
 import d3 from 'd3';
 export default Component.extend({
-    tagName: 'div',
-    gradient: '',
+	tagName: 'div',
+	gradient: '',
 	classNames: ['radar-section-effectiveness', ],
 
 	didReceiveAttrs() {
@@ -21,13 +21,13 @@ export default Component.extend({
 			w: 290,
 			h: 350,
 			margin: { top: 50, right: 80, bottom: 50, left: 80 },
-			maxValue: 60,
+			maxValue: 10,
 			levels: 6,
 			roundStrokes: false,
 			color: d3.scaleOrdinal().range(_currentColor),
 			format: '.0f',
 			legend: { title: '图例', translateX: 100, translateY: 40 },
-			unit: '%'
+			unit: ''
 		};
 		let options = radarChartOptions;
 		const max = Math.max;

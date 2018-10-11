@@ -69,7 +69,8 @@ export default Component.extend({
 					this.get('areaArray').pushObject(elem.get('selected'));
 					elem.set('selected', null);
 				}
-			})
+			});
+			localStorage.setItem('regionResort', JSON.stringify(this.get('levelArray')));
 		},
 		openTips(currentRegion) {
 			this.set('tipModal', true);
