@@ -52,7 +52,7 @@
                                             <td>{{item.company_targe}}</td>
                                         {{/if}}
                                     {{/each}}
-									<td>{{input type="text" value=region.forecast dir="rtl"}} </td>
+									<td>{{input type="text" value=region.forecast dir="ltr"}} </td>
 								</tr>
 							{{/each}}
 						</tbody>
@@ -65,7 +65,7 @@
 	</div>
 </div>
 
-{{#bs-modal open=tipsModal onSubmit=(action 'toResource') onHidden=(action (mut tipsModal) false) as |modal|}}
+{{#bs-modal local-class="hint-modal" open=tipsModal onSubmit=(action 'toResource') onHidden=(action (mut tipsModal) false) as |modal|}}
   {{#modal.header}}
     <h4 class="modal-title">
       <span></span>{{tipsTitle}}

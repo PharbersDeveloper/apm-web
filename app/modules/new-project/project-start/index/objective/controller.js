@@ -16,14 +16,14 @@ export default Controller.extend({
 		});
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 		region.forEach((item) => {
-			total += Number(item.forecast) || 0;
+			total += parseInt(item.forecast) || 0;
 		});
 		return total;
 	}),
 	totalCompanyTarget: computed('regionCompanyTargets.@each', function() {
 		let total = 0;
 		this.get('regionCompanyTargets').forEach((item) => {
-			total += Number(item.company_targe)
+			total += parseInt(item.company_targe)
 		});
 		return total;
 	}),
@@ -85,7 +85,7 @@ export default Controller.extend({
 				let eqValues = [
 					{ key: 'paper_id', type: 'eqcond', val: params.paperid },
 					{ key: 'region_id', type: 'eqcond', val: reg.id },
-					{ key: 'predicted_target', type: 'upcond', val: Number(reg.forecast) }
+					{ key: 'predicted_target', type: 'upcond', val: parseInt(reg.forecast) }
 				];
 				eqValues.forEach((item) => {
 					req.get(item.type).pushObject(this.store.createRecord(item.type, {

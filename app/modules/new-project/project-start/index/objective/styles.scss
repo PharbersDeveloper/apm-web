@@ -110,3 +110,9 @@
 		}
 	}
 }
+
+.hint-modal {
+	:global(.close) {
+		display: none;
+	}
+}

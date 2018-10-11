@@ -38,7 +38,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个协访天数数据不能超过100%');
 				set(item, 'covisit', '');
 			}
-			covisit += Number(item.covisit);
+			covisit += parseInt(item.covisit);
 		})
 		return covisit;
 	}),
@@ -52,7 +52,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个全国会数据不能超过100%');
 				set(item, 'nationMeeting', '');
 			}
-			nationMeeting += Number(item.nationMeeting);
+			nationMeeting += parseInt(item.nationMeeting);
 		});
 		return nationMeeting;
 	}),
@@ -67,7 +67,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个城市会数据不能超过100%');
 				set(item, 'cityMeeting', '');
 			}
-			cityMeeting += Number(item.cityMeeting);
+			cityMeeting += parseInt(item.cityMeeting);
 		})
 		return cityMeeting;
 	}),
@@ -81,7 +81,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个科室会数据不能超过100%');
 				set(item, 'departmentMeeting', '');
 			}
-			departmentMeeting += Number(item.departmentMeeting);
+			departmentMeeting += parseInt(item.departmentMeeting);
 		})
 		return departmentMeeting;
 	}),
@@ -138,10 +138,10 @@ export default Controller.extend({
 				let eqValues = [
 					{ key: 'paper_id', type: 'eqcond', val: params.paperid },
 					{ key: 'region_id', type: 'eqcond', val: reg.id },
-					{ key: 'field_work_days', type: 'upcond', val: Number(reg.covisit) },
-					{ key: 'national_meeting', type: 'upcond', val: Number(reg.nationMeeting) },
-					{ key: 'city_meeting', type: 'upcond', val: Number(reg.cityMeeting) },
-					{ key: 'depart_meeting', type: 'upcond', val: Number(reg.departmentMeeting) },
+					{ key: 'field_work_days', type: 'upcond', val: parseInt(reg.covisit) },
+					{ key: 'national_meeting', type: 'upcond', val: parseInt(reg.nationMeeting) },
+					{ key: 'city_meeting', type: 'upcond', val: parseInt(reg.cityMeeting) },
+					{ key: 'depart_meeting', type: 'upcond', val: parseInt(reg.departmentMeeting) },
 				];
 				eqValues.forEach((item) => {
 					req.get(item.type).pushObject(this.store.createRecord(item.type, {
