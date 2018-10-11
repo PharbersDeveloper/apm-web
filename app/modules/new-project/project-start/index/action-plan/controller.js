@@ -1,11 +1,9 @@
 import Controller from '@ember/controller';
-import {
-	computed,
-	set
-} from '@ember/object';
+import { computed } from '@ember/object';
 
 export default Controller.extend({
-	collapsed: false,
+    collapsed: false,
+    areaRadars: [],
 	init() {
 		this._super(...arguments);
 		this.readyChoose = [{
@@ -58,40 +56,8 @@ export default Controller.extend({
 			},
 
 		]
-
-		this.radarData = [{
-				name: '区域A',
-				axes: [
-					{ axis: '产品知识', value: 42 },
-					{ axis: '目标拜访频次', value: 20 },
-					{ axis: '拜访次数', value: 60 },
-					{ axis: '实际工作天数', value: 26 },
-					{ axis: '工作积极性', value: 35 },
-					{ axis: '区域管理能力', value: 20 },
-					{ axis: '销售能力', value: 40 }
-
-				],
-				color: '#26AF32'
-			},
-			{
-				name: '区域平均',
-				axes: [
-					{ axis: '产品知识', value: 50 },
-					{ axis: '目标拜访频次', value: 45 },
-					{ axis: '拜访次数', value: 20 },
-					{ axis: '实际工作天数', value: 20 },
-					{ axis: '工作积极性', value: 25 },
-					{ axis: '区域管理能力', value: 23 },
-					{ axis: '销售能力', value: 44 }
-
-				],
-				color: '#762712'
-			}
-		];
-
-		this.set('region', this.store.peekAll('region'));
-
-		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
+        
+        this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
 
 	},
 	planPaire: computed('readyChoose.@each.isChecked', function() {
@@ -127,40 +93,8 @@ export default Controller.extend({
 		toggle() {
 			this.toggleProperty('collapsed')
 		},
-		changeArea(id) {
-			console.log(id)
-			// let BAreaData = [{
-			// 		name: '区域B',
-			// 		axes: [
-			// 			{ axis: '产品知识', value: 32 },
-			// 			{ axis: '目标拜访频次', value: 33 },
-			// 			{ axis: '拜访次数', value: 50 },
-			// 			{ axis: '实际工作天数', value: 46 },
-			// 			{ axis: '工作积极性', value: 55 },
-			// 			{ axis: '区域管理能力', value: 40 },
-			// 			{ axis: '销售能力', value: 32 }
-			//
-			// 		],
-			// 		color: '#ff6600'
-			// 	},
-			// 	{
-			// 		name: '区域平均',
-			// 		axes: [
-			// 			{ axis: '产品知识', value: 50 },
-			// 			{ axis: '目标拜访频次', value: 45 },
-			// 			{ axis: '拜访次数', value: 20 },
-			// 			{ axis: '实际工作天数', value: 20 },
-			// 			{ axis: '工作积极性', value: 25 },
-			// 			{ axis: '区域管理能力', value: 23 },
-			// 			{ axis: '销售能力', value: 44 }
-			//
-			// 		],
-			// 		color: '#762712'
-			// 	}
-			// ];
-			// if (value === 'B') {
-			// 	this.set('radarData', BAreaData);
-			// }
+		changeArea(value) {
+			this.set('radarData', this.areaRadars.find(elem => elem.region_id === value).data)
 		},
 		nextStep() {
 			let region = this.store.peekAll('region');
