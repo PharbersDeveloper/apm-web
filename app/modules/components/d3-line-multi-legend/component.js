@@ -3,7 +3,7 @@ import { run } from '@ember/runloop';
 import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
-	classNames: ['multilines'],
+    classNames: ['multilines'],
 
 	didReceiveAttrs() {
         this._super(...arguments);
@@ -13,16 +13,13 @@ export default Component.extend({
 		let localClass = this.get('class');
 		let title = this.get('title');
 		d3.select('.' + localClass + ' svg.much-lines').remove();
-		// d3.select('.' + localClass + ' svg').remove();
 		d3.select('.' + localClass + ' .legendContainer').remove();
 		let svgContainer = d3.select(this.element);
 		let svg = svgContainer.append("svg").attr('class', 'much-lines');
-		// let data = this.get('chooseData');
 		let chooseData = this.get('chooseData');
 		let width = 900;
 		let height = 340;
 		let margin = 20;
-		// let duration = 250;
 
 		let lineOpacity = "0.45";
 		let lineOpacityHover = "0.85";
@@ -36,15 +33,16 @@ export default Component.extend({
 		let circleRadiusHover = 4;
 
 		/* Format Data */
-		let parseDate = d3.timeParse("%y-%m");
-		let formatDateIntoYearMonth = d3.timeFormat('%y-%m');
+		// let parseDate = d3.timeParse("%y-%m");
+		// let formatDateIntoYearMonth = d3.timeFormat('%y-%m');
 
 		let data = chooseData.map(function(item) {
 			let proditem = {};
 			proditem.name = item.name;
 			let inValues = item.values.map(function(iitem) {
 				let valueItem = {};
-				valueItem.ym = parseDate(iitem.ym);
+				// valueItem.ym = parseDate(iitem.ym);
+				valueItem.ym = iitem.ym;
 				valueItem.unit = iitem.unit;
 				valueItem.value = iitem.value;
 				return valueItem;
@@ -52,18 +50,19 @@ export default Component.extend({
 			proditem.values = inValues;
 
 			return proditem;
-		})
+        })
+        
+        // TODO 这个地方后续会有bug隐患，因为只是取出数组中的第一个，如果第一个的长度小于第二个 那么会造成丢失，重构时修改整个折线图
+        let xDatas = chooseData.map(elem => {
+            return elem.values.map(vals => vals.ym)
+        })[0];
 
-		// data.forEach(function(d) {
-		//     d.values.forEach(function(dd) {
-		//         dd.ym = parseDate(dd.ym);
-		//         dd.value = +dd.value;
-		//     });
-		// });
 		/* Scale */
-		let xScale = d3.scaleTime()
-			.domain(d3.extent(data[0].values, d => d.ym))
-			.range([0, width - margin]);
+        let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+        xScale.domain(xDatas);
+        // d3.scaleTime()
+		// 	.domain(d3.extent(data[0].values, d => d.ym))
+		// 	.range([0, width - margin]);
 		let yMax = 0,
 			yMin = 0;
 		for (let i = 0, len = data.length; i < len; i++) {
@@ -87,13 +86,13 @@ export default Component.extend({
 			.attr("height", 380)
 			.attr('preserveAspectRatio', 'none')
 			.attr('viewBox', '-40 -10 950 380')
-			.append('g');
-		// .attr("transform", `translate(${margin}, ${margin})`);
+            .append('g');
+            
 		function make_y_gridlines() {
 			return d3.axisLeft(yScale)
 				.ticks(7)
 		};
-		// svg.append('text')
+
 		svg.append("text")
 			.text(title)
 			.attr("class", "title")
@@ -201,7 +200,7 @@ export default Component.extend({
 			});
 
 		/* Add Axis into SVG */
-		let xAxis = d3.axisBottom(xScale).ticks(12).tickFormat(formatDateIntoYearMonth);
+		let xAxis = d3.axisBottom(xScale)//.ticks(12).tickFormat(formatDateIntoYearMonth);
 		let yAxis = d3.axisLeft(yScale).ticks(7);
 
 		svg.append("g")
