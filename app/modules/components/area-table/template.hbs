@@ -1,24 +1,22 @@
-{{!-- <div class="table-responsive"> --}}
-    <table local-class="table-container" class="table">
-        <thead>
-            <tr>
-                <td>公司目标($)</td>
-                <td>预测目标($)</td>
-                <td>协访天数</td>
-                <td>全国会</td>
-                <td>城市会</td>
-                <td>科室会</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>652,000 </td>
-                <td>{{data.forecast}}</td>
-                <td>{{data.covisit}}</td>
-                <td>{{data.nationMeeting}}</td>
-                <td>{{data.cityMeeting}}</td>
-                <td>{{data.departmentMeeting}}</td>
-            </tr>
-        </tbody>
-    </table>
-{{!-- </div> --}}
+<table local-class="table-container" class="table">
+    <thead>
+        <tr>
+            <td>公司目标($)</td>
+            <td>预测目标($)</td>
+            <td>协访天数</td>
+            <td>全国会</td>
+            <td>城市会</td>
+            <td>科室会</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{areaComponyTarget}} </td>
+            <td>{{data.forecast}}</td>
+            <td>{{data.covisit}}</td>
+            <td>{{data.nationMeeting}}</td>
+            <td>{{data.cityMeeting}}</td>
+            <td>{{data.departmentMeeting}}</td>
+        </tr>
+    </tbody>
+</table>

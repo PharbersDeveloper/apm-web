@@ -4,5 +4,7 @@
 </button>
 <button local-class="btn-show">
     <span>代表</span>
-    <span>小郭</span>
+    {{#each represents as |item|}}
+        <span>{{item}}</span>
+    {{/each}}
 </button>

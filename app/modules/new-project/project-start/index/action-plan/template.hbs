@@ -1,6 +1,5 @@
 <div local-class="action-plan-container">
 	<div class="next-step">
-		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
 		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
 			下一步
 		{{/bs-button}}
@@ -11,10 +10,11 @@
 		        <option  value={{area.id}}>{{area.name}}</option>
 		    {{/each}}
 		</select>
-		{{radar-section-effectiveness  gradient="glowplan" radarSectionData=radarData changeArea=(action 'changeArea')}}
+		{{radar-section-effectiveness  gradient="glowplan" radarSectionData=radarData }}
 	</div>
 	{{#each resortRegionModel as |region index|}}
-		{{area-plan-info data=region index=index}}
+        {{area-plan-info data=region areaReps=areaReps regionCompanyTargets=regionCompanyTargets index=index}}
+
 	{{/each}}
 </div>
 

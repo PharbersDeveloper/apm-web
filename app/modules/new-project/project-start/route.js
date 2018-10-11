@@ -121,8 +121,8 @@ export default Route.extend({
 
                 let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
                 d3Data(medicineAll)
-                this.areaInfo(ids.courseid, controller)
-                return ids
+                // TODO 获取竞品后立即获取 区域信息，放到最后获取会出现缓存问题，这块需要重构
+                return this.areaInfo(ids, controller)
             })
             .finally( () => {
                 let productInfo = {
@@ -142,17 +142,17 @@ export default Route.extend({
         let conditions = this.store.object2JsonApi('request', req);
         this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
     },
-    areaInfo(courseid, controller) {
+    areaInfo(ids, controller) {
         let regionBaseInfo = {}
         // 获取所有区域名称与基本信息
         let req = this.store.createRecord('request', { res: 'bind_course_region' });
         req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
             key: 'course_id',
-            val: courseid,
+            val: ids.courseid,
         }))
         let conditions = this.store.object2JsonApi('request', req);
 
-        this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
+        return this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
             .then(data => { // 处理区域基本数据
                 regionBaseInfo.info = data;
                 return data;
@@ -170,7 +170,7 @@ export default Route.extend({
                 req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
                 req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
                     key: 'course_id',
-                    val: courseid,
+                    val: ids.courseid,
                 }))
                 conditions = this.store.object2JsonApi('request', req);
                 return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
@@ -243,7 +243,7 @@ export default Route.extend({
                     req = this.store.createRecord('request', { res: 'bind_course_region_rep' });
                     let eqValues = [
                         { type: 'eqcond', key: 'region_id', val: elem.id},
-                        { type: 'eqcond', key: 'course_id', val: courseid },
+                        { type: 'eqcond', key: 'course_id', val: ids.courseid },
                     ]
                     eqValues.forEach((elem) => {
                         req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
@@ -258,7 +258,13 @@ export default Route.extend({
             })
             .then(data => { // 处理所有区域的负责代表
                 regionBaseInfo.represents = [];
-                data.forEach(elem => {
+                data.forEach((elem, index) => {
+                    // 绑定区域与人员关系，方便缓存读取
+                    this.store.createRecord('bind_course_region_rep', {
+                        id: index,
+                        region_id: elem.query.included[0].attributes.val,
+                        represents: elem.map(x => x.id)
+                    })
                     regionBaseInfo.represents.pushObject({
                         region_id: elem.query.included[0].attributes.val,
                         data: elem
@@ -272,7 +278,7 @@ export default Route.extend({
                     req = this.store.createRecord('request', {res: 'bind_course_region_ym_rep_behavior'});
                     let eqValues = [
                         { type: 'eqcond', key: 'region_id', val: elem.id},
-                        { type: 'eqcond', key: 'course_id', val: courseid },
+                        { type: 'eqcond', key: 'course_id', val: ids.courseid },
                         { type: 'gtecond', key: 'ym', val: '17-01' },
                         { type: 'ltecond', key: 'ym', val: '17-12' },
                     ]
@@ -312,7 +318,7 @@ export default Route.extend({
                     req = this.store.createRecord('request', {res: 'bind_course_region_business'});
                     let eqValues = [
                         { type: 'eqcond', key: 'region_id', val: elem.id},
-                        { type: 'eqcond', key: 'course_id', val: courseid }
+                        { type: 'eqcond', key: 'course_id', val: ids.courseid }
                     ]
                     eqValues.forEach((elem) => {
                         req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
@@ -402,6 +408,7 @@ export default Route.extend({
                     lineData: d3Data(medicineByRegion).reverse(),
                     tableData: tableData(medicineByRegion).reverse()
                 }
+                return ids
             })
             .finally(() => {
                 controller.set('AreaModel', regionBaseInfo);
