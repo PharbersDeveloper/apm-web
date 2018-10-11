@@ -2,6 +2,10 @@
 	font-size: 0;
 
 	.turn {
+		position: fixed;
+		right: 0;
+		top: 80px;
+		z-index: 3;
 		display: block;
 		padding: 0 40px;
 
@@ -13,7 +17,18 @@
 	}
 
 	.reginonal-info-content {
-		ul {
+		padding-top: 40px;
+
+		& > ul {
+			position: fixed;
+			top: 80px;
+			left: 0;
+			right: 0;
+			z-index: 2;
+			margin-bottom: 5px;
+			height: 40px;
+			background-color: #EFEEF0;
+
 			li {
 				a {
 					font-size: 14px;
@@ -35,53 +50,52 @@
 			.analyze-section {
 				background: #FFFFFF;
 				box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
-
-				.table-container {
-					font-family: PingFangSC-Regular;
-					font-size: 14px;
-
-					thead {
-						color: #767A80;
-						letter-spacing: 1px;
-
-						td {
-							padding: 10px 0 10px 5px;
-						}
-					}
-
-					tbody {
-						color: #485465;
-						letter-spacing: 1.5px;
-
-						tr {
-							height: 60px;
-							padding: 10px 0;
-						}
-
-						td {
-							margin: 5px 0;
-							height: 40px;
-							line-height: 40px;
-							padding: 0 0 0 5px;
-							border: 0;
-
-							&:first-child {
-								cursor: pointer;
-								color: #4A90E2;
-							}
-
-							input {
-								padding: 0 14px;
-								width: 90px;
-								height: 30px;
-								border: 0;
-								letter-spacing: 1.17px;
-								background: #D8D8D8;
-								border-radius: 50px;
-							}
-						}
-					}
-				}
+				// .table-container {
+				// 	font-family: PingFangSC-Regular;
+				// 	font-size: 14px;
+				//
+				// 	thead {
+				// 		color: #767A80;
+				// 		letter-spacing: 1px;
+				//
+				// 		td {
+				// 			padding: 10px 0 10px 5px;
+				// 		}
+				// 	}
+				//
+				// 	tbody {
+				// 		color: #485465;
+				// 		letter-spacing: 1.5px;
+				//
+				// 		tr {
+				// 			height: 60px;
+				// 			padding: 10px 0;
+				// 		}
+				//
+				// 		td {
+				// 			margin: 5px 0;
+				// 			height: 40px;
+				// 			line-height: 40px;
+				// 			padding: 0 0 0 5px;
+				// 			border: 0;
+				//
+				// 			&:first-child {
+				// 				cursor: pointer;
+				// 				color: #4A90E2;
+				// 			}
+				//
+				// 			input {
+				// 				padding: 0 14px;
+				// 				width: 90px;
+				// 				height: 30px;
+				// 				border: 0;
+				// 				letter-spacing: 1.17px;
+				// 				background: #D8D8D8;
+				// 				border-radius: 50px;
+				// 			}
+				// 		}
+				// 	}
+				// }
 			}
 		}
 	}

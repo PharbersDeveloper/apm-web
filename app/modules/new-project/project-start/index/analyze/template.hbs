@@ -12,7 +12,7 @@
 	{{/each}}
 	{{!-- {{area-analyze-input }} --}}
 </div>
-{{#bs-modal open=notesEmpty onSubmit=(action 'toSort') onHidden=(action (mut notesEmpty) false) as |modal|}}
+{{#bs-modal local-class="hint-modal" open=notesEmpty onSubmit=(action 'toSort') onHidden=(action (mut notesEmpty) false) as |modal|}}
   {{#modal.header}}
     <h4 class="modal-title">
       <span></span>提示

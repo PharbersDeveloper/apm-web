@@ -52,7 +52,7 @@ export default Route.extend({
                 }
             })
             controller.set('regionCompanyTargets', regionCompanyTargets)
-            controller.set('quarterTotal', predictionData.reduce((acc, cur) => acc + cur.sales.company_target, 0))
+            controller.set('totalCompanyTarget', predictionData.reduce((acc, cur) => acc + cur.sales.company_target, 0))
 
             let areaBarData = d3Data(groupBy(temp.filter(elem => elem.region_id !== 'all'), 'region_id'));
             controller.set('areaBarData', areaBarData);

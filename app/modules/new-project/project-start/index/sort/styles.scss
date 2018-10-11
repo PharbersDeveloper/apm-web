@@ -1,24 +1,30 @@
 .sort-conent {
-    padding: 18px 20px;
+	padding: 18px 20px;
 	background: #FFF;
-    box-shadow: 0 0 4px 0 rgba(210,210,210,0.50);
-    font-family: PingFangSC-Regular;
+	box-shadow: 0 0 4px 0 rgba(210,210,210,0.50);
+	font-family: PingFangSC-Regular;
 
-    .title-sort {
-        height: 20px;
-        line-height: 20px;
-        font-size: 14px;
-        color: #000000;
-        letter-spacing: 1.5px;
+	.title-sort {
+		height: 20px;
+		line-height: 20px;
+		font-size: 14px;
+		color: #000000;
+		letter-spacing: 1.5px;
 
-        span {
-            color: #485465;
-            letter-spacing: 1.5px;
-        }
-    }
+		span {
+			color: #485465;
+			letter-spacing: 1.5px;
+		}
+	}
 
-    .tips-sort {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
+	.tips-sort {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+}
+
+.hint-modal {
+	:global(.close) {
+		display: none;
+	}
 }

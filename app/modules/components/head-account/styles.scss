@@ -32,9 +32,13 @@
 			width: 120px;
 			background-color: #E3E3E3;
 
-			a:hover {
-				background-color: inherit;
+			li {
+				text-align: center;
+				cursor: pointer;
 			}
+			// a:hover {
+			// 	background-color: inherit;
+			// }
 		}
 	}
 }
