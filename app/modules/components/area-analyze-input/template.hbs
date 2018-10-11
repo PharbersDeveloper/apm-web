@@ -5,7 +5,7 @@
             <p local-class="title-section">
                 {{data.name}}
                 <div local-class="toggle-area">
-                    <span class="glyphicon glyphicon-trash"></span>
+                    <span local-class="clear" {{action 'clearNotes'}}><span class="glyphicon glyphicon-trash"></span></span>
                     {{!-- {{#if collapsed}}
                         <span class="glyphicon glyphicon-triangle-bottom"></span>
                     {{else}}
