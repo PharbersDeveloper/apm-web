@@ -20,13 +20,6 @@ export default Controller.extend({
 		});
 		return total;
 	}),
-	totalCompanyTarget: computed('regionCompanyTargets.@each', function() {
-		let total = 0;
-		this.get('regionCompanyTargets').forEach((item) => {
-			total += parseInt(item.company_targe)
-		});
-		return total;
-	}),
 	newRegionData: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');
 		let region = this.store.peekAll('region');

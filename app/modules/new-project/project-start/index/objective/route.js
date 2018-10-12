@@ -43,9 +43,21 @@ export default Route.extend({
         
         return Promise.all(promiseArray).then(data => {
             data.forEach(elem => {elem.forEach(good => temp.pushObject(good)) });
+            let predictionData =  temp.filter(elem => elem.ym === '18-01' || elem.ym === '18-02' || elem.ym === '18-03')
+            let predictionGroupData = groupBy(predictionData, 'region_id')
+            let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
+                return {
+                    region_id: key,
+                    company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.sales.company_target, 0)
+                }
+            })
+            controller.set('regionCompanyTargets', regionCompanyTargets)
+            controller.set('totalCompanyTarget', predictionData.reduce((acc, cur) => acc + cur.sales.company_target, 0))
+
             let areaBarData = d3Data(groupBy(temp.filter(elem => elem.region_id !== 'all'), 'region_id'));
             controller.set('areaBarData', areaBarData);
             controller.set('barData', areaBarData.find(elem => elem.region_id === controller.get('initSelectedRegionId')).data)
+
             return areaBarData
         })
     },
@@ -57,15 +69,6 @@ export default Route.extend({
         controller.set('params', paramsController);
         controller.set('regionData', region);
         controller.set('initSelectedRegionId', region.firstObject.id);
-
-        let goodsByRegion = groupBy(this.store.peekAll('bind-course-region-goods-ym-sales').filter(elem => elem.region_id !== 'all'), 'region_id')
-        let regionCompanyTargets = Object.keys(goodsByRegion).map(key => {
-            return {
-                region_id: key,
-                company_targe: goodsByRegion[key].lastObject.sales.company_target
-            }
-        })
-        controller.set('regionCompanyTargets', regionCompanyTargets)
         
         return this.loadD3Data(paramsController, controller)
         

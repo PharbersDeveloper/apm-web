@@ -1,6 +1,5 @@
 {{outlet}}
 <div class="next-step">
-    {{!-- {{#bs-button onClick=(action "nextStep")}} --}}
     {{#bs-button class="btn-next"}}
         导出
     {{/bs-button}}
@@ -10,7 +9,8 @@
 </div>
 <div  local-class="area-sales">
     <p>地区季度销售结果</p>
-	{{d3-histogram-area-sales }}
+    {{log model}}
+	{{d3-histogram-area-sales data=model.quarterD3BarData}}
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<table class="table table-striped" local-class="table-sales">
 			<thead>
@@ -21,31 +21,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>最佳结果</td>
-					<td>26.33%</td>
-					<td>60,000</td>
-				</tr>
-				<tr>
-					<td>本季结果</td>
-					<td>26.33%</td>
-					<td>60,000</td>
-				</tr>
-				<tr>
-					<td>上季结果</td>
-					<td>26.33%</td>
-					<td>60,000</td>
-				</tr>
-				<tr>
-					<td>最差结果</td>
-					<td>26.33%</td>
-					<td>60,000</td>
-				</tr>
+                {{#each model.quarterTableData as |item|}}
+                    <tr>
+                        <td>{{item.name}}</td>
+                        <td>{{item.share}}</td>
+                        <td>{{item.sales}}</td>
+                    </tr>
+                {{/each}}
 			</tbody>
 		</table>
 	</div>
 </div>
-{{d3-line-multi-legend chooseData=chooseData title="地区产品份额变化" class="multiline-area-prod-share"}}
-{{d3-line-multi-legend chooseData=sectionData title="各区域份额结果" class="rea-share"}}
-
-{{!-- {{multiline-section-share sectionData=sectionData}} --}}
+{{d3-line-multi-legend chooseData=model.areaD3LineShareData title="地区产品份额变化" class="multiline-area-prod-share"}}
+{{d3-line-multi-legend chooseData=model.areaD3LineRegionData title="各区域份额结果" class="rea-share"}}
