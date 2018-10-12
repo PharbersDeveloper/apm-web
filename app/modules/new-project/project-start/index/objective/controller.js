@@ -1,13 +1,10 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 
-export default Controller.extend({
-	init() {
-		this._super(...arguments);
-		// this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
-		this.set('regionData', this.store.peekAll('region'));
-	},
 
+export default Controller.extend({
+	areaBarData: null,
+	initSelectedRegionId: '',
 	totalForecast: computed('regionData.@each.forecast', function() {
 		let total = 0;
 		let region = this.store.peekAll('region');
@@ -19,7 +16,7 @@ export default Controller.extend({
 		});
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 		region.forEach((item) => {
-			total += Number(item.forecast) || 0;
+			total += parseInt(item.forecast) || 0;
 		});
 		return total;
 	}),
@@ -39,23 +36,73 @@ export default Controller.extend({
 	}),
 	actions: {
 		nextStep() {
+			let emptyForecastRegion = "";
 			let region = this.set('region', this.store.peekAll('region'));
+			// let params = this.get('params');
 			let isForecastEmpty = region.every((item) => {
+				if (item.forecast.length == 0) {
+					emptyForecastRegion = item.name;
+				}
 				return item.forecast.length > 0
 			});
+			this.set('isForecastEmpty', isForecastEmpty);
+			this.set('tipsTitle', '提示');
+
 			if (isForecastEmpty) {
-				this.transitionToRoute('new-project.project-start.index.resource')
+				let totalCompanyTarget = this.get('totalCompanyTarget');
+				let totalForecast = this.get('totalForecast');
+
+				if (totalForecast < totalCompanyTarget) {
+					this.set('isForecastEmpty', false);
+					this.set('tipsModal', true);
+					// this.set('tipsTitle', '提示');
+					this.set('tipsContent', '您的预测总指标需要超过公司本季度总指标！');
+				} else {
+					this.set('tipsModal', true);
+					// this.set('tipsTitle', '提示');
+					this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+				}
 			} else {
-				this.set('tipModal', true);
-				this.set('content', '请填写全部的预测数据')
+				this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				this.set('tipsContent', '请填写 ' + emptyForecastRegion + ' 的预测数据')
 			}
 		},
+		toResource() {
+			let region = this.set('region', this.store.peekAll('region'));
+			let params = this.get('params');
+			let promiseArray = region.map((reg) => {
+				let req = this.store.createRecord('request', {
+					res: 'paperinput',
+				});
+				let eqValues = [
+					{ key: 'paper_id', type: 'eqcond', val: params.paperid },
+					{ key: 'region_id', type: 'eqcond', val: reg.id },
+					{ key: 'predicted_target', type: 'upcond', val: parseInt(reg.forecast) }
+				];
+				eqValues.forEach((item) => {
+					req.get(item.type).pushObject(this.store.createRecord(item.type, {
+						key: item.key,
+						val: item.val,
+					}))
+				});
+				let jsonReq = this.store.object2JsonApi('request', req);
+				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
+			});
+
+			Promise.all(promiseArray).then((res) => {
+				this.transitionToRoute('new-project.project-start.index.resource')
+			}).catch((error) => {
+				console.error(error);
+			});
+		},
 		openTips(region) {
-			this.set('tipModal', true);
-			this.set('content', region.notes)
+			this.set('tipsModal', true);
+			this.set('tipsTitle', region.name);
+			this.set('tipsContent', region.notes);
 		},
 		changeArea(value) {
-			alert('Are you sure to change Area?');
+			this.set('barData', this.areaBarData.find(elem => elem.region_id === value).data)
 		}
 	}
 });

@@ -19,11 +19,10 @@
 	}
 
 	.account {
-		opacity: 0.46;
-		background: #E3E3E3;
 		width: 120px;
 
 		button {
+			opacity: 0.46;
 			border: none;
 			height: 40px;
 			width: 120px;
@@ -31,6 +30,15 @@
 
 		ul {
 			width: 120px;
+			background-color: #E3E3E3;
+
+			li {
+				text-align: center;
+				cursor: pointer;
+			}
+			// a:hover {
+			// 	background-color: inherit;
+			// }
 		}
 	}
 }

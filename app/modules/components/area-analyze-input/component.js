@@ -8,6 +8,9 @@ export default Component.extend({
 		},
 		keyUp() {
 			this.sendAction('saveToLocalStorage');
+		},
+		clearNotes() {
+			this.set('data.notes', "")
 		}
 	}
 });

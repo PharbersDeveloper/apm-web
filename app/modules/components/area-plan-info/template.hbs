@@ -1,4 +1,3 @@
-{{yield}}
 <div local-class="action-plan-section">
 	<div class="row">
 		<div class="col-md-12 col-lg-12 col-sm-12">
@@ -11,8 +10,16 @@
 			</p>
 
 			{{#bs-collapse local-class="content-container" collapsed=collapsed}}
-				{{area-order-rep data=data index=index}}
-				{{area-table data=data}}
+                {{#each areaReps as |item|}}
+                    {{#if (eq item.region_id data.id)}}
+                        {{area-order-rep data=data represents=item.data index=index}}
+                    {{/if}}
+                {{/each}}
+                {{#each regionCompanyTargets as |item|}}
+                    {{#if (eq item.region_id data.id)}}
+                        {{area-table data=data areaComponyTarget=item.company_targe}}
+                    {{/if}}
+                {{/each}}
                 {{area-choose-plan data=data}}
 			{{/bs-collapse}}
 		</div>

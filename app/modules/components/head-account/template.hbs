@@ -5,15 +5,14 @@
     <div local-class="account">
         <div class="dropdown">
           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Alex Wang
+            {{data}}
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li {{action 'exitSystem'}}>退出系统</li>
+
+            {{!-- <li role="separator" class="divider"></li> --}}
           </ul>
         </div>
     </div>
 </div>
-{{yield}}

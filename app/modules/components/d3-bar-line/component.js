@@ -19,27 +19,10 @@ export default Component.extend({
 	},
 	drawChart() {
 		d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
-		// let dataset = [
-		// 	{ key: 'W1', value: 32, value2: 16 },
-		// 	{ key: 'W2', value: 26, value2: 20 },
-		// 	{ key: 'W3', value: 45, value2: 40 },
-		// 	{ key: 'W4', value: 38, value2: 35 },
-		// 	{ key: 'W5', value: 53, value2: 24 },
-		// 	{ key: 'W6', value: 48, value2: 18 },
-		// 	{ key: 'W7', value: 42, value2: 12 },
-		// 	{ key: 'W8', value: 34, value2: 15 },
-		// 	{ key: 'W9', value: 37, value2: 23 },
-		// 	{ key: 'W10', value: 36, value2: 24 },
-		// 	{ key: 'W11', value: 34, value2: 12 },
-		// 	{ key: 'W12', value: 32, value2: 18 },
-		// 	{ key: 'W13', value: 20, value2: 26 },
-		// 	{ key: 'W14', value: 19, value2: 36 },
-		// 	{ key: 'W15', value: 28, value2: 26 },
-		// ];
 
 		let width = 900;
 		let height = 340;
-		let margin = { top: 50, right: 20, bottom: 30, left: 30 };
+		let margin = { top: 50, right: 20, bottom: 30, left: 50 };
 
 		let xDatas = this.dataset.map(elem => elem.key);
 		let values = this.dataset.map(elem => elem.value);
@@ -47,14 +30,15 @@ export default Component.extend({
 		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 			yScale = d3.scaleLinear().rangeRound([height, 0]);
 
-		xScale.domain(xDatas);
-		yScale.domain([0, d3.max(values)]);
+        xScale.domain(xDatas);
+        let maxVal = d3.max(values) * 1.3
+		yScale.domain([0, maxVal]);
 
 		let svgContainer = d3.select(`#${this.get('chartId')}`);
 		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
 		let svg = svgContainer.append("svg").style('background-color', this.get('backgroundColor'))
 			.attr('preserveAspectRatio', 'xMidYMid meet')
-			.attr('viewBox', '0 0 960 420')
+            .attr('viewBox', '0 0 960 420')
 
 		let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
@@ -124,19 +108,19 @@ export default Component.extend({
 				.selectAll('g:nth-last-of-type(3)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
-			// .attr('class', '_predict-bar_1mas67')
+
 			d3.select(`#${this.get('chartId')}`)
 				.selectAll('._container-g_1mas67')
 				.selectAll('g:nth-last-of-type(2)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
-			// .attr('class', '_predict-bar_1mas67')
+
 			d3.select(`#${this.get('chartId')}`)
 				.selectAll('._container-g_1mas67')
 				.selectAll('g:last-of-type')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
-			// .attr('class', '_predict-bar_1mas67')
+
 		}
 
 		let line = d3.line()
@@ -170,10 +154,9 @@ export default Component.extend({
 		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer');
 		var legendArea = legendContainer.append("svg")
 			.attr('preserveAspectRatio', 'xMidYMid meet')
-			.attr('viewBox', '0 0 960 20')
-			.attr("transform", function(d, i) {
-				return "translate(" + 800 / 2 + ", 0)";
-			});
+            .attr('viewBox', '0 0 960 20')
+            .attr('class', 'legendArea')
+			
 		let legendData = ["份额", "销售额"];
 		if (this.get('laterThreeChangeBg')) {
 			legendData = ["份额", "销售额", "预测销售额"];
@@ -184,7 +167,7 @@ export default Component.extend({
 			.enter()
 			.append("g")
 			.attr("transform", function(d, i) {
-				return "translate(" + i * 100 + ",0)";
+				return "translate(" + parseInt(i * 2 + 2) * 100 + ",0)";
 			});
 
 		//添加图例的矩形色块

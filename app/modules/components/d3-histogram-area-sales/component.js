@@ -6,7 +6,7 @@ export default Component.extend({
 	classNames: ['histogram-area-sales', 'col-lg-6', 'col-md-6', 'col-sm-6', 'col-xs-12'],
 	init() {
 		this._super(...arguments);
-		this.data = [{ id: "1", name: "最差结果", value: 61 }, { id: "2", name: "上季", value: 78 }, { id: "3", name: "本季", value: 28 }, { id: "4", name: "最佳结果", value: 35 }];
+		// this.data = [{ id: "1", name: "最差结果", value: 61 }, { id: "2", name: "上季", value: 78 }, { id: "3", name: "本季", value: 28 }, { id: "4", name: "最佳结果", value: 35 }];
 	},
 	didReceiveAttrs() {
 		this._super(...arguments);
@@ -44,7 +44,7 @@ export default Component.extend({
 
 		let y = d3.scaleLinear()
 			.rangeRound([height, 0])
-			.domain([0, 100]);
+			.domain([0, 1]);
 
 		let x_axis = d3.axisBottom(x);
 		let y_axis = d3.axisLeft(y).ticks(10).tickFormat(elem => "");

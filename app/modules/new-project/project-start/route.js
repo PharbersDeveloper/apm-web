@@ -1,17 +1,7 @@
 import Route from '@ember/routing/route';
-import { later } from '@ember/runloop';
+import { groupBy } from '../../phtool/tool';
 
 export default Route.extend({
-    groupBy(objectArray, property) {
-        return objectArray.reduce(function(acc, obj) {
-            var key = obj[property];
-            if (!acc[key]) {
-                acc[key] = [];
-            }
-            acc[key].push(obj);
-            return acc;
-        }, {});
-    },
     scenarioInfo(courseid, controller) {
         let courseRecord = this.store.peekRecord('course', courseid);
         let data = {
@@ -112,7 +102,7 @@ export default Route.extend({
                 let that = this;
                 function d3Data(medicineArrayObject) {
                     Object.keys(medicineArrayObject).forEach(key => {
-                        let temp = that.groupBy(medicineArrayObject[key], 'ym');
+                        let temp = groupBy(medicineArrayObject[key], 'ym');
                         let record = that.store.peekRecord('medicine', key);
                         let values = Object.keys(temp).map(elem => {
                             let sum = temp[elem].reduce((acc, cur) => acc + cur.sales.share, 0);
@@ -129,12 +119,10 @@ export default Route.extend({
                 }
                 let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
 
-                let medicineCompany = this.groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'goods_id');
-                let medicineCompete = this.groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
-                d3Data(medicineCompany)
-                d3Data(medicineCompete)
-                this.areaInfo(ids.courseid, controller)
-                return ids
+                let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
+                d3Data(medicineAll)
+                // TODO 获取竞品后立即获取 区域信息，放到最后获取会出现缓存问题，这块需要重构
+                return this.areaInfo(ids, controller)
             })
             .finally( () => {
                 let productInfo = {
@@ -154,17 +142,17 @@ export default Route.extend({
         let conditions = this.store.object2JsonApi('request', req);
         this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
     },
-    areaInfo(courseid, controller) {
+    areaInfo(ids, controller) {
         let regionBaseInfo = {}
         // 获取所有区域名称与基本信息
         let req = this.store.createRecord('request', { res: 'bind_course_region' });
         req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
             key: 'course_id',
-            val: courseid,
+            val: ids.courseid,
         }))
         let conditions = this.store.object2JsonApi('request', req);
 
-        this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
+        return this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
             .then(data => { // 处理区域基本数据
                 regionBaseInfo.info = data;
                 return data;
@@ -182,7 +170,7 @@ export default Route.extend({
                 req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
                 req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
                     key: 'course_id',
-                    val: courseid,
+                    val: ids.courseid,
                 }))
                 conditions = this.store.object2JsonApi('request', req);
                 return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
@@ -255,7 +243,7 @@ export default Route.extend({
                     req = this.store.createRecord('request', { res: 'bind_course_region_rep' });
                     let eqValues = [
                         { type: 'eqcond', key: 'region_id', val: elem.id},
-                        { type: 'eqcond', key: 'course_id', val: courseid },
+                        { type: 'eqcond', key: 'course_id', val: ids.courseid },
                     ]
                     eqValues.forEach((elem) => {
                         req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
@@ -270,7 +258,13 @@ export default Route.extend({
             })
             .then(data => { // 处理所有区域的负责代表
                 regionBaseInfo.represents = [];
-                data.forEach(elem => {
+                data.forEach((elem, index) => {
+                    // 绑定区域与人员关系，方便缓存读取
+                    this.store.createRecord('bind_course_region_rep', {
+                        id: index,
+                        region_id: elem.query.included[0].attributes.val,
+                        represents: elem.map(x => x.id)
+                    })
                     regionBaseInfo.represents.pushObject({
                         region_id: elem.query.included[0].attributes.val,
                         data: elem
@@ -284,7 +278,7 @@ export default Route.extend({
                     req = this.store.createRecord('request', {res: 'bind_course_region_ym_rep_behavior'});
                     let eqValues = [
                         { type: 'eqcond', key: 'region_id', val: elem.id},
-                        { type: 'eqcond', key: 'course_id', val: courseid },
+                        { type: 'eqcond', key: 'course_id', val: ids.courseid },
                         { type: 'gtecond', key: 'ym', val: '17-01' },
                         { type: 'ltecond', key: 'ym', val: '17-12' },
                     ]
@@ -324,7 +318,7 @@ export default Route.extend({
                     req = this.store.createRecord('request', {res: 'bind_course_region_business'});
                     let eqValues = [
                         { type: 'eqcond', key: 'region_id', val: elem.id},
-                        { type: 'eqcond', key: 'course_id', val: courseid }
+                        { type: 'eqcond', key: 'course_id', val: ids.courseid }
                     ]
                     eqValues.forEach((elem) => {
                         req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
@@ -369,11 +363,11 @@ export default Route.extend({
                     })
                 }
                 let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
-                let medicineByRegion = this.groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
+                let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
                 regionBaseInfo.salesBar = d3Data(medicineByRegion)
                 return null;
             })
-            .then(() => {
+            .then(() => { // 整体
                 let that = this;
                 function d3Data(medicineArrayObject) {
                     return Object.keys(medicineArrayObject).map(key => {
@@ -390,12 +384,12 @@ export default Route.extend({
                 }
                 function tableData(arrayObjec) {
                     return Object.keys(arrayObjec).map(key => {
-                        let potential = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
-                        let potential_contri = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
-                        let sales = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
-                        let sales_contri = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
-                        let contri_index = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
-                        let sales_growth = arrayObjec[key].reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
+                        let potential = arrayObjec[key].lastObject.sales.potential.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
+                        let potential_contri = arrayObjec[key].lastObject.sales.potential_contri.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
+                        let sales = arrayObjec[key].lastObject.sales.sales.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
+                        let sales_contri = arrayObjec[key].lastObject.sales.sales_contri.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
+                        let contri_index = arrayObjec[key].lastObject.sales.contri_index.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
+                        let sales_growth = arrayObjec[key].lastObject.sales.sales_growth.toFixed(2)//.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
                         return {
                             name: that.store.peekRecord('region', key).name,
                             potential,
@@ -409,11 +403,12 @@ export default Route.extend({
                 }
                 let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
                 // TODO 这块有疑问 是所有区域还是只有本公司产品？
-                let medicineByRegion = this.groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
+                let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
                 regionBaseInfo.overall = {
-                    lineData: d3Data(medicineByRegion),
+                    lineData: d3Data(medicineByRegion).reverse(),
                     tableData: tableData(medicineByRegion).reverse()
                 }
+                return ids
             })
             .finally(() => {
                 controller.set('AreaModel', regionBaseInfo);
