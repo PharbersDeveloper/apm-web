@@ -3,11 +3,11 @@ import { run } from '@ember/runloop';
 import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
-    classNames: ['multilines'],
+	classNames: ['multilines'],
 
 	didReceiveAttrs() {
-        this._super(...arguments);
-        if (this.get('chooseData')) run.schedule('render', this, this.drawMultiLineChoose);
+		this._super(...arguments);
+		if (this.get('chooseData')) run.schedule('render', this, this.drawMultiLineChoose);
 	},
 	drawMultiLineChoose() {
 		let localClass = this.get('class');
@@ -50,17 +50,17 @@ export default Component.extend({
 			proditem.values = inValues;
 
 			return proditem;
-        })
-        
-        // TODO 这个地方后续会有bug隐患，因为只是取出数组中的第一个，如果第一个的长度小于第二个 那么会造成丢失，重构时修改整个折线图
-        let xDatas = chooseData.map(elem => {
-            return elem.values.map(vals => vals.ym)
-        })[0];
+		})
+
+		// TODO 这个地方后续会有bug隐患，因为只是取出数组中的第一个，如果第一个的长度小于第二个 那么会造成丢失，重构时修改整个折线图
+		let xDatas = chooseData.map(elem => {
+			return elem.values.map(vals => vals.ym)
+		})[0];
 
 		/* Scale */
-        let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1);
-        xScale.domain(xDatas);
-        // d3.scaleTime()
+		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+		xScale.domain(xDatas);
+		// d3.scaleTime()
 		// 	.domain(d3.extent(data[0].values, d => d.ym))
 		// 	.range([0, width - margin]);
 		let yMax = 0,
@@ -74,7 +74,7 @@ export default Component.extend({
 			if (min < yMin) {
 				yMin = min
 			}
-		};
+		}
 
 		let yScale = d3.scaleLinear()
 			.domain([yMin, yMax + yMax / 3])
@@ -86,12 +86,12 @@ export default Component.extend({
 			.attr("height", 380)
 			.attr('preserveAspectRatio', 'none')
 			.attr('viewBox', '-40 -10 950 380')
-            .append('g');
-            
+			.append('g');
+
 		function make_y_gridlines() {
 			return d3.axisLeft(yScale)
 				.ticks(7)
-		};
+		}
 
 		svg.append("text")
 			.text(title)
@@ -128,7 +128,7 @@ export default Component.extend({
 					.attr("x", (width - margin) / 2)
 					.attr("y", 30);
 			})
-			.on("mouseout", function(d) {
+			.on("mouseout", function() {
 				svg.select(".title-text").remove();
 			})
 			.append('path')
@@ -136,7 +136,7 @@ export default Component.extend({
 			.attr('d', d => line(d.values))
 			.style('stroke', (d, i) => color(i))
 			.style('opacity', lineOpacity)
-			.on("mouseover", function(d) {
+			.on("mouseover", function() {
 				d3.selectAll('.much-lines .line')
 					.style('opacity', otherLinesOpacityHover);
 				d3.selectAll('.much-lines .circle')
@@ -146,7 +146,7 @@ export default Component.extend({
 					.style("stroke-width", lineStrokeHover)
 					.style("cursor", "pointer");
 			})
-			.on("mouseout", function(d) {
+			.on("mouseout", function() {
 				d3.selectAll(".much-lines .line")
 					.style('opacity', lineOpacity);
 				d3.selectAll('.much-lines .circle')
@@ -174,7 +174,7 @@ export default Component.extend({
 					.attr("x", d => xScale(d.ym) + 5)
 					.attr("y", d => yScale(d.value) - 10);
 			})
-			.on("mouseout", function(d) {
+			.on("mouseout", function() {
 				d3.select(this)
 					.style("cursor", "none")
 					// .transition()
@@ -186,13 +186,13 @@ export default Component.extend({
 			.attr("cy", d => yScale(d.value))
 			.attr("r", circleRadius)
 			.style('opacity', circleOpacity)
-			.on("mouseover", function(d) {
+			.on("mouseover", function() {
 				d3.select(this)
 					// .transition()
 					// .duration(duration)
 					.attr("r", circleRadiusHover);
 			})
-			.on("mouseout", function(d) {
+			.on("mouseout", function() {
 				d3.select(this)
 					// .transition()
 					// .duration(duration)
@@ -200,7 +200,7 @@ export default Component.extend({
 			});
 
 		/* Add Axis into SVG */
-		let xAxis = d3.axisBottom(xScale)//.ticks(12).tickFormat(formatDateIntoYearMonth);
+		let xAxis = d3.axisBottom(xScale) //.ticks(12).tickFormat(formatDateIntoYearMonth);
 		let yAxis = d3.axisLeft(yScale).ticks(7);
 
 		svg.append("g")
@@ -273,7 +273,7 @@ export default Component.extend({
 			.style("fill", '#485465')
 			.style('font-size', '12px')
 			.attr("dy", ".35em")
-			.text(function(d, i) {
+			.text(function(d) {
 				return d.name;
 			});
 	}

@@ -25,7 +25,7 @@ export default Component.extend({
 		let existPlan = this.get('data').actionplan.split(',').filter((item) => {
 			return item.length > 0;
 		});
-		console.log(existPlan);
+		// console.log(existPlan);
 		let initChoose = this.get('readyChoose');
 		initChoose.forEach((item) => {
 			if (existPlan.length > 0) {
