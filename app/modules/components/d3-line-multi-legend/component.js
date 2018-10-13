@@ -15,7 +15,7 @@ export default Component.extend({
 		d3.select('.' + localClass + ' svg.much-lines').remove();
 		d3.select('.' + localClass + ' .legendContainer').remove();
 		let svgContainer = d3.select(this.element);
-		let svg = svgContainer.append("svg").attr('class', 'much-lines');
+		let svg = svgContainer.append("svg").attr('class', 'much-lines').style('padding', '0 10px');
 		let chooseData = this.get('chooseData');
 		let width = 900;
 		let height = 340;
@@ -56,9 +56,10 @@ export default Component.extend({
 		let xDatas = chooseData.map(elem => {
 			return elem.values.map(vals => vals.ym)
 		})[0];
-
+		// console.log(xDatas);
 		/* Scale */
-		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+		let xScale = d3.scalePoint().rangeRound([0, width])
+		// let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1);
 		xScale.domain(xDatas);
 		// d3.scaleTime()
 		// 	.domain(d3.extent(data[0].values, d => d.ym))
@@ -114,8 +115,6 @@ export default Component.extend({
 		let lines = svg.append('g')
 			.attr('class', 'lines')
 			.attr("transform", "translate(0,30)");
-		console.log('in component ')
-		console.log(d3.select('.line').firstObject);
 		lines.selectAll('.line-group')
 			.data(data).enter()
 			.append('g')
@@ -224,7 +223,7 @@ export default Component.extend({
 		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer');
 		let legendArea = legendContainer.append("svg")
 			// .attr('width', 90)
-			.attr('width', 200 * data.length)
+			.attr('width', 180 * data.length)
 			// .attr('height', 30 * data.length);
 			.attr('height', 20)
 		// .attr("transform", "translate(0,0)");
@@ -242,7 +241,7 @@ export default Component.extend({
 			.enter()
 			.append("g")
 			.attr("transform", function(d, i) {
-				return "translate(" + i * 200 + ",0)";
+				return "translate(" + (i * 200) + ",0)";
 			});
 		//添加图例的矩形色块
 		// legend.append("rect")
