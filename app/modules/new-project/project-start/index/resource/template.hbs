@@ -52,7 +52,7 @@
 						<tbody>
                             {{log model}}
 							{{#each newRegionData as |region index|}}
-                                
+
 								<tr>
 									<td>{{index-to-normal index}} </td>
 									<td><span {{action 'openTips' region}}>{{region.name}}<span class="glyphicon glyphicon-list-alt"></span></span>
@@ -60,15 +60,15 @@
 									<td>
                                         {{#each model as |item|}}
                                             {{#if (eq item.region_id region.id)}}
-                                                {{item.company_targe}}
+                                                {{number-format item.company_targe}}
                                             {{/if}}
                                         {{/each}}
                                     </td>
-									<td>{{region.forecast}}</td>
-									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.covisit dir="rtl"}} </td>
-									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.nationMeeting dir="rtl"}} </td>
-									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.cityMeeting dir="rtl"}} </td>
-									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.departmentMeeting dir="rtl"}} </td>
+									<td>{{number-format region.forecast}}</td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.covisit dir="ltr"}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.nationMeeting dir="ltr"}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.cityMeeting dir="ltr"}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.departmentMeeting dir="ltr"}} </td>
 								</tr>
 							{{/each}}
 						</tbody>

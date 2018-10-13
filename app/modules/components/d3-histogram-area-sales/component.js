@@ -33,10 +33,14 @@ export default Component.extend({
 			.rangeRound([0, width])
 			.domain(xAxisText)
 			.padding(.2);
-
+		let yMax = 0;
+		yMax = d3.max(areaSalesData.map((item) => {
+			return item.value;
+		}));
+		console.log(yMax);
 		let y = d3.scaleLinear()
 			.rangeRound([height, 0])
-			.domain([0, 1]);
+			.domain([0, (yMax * 1.33)]);
 
 		let x_axis = d3.axisBottom(x);
 		let y_axis = d3.axisLeft(y).ticks(10).tickFormat(elem => "");
@@ -78,7 +82,8 @@ export default Component.extend({
 		amount
 			// .transition()
 			.attr("y", function(d) { return y(d.value); })
-			.text(function(d) { return d.value; });
+			// .text(function(d) { return d.value; });
+			.text('');
 
 		// 渐变开始
 		var colorRange = ['#FCA0A8', '#EA919E', '#A5A8CF', '#6177B4', '#A5A8CF', '#6177B4', '#F5D561', '#FBBF9E']

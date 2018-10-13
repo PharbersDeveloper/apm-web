@@ -13,16 +13,16 @@
 			{{#each regionCards as |card|}}
                 {{#if (eq data.id card.region_id)}}
                     <div local-class="card">
-                        <p local-class="headline">市场规模</p>
-                        <p local-class="num">{{card.sales.potential}}</p>
+                        <p local-class="headline">市场规模($)</p>
+                        <p local-class="num">{{number-format card.sales.potential}}</p>
                     </div>
                     <div local-class="card">
-                        <p local-class="headline">上月销售额</p>
-                        <p local-class="num">{{card.sales.sales}}</p>
+                        <p local-class="headline">上月销售额($)</p>
+                        <p local-class="num">{{number-format card.sales.sales}}</p>
                     </div>
                     <div local-class="card">
-                        <p local-class="headline">上月达成率%</p>
-                        <p local-class="num">{{card.sales.achieve_rate}}</p>
+                        <p local-class="headline">上月达成率(%)</p>
+                        <p local-class="num">{{number-percent card.sales.achieve_rate}}</p>
                     </div>
                 {{/if}}
 			{{/each}}
@@ -104,17 +104,17 @@
                             {{represent-report data=item.data}}
                         {{/if}}
                     {{/each}}
-					
+
 				</div>
 			{{/tab.pane}}
-			{{#tab.pane title="區域销售情況" }}
+			{{#tab.pane title="区域销售情況" }}
 				<div local-class="analyze">
                     {{#each salesBar as |item|}}
                         {{#if (eq item.region_id data.id)}}
                             {{d3-bar-line chartId=(concat "area-sales-chart" data.id) laterThreeChangeBg=false dataset=item.data}}
                         {{/if}}
                     {{/each}}
-                    
+
 					<div local-class="table-content">
 						<p>公司产品历史销售数据</p>
 						<table class="table table-striped" local-class="table-sales">
@@ -132,11 +132,11 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>销售额(K)</td>
+									<td>销售额($)</td>
                                     {{#each salesBar as |item|}}
                                         {{#if (eq item.region_id data.id)}}
                                             {{#each item.data as |item|}}
-                                                <td>{{item.value}}</td>
+                                                <td>{{number-format item.value}}</td>
                                             {{/each}}
                                         {{/if}}
                                     {{/each}}
@@ -146,7 +146,7 @@
                                     {{#each salesBar as |item|}}
                                         {{#if (eq item.region_id data.id)}}
                                             {{#each item.data as |item|}}
-                                                <td>{{item.value2}}</td>
+                                                <td>{{number-percent item.value2}}</td>
                                             {{/each}}
                                         {{/if}}
                                     {{/each}}
