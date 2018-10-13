@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
-import { get } from '@ember/object';
 import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',

@@ -30,7 +30,7 @@
 	{{#modal.footer}}
 	{{#if isActionplanEmpty}}
 		{{#bs-button onClick=(action modal.close)}}取消{{/bs-button}}
-		{{#bs-button type="success" onClick=(action modal.submit)}}下一步{{/bs-button}}
+		{{bs-button type="success" defaultText="下一步" pendingText="提交中。。。" resolvedText="提交成功，正在跳转" onClick=(action modal.submit)}}
 	{{else}}
 		{{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
 	{{/if}}

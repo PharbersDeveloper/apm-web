@@ -7,14 +7,14 @@ export default Component.extend({
 	chartId: '',
 	backgroundColor: '#FFF',
 	laterThreeChangeBg: false,
-    title: '',
-    dataset: [],
+	title: '',
+	dataset: [],
 
 	didReceiveAttrs() {
 		if (this.get('chartId') === '') {
 			throw 'chartId is null or undefinde, please set value';
 		} else {
-            if(this.dataset) run.scheduleOnce('render', this, this.drawChart);
+			if (this.dataset) run.scheduleOnce('render', this, this.drawChart);
 		}
 	},
 	drawChart() {
@@ -30,15 +30,15 @@ export default Component.extend({
 		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 			yScale = d3.scaleLinear().rangeRound([height, 0]);
 
-        xScale.domain(xDatas);
-        let maxVal = d3.max(values) * 1.3
+		xScale.domain(xDatas);
+		let maxVal = d3.max(values) * 1.3
 		yScale.domain([0, maxVal]);
 
 		let svgContainer = d3.select(`#${this.get('chartId')}`);
 		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
 		let svg = svgContainer.append("svg").style('background-color', this.get('backgroundColor'))
 			.attr('preserveAspectRatio', 'xMidYMid meet')
-            .attr('viewBox', '0 0 960 420')
+			.attr('viewBox', '0 0 960 420')
 
 		let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
@@ -154,9 +154,9 @@ export default Component.extend({
 		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer');
 		var legendArea = legendContainer.append("svg")
 			.attr('preserveAspectRatio', 'xMidYMid meet')
-            .attr('viewBox', '0 0 960 20')
-            .attr('class', 'legendArea')
-			
+			.attr('viewBox', '0 0 960 20')
+			.attr('class', 'legendArea')
+
 		let legendData = ["份额", "销售额"];
 		if (this.get('laterThreeChangeBg')) {
 			legendData = ["份额", "销售额", "预测销售额"];

@@ -1,11 +1,12 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
+import { set } from '@ember/object';
 
 export default Controller.extend({
-    collapsed: false,
-    areaRadars: [],
+	collapsed: false,
 	init() {
 		this._super(...arguments);
+		this.set('areaRadars', []);
 		this.readyChoose = [{
 				text: "产品知识培训",
 				isChecked: true
@@ -56,8 +57,8 @@ export default Controller.extend({
 			},
 
 		]
-        
-        this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
+
+		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
 
 	},
 	planPaire: computed('readyChoose.@each.isChecked', function() {
@@ -69,10 +70,10 @@ export default Controller.extend({
 				return choose.isChecked;
 			});
 			let index = booleanChooses.indexOf(true);
-			Ember.set(chooses[index], 'isChecked', false);
+			set(chooses[index], 'isChecked', false);
 			this.set('readyChoose', chooses);
 			dealPlan.shift()
-		};
+		}
 		return dealPlan;
 	}),
 	resortRegionModel: computed('regionResort', function() {
@@ -100,6 +101,7 @@ export default Controller.extend({
 			let region = this.store.peekAll('region');
 			// let params = this.get('params');
 			let isActionplanEmpty = region.every((item) => {
+				// console.log(item.actionplan);
 				return item.actionplan
 			});
 			this.set('isActionplanEmpty', isActionplanEmpty);
@@ -115,6 +117,7 @@ export default Controller.extend({
 			}
 		},
 		toUpshot() {
+			this.set('isPending', true);
 			let region = this.store.peekAll('region');
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
@@ -136,15 +139,14 @@ export default Controller.extend({
 				let jsonReq = this.store.object2JsonApi('request', req);
 				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
-
-			Promise.all(promiseArray).then((res) => {
+			Promise.all(promiseArray).then(() => {
+				console.log('successed')
+				// this.set('isPending', false);
+				// this.set('isFulfilled', true);
+				// this.set('isSettled', true);
 				this.transitionToRoute('new-project.project-start.index.upshot')
-
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 			}).catch((error) => {
-				console.error(error);
+				this.set('error', error);
 			});
 			// this.transitionToRoute('new-project.project-start.index.upshot')
 		}

@@ -34,14 +34,6 @@ export default Component.extend({
 			.domain(xAxisText)
 			.padding(.2);
 
-		// let yMax = 0;
-		// for (let i = 0, len = 4; i < len; i++) {
-		// 	let max = d3.max(areaSalesData[i], d => { return d.value });
-		// 	if (max > yMax) {
-		// 		yMax = max
-		// 	}
-		// };
-
 		let y = d3.scaleLinear()
 			.rangeRound([height, 0])
 			.domain([0, 1]);

@@ -10,8 +10,9 @@ export default Controller.extend({
 
 	},
 	newRegionData: computed('regionResort', function() {
-		let regionResort = this.get('regionResort');
+		let regionResort = JSON.parse(localStorage.getItem('regionResort'));
 		let region = this.store.peekAll('region');
+		console.log(regionResort);
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
 			region.forEach((ele) => {

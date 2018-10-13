@@ -12,6 +12,9 @@ export default Controller.extend({
 			localStorage.removeItem('userImage');
 			localStorage.removeItem('userEmail');
 			localStorage.removeItem('userPhone');
+			localStorage.removeItem('regionResort');
+			localStorage.removeItem('totalRegion');
+
 			this.transitionToRoute('index')
 		}
 	}
