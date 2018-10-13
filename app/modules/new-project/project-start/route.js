@@ -81,7 +81,7 @@ export default Route.extend({
 						skip: 0,
 						take: 1000
 					})
-				});
+                });
 				let promiseArray = data.map(elem => {
 					let eqValues = [
 						{ type: 'eqcond', key: 'course_id', val: ids.courseid },
@@ -357,7 +357,7 @@ export default Route.extend({
 								return {
 									key: elem.ym,
 									value: elem.sales.sales,
-									value2: (elem.sales.share * 100)
+									value2: (elem.sales.share * 100).toFixed(1)
 								}
 							})
 						}

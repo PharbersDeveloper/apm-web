@@ -3,7 +3,8 @@ import { computed } from '@ember/object';
 import { set } from '@ember/object';
 
 export default Controller.extend({
-	collapsed: false,
+    collapsed: false,
+    regionResort: [],
 	init() {
 		this._super(...arguments);
 		this.set('areaRadars', []);
@@ -57,9 +58,6 @@ export default Controller.extend({
 			},
 
 		]
-
-		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
-
 	},
 	planPaire: computed('readyChoose.@each.isChecked', function() {
 		let chooses = this.get('readyChoose');

@@ -12,6 +12,11 @@ export default Component.extend({
         },
         showArea(name) {
             this.get('introduced').set('isSelectedName', name)
+        },
+        exitTest() {
+            localStorage.removeItem('regionResort')
+            localStorage.removeItem('totalRegion')
+            window.location = '/new-project'
         }
     }
 });
