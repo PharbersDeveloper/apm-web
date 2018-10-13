@@ -8,7 +8,9 @@
                 {{/unless}}
             </div>
             <div local-class="btn">
-                {{#bs-button onClick=(action 'sendTitle' course.name course.prompt course.id) local-class="start"}}Start{{/bs-button}}
+                {{#if course.state}}
+                    {{#bs-button onClick=(action 'sendTitle' course.name course.prompt course.id) local-class="start"}}Start{{/bs-button}}
+                {{/if}}
             </div>
         </div>
     </div>
