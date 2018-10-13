@@ -23,14 +23,14 @@ export default Route.extend({
 		return this.store.queryObject('/api/v1/findQuarterReport/0', 'apmquarterreport', conditions).
 		then(data => {
 			modelData.quarterD3BarData = [
-				{ id: 1, name: '最差结果', value: data.worst_share },
-				{ id: 2, name: '上季结果', value: data.pre_share },
-				{ id: 4, name: '最佳结果', value: data.best_share }
+				{ id: 1, name: '最差结果', value: (data.worst_share * 100).toFixed(1) },
+				{ id: 2, name: '上季结果', value: (data.pre_share * 100).toFixed(1) },
+				{ id: 4, name: '最佳结果', value: (data.best_share * 100).toFixed(1) }
 			];
 			modelData.quarterTableData = [
-				{ name: '最差结果', sales: data.worst_sales, share: data.worst_share },
-				{ name: '上季结果', sales: data.pre_sales, share: data.pre_share },
-				{ name: '最佳结果', sales: data.best_sales, share: data.best_share }
+				{ name: '最差结果', sales: data.worst_sales, share: (data.worst_share * 100).toFixed(1) },
+				{ name: '上季结果', sales: data.pre_sales, share: (data.pre_share * 100).toFixed(1) },
+				{ name: '最佳结果', sales: data.best_sales, share: (data.best_share * 100).toFixed(1) }
 			]
 			return data;
 		}).
@@ -70,12 +70,12 @@ export default Route.extend({
 			let that = this;
 			let all = temData.filter(elem => elem.region_id === 'all');
 			let region = temData.filter(elem => elem.region_id !== 'all');
-			modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: all.lastObject.apmreport.share });
+			modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: (all.lastObject.apmreport.share).toFixed(1) });
 			modelData.quarterD3BarData = modelData.quarterD3BarData.sort(function(o1, o2) {
 				return o1.id - o2.id
 			})
 
-			modelData.quarterTableData.pushObject({ name: '本季结果', sales: all.lastObject.apmreport.sales, share: all.lastObject.apmreport.share });
+			modelData.quarterTableData.pushObject({ name: '本季结果', sales: all.lastObject.apmreport.sales, share: (all.lastObject.apmreport.share * 100).toFixed(1) });
 
 			let tempByGroupGoods = groupBy(all, 'goods_id')
 			modelData.areaD3LineShareData = Object.keys(tempByGroupGoods).map(key => {
