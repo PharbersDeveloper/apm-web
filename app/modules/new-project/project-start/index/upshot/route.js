@@ -28,9 +28,9 @@ export default Route.extend({
 				{ id: 4, name: '最佳结果', value: data.best_share }
 			];
 			modelData.quarterTableData = [
-				{ name: '最差结果', sales: data.worst_sales, share: data.worst_share },
-				{ name: '上季结果', sales: data.pre_sales, share: data.pre_share },
-				{ name: '最佳结果', sales: data.best_sales, share: data.best_share }
+				{ name: '最差结果', sales: data.worst_sales, share: (data.worst_share * 100).toFixed(1) },
+				{ name: '上季结果', sales: data.pre_sales, share: (data.pre_share * 100).toFixed(1) },
+				{ name: '最佳结果', sales: data.best_sales, share: (data.best_share * 100).toFixed(1) }
 			]
 			return data;
 		}).
@@ -70,7 +70,7 @@ export default Route.extend({
 			let that = this;
 			let all = temData.filter(elem => elem.region_id === 'all');
 			let region = temData.filter(elem => elem.region_id !== 'all');
-			modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: all.lastObject.apmreport.share });
+			modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: (all.lastObject.apmreport.share).toFixed(1) });
 			modelData.quarterD3BarData = modelData.quarterD3BarData.sort(function(o1, o2) {
 				return o1.id - o2.id
 			})
