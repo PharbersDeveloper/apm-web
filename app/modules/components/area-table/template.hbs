@@ -3,16 +3,16 @@
         <tr>
             <td>公司目标($)</td>
             <td>预测目标($)</td>
-            <td>协访天数</td>
-            <td>全国会</td>
-            <td>城市会</td>
-            <td>科室会</td>
+            <td>协访天数(%)</td>
+            <td>全国会(%)</td>
+            <td>城市会(%)</td>
+            <td>科室会(%)</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>{{areaComponyTarget}} </td>
-            <td>{{data.forecast}}</td>
+            <td>{{number-format areaComponyTarget}} </td>
+            <td>{{number-format data.forecast}}</td>
             <td>{{data.covisit}}</td>
             <td>{{data.nationMeeting}}</td>
             <td>{{data.cityMeeting}}</td>

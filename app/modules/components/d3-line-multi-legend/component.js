@@ -43,15 +43,15 @@ export default Component.extend({
 				let valueItem = {};
 				// valueItem.ym = parseDate(iitem.ym);
 				valueItem.ym = iitem.ym;
-				valueItem.unit = iitem.unit;
-				valueItem.value = iitem.value;
+				// valueItem.unit = iitem.unit;
+				// valueItem.value = iitem.value;
+				valueItem.value = (Number(iitem.value) * 100).toFixed(0) - 0;
 				return valueItem;
 			})
 			proditem.values = inValues;
 
 			return proditem;
 		})
-
 		// TODO 这个地方后续会有bug隐患，因为只是取出数组中的第一个，如果第一个的长度小于第二个 那么会造成丢失，重构时修改整个折线图
 		let xDatas = chooseData.map(elem => {
 			return elem.values.map(vals => vals.ym)
@@ -114,7 +114,8 @@ export default Component.extend({
 		let lines = svg.append('g')
 			.attr('class', 'lines')
 			.attr("transform", "translate(0,30)");
-
+		console.log('in component ')
+		console.log(d3.select('.line').firstObject);
 		lines.selectAll('.line-group')
 			.data(data).enter()
 			.append('g')
@@ -223,7 +224,7 @@ export default Component.extend({
 		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer');
 		let legendArea = legendContainer.append("svg")
 			// .attr('width', 90)
-			.attr('width', 100 * data.length)
+			.attr('width', 200 * data.length)
 			// .attr('height', 30 * data.length);
 			.attr('height', 20)
 		// .attr("transform", "translate(0,0)");
@@ -241,7 +242,7 @@ export default Component.extend({
 			.enter()
 			.append("g")
 			.attr("transform", function(d, i) {
-				return "translate(" + i * 100 + ",0)";
+				return "translate(" + i * 200 + ",0)";
 			});
 		//添加图例的矩形色块
 		// legend.append("rect")

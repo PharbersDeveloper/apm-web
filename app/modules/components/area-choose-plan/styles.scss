@@ -4,6 +4,11 @@
 	font-family: PingFangSC-Regular;
 	font-size: 14px;
 
+	.sub-desc {
+		color: #767A80;
+		letter-spacing: 2px;
+	}
+
 	.checkbox-choose-plan {
 		float: right;
 		display: inline-block;
@@ -38,10 +43,16 @@
 
 .show-plan {
 	span {
+		display: inline-block;
+		height: 30px;
+		line-height: 30px;
+		margin-right: 10px;
 		padding: 0 10px;
 		font-family: PingFangSC-Regular;
 		font-size: 14px;
-		color: #767A80;
+		border-radius: 30px;
+		background-color: rgb(127,146,201);
+		color: #FFF;
 		letter-spacing: 2px;
 	}
 }

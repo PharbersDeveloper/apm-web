@@ -35,7 +35,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个协访天数数据不能超过100%');
 				set(item, 'covisit', '');
 			}
-			covisit += parseInt(item.covisit);
+			covisit += parseInt(item.covisit - 0);
 		})
 		return covisit;
 	}),
@@ -49,7 +49,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个全国会数据不能超过100%');
 				set(item, 'nationMeeting', '');
 			}
-			nationMeeting += parseInt(item.nationMeeting);
+			nationMeeting += parseInt(item.nationMeeting - 0);
 		});
 		return nationMeeting;
 	}),
@@ -64,7 +64,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个城市会数据不能超过100%');
 				set(item, 'cityMeeting', '');
 			}
-			cityMeeting += parseInt(item.cityMeeting);
+			cityMeeting += parseInt(item.cityMeeting - 0);
 		})
 		return cityMeeting;
 	}),
@@ -78,7 +78,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个科室会数据不能超过100%');
 				set(item, 'departmentMeeting', '');
 			}
-			departmentMeeting += parseInt(item.departmentMeeting);
+			departmentMeeting += parseInt(item.departmentMeeting - 0);
 		})
 		return departmentMeeting;
 	}),

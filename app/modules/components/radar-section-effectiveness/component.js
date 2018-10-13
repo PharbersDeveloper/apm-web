@@ -28,6 +28,7 @@ export default Component.extend({
 			legend: { title: '图例', translateX: 100, translateY: 40 },
 			unit: ''
 		};
+		let radarColor = ['#50E3C2', '#D0021B'];
 		let options = radarChartOptions;
 		const max = Math.max;
 		const sin = Math.sin;
@@ -231,7 +232,7 @@ export default Component.extend({
 			.append("path")
 			.attr("class", "radarArea")
 			.attr("d", d => radarLine(d.axes))
-			.style("fill", (d, i) => cfg.color(i))
+			.style("fill", (d, i) => radarColor[i])
 			.style("fill-opacity", cfg.opacityArea)
 			.on('mouseover', function(d, i) {
 				//Dim all blobs
@@ -255,7 +256,7 @@ export default Component.extend({
 			.attr("class", "radarStroke")
 			.attr("d", function(d, i) { return radarLine(d.axes); })
 			.style("stroke-width", cfg.strokeWidth + "px")
-			.style("stroke", (d, i) => cfg.color(i))
+			.style("stroke", (d, i) => radarColor[i])
 			.style("fill", "none")
 			.style("filter", "url(#" + glow + ")");
 
@@ -265,10 +266,10 @@ export default Component.extend({
 			.enter()
 			.append("circle")
 			.attr("class", "radarCircle")
-			.attr("r", cfg.dotRadius)
+			.attr("r", 2)
 			.attr("cx", (d, i) => rScale(d.value) * cos(angleSlice * i - HALF_PI))
 			.attr("cy", (d, i) => rScale(d.value) * sin(angleSlice * i - HALF_PI))
-			.style("fill", (d) => cfg.color(d.id))
+			.style("fill", '#485465')
 			.style("fill-opacity", 0.8);
 
 		/////////////////////////////////////////////////////////
@@ -286,7 +287,7 @@ export default Component.extend({
 			.data(d => d.axes)
 			.enter().append("circle")
 			.attr("class", "radarInvisibleCircle")
-			.attr("r", cfg.dotRadius * 1.5)
+			.attr("r", 2)
 			.attr("cx", (d, i) => rScale(d.value) * cos(angleSlice * i - HALF_PI))
 			.attr("cy", (d, i) => rScale(d.value) * sin(angleSlice * i - HALF_PI))
 			.style("fill", "none")
@@ -346,7 +347,7 @@ export default Component.extend({
 				.attr("y", (d, i) => i * 20)
 				.attr("width", 10)
 				.attr("height", 10)
-				.style("fill", (d, i) => cfg.color(i));
+				.style("fill", (d, i) => radarColor[i]);
 			// Create labels
 			legend.selectAll('text')
 				.data(names)
