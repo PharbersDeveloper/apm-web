@@ -25,18 +25,24 @@ export default Component.extend({
 		let margin = { top: 50, right: 20, bottom: 30, left: 50 };
 
 		let xDatas = this.dataset.map(elem => elem.key);
-		let values = this.dataset.map(elem => elem.value);
+        let values = this.dataset.map(elem => elem.value);
+        let values2 = this.dataset.map(elem => elem.value2);
 
 		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
-			yScale = d3.scaleLinear().rangeRound([height, 0]);
+            yScale = d3.scaleLinear().rangeRound([height, 0]),
+            yScale2 = d3.scaleLinear().rangeRound([height, 0]);
 
 		xScale.domain(xDatas);
-		let maxVal = d3.max(values) * 1.3
-		yScale.domain([0, maxVal]);
+        let maxVal = d3.max(values) * 1.3
+        let maxVal2 = d3.max(values2) * 1.3
+        yScale.domain([0, maxVal]);
+        yScale2.domain([0, maxVal2]);
 
 		let svgContainer = d3.select(`#${this.get('chartId')}`);
 		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
-		let svg = svgContainer.append("svg").style('background-color', this.get('backgroundColor'))
+        let svg = svgContainer.append("svg")
+            .style('background-color', this.get('backgroundColor'))
+            .style('padding', '0 10px')
 			.attr('preserveAspectRatio', 'xMidYMid meet')
 			.attr('viewBox', '0 0 960 420')
 
@@ -57,7 +63,12 @@ export default Component.extend({
 
 		g.append('g')
 			.attr('class', 'axisY')
-			.call(d3.axisLeft(yScale).ticks(10));
+            .call(d3.axisLeft(yScale).ticks(10));
+        
+        g.append('g')
+            .attr('class', 'axisY')
+            .attr('transform', 'translate(' + (width - margin.right) + ', 0)')
+			.call(d3.axisRight(yScale2).ticks(10));
 
 		let chart = g.selectAll('bar')
 			.data(this.dataset)
@@ -93,14 +104,14 @@ export default Component.extend({
 			.attr('width', xScale.bandwidth() / 2)
 			.attr('class', '_bar_1mas67')
 
-		chart.append('text')
-			.attr('class', '_barText_1mas67')
-			.attr('x', function(d) { return xScale(d.key); })
-			.attr('y', function(d) { return yScale(d.value); })
-			.attr('dx', xScale.bandwidth() / 4)
-			.attr('dy', 20)
-			.attr('text-anchor', 'middle')
-			.text(function(d) { return d.value; });
+		// chart.append('text')
+		// 	.attr('class', '_barText_1mas67')
+		// 	.attr('x', function(d) { return xScale(d.key); })
+		// 	.attr('y', function(d) { return yScale(d.value); })
+		// 	.attr('dx', xScale.bandwidth() / 4)
+		// 	.attr('dy', 20)
+		// 	.attr('text-anchor', 'middle')
+		// 	.text(function(d) { return d.value; });
 
 		if (this.get('laterThreeChangeBg')) {
 			d3.select(`#${this.get('chartId')}`)
@@ -125,7 +136,7 @@ export default Component.extend({
 
 		let line = d3.line()
 			.x(function(d) { return xScale(d.key); })
-			.y(function(d) { return yScale(d.value2); });
+			.y(function(d) { return yScale2(d.value2); });
 
 		// Line
 		g.append("path")

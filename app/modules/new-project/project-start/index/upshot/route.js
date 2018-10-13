@@ -70,7 +70,7 @@ export default Route.extend({
 			let that = this;
 			let all = temData.filter(elem => elem.region_id === 'all');
 			let region = temData.filter(elem => elem.region_id !== 'all');
-			modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: (all.lastObject.apmreport.share).toFixed(1) });
+			modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: (all.lastObject.apmreport.share * 100).toFixed(1) });
 			modelData.quarterD3BarData = modelData.quarterD3BarData.sort(function(o1, o2) {
 				return o1.id - o2.id
 			})
