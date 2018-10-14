@@ -89,6 +89,7 @@ export default Route.extend({
         controller.set('params', paramsController);
         controller.set('radarData', d3Data.find(elem => elem.region_id === regionCahe.firstObject.id).data);
         controller.set('areaRadars', d3Data);
+        controller.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
 		return regionCahe;
 	},
 	actions: {

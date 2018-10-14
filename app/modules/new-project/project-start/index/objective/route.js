@@ -11,7 +11,7 @@ export default Route.extend({
                         return {
                             key: elem.ym,
                             value: elem.sales.sales,
-                            value2: elem.sales.share
+                            value2: (elem.sales.share * 100).toFixed(1)
                         }
                     })
                 }

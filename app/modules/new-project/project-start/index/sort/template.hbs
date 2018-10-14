@@ -1,6 +1,5 @@
 <div local-class="sort-container">
 	<div class="next-step">
-		{{!-- {{#bs-button onClick=(action "nextStep")}} --}}
 		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
 			下一步
 		{{/bs-button}}
@@ -25,7 +24,6 @@
 	{{#modal.header}}
 		<h4 class="modal-title">
       <span></span>提示
-      {{!-- <div class="badge">2</div> --}}
     </h4>
 	{{/modal.header}}
 	{{#modal.body}}
@@ -38,6 +36,5 @@
 		{{else}}
 			{{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
 		{{/if}}
-		{{!-- {{#bs-button type="success" onClick=(action modal.submit)}}下一步{{/bs-button}} --}}
 	{{/modal.footer}}
 {{/bs-modal}}
