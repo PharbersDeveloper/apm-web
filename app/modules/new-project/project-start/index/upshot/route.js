@@ -6,22 +6,35 @@ export default Route.extend({
 	model() {
 		let parentModel = this.modelFor('new-project.project-start');
 		let medicine = this.store.peekAll('medicine').filter(elem => !elem.compete).firstObject;
-		let req = this.store.createRecord('request', { res: 'bind_course_goods_quarter_report' });
+        
+        let req = this.store.createRecord('callapmr', {
+            paper_id: parentModel.paperid,
+        });
+        let conditions = this.store.object2JsonApi('callapmr', req);
 
-		let eqValues = [
-			{ type: 'eqcond', key: 'course_id', val: parentModel.courseid },
-			{ type: 'eqcond', key: 'goods_id', val: medicine.id }
-		]
-		eqValues.forEach((elem) => {
-			req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
-				key: elem.key,
-				val: elem.val,
-			}))
-		});
-		let conditions = this.store.object2JsonApi('request', req);
-		let modelData = {};
-		return this.store.queryObject('/api/v1/findQuarterReport/0', 'apmquarterreport', conditions).
-		then(data => {
+        let modelData = {};
+
+        return this.store.transaction('/api/v1/callAPMr/0', 'callapmr', conditions).then(data => {
+            return data
+        }).
+        then(() => {
+            req = this.store.createRecord('request', { res: 'bind_course_goods_quarter_report' });
+        
+            let eqValues = [
+                { type: 'eqcond', key: 'course_id', val: parentModel.courseid },
+                { type: 'eqcond', key: 'goods_id', val: medicine.id }
+            ]
+            eqValues.forEach((elem) => {
+                req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+                    key: elem.key,
+                    val: elem.val,
+                }))
+            });
+            conditions = this.store.object2JsonApi('request', req);
+
+            return this.store.queryObject('/api/v1/findQuarterReport/0', 'apmquarterreport', conditions)
+        }).
+        then(data => {
 			modelData.quarterD3BarData = [
 				{ id: 1, name: '最差结果', value: (data.worst_share * 100).toFixed(1) },
 				{ id: 2, name: '上季结果', value: (data.pre_share * 100).toFixed(1) },
@@ -64,18 +77,21 @@ export default Route.extend({
 			return Promise.all(promiseArray)
 		}).
 		then(data => {
+            let companyMedicine = this.store.peekAll('medicine').find(elem => !elem.compete);
 			let temData = [];
 			data.forEach(x => x.forEach(r => temData.pushObject(r)))
 
 			let that = this;
-			let all = temData.filter(elem => elem.region_id === 'all');
-			let region = temData.filter(elem => elem.region_id !== 'all');
-			modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: (all.lastObject.apmreport.share * 100).toFixed(1) });
+			let all = temData.filter(elem => elem.region_id === 'all')
+            let region = temData.filter(elem => elem.region_id !== 'all');
+			modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: (all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1').lastObject.apmreport.share * 100).toFixed(1) });
 			modelData.quarterD3BarData = modelData.quarterD3BarData.sort(function(o1, o2) {
 				return o1.id - o2.id
 			})
 
-			modelData.quarterTableData.pushObject({ name: '本季结果', sales: all.lastObject.apmreport.sales, share: (all.lastObject.apmreport.share * 100).toFixed(1) });
+            modelData.quarterTableData.pushObject({ name: '本季结果', 
+                sales: all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1').lastObject.apmreport.sales, 
+                share: (all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1').lastObject.apmreport.share * 100).toFixed(1) });
 
 			let tempByGroupGoods = groupBy(all, 'goods_id')
 			modelData.areaD3LineShareData = Object.keys(tempByGroupGoods).map(key => {
@@ -106,6 +122,7 @@ export default Route.extend({
 			})
 			return modelData
 		})
+		
 	},
 	actions: {
 
