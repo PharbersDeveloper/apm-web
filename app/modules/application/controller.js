@@ -1,6 +1,8 @@
 import Controller from '@ember/controller';
+import { inject } from '@ember/service';
 
 export default Controller.extend({
+	cookies: inject(),
 	userName: '',
 	init() {
 		this._super(...arguments);
@@ -8,14 +10,14 @@ export default Controller.extend({
 	},
 	actions: {
 		exitSystem() {
-			localStorage.removeItem('userName');
-			localStorage.removeItem('userImage');
-			localStorage.removeItem('userEmail');
-			localStorage.removeItem('userPhone');
-			localStorage.removeItem('regionResort');
-			localStorage.removeItem('totalRegion');
-
-			this.transitionToRoute('index')
+            new Promise((resolve, reject) => {
+                this.get('cookies').clear('token');
+                localStorage.clear();
+                return resolve(true)
+            }).then(data => {
+                console.info(123)
+                window.location.reload()
+            })			
 		}
 	}
 });
