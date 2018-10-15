@@ -3,22 +3,35 @@
 	min-width: 1000px;
 
 	.content {
-		padding-top: 45px;
+		padding-top: 40px;
 
 		.title {
-			a:hover {
-				text-decoration: none;
-			}
+			margin: 10px 0;
+			font-family: PingFangSC-Regular;
+			font-size: 18px;
+			letter-spacing: 2px;
 
 			span {
 				margin-right: 15px;
 				color: #4A64AC;
 			}
-			margin: 0 20px;
-			font-family: PingFangSC-Regular;
-			font-size: 18px;
-			color: #485465;
-			letter-spacing: 2px;
+
+			a {
+				color: #485465;
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
 		}
+		// .title {
+		//
+		//
+		// 	margin: 0 20px;
+		// 	font-family: PingFangSC-Regular;
+		// 	font-size: 18px;
+		// 	color: #485465;
+		// 	letter-spacing: 2px;
+		// }
 	}
 }

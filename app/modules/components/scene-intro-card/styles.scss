@@ -1,4 +1,5 @@
 .content {
+	padding: 0;
 	background: #efeff0;
 	height: auto;
 	// padding-top: 70px;
@@ -29,14 +30,8 @@
 		height: 100%;
 		margin-right: -20px;
 		padding-top: 20px;
-		display: flex;
-		justify-content: center;
-
-		.center {
-			max-width: 960px;
-			width: 100%;
-		}
-
+		// display: flex;
+		// justify-content: center;
 		.con-area {
 			background: #fff;
 			min-height: 82vh;

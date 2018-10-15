@@ -14,6 +14,8 @@ export default Component.extend({
 		let title = this.get('title');
 		d3.select('.' + localClass + ' svg.much-lines').remove();
 		d3.select('.' + localClass + ' .legendContainer').remove();
+		d3.select('.' + localClass + ' text').remove();
+
 		let svgContainer = d3.select(this.element);
 		let svg = svgContainer.append("svg").attr('class', 'much-lines').style('padding', '0 10px');
 		let chooseData = this.get('chooseData');

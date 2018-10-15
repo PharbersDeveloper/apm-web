@@ -3,7 +3,7 @@
     {{#bs-button class="btn-next"}}
         导出
     {{/bs-button}}
-    {{#bs-button class="btn-next"}}
+    {{#bs-button class="btn-next" onClick=(action "saveUpshot")}}
         保存退出
     {{/bs-button}}
 </div>
@@ -34,3 +34,18 @@
 </div>
 {{d3-line-multi-legend chooseData=model.areaD3LineShareData title="地区产品份额变化" class="multiline-area-prod-share"}}
 {{d3-line-multi-legend chooseData=model.areaD3LineRegionData title="各区域份额结果" class="rea-share"}}
+
+{{#bs-modal local-class="hint-modal" open=tipsModal onSubmit=(action 'confirmSaveUpshot') onHidden=(action (mut tipsModal) false) as |modal|}}
+	{{#modal.header}}
+		<h4 class="modal-title">
+      <span></span>提示
+    </h4>
+	{{/modal.header}}
+	{{#modal.body}}
+		<p local-class="tips-content">{{content-bound-helper tipsContent}}</p>
+	{{/modal.body}}
+	{{#modal.footer}}
+			{{#bs-button onClick=(action modal.close)}}取消{{/bs-button}}
+			{{#bs-button type="success" onClick=(action modal.submit)}}保存退出{{/bs-button}}
+	{{/modal.footer}}
+{{/bs-modal}}
