@@ -1,17 +1,16 @@
 <div local-class="center">
-    <div local-class="content-page">
+    <div local-class="content-page" class="container">
         <div local-class="head">
-            <img src="" alt="">
-            <p local-class="title">Historical plan</p>
+            <p local-class="title">{{#link-to 'project-sort'}}<span class="glyphicon glyphicon-triangle-left"></span>Historical plan{{/link-to}}</p>
         </div>
         <div local-class="list">
-            <p local-class="headline">进行中</p>
+            <p local-class="headline"><span local-class="point-span"></span><span>进行中</span></p>
             <div local-class="card">
                 {{his-class-card}}
             </div>
         </div>
         <div local-class="list">
-            <p local-class="headline">已完成</p>
+            <p local-class="headline"><span local-class="point-span"></span><span>已完成</span></p>
             <div local-class="card">
                 {{his-class-card}}
                 {{his-class-card}}

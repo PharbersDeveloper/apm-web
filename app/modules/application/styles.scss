@@ -11,14 +11,31 @@ html {
 .application {
 	height: 100%;
 	width: 100%;
+
+	:global(.container) {
+		padding: 0;
+		min-width: 960px;
+	}
 }
 @media (min-width: 1400px) {
 	:global(.container) {
-		width: 1400px;
 		padding: 0;
+		width: 1400px;
+		max-width: 1400px;
 	}
 }
 
 :global(.display-none) {
 	display: none;
+}
+
+:global(.modal) {
+	p {
+		margin: 0;
+		line-height: 26px;
+		font-family: PingFangSC-Regular;
+		font-size: 14px;
+		letter-spacing: 2px;
+		color: #767A80;
+	}
 }

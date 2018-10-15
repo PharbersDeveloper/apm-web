@@ -1,11 +1,11 @@
 <div local-class="content-page">
-    <div local-class="content">
-        <div local-class="title">
-            <p> {{#link-to 'project-sort'}}<span class="glyphicon glyphicon-triangle-left"></span>New project {{/link-to}}</p>
-        </div>
-        <div>
-            {{class-card data=model skip=(action 'skip') goScenarioDescribe=(action 'goScenarioDescribe')}}
-        </div>
-    </div>
+	<div local-class="content" class="container">
+		<p local-class="title">
+			{{#link-to 'project-sort'}}<span class="glyphicon glyphicon-triangle-left"></span>New project {{/link-to}}
+		</p>
+		<div>
+			{{class-card data=model skip=(action 'skip') goScenarioDescribe=(action 'goScenarioDescribe')}}
+		</div>
+	</div>
 </div>
 {{outlet}}
