@@ -46,7 +46,7 @@ export default Route.extend({
 				});
 				let eqValues = [
 					{ type: 'eqcond', key: 'goods_id', val: medicine.id }, //medicine.id
-					{ type: 'eqcond', key: 'paper_id', val: '5bc04a3afaf85b0001069a64' }, //parentModel.paperid
+					{ type: 'eqcond', key: 'paper_id', val: parentModel.paperid }, //parentModel.paperid
 					{ type: 'gtecond', key: 'ym', val: '17-q1' },
 					{ type: 'ltecond', key: 'ym', val: '18-q1' },
 
