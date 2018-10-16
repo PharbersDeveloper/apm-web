@@ -1,49 +1,67 @@
-.table-container {
-    font-family: PingFangSC-Regular;
-    font-size: 14px;
+.table-no-border {
+	border: 0;
 
-    thead {
-        color: #767A80;
-        letter-spacing: 1px;
+	.title {
+		margin: 0;
+		padding: 0 20px;
+		height: 40px;
+		line-height: 40px;
+		font-size: 16px;
+		letter-spacing: 1.5px;
+		color: #485465;
 
-        td {
-            padding: 10px 0 10px 5px;
-            text-align: center;
-        }
-    }
+		span {
+			font-size: 14px;
+			color: #aaaaaa;
+		}
+	}
 
-    tbody {
-        color: #485465;
-        letter-spacing: 1.5px;
+	.table-container {
+		font-family: PingFangSC-Regular;
+		font-size: 14px;
 
-        tr {
-            height: 60px;
-            padding: 10px 0;
-            td {
-                margin: 5px 0;
-                padding: 0 0 0 5px;
-                height: 40px;
-                line-height: 40px;
-                border: 0;
-                text-align: center;
-                
-                &:first-child {
-                    cursor: pointer;
-                    color: #4A90E2;
-                }
-    
-                input {
-                    padding: 0 14px;
-                    // width: 90px;
-                    height: 30px;
-                    border: 0;
-                    letter-spacing: 1.17px;
-                    background: #D8D8D8;
-                    border-radius: 50px;
-                }
-            }
-        }
+		thead {
+			color: #767A80;
+			letter-spacing: 1px;
 
-        
-    }
+			td {
+				padding: 10px 0 10px 5px;
+				text-align: center;
+			}
+		}
+
+		tbody {
+			color: #485465;
+			letter-spacing: 1.5px;
+
+			tr {
+				height: 60px;
+				padding: 10px 0;
+
+				td {
+					margin: 5px 0;
+					padding: 0 0 0 5px;
+					height: 40px;
+					line-height: 40px;
+					border: 0;
+					text-align: center;
+
+					&:first-child {
+						cursor: pointer;
+						color: #4A90E2;
+					}
+
+					input {
+						padding: 0 14px;
+						// width: 90px;
+						height: 30px;
+						border: 0;
+						letter-spacing: 1.17px;
+						background: #D8D8D8;
+						border-radius: 50px;
+					}
+				}
+			}
+		}
+	}
 }

@@ -2,15 +2,14 @@
 	.content {
 		display: flex;
 		flex-direction: column;
+		margin: 20px 0 10px;
 		background: #fff;
-		padding: 20px 20px 0;
-		margin-top: 20px;
-		margin-bottom: 20px;
+		padding: 20px;
 
 		.top {
 			display: flex;
 			flex-direction: row;
-			padding-bottom: 35px;
+			padding-bottom: 20px;
 			border-bottom: 1px solid #E9E9E9;
 
 			.head {
@@ -48,30 +47,36 @@
 		}
 
 		.bottom {
-			padding: 20px 0;
+			margin: 0;
+			padding: 20px 0 0;
 			display: inline-block;
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: center;
 
 			.card {
-				padding: 4px;
-				margin: 0 5px;
-				background: #F1F7FD;
+				padding: 0;
+				// padding: 4px;
+				// margin: 0 5px;
 				border-radius: 2px;
-				height: 80px;
-				width: 20%;
-				display: inline-block;
-				flex-direction: column;
-				justify-content: space-between;
-				align-items: flex-start;
+				// height: 80px;
+				// width: 20%;
+				// display: inline-block;
+				.card-inside-content {
+					padding: 10px;
+					// margin: 0 10px;
+					background: #F1F7FD;
+					flex-direction: column;
+					justify-content: space-between;
+					align-items: flex-start;
+				}
 
 				.headline {
 					font-family: PingFangSC-Light;
 					font-size: 12px;
 					color: #485465;
 					letter-spacing: 1.71px;
-					margin-bottom: 34px;
+					margin-bottom: 24px;
 				}
 
 				.num {
@@ -81,6 +86,14 @@
 					letter-spacing: 2px;
 					margin-bottom: 0;
 				}
+			}
+
+			& .card:first-child {
+				padding-right: 10px;
+			}
+
+			& .card:last-child {
+				padding-left: 10px;
 			}
 		}
 	}
@@ -99,6 +112,7 @@
 				width: 50%;
 
 				a {
+					text-align: center;
 					font-size: 14px;
 					color: #485465;
 					letter-spacing: 2px;
@@ -112,20 +126,22 @@
 
 			.table-content {
 				margin-top: 10px;
-				padding: 18px 10px;
+				padding: 10px 10px 20px;
 				background-color: #FFF;
 
-				p {
-					margin: 0;
+				p.title {
+					padding-left: 10px;
 					height: 20px;
 					line-height: 20px;
-					font-size: 14px;
+					font-size: 16px;
 					color: #485465;
 					letter-spacing: 2px;
 				}
 
 				table {
+					// min-width: 930px;
 					thead tr td {
+						padding: 8px 2px;
 						font-size: 12px;
 						letter-spacing: 1px;
 						border-bottom: 1px solid rgba(111,109,204,0.10);
@@ -133,12 +149,13 @@
 					}
 
 					tbody tr td {
+						padding: 8px 2px;
 						height: 40px;
 						line-height: 40px;
 						border: 0;
 						font-size: 12px;
 						color: #485465;
-						letter-spacing: 1.71px;
+						letter-spacing: 1px;
 					}
 				}
 			}
@@ -157,19 +174,21 @@
 			background: #fff;
 
 			.title-action {
-				font-size: 14px;
-				color: #485465;
+				font-family: PingFangSC-Regular;
+				font-size: 16px;
 				letter-spacing: 2px;
+				color: #485465;
 			}
 
 			.table-action {
 				padding: 0 20px;
+				border: 0;
 
 				.table-sales {
 					thead {
 						tr td {
-							font-size: 12px;
-							color: #485465;
+							font-size: 14px;
+							color: #2A2A44;
 							letter-spacing: 1.71px;
 							border-bottom: 1px solid rgba(111,109,204,0.10);
 						}
@@ -180,8 +199,8 @@
 							height: 40px;
 							line-height: 40px;
 							border: 0;
-							font-size: 12px;
-							color: #485465;
+							font-size: 14px;
+							color: #2A2A44;
 							letter-spacing: 1.71px;
 						}
 					}

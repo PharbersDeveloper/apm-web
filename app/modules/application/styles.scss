@@ -7,21 +7,26 @@ html {
 	height: 100%;
 	background: #efeff0;
 }
+@media (min-width: 1400px) {
+	:global(.container) {
+		// padding: 0;
+		width: 1400px;
+		max-width: 1400px;
+	}
+}
+@media (max-width: 1000px) {
+	:global(.container) {
+		width: 960px;
+		min-width: 960px;
+	}
+}
 
 .application {
 	height: 100%;
 	width: 100%;
 
 	:global(.container) {
-		padding: 0;
 		min-width: 960px;
-	}
-}
-@media (min-width: 1400px) {
-	:global(.container) {
-		padding: 0;
-		width: 1400px;
-		max-width: 1400px;
 	}
 }
 

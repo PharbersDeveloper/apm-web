@@ -12,7 +12,7 @@ export default Component.extend({
 	},
 
 	RadarChart() {
-		let data = this.get('radarSectionData');
+		let data = this.get('radarSectionData').reverse();
 		let _currentColor = data.map((item) => {
 			return item.color;
 		});
@@ -25,10 +25,10 @@ export default Component.extend({
 			roundStrokes: false,
 			color: d3.scaleOrdinal().range(_currentColor),
 			format: '.0f',
-			legend: { title: '图例', translateX: 100, translateY: 40 },
+			legend: { title: '', translateX: 100, translateY: 40 },
 			unit: ''
 		};
-		let radarColor = ['#50E3C2', '#D0021B'];
+		let radarColor = ['#D0021B', '#50E3C2'];
 		let options = radarChartOptions;
 		const max = Math.max;
 		const sin = Math.sin;
@@ -71,7 +71,7 @@ export default Component.extend({
 			opacityArea: 0.35, //The opacity of the area of the blob
 			dotRadius: 4, //The size of the colored circles of each blog
 			opacityCircles: 0.1, //The opacity of the circles of each blob
-			strokeWidth: 2, //The width of the stroke around each blob
+			strokeWidth: 1, //The width of the stroke around each blob
 			roundStrokes: false, //If true the area and stroke will follow a round path (cardinal-closed)
 			color: d3.scaleOrdinal(d3.schemeCategory10), //Color function,
 			format: '.2%',
@@ -128,7 +128,9 @@ export default Component.extend({
 
 		//Append a g element
 		let g = svg.append("g")
+			// .attr('class', 'radar-g')
 			.attr("transform", "translate(" + (cfg.w / 2 + cfg.margin.left) + "," + (cfg.h / 2 + cfg.margin.top) + ")");
+		// .attr("transform", "translate(50%," + (cfg.h / 2 + cfg.margin.top) + ")");
 
 		/////////////////////////////////////////////////////////
 		////////// Glow filter for some extra pizzazz ///////////
@@ -196,7 +198,8 @@ export default Component.extend({
 		//Append the labels at each axis
 		axis.append("text")
 			.attr("class", "legend")
-			.style("font-size", "11px")
+			.style("font-size", "13px")
+			.style('letter-spacing', '1.5px')
 			.attr("text-anchor", "middle")
 			.attr("dy", "0.35em")
 			.attr("x", (d, i) => rScale(maxValue * cfg.labelFactor) * cos(angleSlice * i - HALF_PI))
@@ -313,7 +316,7 @@ export default Component.extend({
 			.attr("class", "tooltip")
 			.attr('x', 0)
 			.attr('y', 0)
-			.style("font-size", "12px")
+			.style("font-size", "13px")
 			.style('display', 'none')
 			.attr("text-anchor", "middle")
 			.attr("dy", "0.35em");
@@ -321,7 +324,7 @@ export default Component.extend({
 		if (cfg.legend !== false && typeof cfg.legend === "object") {
 			let legendZone = svg.append('g')
 				.attr('class', 'legendZone')
-				.attr('transform', `translate(60,${options.h-40})`);
+				.attr('transform', `translate(280,${options.h-40})`);
 			let names = data.map(el => el.name);
 			if (cfg.legend.title) {
 				let title = legendZone.append("text")
@@ -329,7 +332,7 @@ export default Component.extend({
 					.attr('transform', `translate(${cfg.legend.translateX},${cfg.legend.translateY})`)
 					.attr("x", cfg.w - 70)
 					.attr("y", 10)
-					.attr("font-size", "12px")
+					.attr("font-size", "13px")
 					.attr("fill", "#404040")
 					.text(cfg.legend.title);
 			}

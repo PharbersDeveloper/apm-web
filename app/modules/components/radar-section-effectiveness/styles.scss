@@ -10,6 +10,22 @@
 	cursor: default;
 	background-color: #FFF;
 
+	svg {
+		overflow: visible;
+
+		:global(.radar-g) {}
+	}
+
+	.title {
+		position: absolute;
+		left: 10px;
+		top: 10px;
+		margin: 0;
+		font-size: 16px;
+		letter-spacing: 2px;
+		color: #485465;
+	}
+
 	:global .legend {
 		font-family: "Raleway", sans-serif;
 		fill: #333333;
