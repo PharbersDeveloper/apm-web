@@ -258,7 +258,7 @@ export default Route.extend({
 				return Promise.all(promiseArray)
 			})
 			.then(data => { // 处理所有区域的负责代表
-				regionBaseInfo.represents = [];
+                regionBaseInfo.represents = [];
 				data.forEach((elem, index) => {
 					// 绑定区域与人员关系，方便缓存读取
 					this.store.createRecord('bind_course_region_rep', {
