@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-12 col-lg-12 col-sm-12">
             <p local-class="title-section">
-                {{data.name}}
+                <span local-class="title">{{data.name}}</span>
                 <div local-class="toggle-area">
                     <span local-class="clear" {{action 'clearNotes'}}><span class="glyphicon glyphicon-trash"></span></span>
                     {{!-- {{#if collapsed}}
@@ -19,7 +19,8 @@
                 </div>
             </p>
             {{#bs-collapse local-class="content-container" collapsed=collapsed}}
-                {{textarea rows=10 placeholder="hint" key-up=(action 'keyUp') value=data.notes maxlength=300 }}
+                {{textarea rows=10 placeholder="请输入您对该区域的要点分析(最多300字)." key-up=(action 'keyUp')
+                value=data.notes maxlength=600 }}
             {{/bs-collapse}}
         </div>
     </div>
