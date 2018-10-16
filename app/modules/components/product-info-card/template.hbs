@@ -1,5 +1,4 @@
-<div local-class="content">
-	<div class="alert" role="alert">
+	<div class="alert container" role="alert"  local-class="content">
 		<div local-class="fork-area">
 			<button type="button" class="close" local-class="turn" {{action "close"}}>
                 <span local-class="clos" aria-hidden="true" >&times;</span>
@@ -12,10 +11,8 @@
 						{{product-card data=medicine}}
 					{{/each}}
 				</div>
-                
 				{{d3-line-multi-legend chooseData=data.lineData title="产品份额竞争趋势" class="multiline-prods-share"}}
 			</div>
 		</div>
 	</div>
-</div>
 {{yield}}

@@ -1,7 +1,17 @@
 .objective-bar-line {
-    position: relative;
-    padding: 0 20px;
+	position: relative;
+	padding: 0 20px;
 	background-color: #FFF;
+
+	.title {
+		position: absolute;
+		left: 20px;
+		top: 10px;
+		margin: 0;
+		font-size: 16px;
+		letter-spacing: 2px;
+		color: #485465;
+	}
 }
 
 .tooltip {

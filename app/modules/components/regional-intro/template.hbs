@@ -1,30 +1,39 @@
-<div class="container" local-class="section-a">
+<div local-class="section-a">
 	<div local-class="content">
 		<div local-class="top">
 			<div local-class="head">
 				<p local-class="title">{{data.name}}</p>
-				<img src={{data.image}} alt="">
+				<img src= {{data.image}} alt="">
 			</div>
 			<div local-class="intro">
 				<p>{{data.describe}}</p>
 			</div>
 		</div>
-		<div local-class="bottom">
+		<div local-class="bottom" class="row">
 			{{#each regionCards as |card|}}
-                {{#if (eq data.id card.region_id)}}
-                    <div local-class="card">
-                        <p local-class="headline">市场规模($)</p>
-                        <p local-class="num">{{number-format card.sales.potential}}</p>
-                    </div>
-                    <div local-class="card">
-                        <p local-class="headline">上月销售额($)</p>
-                        <p local-class="num">{{number-format card.sales.sales}}</p>
-                    </div>
-                    <div local-class="card">
-                        <p local-class="headline">上月达成率(%)</p>
-                        <p local-class="num">{{number-percent card.sales.achieve_rate}}</p>
-                    </div>
-                {{/if}}
+				{{#if (eq data.id card.region_id)}}
+					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<div local-class="card-inside-content">
+							<p local-class="headline">市场规模($)</p>
+							<p local-class="num">{{number-format card.sales.potential}}</p>
+						</div>
+
+					</div>
+					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<div local-class="card-inside-content">
+
+						<p local-class="headline">上月销售额($)</p>
+						<p local-class="num">{{number-format card.sales.sales}}</p>
+					</div>
+					</div>
+					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<div local-class="card-inside-content">
+
+						<p local-class="headline">上月达成率(%)</p>
+						<p local-class="num">{{number-percent card.sales.achieve_rate}}</p>
+					</div>
+					</div>
+				{{/if}}
 			{{/each}}
 		</div>
 	</div>
@@ -32,20 +41,20 @@
 	<div local-class="sub-tab">
 		{{#bs-tab as |tab|}}
 			{{#tab.pane title="代表与执行" }}
-                {{#each radarData as |item|}}
-                    {{#if (eq item.region_id data.id)}}
-                        {{radar-section-effectiveness gradient=(concat 'glowarea' data.id) radarSectionData=item.data}}
-                    {{/if}}
-                {{/each}}
+				{{#each radarData as |item|}}
+					{{#if (eq item.region_id data.id)}}
+						{{radar-section-effectiveness gradient=(concat 'glowarea' data.id) radarSectionData=item.data}}
+					{{/if}}
+				{{/each}}
 
 				<div local-class="represent">
-                    {{#each represents as |item|}}
-                        {{#if (eq item.region_id data.id)}}
-                            {{#each item.data as |represent|}}
-                                {{charge-represent data=represent}}
-                            {{/each}}
-                        {{/if}}
-                    {{/each}}
+					{{#each represents as |item|}}
+						{{#if (eq item.region_id data.id)}}
+							{{#each item.data as |represent|}}
+								{{charge-represent data=represent}}
+							{{/each}}
+						{{/if}}
+					{{/each}}
 				</div>
 				<div local-class="action">
 					<p local-class="title-action">行动KPI</p>
@@ -54,105 +63,107 @@
 							<thead>
 								<tr>
 									<td> 年/月</td>
-                                    {{#each kpi as |item|}}
-                                        {{#if (eq item.region_id data.id)}}
-                                            {{#each item.yms as |ym|}}
-                                                <td>{{ym}}</td>
-                                            {{/each}}
-                                        {{/if}}
-                                    {{/each}}
+									{{#each kpi as |item|}}
+										{{#if (eq item.region_id data.id)}}
+											{{#each item.yms as |ym|}}
+												<td>{{ym}}</td>
+											{{/each}}
+										{{/if}}
+									{{/each}}
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td>目标医生拜访频率</td>
-                                    {{#each kpi as |item|}}
-                                        {{#if (eq item.region_id data.id)}}
-                                            {{#each item.target_call_freq_vals as |target_call_freq_val|}}
-                                                <td>{{target_call_freq_val}}</td>
-                                            {{/each}}
-                                        {{/if}}
-                                    {{/each}}
+									{{#each kpi as |item|}}
+										{{#if (eq item.region_id data.id)}}
+											{{#each item.target_call_freq_vals as |target_call_freq_val|}}
+												<td>{{target_call_freq_val}}</td>
+											{{/each}}
+										{{/if}}
+									{{/each}}
 								</tr>
 								<tr>
 									<td>实地工作天数</td>
-                                    {{#each kpi as |item|}}
-                                        {{#if (eq item.region_id data.id)}}
-                                            {{#each item.in_field_days_vals as |in_field_days_val|}}
-                                                <td>{{in_field_days_val}}</td>
-                                            {{/each}}
-                                        {{/if}}
-                                    {{/each}}
+									{{#each kpi as |item|}}
+										{{#if (eq item.region_id data.id)}}
+											{{#each item.in_field_days_vals as |in_field_days_val|}}
+												<td>{{in_field_days_val}}</td>
+											{{/each}}
+										{{/if}}
+									{{/each}}
 								</tr>
 								<tr>
 									<td>拜访次数</td>
-                                    {{#each kpi as |item|}}
-                                        {{#if (eq item.region_id data.id)}}
-                                            {{#each item.call_times_vals as |call_times_val|}}
-                                                <td>{{call_times_val}}</td>
-                                            {{/each}}
-                                        {{/if}}
-                                    {{/each}}
+									{{#each kpi as |item|}}
+										{{#if (eq item.region_id data.id)}}
+											{{#each item.call_times_vals as |call_times_val|}}
+												<td>{{call_times_val}}</td>
+											{{/each}}
+										{{/if}}
+									{{/each}}
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<div local-class="report">
-                    {{#each reports as |item|}}
-                        {{#if (eq item.region_id data.id)}}
-                            {{represent-report data=item.data}}
-                        {{/if}}
-                    {{/each}}
+					{{#each reports as |item|}}
+						{{#if (eq item.region_id data.id)}}
+							{{represent-report data=item.data}}
+						{{/if}}
+					{{/each}}
 
 				</div>
 			{{/tab.pane}}
 			{{#tab.pane title="区域销售情況" }}
 				<div local-class="analyze">
-                    {{#each salesBar as |item|}}
-                        {{#if (eq item.region_id data.id)}}
-                            {{d3-bar-line chartId=(concat "area-sales-chart" data.id) laterThreeChangeBg=false dataset=item.data}}
-                        {{/if}}
-                    {{/each}}
+					{{#each salesBar as |item|}}
+						{{#if (eq item.region_id data.id)}}
+							{{d3-bar-line chartId=(concat "area-sales-chart" data.id) laterThreeChangeBg=false dataset=item.data}}
+						{{/if}}
+					{{/each}}
 
 					<div local-class="table-content">
-						<p>公司产品历史销售数据</p>
-						<table class="table table-striped" local-class="table-sales">
-							<thead>
-								<tr>
-									<td> </td>
-                                    {{#each salesBar as |item|}}
-                                        {{#if (eq item.region_id data.id)}}
-                                            {{#each item.data as |item|}}
-                                                <td>{{item.key}}</td>
-                                            {{/each}}
-                                        {{/if}}
-                                    {{/each}}
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>销售额($)</td>
-                                    {{#each salesBar as |item|}}
-                                        {{#if (eq item.region_id data.id)}}
-                                            {{#each item.data as |item|}}
-                                                <td>{{number-format item.value}}</td>
-                                            {{/each}}
-                                        {{/if}}
-                                    {{/each}}
-								</tr>
-								<tr>
-									<td>份额(%)</td>
-                                    {{#each salesBar as |item|}}
-                                        {{#if (eq item.region_id data.id)}}
-                                            {{#each item.data as |item|}}
-                                                <td>{{number-percent item.value2}}</td>
-                                            {{/each}}
-                                        {{/if}}
-                                    {{/each}}
-								</tr>
-							</tbody>
-						</table>
+						<p local-class="title">公司产品历史销售数据</p>
+						{{!-- <div class="table-responsive"> --}}
+							<table class="table table-striped" local-class="table-sales">
+								<thead>
+									<tr>
+										<td> </td>
+										{{#each salesBar as |item|}}
+											{{#if (eq item.region_id data.id)}}
+												{{#each item.data as |item|}}
+													<td>{{item.key}}</td>
+												{{/each}}
+											{{/if}}
+										{{/each}}
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>销售额($)</td>
+										{{#each salesBar as |item|}}
+											{{#if (eq item.region_id data.id)}}
+												{{#each item.data as |item|}}
+													<td>{{number-format item.value}}</td>
+												{{/each}}
+											{{/if}}
+										{{/each}}
+									</tr>
+									<tr>
+										<td>份额(%)</td>
+										{{#each salesBar as |item|}}
+											{{#if (eq item.region_id data.id)}}
+												{{#each item.data as |item|}}
+													<td>{{item.value2}}%</td>
+												{{/each}}
+											{{/if}}
+										{{/each}}
+									</tr>
+								</tbody>
+							</table>
+						{{!-- </div> --}}
 					</div>
 				</div>
 			{{/tab.pane}}
