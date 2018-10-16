@@ -1,6 +1,6 @@
 .analyze-section {
 	margin-bottom: 10px;
-	padding: 6px 20px;
+	padding: 20px 20px 17px;
 	background: #FFFFFF;
 	box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 
@@ -14,11 +14,19 @@
 	}
 
 	.title-section {
-		margin: 10px auto;
+		margin: 0 auto 10px;
 		font-family: PingFangTC-Medium;
 		font-size: 14px;
 		color: #4A90E2;
 		letter-spacing: 1.5px;
+
+		span.title {
+			// height: 40px;
+			// line-height: 40px;
+			font-size: 16px;
+			letter-spacing: 1.5px;
+			color: #485465;
+		}
 
 		.toggle-area {
 			color: #767A80;
