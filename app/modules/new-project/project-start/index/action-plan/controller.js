@@ -97,9 +97,7 @@ export default Controller.extend({
 		},
 		nextStep() {
 			let region = this.store.peekAll('region');
-			// let params = this.get('params');
 			let isActionplanEmpty = region.every((item) => {
-				// console.log(item.actionplan);
 				return item.actionplan
 			});
 			this.set('isActionplanEmpty', isActionplanEmpty);
@@ -138,15 +136,11 @@ export default Controller.extend({
 				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 			Promise.all(promiseArray).then(() => {
-				console.log('successed')
-				// this.set('isPending', false);
-				// this.set('isFulfilled', true);
-				// this.set('isSettled', true);
-				this.transitionToRoute('new-project.project-start.index.upshot')
-			}).catch((error) => {
+                this.transitionToRoute('new-project.project-start.index.upshot')
+            })
+            .catch((error) => {
 				this.set('error', error);
 			});
-			// this.transitionToRoute('new-project.project-start.index.upshot')
 		}
 	}
 });
