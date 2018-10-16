@@ -20,7 +20,6 @@ export function numberFormat(params /*, hash*/ ) {
 			}
 		}, "").replace(/,$/g, "");
 		return mask + temp;
-		// return mask + temp + decimal;
 	}
 }
 

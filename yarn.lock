@@ -3196,9 +3196,9 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-ember-ajax@^3.0.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/ember-ajax/-/ember-ajax-3.1.1.tgz#dcb55aaf1a9fe8b2ce04206863384709ebc2358b"
+ember-ajax@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/ember-ajax/-/ember-ajax-3.1.2.tgz#32e4c906835ea74aa5a8a24d9abf5b1576fd70aa"
   dependencies:
     ember-cli-babel "^6.16.0"
     najax "^1.0.3"
@@ -3243,9 +3243,9 @@ ember-bootstrap-cp-validations@^1.0.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-bootstrap@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-2.1.0.tgz#28c9e30546b776a534f792020b91ba4834540d33"
+ember-bootstrap@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-2.1.2.tgz#99fc88b32479e364e793a673f022962c81fb8565"
   dependencies:
     broccoli-debug "^0.6.3"
     broccoli-funnel "^2.0.0"
@@ -3371,6 +3371,16 @@ ember-cli-get-component-path-option@^1.0.0:
 ember-cli-htmlbars-inline-precompile@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars-inline-precompile/-/ember-cli-htmlbars-inline-precompile-1.0.3.tgz#332ff96c06fc522965162f1090d78a615379c3c2"
+  dependencies:
+    babel-plugin-htmlbars-inline-precompile "^0.2.5"
+    ember-cli-version-checker "^2.1.2"
+    hash-for-dep "^1.2.3"
+    heimdalljs-logger "^0.1.9"
+    silent-error "^1.1.0"
+
+ember-cli-htmlbars-inline-precompile@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars-inline-precompile/-/ember-cli-htmlbars-inline-precompile-1.0.5.tgz#312e050c9e3dd301c55fb399fd706296cd0b1d6a"
   dependencies:
     babel-plugin-htmlbars-inline-precompile "^0.2.5"
     ember-cli-version-checker "^2.1.2"
@@ -7877,9 +7887,9 @@ sane@^2.2.0, sane@^2.4.1, sane@^2.5.2:
   optionalDependencies:
     fsevents "^1.2.3"
 
-sass@^1.13.4:
-  version "1.13.4"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.13.4.tgz#c6d8e08623b6f11ac1fc55c7581c395c9d5c65a8"
+sass@^1.14.2:
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.14.2.tgz#6fabdb10939a3f6848cda59b7d91d6a3103923c0"
   dependencies:
     chokidar "^2.0.0"
 

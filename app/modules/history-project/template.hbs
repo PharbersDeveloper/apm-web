@@ -3,21 +3,22 @@
         <div local-class="head">
             <p local-class="title">{{#link-to 'project-sort'}}<span class="glyphicon glyphicon-triangle-left"></span>Historical plan{{/link-to}}</p>
         </div>
-        <div local-class="list">
+        <div>
             <p local-class="headline"><span local-class="point-span"></span><span>进行中</span></p>
-            <div local-class="card">
-                {{his-class-card}}
-            </div>
+            {{#each model as |item|}}
+                {{#if item.state}}
+                    {{his-class-card data=item lookOver=(action 'lookOver')}}
+                {{/if}}
+            {{/each}}
         </div>
-        <div local-class="list">
+        <div>
             <p local-class="headline"><span local-class="point-span"></span><span>已完成</span></p>
-            <div local-class="card">
-                {{his-class-card}}
-                {{his-class-card}}
-                {{his-class-card}}
-            </div>
+             {{#each model as |item|}}
+                {{#unless item.state}}
+                    {{his-class-card data=item continue=(action 'continue')}} 
+                {{/unless}}
+            {{/each}}
         </div>
     </div>
 </div>
-
 {{outlet}}
