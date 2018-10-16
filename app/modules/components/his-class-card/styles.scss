@@ -31,5 +31,12 @@
         text-align: center;
         line-height: 30px;
         align-self: flex-end;
+
+        p {
+            cursor: pointer;
+        }
     }
+}
+.ember-view {
+    margin-bottom: 20px;
 }
