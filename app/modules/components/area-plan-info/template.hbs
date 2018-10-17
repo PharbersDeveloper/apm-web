@@ -25,7 +25,7 @@
 		</div>
 	</div>
 </div>
-{{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
+{{!-- {{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
 	{{#modal.header}}
 		<h4 class="modal-title">
             <span></span>{{tipsTitle}}
@@ -37,4 +37,5 @@
 	{{#modal.footer}}
 	  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
 	{{/modal.footer}}
-{{/bs-modal}}
+{{/bs-modal}} --}}
+{{hint-modal hint=hint}}

@@ -1,0 +1,72 @@
+.hint-modal {
+	font-size: 0;
+
+	:global(.modal-title) {
+		font-size: 14px;
+		letter-spacing: 1.5px;
+		color: #767A80;
+	}
+
+	:global(.modal-content) {
+		width: 530px;
+		margin: 0 auto;
+	}
+
+	:global(.close) {
+		display: none;
+	}
+
+	:global(.modal-title) {
+		line-height: 25px;
+
+		img {
+			margin-right: 20px;
+		}
+	}
+
+	:global(.modal-body) {
+		min-height: 100px;
+	}
+
+	:global(.modal-footer) {
+		border: 0;
+	}
+
+	:global(.btn-warning) {
+		padding: 0;
+		width: 100px;
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+		letter-spacing: 2px;
+		border: 0;
+		color: #B7B7B7;
+		background-color: transparent;
+
+		&:active:hover {
+			color: #B7B7B7;
+			background-color: transparent;
+			border: 0;
+		}
+	}
+
+	:global(.btn-success) {
+		padding: 0;
+		width: 100px;
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+		letter-spacing: 2.15px;
+		box-shadow: 0 2px 4px 0 rgba(210,210,210,0.50);
+		border-radius: 100px;
+		border: 0;
+		color: #FFF;
+		background: #7F92C9;
+
+		&:active:hover {
+			color: #FFF;
+			background-color: transparent;
+			border: 0;
+		}
+	}
+}

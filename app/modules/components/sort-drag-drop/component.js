@@ -73,8 +73,15 @@ export default Component.extend({
 			localStorage.setItem('regionResort', JSON.stringify(this.get('levelArray')));
 		},
 		openTips(currentRegion) {
-			this.set('tipModal', true);
-			this.set('currentRegion', currentRegion)
+			this.set('hint', {
+				hintModal: true,
+				hintImg: false,
+				title: currentRegion.data.attributes.name,
+				content: currentRegion.data.attributes.notes,
+				hintBtn: false,
+			})
+			// this.set('tipModal', true);
+			// this.set('currentRegion', currentRegion)
 		}
 	}
 });

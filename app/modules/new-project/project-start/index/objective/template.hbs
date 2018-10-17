@@ -8,22 +8,25 @@
     {{/unless}}
 	
 	<div local-class="objective-section">
-		<div class="row">
-			<div class="col-md-12 col-lg-12 col-sm-12">
+		{{!-- <div class="row"> --}}
+			{{!-- <div class="col-md-12 col-lg-12 col-sm-12"> --}}
 				<select local-class="choose-area" onchange= {{action 'changeArea' value="target.value"}}>
 				    {{#each regionData as |area index|}}
 				        <option value={{area.id}}>{{area.name}}</option>
 				    {{/each}}
 				</select>
                 {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true dataset=barData }}
-			</div>
-		</div>
+			{{!-- </div> --}}
+		{{!-- </div> --}}
 	</div>
 
 	<div local-class="objective-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-objective">设定目标<span>-为接下来三个月，各区域预测您期望达成目标，基于总体分析中您的分析，并参考公司指标，区域背景信息，竞争情况，做出您的目标设定。</span></p>
+				<p local-class="title-objective">
+					<span>设定目标-</span>
+					<span>为接下来三个月，各区域预测您期望达成目标，基于总体分析中您的分析，并参考公司指标，区域背景信息，竞争情况，做出您的目标设定。</span>
+				</p>
 				<div class="row" local-class="summary">
 					<div class="col-md-2 col-lg-2 col-sm-2">
 						<p>公司本季度总指标</p>
@@ -35,7 +38,7 @@
 					</div>
 
 				</div>
-				<div class="table-responsive">
+				{{!-- <div class="table-responsive"> --}}
 					<table local-class="table-container" class="table">
 						<thead>
 							<tr>
@@ -55,19 +58,19 @@
                                             <td>{{number-format item.company_targe}}</td>
                                         {{/if}}
                                     {{/each}}
-									<td>{{input type="text" value=region.forecast dir="ltr" disabled=(if history true false)}} </td>
+									<td>{{input type="text" value=region.forecast dir="ltr" maxlength="10" disabled=(if history true false)}} </td>
 								</tr>
 							{{/each}}
 						</tbody>
 					</table>
-				</div>
+				{{!-- </div> --}}
 
 			</div>
 
 		</div>
 	</div>
 </div>
-
+{{!--
 {{#bs-modal local-class="hint-modal" open=tipsModal onSubmit=(action 'toResource') onHidden=(action (mut tipsModal) false) as |modal|}}
   {{#modal.header}}
     <h4 class="modal-title">
@@ -75,7 +78,6 @@
     </h4>
   {{/modal.header}}
   {{#modal.body}}
-	{{!-- <p>请填写完成 {{emptyNotesRegion}} 的内容！</p> --}}
 	<p>{{content-bound-helper tipsContent}}</p>
 
   {{/modal.body}}
@@ -87,4 +89,5 @@
 		  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
 	  {{/if}}
   {{/modal.footer}}
-{{/bs-modal}}
+{{/bs-modal}} --}}
+{{hint-modal hint=hint confirm=(action 'toResource')}}

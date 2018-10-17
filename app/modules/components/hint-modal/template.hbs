@@ -1,0 +1,25 @@
+{{#bs-modal local-class="hint-modal" open=hint.hintModal onSubmit=(action 'confirm') onHidden=(action (mut hint.hintModal) false) as |modal|}}
+	{{#modal.header}}
+		<h4 class="modal-title">
+      <span></span>
+      {{#if hint.hintImg}}
+        <img width='25px' height="25px" src="/assets/images/hint.png" alt=""> {{hint.title}}
+        {{else}}
+        {{hint.title}}
+      {{/if}}
+    </h4>
+	{{/modal.header}}
+	{{#modal.body}}
+		{{!-- <p>请填写完成 {{emptyNotesRegion}} 的内容！</p> --}}
+		<p>{{content-bound-helper hint.content}}</p>
+
+	{{/modal.body}}
+	{{#modal.footer}}
+		{{#if hint.hintBtn}}
+			{{#bs-button type="warning" onClick=(action modal.close)}}取消{{/bs-button}}
+			{{#bs-button type="success" onClick=(action modal.submit)}}确认{{/bs-button}}
+		{{else}}
+			{{#bs-button type="success"  onClick=(action modal.close)}}继续{{/bs-button}}
+		{{/if}}
+	{{/modal.footer}}
+{{/bs-modal}}

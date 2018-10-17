@@ -13,6 +13,21 @@
             </ul>
         </div>
     {{/unless}}
+
+    {{!-- <div local-class="checkbox-choose-plan" class="dropup">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            选择行动计划<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            {{#each planPaireComputed as |choose|}}
+                <li>{{input type="checkbox" name=choose.text checked=choose.isChecked}}{{choose.text}}</li>
+            {{/each}}
+        </ul>
+    </div> --}}
+        {{!-- <button local-class="checkbox-choose-plan" class="btn btn-default dropdown-toggle" type="button" >
+            选择行动计划
+        </button> --}}
+        {{#bs-button local-class="checkbox-choose-plan" onClick=(action (mut chooseModal) true)}}选择行动计划{{/bs-button}}
 </p>
 <p local-class="show-plan">
     {{#each planPaireComputed as |plan|}}
@@ -21,3 +36,24 @@
         {{/if}}
     {{/each}}
 </p>
+
+{{#bs-modal local-class="hint-modal" open=chooseModal onSubmit=(action 'confirm') onHidden=(action (mut chooseModal) false) as |modal|}}
+	{{#modal.header}}
+		<h4 class="modal-title">
+            <span></span>选择行动计划（最多两项）
+        </h4>
+	{{/modal.header}}
+	{{#modal.body}}
+    {{#each planPaireComputed as |item|}}
+        <label class="data-checkbox" for="{{item.year}}">
+            {{input type="checkbox" id=item.year name="year" checked=item.isChecked}}
+            <span class="checkbox-span"></span>{{item.year}}
+        </label>
+    {{/each}}
+
+	{{/modal.body}}
+	{{#modal.footer}}
+			{{#bs-button type="warning" onClick=(action modal.close)}}取消{{/bs-button}}
+			{{#bs-button type="success" onClick=(action modal.submit)}}确认{{/bs-button}}
+	{{/modal.footer}}
+{{/bs-modal}}

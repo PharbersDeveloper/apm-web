@@ -3,8 +3,8 @@ import { computed } from '@ember/object';
 import { set } from '@ember/object';
 
 export default Controller.extend({
-    collapsed: false,
-    regionResort: [],
+	collapsed: false,
+	regionResort: [],
 	init() {
 		this._super(...arguments);
         this.set('areaRadars', []);
@@ -103,14 +103,30 @@ export default Controller.extend({
 			});
 			this.set('isActionplanEmpty', isActionplanEmpty);
 			if (isActionplanEmpty) {
-				this.set('tipsModal', true);
-				this.set('tipsTitle', '提示');
-				this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '确认进入下一步后,将不可修改当前内容.',
+					hintBtn: true,
+				}
+				this.set('hint', hint);
+				// this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 				// this.transitionToRoute('new-project.project-start.index.upshot')
 			} else {
-				this.set('tipsModal', true);
-				this.set('tipsTitle', '提示');
-				this.set('tipsContent', '选择全部的行动计划，并保证最多两项！')
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '选择全部的行动计划,并保证最多两项！',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				// this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				// this.set('tipsContent', '选择全部的行动计划，并保证最多两项！')
 			}
 		},
 		toUpshot() {
@@ -137,11 +153,11 @@ export default Controller.extend({
 				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 			Promise.all(promiseArray).then(() => {
-                this.transitionToRoute('new-project.project-start.index.upshot')
-            })
-            .catch((error) => {
-				this.set('error', error);
-			});
+					this.transitionToRoute('new-project.project-start.index.upshot')
+				})
+				.catch((error) => {
+					this.set('error', error);
+				});
 		}
 	}
 });

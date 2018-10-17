@@ -84,5 +84,9 @@ export default Component.extend({
 		}
 		return chooses;
 	}),
-
+	actions: {
+		confirm() {
+			console.log('dd');
+		}
+	}
 });

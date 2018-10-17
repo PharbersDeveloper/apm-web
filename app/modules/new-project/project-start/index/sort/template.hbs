@@ -23,7 +23,7 @@
 	</div>
 </div>
 
-{{#bs-modal local-class="hint-modal" open=tipsModal onSubmit=(action 'toObjective') onHidden=(action (mut tipsModal) false) as |modal|}}
+{{!-- {{#bs-modal local-class="hint-modal" open=tipsModal onSubmit=(action 'toObjective') onHidden=(action (mut tipsModal) false) as |modal|}}
 	{{#modal.header}}
 		<h4 class="modal-title">
       <span></span>提示
@@ -40,4 +40,5 @@
 			{{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
 		{{/if}}
 	{{/modal.footer}}
-{{/bs-modal}}
+{{/bs-modal}} --}}
+{{hint-modal hint=hint confirm=(action 'toObjective')}}

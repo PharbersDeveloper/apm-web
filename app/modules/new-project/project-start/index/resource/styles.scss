@@ -9,14 +9,16 @@
 		.title-resource {
 			height: 20px;
 			line-height: 20px;
-			font-family: PingFangSC-Regular;
-			font-size: 14px;
-			color: #000000;
 			letter-spacing: 1.5px;
 
-			span {
+			span:first-child {
+				font-size: 16px;
 				color: #485465;
-				letter-spacing: 1.5px;
+			}
+
+			span:last-child {
+				color: #aaaaaa;
+				font-size: 14px;
 			}
 		}
 
@@ -77,7 +79,6 @@
 		}
 
 		.table-container {
-			font-family: PingFangSC-Regular;
 			font-size: 14px;
 
 			thead {
@@ -96,6 +97,10 @@
 				tr {
 					height: 60px;
 					padding: 10px 0;
+
+					td:first-child {
+						font-size: 16px;
+					}
 				}
 
 				td {

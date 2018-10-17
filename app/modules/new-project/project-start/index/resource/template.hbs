@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="col-md-12 col-lg-12 col-sm-12">
 			<div local-class="resource-content">
-				<p local-class="title-resource">资源分配<span> -在资源有限的情况下，做出合适的投入计划，以达到目标。</span></p>
+				<p local-class="title-resource"><span>资源分配</span><span> -在资源有限的情况下，做出合适的投入计划，以达到目标。</span></p>
 
 				<div local-class="card-item-container" class="container">
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3">
@@ -81,7 +81,7 @@
 		</div>
 	</div>
 </div>
-{{#bs-modal open=tipsModal onSubmit=(action 'toActionPlan') onHidden=(action (mut tipsModal) false) as |modal|}}
+{{!-- {{#bs-modal open=tipsModal onSubmit=(action 'toActionPlan') onHidden=(action (mut tipsModal) false) as |modal|}}
 	{{#modal.header}}
 		<h4 class="modal-title">
             <span></span>{{tipsTitle}}
@@ -98,4 +98,5 @@
 			{{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
 		{{/if}}
 	{{/modal.footer}}
-{{/bs-modal}}
+{{/bs-modal}} --}}
+{{hint-modal hint=hint confirm=(action 'toActionPlan')}}

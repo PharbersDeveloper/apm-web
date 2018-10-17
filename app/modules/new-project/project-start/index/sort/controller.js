@@ -14,12 +14,28 @@ export default Controller.extend({
 			});
 			this.set('isAllResort', isAllResort);
 			if (isAllResort) {
-				this.set('tipsModal', true);
-				this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '确认进入下一步后，将不可修改当前内容。',
+					hintBtn: true,
+				}
+				this.set('hint', hint);
+				// this.set('tipsModal', true);
+				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 			} else {
 				// 弹窗提醒排序
-				this.set('tipsModal', true);
-				this.set('tipsContent', '请对所有的区域进行排序！');
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请对所有的区域进行排序！',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				// this.set('tipsModal', true);
+				// this.set('tipsContent', '请对所有的区域进行排序！');
 			}
 		},
 		toObjective() {

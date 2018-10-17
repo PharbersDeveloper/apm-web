@@ -6,6 +6,7 @@ body,
 html {
 	height: 100%;
 	background: #efeff0;
+	font-family: "Microsoft Yahei","微软雅黑","宋体",Tahoma,Arial,Helvetica,STHeiti;
 }
 @media (min-width: 1400px) {
 	:global(.container) {
@@ -38,7 +39,6 @@ html {
 	p {
 		margin: 0;
 		line-height: 26px;
-		font-family: PingFangSC-Regular;
 		font-size: 14px;
 		letter-spacing: 2px;
 		color: #767A80;
