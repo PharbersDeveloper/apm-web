@@ -2,7 +2,8 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
 	init() {
-		this._super(...arguments);
+        this._super(...arguments);
+        this.set('history',  JSON.parse(localStorage.getItem('history')));
 		let totalRegion = JSON.parse(localStorage.getItem('totalRegion'));
 		if (totalRegion) {
 			totalRegion.forEach((item) => {

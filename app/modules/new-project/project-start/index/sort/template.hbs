@@ -1,9 +1,12 @@
 <div local-class="sort-container">
-	<div class="next-step">
-		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
-			下一步
-		{{/bs-button}}
-	</div>
+    {{#unless history}}
+        <div class="next-step">
+            {{#bs-button class="btn-next" onClick=(action "nextStep")}}
+                下一步
+            {{/bs-button}}
+        </div>
+    {{/unless}}
+	
 	<div local-class="sort-conent">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">

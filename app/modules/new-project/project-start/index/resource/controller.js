@@ -7,7 +7,7 @@ export default Controller.extend({
 		this._super(...arguments);
 		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
 		this.set('region', this.store.peekAll('region'));
-
+        this.set('history',  JSON.parse(localStorage.getItem('history')));
 	},
 	newRegionData: computed('regionResort', function() {
 		let regionResort = JSON.parse(localStorage.getItem('regionResort'));

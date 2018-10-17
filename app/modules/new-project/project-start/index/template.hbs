@@ -4,27 +4,27 @@
 			<div local-class='navigation'>
 				{{#bs-nav type="tabs" justified=true as |nav|}}
 					{{#nav.item}}
-						{{#nav.link-to "new-project.project-start.index.analyze" disabled=true}}总体分析{{/nav.link-to}}
+						{{#nav.link-to "new-project.project-start.index.analyze" disabled=(if history false true )}}总体分析{{/nav.link-to}}
                         {{!-- <span>总体分析</span> --}}
 					{{/nav.item}}
 					{{#nav.item}}
-						{{#nav.link-to "new-project.project-start.index.sort" disabled=true}}排序{{/nav.link-to}}
+						{{#nav.link-to "new-project.project-start.index.sort" disabled=(if history false true)}}排序{{/nav.link-to}}
                         {{!-- <span>排序</span> --}}
 					{{/nav.item}}
 					{{#nav.item}}
-						{{#nav.link-to "new-project.project-start.index.objective" disabled=true}}目标设定{{/nav.link-to}}
+						{{#nav.link-to "new-project.project-start.index.objective" disabled=(if history false true)}}目标设定{{/nav.link-to}}
                         {{!-- <span>目标设定</span> --}}
 					{{/nav.item}}
 					{{#nav.item}}
-						{{#nav.link-to "new-project.project-start.index.resource" disabled=true}}资源分配{{/nav.link-to}}
+						{{#nav.link-to "new-project.project-start.index.resource" disabled=(if history false true)}}资源分配{{/nav.link-to}}
                         {{!-- <span>资源分配</span> --}}
 					{{/nav.item}}
 					{{#nav.item}}
-						{{#nav.link-to "new-project.project-start.index.action-plan" disabled=true}}行动计划{{/nav.link-to}}
+						{{#nav.link-to "new-project.project-start.index.action-plan" disabled=(if history false true)}}行动计划{{/nav.link-to}}
                         {{!-- <span>行动计划</span> --}}
 					{{/nav.item}}
 					{{#nav.item}}
-						{{#nav.link-to "new-project.project-start.index.upshot" disabled=true}}结果{{/nav.link-to}}
+						{{#nav.link-to "new-project.project-start.index.upshot" disabled=(if history false true)}}结果{{/nav.link-to}}
                         {{!-- <span>结果</span> --}}
 					{{/nav.item}}
 				{{/bs-nav}}

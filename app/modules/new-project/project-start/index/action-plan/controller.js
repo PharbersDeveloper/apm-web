@@ -7,7 +7,8 @@ export default Controller.extend({
     regionResort: [],
 	init() {
 		this._super(...arguments);
-		this.set('areaRadars', []);
+        this.set('areaRadars', []);
+        this.set('history',  JSON.parse(localStorage.getItem('history')));
 		this.readyChoose = [{
 				text: "产品知识培训",
 				isChecked: true

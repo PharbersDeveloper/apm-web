@@ -1,14 +1,17 @@
 <div local-class="analyze-container">
-	<div class="next-step">
-		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
-			下一步
-		{{/bs-button}}
-	</div>
+    {{#unless history}}
+        <div class="next-step">
+            {{#bs-button class="btn-next" onClick=(action "nextStep")}}
+                下一步
+            {{/bs-button}}
+        </div>
+    {{/unless}}
+	
 	<div local-class="analyze-section">
 		{{area-base-info-table data=model.tableData}}
 	</div>
 	{{#each model.regionList as |region|}}
-		{{area-analyze-input data=region keyUp=(action 'saveToLocalStorage')}}
+		{{area-analyze-input data=region keyUp=(action 'saveToLocalStorage') history=history}}
 	{{/each}}
 	{{!-- {{area-analyze-input }} --}}
 </div>
