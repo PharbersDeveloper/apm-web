@@ -2,9 +2,14 @@
 	font-size: 0;
 
 	:global(.modal-title) {
+		line-height: 25px;
 		font-size: 14px;
 		letter-spacing: 1.5px;
 		color: #767A80;
+
+		img {
+			margin-right: 20px;
+		}
 	}
 
 	:global(.modal-content) {
@@ -14,14 +19,6 @@
 
 	:global(.close) {
 		display: none;
-	}
-
-	:global(.modal-title) {
-		line-height: 25px;
-
-		img {
-			margin-right: 20px;
-		}
 	}
 
 	:global(.modal-body) {

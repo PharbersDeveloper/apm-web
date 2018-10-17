@@ -3,8 +3,12 @@
     {{#each computeareaArray as |item|}}
         <div local-class="areaCard">
             {{#draggable-object content=item }}
+            <span  {{action 'openTips' item}}>
                 <span>{{item.data.attributes.name}}</span>
-                <span local-class="hintModal" class="glyphicon glyphicon-list-alt" {{action 'openTips' item}}></span>
+                <img src="/assets/images/note.png" width="16px" height="20px" alt="note">
+                {{!-- <span local-class="hintModal" class="glyphicon glyphicon-list-alt"></span> --}}
+            </span>
+
             {{/draggable-object}}
         </div>
     {{/each}}

@@ -1,12 +1,9 @@
 <div local-class="objective-container">
-    {{#unless history}}
-        <div class="next-step">
-            {{#bs-button class="btn-next" onClick=(action "nextStep")}}
-                下一步
-            {{/bs-button}}
-        </div>
-    {{/unless}}
-	
+	<div class="next-step">
+		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
+			下一步
+		{{/bs-button}}
+	</div>
 	<div local-class="objective-section">
 		{{!-- <div class="row"> --}}
 			{{!-- <div class="col-md-12 col-lg-12 col-sm-12"> --}}
@@ -52,13 +49,18 @@
 							{{#each newRegionData as |region index|}}
 								<tr>
 									<td>{{index-to-normal index}}</td>
-									<td><span {{action 'openTips' region}}>{{region.name}} <span class="glyphicon glyphicon-list-alt" ></span></span></td>
+									<td>
+										<span {{action 'openTips' region}}>
+											{{region.name}}
+											<img src="/assets/images/note.png" width="16px" height="20px" alt="note">
+										</span>
+								</td>
                                     {{#each regionCompanyTargets as |item|}}
                                         {{#if (eq region.id item.region_id)}}
                                             <td>{{number-format item.company_targe}}</td>
                                         {{/if}}
                                     {{/each}}
-									<td>{{input type="text" value=region.forecast dir="ltr" maxlength="10" disabled=(if history true false)}} </td>
+									<td>{{input type="text" value=region.forecast maxlength="10" dir="ltr"}} </td>
 								</tr>
 							{{/each}}
 						</tbody>

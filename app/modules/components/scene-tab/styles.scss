@@ -11,7 +11,7 @@
 	z-index: 1;
 
 	.quit {
-		position: fixed;
+		position: absolute;
 		right: 20px;
 		width: 30px;
 		margin-top: 10px;
@@ -22,8 +22,9 @@
 		}
 
 		ul {
-			left: -60px;
-			padding: 10px 0 0;
+			left: -110px;
+			top: -14px;
+			padding: 0;
 			min-width: 50px;
 
 			li {

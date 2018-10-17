@@ -113,6 +113,10 @@
 					&:nth-child(2) {
 						cursor: pointer;
 						color: #4A90E2;
+
+						img {
+							margin-left: 10px;
+						}
 					}
 
 					input {

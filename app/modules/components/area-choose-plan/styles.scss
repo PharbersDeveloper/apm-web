@@ -58,30 +58,73 @@
 *
 *多选样式
 */
-.data-checkbox {
-	width: 130px;
-	font-weight: normal;
-}
+.hint-modal {
+	:global(.modal-title) {
+		font-size: 14px;
+		letter-spacing: 1.5px;
+		color: #767A80;
+	}
 
-input[type="checkbox"] {
-	display: none;
-}
+	:global(.close) {
+		display: none;
+	}
 
-.checkbox-span {
-	display: inline-block;
-	margin: 10px;
-	width: 16px;
-	height: 16px;
-	line-height: 1;
-	vertical-align: middle;
-	border: 1px solid rgba(0, 0, 0, .15);
-	background-color: #fff;
-}
+	:global(.modal-body) {
+		min-height: 100px;
+	}
 
-input[type="checkbox"]:checked + .checkbox-span:after {
-	content: "";
-	display: inline-block;
-	height: 14px;
-	width: 14px;
-	background-color: red;
+	:global(.modal-footer) {
+		border: 0;
+	}
+
+	:global(.btn-success) {
+		padding: 0;
+		width: 100px;
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+		letter-spacing: 2.15px;
+		box-shadow: 0 2px 4px 0 rgba(210,210,210,0.50);
+		border-radius: 100px;
+		border: 0;
+		color: #FFF;
+		background: #7F92C9;
+
+		&:active:hover {
+			color: #FFF;
+			background-color: transparent;
+			border: 0;
+		}
+	}
+
+	.data-checkbox {
+		display: block;
+		font-weight: normal;
+		font-size: 13px;
+		color: #767A80;
+		letter-spacing: 1.5px;
+	}
+
+	input[type="checkbox"] {
+		display: none;
+	}
+
+	.checkbox-span {
+		display: inline-block;
+		margin: 10px;
+		width: 16px;
+		height: 16px;
+		line-height: 1;
+		vertical-align: middle;
+		border: 1px solid rgba(0, 0, 0, .15);
+		background-color: #fff;
+	}
+
+	input[type="checkbox"]:checked + .checkbox-span:after {
+		content: "";
+		display: inline-block;
+		height: 14px;
+		width: 14px;
+		background-color: #4F6CB3;
+	}
 }
