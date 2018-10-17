@@ -8,7 +8,13 @@ export default Controller.extend({
 			totalRegion.forEach((item) => {
 				this.store.pushPayload('region', item);
 			})
-		}
+		};
+		this.set('hint', {
+			hintModal: false,
+			title: '提示',
+			content: '',
+			hintBtn: false,
+		})
 	},
 	actions: {
 		nextStep() {
@@ -21,14 +27,31 @@ export default Controller.extend({
 				}
 				return item.notes.length > 0
 			});
-			this.set('isNoteEmpty', isNoteEmpty);
+			// this.set('isNoteEmpty', isNoteEmpty);
+
 			if (isNoteEmpty) {
-				this.set('notesEmpty', true);
-				this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '确认进入下一步后，将不可修改当前内容。',
+					hintBtn: true,
+				}
+				this.set('hint', hint);
+				// this.set('notesEmpty', true);
+				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 
 			} else {
-				this.set('notesEmpty', true);
-				this.set('tipsContent', '请填写完成 ' + emptyNotesRegion + ' 的内容！');
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: emptyNotesRegion,
+					content: '请填写完成 ' + emptyNotesRegion + ' 的内容！',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				// this.set('notesEmpty', true);
+				// this.set('tipsContent', '请填写完成 ' + emptyNotesRegion + ' 的内容！');
 			}
 		},
 		toSort() {

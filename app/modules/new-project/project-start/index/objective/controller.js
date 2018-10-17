@@ -10,15 +10,31 @@ export default Controller.extend({
 		let region = this.store.peekAll('region');
 		let singleRegionJsonApi = null;
 		let regionLocalStorage = region.map((item) => {
-			singleRegionJsonApi = '';
+			// singleRegionJsonApi = '';
 			singleRegionJsonApi = this.store.object2JsonApi('region', item, false);
 			return singleRegionJsonApi
 		});
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
+		// let wrongRegionName = '';
+		// let can2Num = region.every((item) => {
+		// 	wrongRegionName = item.name;
+		// 	return !isNaN(Boolean(item.forecast) ? item.forecast : 0)
+		// });
+		// if (can2Num) {
 		region.forEach((item) => {
 			total += parseInt(item.forecast) || 0;
 		});
 		return total;
+		// } else {
+		// 	let hint = {
+		// 		hintModal: true,
+		// 		hintImg: true,
+		// 		title: '提示',
+		// 		content: '您的' + wrongRegionName + '预测指标需要为正整数！',
+		// 		hintBtn: false,
+		// 	}
+		// 	this.set('hint', hint);
+		// }
 	}),
 	newRegionData: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');
@@ -43,29 +59,55 @@ export default Controller.extend({
 				if (item.forecast.length == 0) {
 					emptyForecastRegion = item.name;
 				}
-				return item.forecast.length > 0
+				if (isNaN(Boolean(item.forecast) ? item.forecast : 0)) {
+					emptyForecastRegion = item.name;
+				}
+				return item.forecast.length > 0 && !isNaN(Boolean(item.forecast) ? item.forecast : 0)
 			});
 			this.set('isForecastEmpty', isForecastEmpty);
-			this.set('tipsTitle', '提示');
+			// this.set('tipsTitle', '提示');
 
 			if (isForecastEmpty) {
 				let totalCompanyTarget = this.get('totalCompanyTarget');
 				let totalForecast = this.get('totalForecast');
 
 				if (totalForecast < totalCompanyTarget) {
+					let hint = {
+						hintModal: true,
+						hintImg: true,
+						title: '提示',
+						content: '您的预测总指标需要超过公司本季度总指标！',
+						hintBtn: false,
+					}
+					this.set('hint', hint);
 					this.set('isForecastEmpty', false);
-					this.set('tipsModal', true);
+					// this.set('tipsModal', true);
 					// this.set('tipsTitle', '提示');
-					this.set('tipsContent', '您的预测总指标需要超过公司本季度总指标！');
+					// this.set('tipsContent', '您的预测总指标需要超过公司本季度总指标！');
 				} else {
-					this.set('tipsModal', true);
+					let hint = {
+						hintModal: true,
+						hintImg: true,
+						title: '提示',
+						content: '确认进入下一步后，将不可修改当前内容。',
+						hintBtn: true,
+					}
+					this.set('hint', hint);
+					// this.set('tipsModal', true);
 					// this.set('tipsTitle', '提示');
-					this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+					// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 				}
 			} else {
-				this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				this.set('tipsContent', '请填写 ' + emptyForecastRegion + ' 的预测数据')
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请填写 ' + emptyForecastRegion + ' 的预测数据，并保证为正整数。',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				// this.set('tipsModal', true);
+				// this.set('tipsContent', '请填写 ' + emptyForecastRegion + ' 的预测数据')
 			}
 		},
 		toResource() {
@@ -97,9 +139,17 @@ export default Controller.extend({
 			});
 		},
 		openTips(region) {
-			this.set('tipsModal', true);
-			this.set('tipsTitle', region.name);
-			this.set('tipsContent', region.notes);
+			let hint = {
+				hintModal: true,
+				hintImg: false,
+				title: region.name,
+				content: region.notes,
+				hintBtn: false,
+			}
+			this.set('hint', hint);
+			// this.set('tipsModal', true);
+			// this.set('tipsTitle', region.name);
+			// this.set('tipsContent', region.notes);
 		},
 		changeArea(value) {
 			this.set('barData', this.areaBarData.find(elem => elem.region_id === value).data)

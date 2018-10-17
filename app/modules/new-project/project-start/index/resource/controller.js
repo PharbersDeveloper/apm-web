@@ -49,7 +49,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个全国会数据不能超过100%');
 				set(item, 'nationMeeting', '');
 			}
-			nationMeeting += parseInt(item.nationMeeting - 0);
+			nationMeeting += parseInt(item.nationMeeting - 0) || 0;
 		});
 		return nationMeeting;
 	}),
@@ -64,7 +64,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个城市会数据不能超过100%');
 				set(item, 'cityMeeting', '');
 			}
-			cityMeeting += parseInt(item.cityMeeting - 0);
+			cityMeeting += parseInt(item.cityMeeting - 0) || 0;
 		})
 		return cityMeeting;
 	}),
@@ -78,7 +78,7 @@ export default Controller.extend({
 				this.set('tipsContent', '单个科室会数据不能超过100%');
 				set(item, 'departmentMeeting', '');
 			}
-			departmentMeeting += parseInt(item.departmentMeeting - 0);
+			departmentMeeting += parseInt(item.departmentMeeting - 0) || 0;
 		})
 		return departmentMeeting;
 	}),
@@ -95,34 +95,74 @@ export default Controller.extend({
 			localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 		},
 		openTips(region) {
-			this.set('tipsModal', true);
-			this.set('tipsTitle', region.name);
-			this.set('tipsContent', region.notes);
+			let hint = {
+				hintModal: true,
+				hintImg: true,
+				title: region.name,
+				content: region.notes,
+				hintBtn: false,
+			}
+			this.set('hint', hint);
+			// this.set('tipsModal', true);
+			// this.set('tipsTitle', region.name);
+			// this.set('tipsContent', region.notes);
 		},
 		nextStep() {
+			let wrongRegionName = '';
 			let region = this.get('region');
 			let iscoVisitEmpty = region.every((item) => {
+				let total = '';
+				total = item.covisit + item.nationMeeting + item.cityMeeting + item.departmentMeeting;
+				console.log(isNaN(total));
+				console.log(total);
+				if (isNaN(total)) {
+					wrongRegionName = item.name;
+				}
 				return item.covisit.length > 0 && item.nationMeeting.length > 0 &&
-					item.cityMeeting.length > 0 && item.departmentMeeting.length > 0;
+					item.cityMeeting.length > 0 && item.departmentMeeting.length > 0 && !isNaN(total);
 			});
 			this.set('iscoVisitEmpty', iscoVisitEmpty);
 			if (iscoVisitEmpty) {
 				let [_totalCoVisit, _totalNationMeeting, _totalCityMeeting, _totalDepartMeeting] = [this.get('coVisit'), this.get('nationMeeting'), this.get('cityMeeting'), this.get('departmentMeeting')];
 				if (_totalCoVisit > 100 || _totalNationMeeting > 100 ||
 					_totalCityMeeting > 100 || _totalDepartMeeting > 100) {
+					let hint = {
+						hintModal: true,
+						hintImg: true,
+						title: '提示',
+						content: '当前输入的总值超出了100%,请检查后重新填写.',
+						hintBtn: false,
+					}
+					this.set('hint', hint);
 					this.set('iscoVisitEmpty', false);
-					this.set('tipsModal', true);
-					this.set('tipsTitle', '提示');
-					this.set('tipsContent', '当前输入的总值超出了100%，请检查后重新填写');
+					// this.set('tipsModal', true);
+					// this.set('tipsTitle', '提示');
+					// this.set('tipsContent', '当前输入的总值超出了100%，请检查后重新填写');
 				} else {
-					this.set('tipsModal', true);
-					this.set('tipsTitle', '提示');
-					this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
+					let hint = {
+						hintModal: true,
+						hintImg: true,
+						title: '提示',
+						content: '确认进入下一步后,将不可修改当前内容.',
+						hintBtn: true,
+					}
+					this.set('hint', hint);
+					// this.set('tipsModal', true);
+					// this.set('tipsTitle', '提示');
+					// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 				}
 			} else {
-				this.set('tipsModal', true);
-				this.set('tipsTitle', '提示');
-				this.set('tipsContent', '请填写全部的预测数据');
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请填写全部的预测数据,并保证数据为正整数.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				// this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				// this.set('tipsContent', '请填写全部的预测数据');
 			}
 		},
 		toActionPlan() {

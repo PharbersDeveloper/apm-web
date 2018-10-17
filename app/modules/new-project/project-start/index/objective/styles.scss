@@ -1,5 +1,4 @@
 .objective-container {
-	font-family: PingFangSC-Regular;
 	font-size: 14px;
 
 	.objective-section {
@@ -11,25 +10,33 @@
 
 		.choose-area {
 			position: absolute;
-			left: 40px;
-			top: 20px;
+			right: 40px;
+			top: 15px;
 			z-index: 1;
 			width: 230px;
 			height: 30px;
 			background: #F1F1F1;
 			border-radius: 2px;
-			font-family: PingFangTC-Regular;
 			font-size: 14px;
 			color: #485465;
 			letter-spacing: 1.17px;
 		}
 
 		.title-objective {
-			height: 20px;
-			line-height: 20px;
-			font-size: 14px;
-			color: #000000;
-			letter-spacing: 1.5px;
+			margin: 0;
+			height: 40px;
+			line-height: 40px;
+			letter-spacing: 2px;
+
+			span:first-child {
+				font-size: 16px;
+				color: #485465;
+			}
+
+			span:last-child {
+				font-size: 14px;
+				color: #AAA;
+			}
 		}
 
 		.summary {
@@ -39,8 +46,19 @@
 			letter-spacing: 2px;
 
 			div {
+				padding: 10px;
+				width: 250px;
+				height: 80px;
 				box-shadow: 0 0 4px 0 rgba(173,173,173,0.50);
 				border-right: 1px solid #D0D0D0;
+
+				p:first-child {
+					margin-bottom: 16px;
+				}
+
+				p:last-child {
+					font-size: 18px;
+				}
 			}
 		}
 
@@ -80,6 +98,10 @@
 				tr {
 					height: 60px;
 					padding: 10px 0;
+
+					td:first-child {
+						font-size: 16px;
+					}
 				}
 
 				td {
@@ -99,7 +121,7 @@
 
 					input {
 						padding: 0 14px;
-						width: 90px;
+						width: 150px;
 						border: 0;
 						letter-spacing: 1.17px;
 						background: #F3F3F3;

@@ -13,31 +13,29 @@
 		float: right;
 		display: inline-block;
 		letter-spacing: 2px;
-
-		button {
-			padding: 0;
-			width: 130px;
-			height: 30px;
-			line-height: 30px;
-			color: #FFF;
-			background: #7F92C9;
-			border-radius: 100px;
-		}
-
-		ul {
-			width: 190px;
-			left: -30px;
-
-			li {
-				color: #485465;
-
-				input {
-					margin: 0 5px;
-					height: 15px;
-					width: 15px;
-				}
-			}
-		}
+		// button {
+		padding: 0;
+		width: 130px;
+		height: 30px;
+		line-height: 30px;
+		color: #FFF;
+		background: #7F92C9;
+		border-radius: 100px;
+		// }
+		// ul {
+		// 	width: 190px;
+		// 	left: -30px;
+		//
+		// 	li {
+		// 		color: #485465;
+		//
+		// 		input {
+		// 			margin: 0 5px;
+		// 			height: 15px;
+		// 			width: 15px;
+		// 		}
+		// 	}
+		// }
 	}
 }
 
@@ -55,4 +53,35 @@
 		color: #FFF;
 		letter-spacing: 2px;
 	}
+}
+/**
+*
+*多选样式
+*/
+.data-checkbox {
+	width: 130px;
+	font-weight: normal;
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+.checkbox-span {
+	display: inline-block;
+	margin: 10px;
+	width: 16px;
+	height: 16px;
+	line-height: 1;
+	vertical-align: middle;
+	border: 1px solid rgba(0, 0, 0, .15);
+	background-color: #fff;
+}
+
+input[type="checkbox"]:checked + .checkbox-span:after {
+	content: "";
+	display: inline-block;
+	height: 14px;
+	width: 14px;
+	background-color: red;
 }
