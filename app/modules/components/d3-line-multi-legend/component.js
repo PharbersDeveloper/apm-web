@@ -96,15 +96,15 @@ export default Component.extend({
 				.ticks(7)
 		}
 
-		svg.append("text")
-			.text(title)
-			.attr("class", "title")
-			.attr("transform", "translate(-30,13)")
-			.attr("text-anchor", "start")
+		// svg.append("text")
+		// 	.text(title)
+		// 	.attr("class", "title")
+		// 	.attr("transform", "translate(-30,13)")
+		// 	.attr("text-anchor", "start")
 
 		svg.append("g")
 			.attr("class", "grid")
-			.attr("transform", "translate(0,30)")
+			.attr("transform", "translate(0,0)")
 			.call(make_y_gridlines()
 				.tickSize(-width)
 				.tickFormat((d) => d + "%")
@@ -116,7 +116,7 @@ export default Component.extend({
 
 		let lines = svg.append('g')
 			.attr('class', 'lines')
-			.attr("transform", "translate(0,30)");
+			.attr("transform", "translate(0,0)");
 		lines.selectAll('.line-group')
 			.data(data).enter()
 			.append('g')
@@ -128,7 +128,7 @@ export default Component.extend({
 					.text(d.name)
 					.attr("text-anchor", "middle")
 					.attr("x", (width - margin) / 2)
-					.attr("y", 30);
+					.attr("y", 0);
 			})
 			.on("mouseout", function() {
 				svg.select(".title-text").remove();
@@ -208,12 +208,12 @@ export default Component.extend({
 		svg.append("g")
 			.attr("class", "x axis")
 			// .attr("transform", `translate(0, ${height-margin})`)
-			.attr("transform", `translate(0, ${height-margin+30})`)
+			.attr("transform", `translate(0, ${height-margin})`)
 			.call(xAxis);
 
 		svg.append("g")
 			.attr("class", "y axis")
-			.attr("transform", "translate(0,30)")
+			.attr("transform", "translate(0,0)")
 			.call(yAxis)
 			.append('text')
 			.attr("y", 15)
@@ -226,9 +226,7 @@ export default Component.extend({
 		let legendArea = legendContainer.append("svg")
 			// .attr('width', 90)
 			.attr('width', 180 * data.length)
-			// .attr('height', 30 * data.length);
 			.attr('height', 20)
-		// .attr("transform", "translate(0,0)");
 
 		//绑定数据，设置每个图例的位置
 		// let legend = legendArea.selectAll("g")

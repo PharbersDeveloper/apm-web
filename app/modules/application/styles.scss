@@ -27,6 +27,7 @@ html {
 	width: 100%;
 
 	:global(.container) {
+		padding: 0;
 		min-width: 960px;
 	}
 }

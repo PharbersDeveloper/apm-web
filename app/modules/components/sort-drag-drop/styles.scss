@@ -10,6 +10,10 @@
 	color: #4A90E2;
 	cursor: move;
 
+	img {
+		margin-left: 20px;
+	}
+
 	:global(.js-draggableObject) {
 		padding: 0 10px;
 	}

@@ -1,6 +1,6 @@
 .action-plan-section {
 	margin-bottom: 10px;
-	padding: 6px 20px;
+	padding: 10px 20px;
 	font-size: 0;
 	background: #FFFFFF;
 	box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
@@ -12,6 +12,10 @@
 		color: #4A90E2;
 		letter-spacing: 1.5px;
 		cursor: pointer;
+
+		img {
+			margin-left: 10px;
+		}
 
 		.btn-toggle {
 			float: right;

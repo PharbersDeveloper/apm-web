@@ -1,7 +1,12 @@
 <div local-class="action-plan-section">
 	<div class="row">
 		<div class="col-md-12 col-lg-12 col-sm-12">
-			<p local-class="title-section"><span {{action 'openTips' data}}>{{data.name}}<span class="glyphicon glyphicon-list-alt" ></span></span>
+			<p local-class="title-section">
+				<span {{action 'openTips' data}}>
+					{{data.name}}
+					<img src="/assets/images/note.png" width="16px" height="20px" alt="note">
+					{{!-- <span class="glyphicon glyphicon-list-alt" ></span> --}}
+				</span>
 				{{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
 					{{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
 					{{else}}<span class="glyphicon glyphicon-triangle-top"></span>
@@ -20,7 +25,7 @@
                         {{area-table data=data areaComponyTarget=item.company_targe}}
                     {{/if}}
                 {{/each}}
-                {{area-choose-plan data=data history=history}}
+                {{area-choose-plan data=data}}
 			{{/bs-collapse}}
 		</div>
 	</div>

@@ -41,13 +41,14 @@ export default Component.extend({
 	planPaireComputed: computed('readyChoose.@each.isChecked', function() {
 		let chooses = this.get('readyChoose');
 		let planPaire = chooses.filterBy('isChecked', true);
+
 		let checkedString = "";
 		let currentId = this.get('getStore').id;
 		let localStorageRegion = JSON.parse(localStorage.getItem('totalRegion'));
 
 		if (planPaire.length > 2) {
 			later(this, function() {
-				set(planPaire.firstObject, 'isChecked', false)
+				set(planPaire.firstObject, 'isChecked', false);
 				// planPaire.firstObject.set('isChecked', false)
 				// planPaire.firstObject.set('text', planPaire.firstObject.get('text'))
 				// console.info(planPaire);
@@ -84,9 +85,4 @@ export default Component.extend({
 		}
 		return chooses;
 	}),
-	actions: {
-		confirm() {
-			console.log('dd');
-		}
-	}
 });

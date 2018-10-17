@@ -5,6 +5,14 @@
 	height: 420px;
 	background-color: #fff;
 
+	.title {
+		padding: 10px 20px;
+		margin: 0;
+		font-size: 14px;
+		color: #767A80;
+		letter-spacing: 2px;
+	}
+
 	:global .title {
 		font-size: 14px;
 		color: #767A80;

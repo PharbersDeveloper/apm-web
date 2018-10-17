@@ -3,6 +3,13 @@
 		width: 1400px;
 	}
 }
+@media (max-width: 960px) {
+	:global(.nav-justified) > li,
+	:global(.nav-tabs.nav-justified) > li {
+		display: table-cell;
+		width: 1%;
+	}
+}
 
 .navigation {
 	background: #FDFDFD;
