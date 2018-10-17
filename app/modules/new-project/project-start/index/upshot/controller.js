@@ -2,7 +2,11 @@ import Controller from '@ember/controller';
 import { inject } from '@ember/service';
 
 export default Controller.extend({
-	cookies: inject(),
+    cookies: inject(),
+    init(){
+        this._super(...arguments);
+        this.set('history',  JSON.parse(localStorage.getItem('history')));
+    },
 	actions: {
 		saveUpshot() {
 			console.log('saveUpshot');

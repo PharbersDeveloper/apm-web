@@ -97,7 +97,7 @@ export default Controller.extend({
 		openTips(region) {
 			let hint = {
 				hintModal: true,
-				hintImg: true,
+				hintImg: false,
 				title: region.name,
 				content: region.notes,
 				hintBtn: false,
