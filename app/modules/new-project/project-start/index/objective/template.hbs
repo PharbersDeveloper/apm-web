@@ -1,9 +1,11 @@
 <div local-class="objective-container">
-	<div class="next-step">
-		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
-			下一步
-		{{/bs-button}}
-	</div>
+    {{#unless history}}
+        <div class="next-step">
+            {{#bs-button class="btn-next" onClick=(action "nextStep")}}
+                下一步
+            {{/bs-button}}
+        </div>
+    {{/unless}}
 	<div local-class="objective-section">
 		{{!-- <div class="row"> --}}
 			{{!-- <div class="col-md-12 col-lg-12 col-sm-12"> --}}
@@ -60,7 +62,7 @@
                                             <td>{{number-format item.company_targe}}</td>
                                         {{/if}}
                                     {{/each}}
-									<td>{{input type="text" value=region.forecast maxlength="10" dir="ltr"}} </td>
+									<td>{{input type="text" value=region.forecast maxlength="10" dir="ltr" disabled=(if history true false)}} </td>
 								</tr>
 							{{/each}}
 						</tbody>

@@ -1,9 +1,11 @@
 <div local-class="resource-container">
-	<div class="next-step">
-		{{#bs-button class="btn-next" onClick=(action "nextStep")}}
-			下一步
-		{{/bs-button}}
-	</div>
+	{{#unless history}}
+        <div class="next-step">
+            {{#bs-button class="btn-next" onClick=(action "nextStep")}}
+                下一步
+            {{/bs-button}}
+        </div>
+    {{/unless}}
 	<div class="row">
 		<div class="col-md-12 col-lg-12 col-sm-12">
 			<div local-class="resource-content">
@@ -50,7 +52,6 @@
 							</tr>
 						</thead>
 						<tbody>
-                            {{log model}}
 							{{#each newRegionData as |region index|}}
 
 								<tr>
@@ -59,7 +60,6 @@
 										<span {{action 'openTips' region}}>
 											{{region.name}}
 											<img src="/assets/images/note.png" width="16px" height="20px" alt="note">
-											{{!-- <span class="glyphicon glyphicon-list-alt"></span> --}}
 										</span>
 									</td>
 									<td>
@@ -70,10 +70,10 @@
                                         {{/each}}
                                     </td>
 									<td>{{number-format region.forecast}}</td>
-									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.covisit dir="ltr"}} </td>
-									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.nationMeeting dir="ltr"}} </td>
-									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.cityMeeting dir="ltr"}} </td>
-									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.departmentMeeting dir="ltr"}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.covisit dir="ltr" disabled=(if history true false)}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.nationMeeting dir="ltr" disabled=(if history true false)}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.cityMeeting dir="ltr" disabled=(if history true false)}} </td>
+									<td>{{input type="text" key-up=(action 'saveToLocalStorage') value=region.departmentMeeting dir="ltr" disabled=(if history true false)}} </td>
 								</tr>
 							{{/each}}
 						</tbody>

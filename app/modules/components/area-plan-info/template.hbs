@@ -5,7 +5,6 @@
 				<span {{action 'openTips' data}}>
 					{{data.name}}
 					<img src="/assets/images/note.png" width="16px" height="20px" alt="note">
-					{{!-- <span class="glyphicon glyphicon-list-alt" ></span> --}}
 				</span>
 				{{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
 					{{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -25,7 +24,7 @@
                         {{area-table data=data areaComponyTarget=item.company_targe}}
                     {{/if}}
                 {{/each}}
-                {{area-choose-plan data=data}}
+                {{area-choose-plan data=data history=history}}
 			{{/bs-collapse}}
 		</div>
 	</div>

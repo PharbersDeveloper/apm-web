@@ -18,9 +18,11 @@
         <div local-class="sortCard">
             {{#draggable-object-target leveid=item.id amount="1" action=(action 'dragResult') overrideClass='dropTarget'}}
                 <div class="col-md-10 col-lg-10 col-sm-10">{{item.name}} {{item.selected.data.attributes.name}}</div>
-                <div class="col-md-2 col-lg-2 col-sm-2 text-right" local-class="remove" {{action "remove" item.id}}>
-                    <span>&times;</span>
-                </div>
+                {{#unless history}}
+                    <div class="col-md-2 col-lg-2 col-sm-2 text-right" local-class="remove" {{action "remove" item.id}}>
+                        <span>&times;</span>
+                    </div>
+                {{/unless}}
             {{/draggable-object-target}}
         </div>
     {{/each}}
