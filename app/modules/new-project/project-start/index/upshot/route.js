@@ -4,6 +4,8 @@ import { groupBy } from '../../../../phtool/tool';
 export default Route.extend({
 
 	model() {
+        this.store.peekAll('bind_course_region_rep').forEach(elem => elem.destroyRecord().then( rec => rec.unloadRecord()));
+        
 		let parentModel = this.modelFor('new-project.project-start');
 		let medicine = this.store.peekAll('medicine').filter(elem => !elem.compete).firstObject;
         
