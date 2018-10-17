@@ -9,7 +9,6 @@ export default Controller.extend({
     },
 	actions: {
 		saveUpshot() {
-			console.log('saveUpshot');
 			this.set('hint', {
 				hintModal: true,
 				hintImg: true,
@@ -22,15 +21,12 @@ export default Controller.extend({
 		},
 		confirmSaveUpshot() {
 			new Promise((resolve, reject) => {
-				this.get('cookies').clear('token');
-				localStorage.clear();
+				localStorage.removeItem('regionResort')
+			    localStorage.removeItem('totalRegion')
 				return resolve(true)
 			}).then(data => {
-				console.info(123);
 				this.transitionToRoute('project-sort')
-				// window.location.reload();
 			})
-			// this.transitionToRoute('project-sort')
 		}
 	}
 });
