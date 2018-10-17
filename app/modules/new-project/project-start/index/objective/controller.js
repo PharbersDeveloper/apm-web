@@ -3,6 +3,10 @@ import { computed } from '@ember/object';
 
 
 export default Controller.extend({
+    init() {
+        this._super(...arguments);
+        this.set('history',  JSON.parse(localStorage.getItem('history')));
+	},
 	areaBarData: null,
 	initSelectedRegionId: '',
 	totalForecast: computed('regionData.@each.forecast', function() {

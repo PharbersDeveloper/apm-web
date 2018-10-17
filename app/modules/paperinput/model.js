@@ -11,4 +11,5 @@ export default DS.Model.extend({
     city_meeting: DS.attr('number'),
     depart_meeting: DS.attr('number'),
     action_plans: DS.attr(),
+    paperinputstep: DS.belongsTo('paperinputstep', { async: false })
 });

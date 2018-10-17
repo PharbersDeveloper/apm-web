@@ -1,7 +1,10 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-
+    init() {
+        this._super(...arguments);
+        this.set('history',  JSON.parse(localStorage.getItem('history')));
+	},
 	actions: {
 		nextStep() {
 			let resortRegion = JSON.parse(localStorage.getItem('regionResort'));
