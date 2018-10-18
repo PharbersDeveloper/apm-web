@@ -8,37 +8,37 @@ export default Route.extend({
         let ave = radarCache.find(elem => elem.region_id === 'ave');
         function axes(radarfigure) {
             let axes = [];
-            axes.pushObject({
+            axes.push({
                 axis: '产品知识',
                 value: radarfigure.prod_knowledge_val
             })
 
-            axes.pushObject({
+            axes.push({
                 axis: '目标拜访频次',
                 value: radarfigure.target_call_freq_val
             })
 
-            axes.pushObject({
+            axes.push({
                 axis: '拜访次数',
                 value: radarfigure.call_times_val
             })
 
-            axes.pushObject({
+            axes.push({
                 axis: '实际工作天数',
                 value: radarfigure.in_field_days_val
             })
 
-            axes.pushObject({
+            axes.push({
                 axis: '工作积极性',
                 value: radarfigure.motivation_val
             })
 
-            axes.pushObject({
+            axes.push({
                 axis: '区域管理能力',
                 value: radarfigure.territory_manage_val
             })
 
-            axes.pushObject({
+            axes.push({
                 axis: '销售能力',
                 value: radarfigure.sales_skills_val
             })
@@ -50,14 +50,14 @@ export default Route.extend({
                 region_id: elem.region_id,
                 data: [
                     {
-                        name: regionCache.name,
-                        axes: axes(elem.radarfigure),
-                        color: '#26AF32'
-                    },
-                    {
                         name: '区域平均',
                         axes: axes(ave.radarfigure),
                         color: '#762712'
+                    },
+                    {
+                        name: regionCache.name,
+                        axes: axes(elem.radarfigure),
+                        color: '#26AF32'
                     }
                 ]
             }

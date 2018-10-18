@@ -12,7 +12,7 @@ export default Component.extend({
 	},
 
 	RadarChart() {
-		let data = this.get('radarSectionData').reverse();
+		let data = this.get('radarSectionData')//.reverse();
 		let _currentColor = data.map((item) => {
 			return item.color;
 		});

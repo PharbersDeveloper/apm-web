@@ -223,16 +223,15 @@ export default Route.extend({
 					return {
 						region_id: elem.region_id,
 						data: [{
-								name: regionCache.name,
-								axes: axes(elem.radarfigure),
-								color: '#26AF32'
-							},
-							{
-								name: '区域平均',
-								axes: axes(ave.radarfigure),
-								color: '#762712'
-							}
-						]
+                            name: '区域平均',
+                            axes: axes(ave.radarfigure),
+                            color: '#762712'
+                        },
+                        {
+                            name: regionCache.name,
+                            axes: axes(elem.radarfigure),
+                            color: '#26AF32'
+                        }]
 					}
 				});
 				regionBaseInfo.radarData = radarData;
