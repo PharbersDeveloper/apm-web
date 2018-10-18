@@ -44,7 +44,9 @@
 								<td>排序</td>
 								<td>区域</td>
 								<td>公司指标($)</td>
-								<td>预测指标($)</td>
+                                <td>上季销售贡献率(%)</td>
+								<td>本季预测指标($)</td>
+                                <td>本季指标贡献率(%)</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -62,8 +64,14 @@
                                             <td>{{number-format item.company_targe}}</td>
                                         {{/if}}
                                     {{/each}}
+                                    <td>30%</td>
 									<td>{{input type="text" value=region.forecast maxlength="10" dir="ltr" disabled=(if history true false)}} </td>
-								</tr>
+                                    {{#each regionCotri as |item|}}
+                                        {{#if (eq region.id item.id)}}
+                                            <td>{{item.contri}}</td>
+                                        {{/if}}
+                                    {{/each}}
+                                </tr>
 							{{/each}}
 						</tbody>
 					</table>

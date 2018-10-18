@@ -3,9 +3,9 @@ import { computed } from '@ember/object';
 
 
 export default Controller.extend({
-    init() {
-        this._super(...arguments);
-        this.set('history',  JSON.parse(localStorage.getItem('history')));
+	init() {
+		this._super(...arguments);
+		this.set('history', JSON.parse(localStorage.getItem('history')));
 	},
 	areaBarData: null,
 	initSelectedRegionId: '',
@@ -19,26 +19,34 @@ export default Controller.extend({
 			return singleRegionJsonApi
 		});
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
-		// let wrongRegionName = '';
-		// let can2Num = region.every((item) => {
-		// 	wrongRegionName = item.name;
-		// 	return !isNaN(Boolean(item.forecast) ? item.forecast : 0)
-		// });
-		// if (can2Num) {
+
 		region.forEach((item) => {
 			total += parseInt(item.forecast) || 0;
 		});
 		return total;
-		// } else {
-		// 	let hint = {
-		// 		hintModal: true,
-		// 		hintImg: true,
-		// 		title: '提示',
-		// 		content: '您的' + wrongRegionName + '预测指标需要为正整数！',
-		// 		hintBtn: false,
-		// 	}
-		// 	this.set('hint', hint);
-		// }
+	}),
+	regionCotri: computed('regionData.@each.forecast', function() {
+		// let data = [];
+		let region = this.store.peekAll('region');
+		let total = this.get('totalForecast');
+		// console.log(total);
+
+		let data = region.map((item) => {
+			let contri = parseInt(item.forecast) || 0;
+			if (contri == 0) {
+				return {
+					id: item.id,
+					contri: '0%',
+				}
+			} else {
+				let rate = ((contri / total) * 100).toFixed(2) + '%';
+				return {
+					id: item.id,
+					contri: rate,
+				}
+			}
+		});
+		return data;
 	}),
 	newRegionData: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');

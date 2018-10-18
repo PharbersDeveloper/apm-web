@@ -7,13 +7,17 @@
 	.title-sort {
 		height: 20px;
 		line-height: 20px;
-		font-size: 14px;
-		color: #000000;
+		font-size: 0;
 		letter-spacing: 1.5px;
 
-		span {
+		span:first-child {
+			font-size: 16px;
 			color: #485465;
-			letter-spacing: 1.5px;
+		}
+
+		span:last-child {
+			font-size: 14px;
+			color: #aaa;
 		}
 	}
 
