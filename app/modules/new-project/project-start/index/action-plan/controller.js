@@ -94,7 +94,12 @@ export default Controller.extend({
 			this.toggleProperty('collapsed')
 		},
 		changeArea(value) {
-			this.set('radarData', this.areaRadars.find(elem => elem.region_id === value).data)
+            let data = this.areaRadars.find(elem => elem.region_id === value).data.toArray()
+            // let temp = data.sort(function(a, b){
+            //     b.sort - a.sort
+            // })
+            // console.info(temp)
+			this.set('radarData', data)
 		},
 		nextStep() {
 			let region = this.store.peekAll('region');
