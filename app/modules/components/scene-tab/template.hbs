@@ -1,8 +1,5 @@
 <div local-class='content'>
     {{#bs-nav type="tabs" as |nav|}}
-        {{!-- {{#nav.item}}{{#nav.link-to "new-project.project-start.introduced.scenario"}}场景介绍{{/nav.link-to}}{{/nav.item}}
-        {{#nav.item}}{{#nav.link-to "new-project.project-start.introduced.product"}}产品信息{{/nav.link-to}}{{/nav.item}}
-        {{#nav.item}}{{#nav.link-to "new-project.project-start.introduced.area"}}区域信息{{/nav.link-to}}{{/nav.item}} --}}
         {{#nav.item active=(if (eq introduced.isSelectedName 'showScenario') true false) onClick=(action 'showScenario' 'showScenario')}}场景介绍{{/nav.item}}
         {{#nav.item active=(if (eq introduced.isSelectedName 'showProduct') true false) onClick=(action 'showProduct' 'showProduct')}}产品信息{{/nav.item}}
         {{#nav.item active=(if (eq introduced.isSelectedName 'showArea') true false) onClick=(action 'showArea' 'showArea')}}区域信息{{/nav.item}}

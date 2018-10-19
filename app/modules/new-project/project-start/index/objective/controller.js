@@ -11,10 +11,11 @@ export default Controller.extend({
 	initSelectedRegionId: '',
 	totalForecast: computed('regionData.@each.forecast', function() {
 		let total = 0;
-		let region = this.store.peekAll('region');
+		// let region = this.store.peekAll('region');
+		let region = this.get('regionData');
+
 		let singleRegionJsonApi = null;
 		let regionLocalStorage = region.map((item) => {
-			// singleRegionJsonApi = '';
 			singleRegionJsonApi = this.store.object2JsonApi('region', item, false);
 			return singleRegionJsonApi
 		});
@@ -27,7 +28,9 @@ export default Controller.extend({
 	}),
 	regionCotri: computed('regionData.@each.forecast', function() {
 		// let data = [];
-		let region = this.store.peekAll('region');
+		// let region = this.store.peekAll('region');
+		let region = this.get('regionData');
+
 		let total = this.get('totalForecast');
 		// console.log(total);
 
@@ -50,7 +53,9 @@ export default Controller.extend({
 	}),
 	newRegionData: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');
-		let region = this.store.peekAll('region');
+		// let region = this.store.peekAll('region');
+		let region = this.get('regionData');
+
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
 			region.forEach((ele) => {
@@ -65,8 +70,8 @@ export default Controller.extend({
 	actions: {
 		nextStep() {
 			let emptyForecastRegion = "";
-			let region = this.set('region', this.store.peekAll('region'));
-			// let params = this.get('params');
+			// let region = this.set('region', this.store.peekAll('region'));
+			let region = this.get('regionData');
 			let isForecastEmpty = region.every((item) => {
 				if (item.forecast.length == 0) {
 					emptyForecastRegion = item.name;
@@ -93,9 +98,6 @@ export default Controller.extend({
 					}
 					this.set('hint', hint);
 					this.set('isForecastEmpty', false);
-					// this.set('tipsModal', true);
-					// this.set('tipsTitle', '提示');
-					// this.set('tipsContent', '您的预测总指标需要超过公司本季度总指标！');
 				} else {
 					let hint = {
 						hintModal: true,
@@ -105,9 +107,6 @@ export default Controller.extend({
 						hintBtn: true,
 					}
 					this.set('hint', hint);
-					// this.set('tipsModal', true);
-					// this.set('tipsTitle', '提示');
-					// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 				}
 			} else {
 				let hint = {
@@ -118,8 +117,6 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsContent', '请填写 ' + emptyForecastRegion + ' 的预测数据')
 			}
 		},
 		toResource() {
@@ -159,9 +156,6 @@ export default Controller.extend({
 				hintBtn: false,
 			}
 			this.set('hint', hint);
-			// this.set('tipsModal', true);
-			// this.set('tipsTitle', region.name);
-			// this.set('tipsContent', region.notes);
 		},
 		changeArea(value) {
 			this.set('barData', this.areaBarData.find(elem => elem.region_id === value).data)

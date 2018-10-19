@@ -1,5 +1,5 @@
 <div local-class="content-page">
-    {{scene-tab}}
+    {{scene-tab changeTab=(action 'changeTab')}}
     <div local-class={{if (eq introduced.isSelectedName 'showScenario') 'introduced show' 'introduced'}}>
         {{scene-intro-card data=ScenarioModel close=(action 'close')}}
     </div>
@@ -9,7 +9,7 @@
     <div local-class={{if (eq introduced.isSelectedName 'showArea') 'introduced show' 'introduced'}}>
         {{regional-info-card data=AreaModel close=(action 'close')}}
     </div>
-    
+
     <div class={{if (not-eq introduced.isSelectedName '') 'display-none' ''}} local-class="content">
         {{outlet}}
     </div>

@@ -81,7 +81,7 @@ export default Route.extend({
 						skip: 0,
 						take: 1000
 					})
-                });
+				});
 				let promiseArray = data.map(elem => {
 					let eqValues = [
 						{ type: 'eqcond', key: 'course_id', val: ids.courseid },
@@ -143,6 +143,7 @@ export default Route.extend({
 		let conditions = this.store.object2JsonApi('request', req);
 		this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
 	},
+
 	areaInfo(ids, controller) {
 		let regionBaseInfo = {}
 		// 获取所有区域名称与基本信息
@@ -223,15 +224,16 @@ export default Route.extend({
 					return {
 						region_id: elem.region_id,
 						data: [{
-                            name: '区域平均',
-                            axes: axes(ave.radarfigure),
-                            color: '#762712'
-                        },
-                        {
-                            name: regionCache.name,
-                            axes: axes(elem.radarfigure),
-                            color: '#26AF32'
-                        }]
+								name: '区域平均',
+								axes: axes(ave.radarfigure),
+								color: '#762712'
+							},
+							{
+								name: regionCache.name,
+								axes: axes(elem.radarfigure),
+								color: '#26AF32'
+							}
+						]
 					}
 				});
 				regionBaseInfo.radarData = radarData;
@@ -257,7 +259,7 @@ export default Route.extend({
 				return Promise.all(promiseArray)
 			})
 			.then(data => { // 处理所有区域的负责代表
-                regionBaseInfo.represents = [];
+				regionBaseInfo.represents = [];
 				data.forEach((elem, index) => {
 					// 绑定区域与人员关系，方便缓存读取
 					this.store.createRecord('bind_course_region_rep', {
@@ -419,11 +421,12 @@ export default Route.extend({
 	},
 	model(ids) {
 		let projectController = this.controllerFor('new-project.project-start');
+		projectController.set('ids', ids);
 		// 场景介绍
 		this.scenarioInfo(ids.courseid, projectController)
 		// this.areaInfo(ids.courseid, projectController)
 		this.areaBaseInfo(ids.courseid)
 
-		return this.productInfo(ids, projectController)
+		// return this.productInfo(ids, projectController)
 	}
 });
