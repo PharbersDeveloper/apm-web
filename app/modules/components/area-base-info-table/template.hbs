@@ -6,22 +6,16 @@
                 <td>区域</td>
                 <td>市场潜力</td>
                 <td>潜力贡献度</td>
-                <td>上次销售额</td>
-                <td>销售贡献度</td>
+                <td>上月销售额</td>
+                <td>上月销售贡献度</td>
                 <td>贡献度系数</td>
-                <td>上期销售增长率</td>
+                <td>上月销售增长率</td>
             </tr>
         </thead>
         <tbody>
             {{#each data as |item|}}
                 <tr>
                     <td>{{item.name}}</td>
-                    {{!-- <td>{{input type="text" dir="rtl" disabled=true value=item.potential}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.potential_contri}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.sales}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.sales_contri}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.contri_index}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.sales_growth}}</td> --}}
                     <td>{{number-format item.potential}}</td>
                     <td>{{number-tofixed2 item.potential_contri}}</td>
                     <td>{{number-format item.sales}}</td>

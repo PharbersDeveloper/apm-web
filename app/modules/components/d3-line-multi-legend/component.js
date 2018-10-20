@@ -7,9 +7,9 @@ export default Component.extend({
 
 	didReceiveAttrs() {
 		this._super(...arguments);
-		if (this.get('chooseData')) run.schedule('render', this, this.drawMultiLineChoose);
+		if (this.get('chooseData')) run.schedule('render', this, this.drawMultiLine);
 	},
-	drawMultiLineChoose() {
+	drawMultiLine() {
 		let localClass = this.get('class');
 		let title = this.get('title');
 		d3.select('.' + localClass + ' svg.much-lines').remove();

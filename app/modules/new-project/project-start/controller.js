@@ -141,15 +141,44 @@ export default Controller.extend({
 						regionBaseInfo.info = data;
 						return data;
 					})
+					.then(data => { // 获取折线图数据
+						let req = this.store.createRecord('request', {
+							res: 'bind_course_region_goods_ym_sales',
+							fmcond: this.store.createRecord('fmcond', {
+								skip: 0,
+								take: 1000
+							})
+						});
+						let promiseArray = data.map(elem => {
+							let eqValues = [
+								{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+								{ type: 'eqcond', key: 'region_id', val: elem.id },
+								{ type: 'gtecond', key: 'ym', val: '17-01' },
+								{ type: 'ltecond', key: 'ym', val: '17-12' },
+							]
+							let conditions = _conditions(req, eqValues)
+							return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+						});
+						return Promise.all(promiseArray)
+					})
 					.then(data => { // 处理cards数据
+						let originRegionData = this.store.peekAll('region');
 						regionBaseInfo.cards = [];
 						let regionData = this.store.peekAll('bind_course_region_goods_ym_sales');
-						data.forEach(elem => {
+						originRegionData.forEach(elem => {
 							let filtrerData = regionData.filter(felem => felem.region_id == elem.id);
-							regionBaseInfo.cards.pushObject(filtrerData.lastObject)
+							let sales = {};
+							sales = filtrerData.lastObject;
+							let allYearPotential = 0;
+							filtrerData.forEach((item) => {
+								allYearPotential += item.sales.potential;
+							});
+							sales.sales.allyearpotential = allYearPotential;
+							regionBaseInfo.cards.pushObject(sales)
 						});
-						return null
+						return originRegionData;
 					})
+
 					.then(() => { // 获取雷达图数据
 						req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
 						req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
@@ -221,41 +250,44 @@ export default Controller.extend({
 						regionBaseInfo.radarData = radarData;
 						return null;
 					})
-					.then(() => { // 获取所有区域的负责代表
-						let regionCache = this.store.peekAll('region');
-						let promiseArray = regionCache.map(elem => {
-							req = this.store.createRecord('request', { res: 'bind_course_region_rep' });
-							let eqValues = [
-								{ type: 'eqcond', key: 'region_id', val: elem.id },
-								{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-							]
-							eqValues.forEach((elem) => {
-								req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
-									key: elem.key,
-									val: elem.val,
-								}))
-							});
-							conditions = this.store.object2JsonApi('request', req);
-							return this.store.queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
-						})
-						return Promise.all(promiseArray)
-					})
-					.then(data => { // 处理所有区域的负责代表
-						regionBaseInfo.represents = [];
-						data.forEach((elem, index) => {
-							// 绑定区域与人员关系，方便缓存读取
-							this.store.createRecord('bind_course_region_rep', {
-								id: index,
-								region_id: elem.query.included[0].attributes.val,
-								represents: elem.map(x => x.id)
-							})
-							regionBaseInfo.represents.pushObject({
-								region_id: elem.query.included[0].attributes.val,
-								data: elem
-							})
-						})
-						return null
-					})
+					/*
+										.then(() => { // 获取所有区域的负责代表
+											let regionCache = this.store.peekAll('region');
+											let promiseArray = regionCache.map(elem => {
+												req = this.store.createRecord('request', { res: 'bind_course_region_rep' });
+												let eqValues = [
+													{ type: 'eqcond', key: 'region_id', val: elem.id },
+													{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+												]
+												eqValues.forEach((elem) => {
+													req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+														key: elem.key,
+														val: elem.val,
+													}))
+												});
+												conditions = this.store.object2JsonApi('request', req);
+												return this.store.queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
+											})
+											return Promise.all(promiseArray)
+										})
+
+										.then(data => { // 处理所有区域的负责代表
+											regionBaseInfo.represents = [];
+											data.forEach((elem, index) => {
+												// 绑定区域与人员关系，方便缓存读取
+												this.store.createRecord('bind_course_region_rep', {
+													id: index,
+													region_id: elem.query.included[0].attributes.val,
+													represents: elem.map(x => x.id)
+												})
+												regionBaseInfo.represents.pushObject({
+													region_id: elem.query.included[0].attributes.val,
+													data: elem
+												})
+											})
+											return null
+										})
+					*/
 					.then(() => { // 获取kpi表格数据
 						let regionCache = this.store.peekAll('region');
 						let promiseArray = regionCache.map(elem => {
@@ -351,7 +383,54 @@ export default Controller.extend({
 						regionBaseInfo.salesBar = d3Data(medicineByRegion)
 						return null;
 					})
-					.then(() => { // 整体
+					/*
+						.then(() => { // 整体
+							let that = this;
+
+							function d3Data(medicineArrayObject) {
+								return Object.keys(medicineArrayObject).map(key => {
+									return {
+										name: that.store.peekRecord('region', key).name,
+										values: medicineArrayObject[key].map(elem => {
+											return {
+												ym: elem.ym,
+												value: elem.sales.share,
+											}
+										})
+									}
+								})
+							}
+
+							function tableData(arrayObjec) {
+								return Object.keys(arrayObjec).map(key => {
+									let potential = arrayObjec[key].lastObject.sales.potential.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
+									let potential_contri = arrayObjec[key].lastObject.sales.potential_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
+									let sales = arrayObjec[key].lastObject.sales.sales.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
+									let sales_contri = arrayObjec[key].lastObject.sales.sales_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
+									let contri_index = arrayObjec[key].lastObject.sales.contri_index.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
+									let sales_growth = arrayObjec[key].lastObject.sales.sales_growth.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
+									return {
+										name: that.store.peekRecord('region', key).name,
+										potential,
+										potential_contri,
+										sales,
+										sales_contri,
+										contri_index,
+										sales_growth
+									}
+								})
+							}
+							let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
+							// TODO 这块有疑问 是所有区域还是只有本公司产品？
+							let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
+							regionBaseInfo.overall = {
+								lineData: d3Data(medicineByRegion),
+								tableData: tableData(medicineByRegion)
+							}
+							return ids
+						})
+					*/
+					.finally(() => {
 						let that = this;
 
 						function d3Data(medicineArrayObject) {
@@ -394,9 +473,6 @@ export default Controller.extend({
 							lineData: d3Data(medicineByRegion),
 							tableData: tableData(medicineByRegion)
 						}
-						return ids
-					})
-					.finally(() => {
 						this.set('AreaModel', regionBaseInfo);
 					})
 
