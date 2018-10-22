@@ -48,13 +48,15 @@
 				{{/each}}
 
 				<div local-class="represent">
-					{{#each represents as |item|}}
+					{{charge-represent data=represent}}
+					
+					{{!-- {{#each represents as |item|}}
 						{{#if (eq item.region_id data.id)}}
 							{{#each item.data as |represent|}}
 								{{charge-represent data=represent}}
 							{{/each}}
 						{{/if}}
-					{{/each}}
+					{{/each}} --}}
 				</div>
 				<div local-class="action">
 					<p local-class="title-action">行动KPI</p>

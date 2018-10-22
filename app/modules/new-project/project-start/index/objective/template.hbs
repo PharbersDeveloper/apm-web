@@ -14,7 +14,7 @@
 				        <option value={{area.id}}>{{area.name}}</option>
 				    {{/each}}
 				</select>
-                {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true dataset=barData }}
+                {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true dataset=barData noLine=true}}
 			{{!-- </div> --}}
 		{{!-- </div> --}}
 	</div>
@@ -81,24 +81,5 @@
 		</div>
 	</div>
 </div>
-{{!--
-{{#bs-modal local-class="hint-modal" open=tipsModal onSubmit=(action 'toResource') onHidden=(action (mut tipsModal) false) as |modal|}}
-  {{#modal.header}}
-    <h4 class="modal-title">
-      <span></span>{{tipsTitle}}
-    </h4>
-  {{/modal.header}}
-  {{#modal.body}}
-	<p>{{content-bound-helper tipsContent}}</p>
 
-  {{/modal.body}}
-  {{#modal.footer}}
-	  {{#if isForecastEmpty}}
-		  {{#bs-button onClick=(action modal.close)}}取消{{/bs-button}}
-		  {{#bs-button type="success" onClick=(action modal.submit)}}下一步{{/bs-button}}
-	  {{else}}
-		  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
-	  {{/if}}
-  {{/modal.footer}}
-{{/bs-modal}} --}}
 {{hint-modal hint=hint confirm=(action 'toResource')}}

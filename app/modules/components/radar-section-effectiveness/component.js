@@ -8,11 +8,16 @@ export default Component.extend({
 
 	didReceiveAttrs() {
 		this._super(...arguments);
-		run.schedule('render', this, this.RadarChart);
+		if (this.get('gradient') === '') {
+			throw 'gradient is null or undefinde, please set value';
+		} else {
+			if (this.get('radarSectionData')) run.schedule('render', this, this.RadarChart);
+		}
+		// run.schedule('render', this, this.RadarChart);
 	},
 
 	RadarChart() {
-		let data = this.get('radarSectionData')//.reverse();
+		let data = this.get('radarSectionData') //.reverse();
 		let _currentColor = data.map((item) => {
 			return item.color;
 		});

@@ -225,7 +225,7 @@ export default Component.extend({
 		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer');
 		let legendArea = legendContainer.append("svg")
 			// .attr('width', 90)
-			.attr('width', 180 * data.length)
+			.attr('width', 100 * data.length)
 			.attr('height', 20)
 
 		//绑定数据，设置每个图例的位置
@@ -241,7 +241,7 @@ export default Component.extend({
 			.enter()
 			.append("g")
 			.attr("transform", function(d, i) {
-				return "translate(" + (i * 200) + ",0)";
+				return "translate(" + (i * 100) + ",0)";
 			});
 		//添加图例的矩形色块
 		// legend.append("rect")

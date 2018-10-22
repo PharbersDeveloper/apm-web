@@ -9,7 +9,7 @@ export default Component.extend({
 	laterThreeChangeBg: false,
 	title: '',
 	dataset: [],
-
+	noLine: false,
 	didReceiveAttrs() {
 		if (this.get('chartId') === '') {
 			throw 'chartId is null or undefinde, please set value';
@@ -31,7 +31,7 @@ export default Component.extend({
 		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 			yScale = d3.scaleLinear().rangeRound([height, 0]),
 			yScale2 = d3.scaleLinear().rangeRound([height, 0]);
-
+		let noLine = this.get('noLine');
 		xScale.domain(xDatas);
 		let maxVal = d3.max(values) * 1.3
 		// let maxVal2 = d3.max(values2) * 3;
@@ -138,17 +138,19 @@ export default Component.extend({
 		let line = d3.line()
 			.x(function(d) { return xScale(d.key); })
 			.y(function(d) { return yScale2(d.value2); });
-
+		if (!noLine) {
+			g.append("path")
+				.datum(this.dataset)
+				.attr("fill", "none")
+				.attr("stroke", "#FF8190")
+				.attr("stroke-linejoin", "round")
+				.attr("stroke-linecap", "round")
+				.attr("transform", "translate(" + xScale.bandwidth() / 4 + ",0)")
+				.attr("stroke-width", 1.5)
+				.attr("d", line);
+		}
 		// Line
-		g.append("path")
-			.datum(this.dataset)
-			.attr("fill", "none")
-			.attr("stroke", "#FF8190")
-			.attr("stroke-linejoin", "round")
-			.attr("stroke-linecap", "round")
-			.attr("transform", "translate(" + xScale.bandwidth() / 4 + ",0)")
-			.attr("stroke-width", 1.5)
-			.attr("d", line);
+
 
 		chart.on('mouseover', function(d) {
 			tooltip.style("opacity", 1.0);
@@ -174,9 +176,12 @@ export default Component.extend({
 
 		let legendData = ["份额", "销售额"];
 		if (this.get('laterThreeChangeBg')) {
-			legendData = ["份额", "销售额", "预测销售额"];
+			if (noLine) {
+				legendData = ["销售额", "预测销售额"];
+			} else {
+				legendData = ["份额", "销售额", "预测销售额"];
+			}
 		}
-
 		var legend = legendArea.selectAll("g")
 			.data(legendData)
 			.enter()

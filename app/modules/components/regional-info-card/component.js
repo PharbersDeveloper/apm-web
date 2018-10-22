@@ -6,9 +6,9 @@ export default Component.extend({
 			this.sendAction('close')
 		},
 		changeRegion(tab, id) {
-			console.log(id);
+			// console.log(id);
 			tab.select(id);
-			this.sendAction('changeRegion')
+			this.sendAction('changeRegion', this, id)
 		},
 		pane(item) {
 			console.log('item');

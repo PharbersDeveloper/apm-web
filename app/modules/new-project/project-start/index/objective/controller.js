@@ -120,6 +120,14 @@ export default Controller.extend({
 			}
 		},
 		toResource() {
+			let hint = {
+				hintModal: false,
+				hintImg: true,
+				title: '提示',
+				content: '确认进入下一步后，将不可修改当前内容。',
+				hintBtn: true,
+			}
+			this.set('hint', hint);
 			let region = this.set('region', this.store.peekAll('region'));
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {

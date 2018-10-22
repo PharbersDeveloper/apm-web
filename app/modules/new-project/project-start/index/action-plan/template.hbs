@@ -19,22 +19,4 @@
 	{{/each}}
 </div>
 
-{{!-- {{#bs-modal open=tipsModal onSubmit=(action 'toUpshot') onHidden=(action (mut tipsModal) false) as |modal|}}
-	{{#modal.header}}
-		<h4 class="modal-title">
-            <span></span>{{tipsTitle}}
-        </h4>
-	{{/modal.header}}
-	{{#modal.body}}
-		{{content-bound-helper tipsContent}}
-	{{/modal.body}}
-	{{#modal.footer}}
-	{{#if isActionplanEmpty}}
-		{{#bs-button onClick=(action modal.close)}}取消{{/bs-button}}
-		{{bs-button type="success" defaultText="下一步" pendingText="提交中。。。" resolvedText="提交成功，正在跳转" onClick=(action modal.submit)}}
-	{{else}}
-		{{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
-	{{/if}}
-	{{/modal.footer}}
-{{/bs-modal}} --}}
 {{hint-modal hint=hint confirm=(action 'toUpshot')}}

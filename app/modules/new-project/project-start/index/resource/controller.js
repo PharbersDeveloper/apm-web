@@ -7,7 +7,7 @@ export default Controller.extend({
 		this._super(...arguments);
 		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
 		this.set('region', this.store.peekAll('region'));
-        this.set('history',  JSON.parse(localStorage.getItem('history')));
+		this.set('history', JSON.parse(localStorage.getItem('history')));
 	},
 	newRegionData: computed('regionResort', function() {
 		let regionResort = JSON.parse(localStorage.getItem('regionResort'));
@@ -166,6 +166,14 @@ export default Controller.extend({
 			}
 		},
 		toActionPlan() {
+			let hint = {
+				hintModal: false,
+				hintImg: true,
+				title: '提示',
+				content: '确认进入下一步后，将不可修改当前内容。',
+				hintBtn: true,
+			}
+			this.set('hint', hint);
 			let region = this.get('region');
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {

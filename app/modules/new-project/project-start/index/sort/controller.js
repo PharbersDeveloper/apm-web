@@ -1,9 +1,9 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-    init() {
-        this._super(...arguments);
-        this.set('history',  JSON.parse(localStorage.getItem('history')));
+	init() {
+		this._super(...arguments);
+		this.set('history', JSON.parse(localStorage.getItem('history')));
 	},
 	actions: {
 		nextStep() {
@@ -39,6 +39,14 @@ export default Controller.extend({
 			}
 		},
 		toObjective() {
+			let hint = {
+				hintModal: false,
+				hintImg: true,
+				title: '提示',
+				content: '确认进入下一步后，将不可修改当前内容。',
+				hintBtn: true,
+			}
+			this.set('hint', hint);
 			let resortRegion = JSON.parse(localStorage.getItem('regionResort'));
 			let params = this.get('params');
 			let promiseArray = resortRegion.map((reg) => {

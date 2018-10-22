@@ -2,8 +2,8 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
 	init() {
-        this._super(...arguments);
-        this.set('history',  JSON.parse(localStorage.getItem('history')));
+		this._super(...arguments);
+		this.set('history', JSON.parse(localStorage.getItem('history')));
 		let totalRegion = JSON.parse(localStorage.getItem('totalRegion'));
 		if (totalRegion) {
 			totalRegion.forEach((item) => {
@@ -56,6 +56,14 @@ export default Controller.extend({
 			}
 		},
 		toSort() {
+			let hint = {
+				hintModal: false,
+				hintImg: true,
+				title: '提示',
+				content: '确认进入下一步后，将不可修改当前内容。',
+				hintBtn: true,
+			}
+			this.set('hint', hint);
 			let region = this.store.peekAll('region');
 			let params = this.get('params');
 

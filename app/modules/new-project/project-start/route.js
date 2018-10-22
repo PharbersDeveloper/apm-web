@@ -256,7 +256,7 @@ export default Route.extend({
 					conditions = this.store.object2JsonApi('request', req);
 					return this.store.queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
 				})
-				return Promise.all(promiseArray)
+				return Promise.all(promiseArray);
 			})
 			.then(data => { // 处理所有区域的负责代表
 				regionBaseInfo.represents = [];
@@ -419,14 +419,15 @@ export default Route.extend({
 			})
 
 	},
+
 	model(ids) {
 		let projectController = this.controllerFor('new-project.project-start');
 		projectController.set('ids', ids);
 		// 场景介绍
 		this.scenarioInfo(ids.courseid, projectController)
 		// this.areaInfo(ids.courseid, projectController)
-		this.areaBaseInfo(ids.courseid)
-
+		// this.areaBaseInfo(ids.courseid);
+		return ids;
 		// return this.productInfo(ids, projectController)
 	}
 });

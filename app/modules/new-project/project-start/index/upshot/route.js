@@ -8,7 +8,8 @@ export default Route.extend({
 
 		let parentModel = this.modelFor('new-project.project-start');
 		let medicine = this.store.peekAll('medicine').filter(elem => !elem.compete).firstObject;
-
+		console.log(this.store.peekAll('medicine'))
+		console.log(medicine)
 		let req = this.store.createRecord('callapmr', {
 			paper_id: parentModel.paperid,
 		});

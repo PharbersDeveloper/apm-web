@@ -7,8 +7,8 @@ export default Controller.extend({
 	regionResort: [],
 	init() {
 		this._super(...arguments);
-        this.set('areaRadars', []);
-        this.set('history',  JSON.parse(localStorage.getItem('history')));
+		this.set('areaRadars', []);
+		this.set('history', JSON.parse(localStorage.getItem('history')));
 		this.readyChoose = [{
 				text: "产品知识培训",
 				isChecked: true
@@ -77,6 +77,9 @@ export default Controller.extend({
 	}),
 	resortRegionModel: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');
+		regionResort.sort((a, b) => {
+			return a.id - b.id
+		});
 		let region = this.store.peekAll('region');
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
@@ -94,11 +97,7 @@ export default Controller.extend({
 			this.toggleProperty('collapsed')
 		},
 		changeArea(value) {
-            let data = this.areaRadars.find(elem => elem.region_id === value).data.toArray()
-            // let temp = data.sort(function(a, b){
-            //     b.sort - a.sort
-            // })
-            // console.info(temp)
+			let data = this.areaRadars.find(elem => elem.region_id === value).data.toArray()
 			this.set('radarData', data)
 		},
 		nextStep() {
@@ -116,10 +115,6 @@ export default Controller.extend({
 					hintBtn: true,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
-				// this.transitionToRoute('new-project.project-start.index.upshot')
 			} else {
 				let hint = {
 					hintModal: true,
@@ -129,13 +124,17 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '选择全部的行动计划，并保证最多两项！')
 			}
 		},
 		toUpshot() {
-			this.set('isPending', true);
+			let hint = {
+				hintModal: false,
+				hintImg: true,
+				title: '提示',
+				content: '确认进入下一步后，将不可修改当前内容。',
+				hintBtn: true,
+			}
+			this.set('hint', hint);
 			let region = this.store.peekAll('region');
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
