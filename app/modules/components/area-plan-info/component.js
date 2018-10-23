@@ -14,10 +14,6 @@ export default Component.extend({
 				content: data.notes,
 				hintBtn: false,
 			})
-			// this.set('tipModal', true);
-			// this.set('tipsTitle', data.name);
-			// this.set('content', data.notes);
-
 		}
 	}
 });

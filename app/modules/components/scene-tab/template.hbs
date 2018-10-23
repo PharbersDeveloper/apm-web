@@ -9,7 +9,8 @@
             <span class="glyphicon glyphicon-option-horizontal"></span>
         </div>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li {{action "exitTest"}}>退出</li>
+            <li {{action "exit"}}>退出</li>
         </ul>
     </div>
 </div>
+{{hint-modal hint=hint confirm=(action 'exitTest')}}

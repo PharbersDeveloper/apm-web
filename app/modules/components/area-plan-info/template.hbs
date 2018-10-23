@@ -24,22 +24,10 @@
                         {{area-table data=data areaComponyTarget=item.company_targe}}
                     {{/if}}
                 {{/each}}
-                {{area-choose-plan data=data history=history}}
+                {{area-choose-plan data=data history=history originChoose=readyChoose}}
 			{{/bs-collapse}}
 		</div>
 	</div>
 </div>
-{{!-- {{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
-	{{#modal.header}}
-		<h4 class="modal-title">
-            <span></span>{{tipsTitle}}
-        </h4>
-	{{/modal.header}}
-	{{#modal.body}}
-		{{content-bound-helper content}}
-	{{/modal.body}}
-	{{#modal.footer}}
-	  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
-	{{/modal.footer}}
-{{/bs-modal}} --}}
+
 {{hint-modal hint=hint}}

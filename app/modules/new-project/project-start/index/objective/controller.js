@@ -53,6 +53,9 @@ export default Controller.extend({
 	}),
 	newRegionData: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');
+		regionResort.sort((a, b) => {
+			return a.id - b.id;
+		})
 		// let region = this.store.peekAll('region');
 		let region = this.get('regionData');
 

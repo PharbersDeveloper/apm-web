@@ -49,7 +49,7 @@
 
 				<div local-class="represent">
 					{{charge-represent data=represent}}
-					
+
 					{{!-- {{#each represents as |item|}}
 						{{#if (eq item.region_id data.id)}}
 							{{#each item.data as |represent|}}
@@ -76,7 +76,7 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>目标医生拜访频率</td>
+									<td>目标医生拜访次数</td>
 									{{#each kpi as |item|}}
 										{{#if (eq item.region_id data.id)}}
 											{{#each item.target_call_freq_vals as |target_call_freq_val|}}

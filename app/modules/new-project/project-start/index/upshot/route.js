@@ -7,9 +7,18 @@ export default Route.extend({
 		this.store.peekAll('bind_course_region_rep').forEach(elem => elem.destroyRecord().then(rec => rec.unloadRecord()));
 
 		let parentModel = this.modelFor('new-project.project-start');
-		let medicine = this.store.peekAll('medicine').filter(elem => !elem.compete).firstObject;
-		console.log(this.store.peekAll('medicine'))
-		console.log(medicine)
+		// let medicine = this.store.peekAll('medicine').filter(elem => !elem.compete).firstObject;
+		// console.log(this.store.peekAll('medicine'))
+		// console.log(medicine);
+		function _conditions(request, anyConditions) {
+			anyConditions.forEach((elem, index) => {
+				request.get(elem.type).pushObject(request.store.createRecord(elem.type, {
+					key: elem.key,
+					val: elem.val,
+				}))
+			});
+			return request.store.object2JsonApi('request', request);
+		}
 		let req = this.store.createRecord('callapmr', {
 			paper_id: parentModel.paperid,
 		});
@@ -21,6 +30,47 @@ export default Route.extend({
 			return data
 		}).
 		then(() => {
+				let req = this.store.createRecord('request', {
+					res: 'bind_course_goods',
+					fmcond: this.store.createRecord('fmcond', {
+						skip: 0,
+						take: 20
+					})
+				});
+
+				let eqValues = [{ type: 'eqcond', key: 'course_id', val: parentModel.courseid }]
+
+				let conditions = _conditions(req, eqValues);
+
+				return this.store.queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
+			})
+			.then(data => { // 处理公司产品
+				data.forEach(elem => {
+					elem.set('compete', false)
+				});
+				return data;
+			}).then(data => { // 获取公司的竞品
+				let that = this;
+				let promiseArray = data.map(reval => {
+					let req = that.store.createRecord('request', {
+						res: 'bind_course_goods_compet',
+						fmcond: that.store.createRecord('fmcond', {
+							skip: 0,
+							take: 20
+						})
+					});
+					let eqValues = [
+						{ type: 'eqcond', key: 'course_id', val: parentModel.courseid },
+						{ type: 'eqcond', key: 'goods_id', val: reval.id },
+					]
+					let conditions = _conditions(req, eqValues);
+					return that.store.queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
+				});
+				return Promise.all(promiseArray)
+			}).
+		then(() => {
+			let medicine = this.store.peekAll('medicine').filter(elem => !elem.compete).firstObject;
+
 			req = this.store.createRecord('request', { res: 'bind_course_goods_quarter_report' });
 
 			let eqValues = [
@@ -102,7 +152,7 @@ export default Route.extend({
 			modelData.areaD3LineShareData = Object.keys(tempByGroupGoods).map(key => {
 				let goodCache = that.store.peekRecord('medicine', key);
 				return {
-					name: goodCache.corp_name,
+					name: goodCache.prod_name,
 					values: tempByGroupGoods[key].map((elem) => {
 						return {
 							ym: elem.ym,

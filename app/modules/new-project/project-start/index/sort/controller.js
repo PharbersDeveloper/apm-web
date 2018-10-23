@@ -22,8 +22,6 @@ export default Controller.extend({
 					hintBtn: true,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 			} else {
 				// 弹窗提醒排序
 				let hint = {
@@ -34,8 +32,6 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsContent', '请对所有的区域进行排序！');
 			}
 		},
 		toObjective() {
@@ -69,14 +65,10 @@ export default Controller.extend({
 			});
 
 			Promise.all(promiseArray).then((res) => {
-				// this.set('tipsModal', true);
-				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 				this.transitionToRoute('new-project.project-start.index.objective')
-
 			}).catch((error) => {
 				console.log(error);
 			});
-			// this.transitionToRoute('new-project.project-start.index.objective')
 		}
 	}
 });

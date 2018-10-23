@@ -6,9 +6,12 @@
             <span  {{action 'openTips' item}}>
                 <span>{{item.data.attributes.name}}</span>
                 <img src="/assets/images/note.png" width="16px" height="20px" alt="note">
-                {{!-- <span local-class="hintModal" class="glyphicon glyphicon-list-alt"></span> --}}
+                {{#each represents as |rep|}}
+                    {{#if (eq rep.region_id item.data.id)}}
+                        <span local-class="rep">{{rep.rep_name}}</span>
+                    {{/if}}
+                {{/each}}
             </span>
-
             {{/draggable-object}}
         </div>
     {{/each}}
@@ -17,7 +20,15 @@
     {{#each computeLevelArray as |item|}}
         <div local-class="sortCard">
             {{#draggable-object-target leveid=item.id amount="1" action=(action 'dragResult') overrideClass='dropTarget'}}
-                <div class="col-md-10 col-lg-10 col-sm-10">{{item.name}} {{item.selected.data.attributes.name}}</div>
+                <div class="col-md-10 col-lg-10 col-sm-10">
+                    {{item.name}}
+                    {{item.selected.data.attributes.name}}
+                    {{#each represents as |rep|}}
+                        {{#if (eq rep.region_id item.selected.data.id)}}
+                            <span local-class="rep">{{rep.rep_name}}</span>
+                        {{/if}}
+                    {{/each}}
+                </div>
                 {{#unless history}}
                     <div class="col-md-2 col-lg-2 col-sm-2 text-right" local-class="remove" {{action "remove" item.id}}>
                         <span>&times;</span>
@@ -28,17 +39,4 @@
     {{/each}}
 </div>
 
-{{!-- {{#bs-modal open=tipModal onHidden=(action (mut tipModal) false) as |modal|}}
-    {{#modal.header}}
-        <h4 class="modal-title">
-            {{currentRegion.data.attributes.name}}
-        </h4>
-    {{/modal.header}}
-    {{#modal.body}}
-        {{content-bound-helper currentRegion.data.attributes.notes}}
-    {{/modal.body}}
-    {{#modal.footer}}
-        {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
-    {{/modal.footer}}
-{{/bs-modal}} --}}
 {{hint-modal hint=hint }}

@@ -10,9 +10,5 @@ export default Component.extend({
 			tab.select(id);
 			this.sendAction('changeRegion', this, id)
 		},
-		pane(item) {
-			console.log('item');
-			console.log(item)
-		}
 	}
 });

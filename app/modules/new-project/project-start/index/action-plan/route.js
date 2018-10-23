@@ -221,7 +221,7 @@ export default Route.extend({
 						{ type: 'eqcond', key: 'course_id', val: ids.courseid },
 						{ type: 'eqcond', key: 'goods_id', val: elem.id },
 						{ type: 'gtecond', key: 'ym', val: '17-01' },
-						{ type: 'ltecond', key: 'ym', val: '17-12' },
+						{ type: 'ltecond', key: 'ym', val: '18-03' },
 					]
 					let conditions = _conditions(req, eqValues)
 					return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
@@ -230,19 +230,52 @@ export default Route.extend({
 			})
 			.then((data) => { // 处理bind-course-region-goods-ym-sales
 				// console.log(data);
-
-				let goodsByRegion = groupBy(this.store.peekAll('bind-course-region-goods-ym-sales').filter(elem => elem.region_id !== 'all'), 'region_id')
-				let regionCompanyTargets = Object.keys(goodsByRegion).map(key => {
+				let temp = [];
+				data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
+				let predictionData = temp.filter(elem => elem.ym === '18-01' || elem.ym === '18-02' || elem.ym === '18-03')
+				let predictionGroupData = groupBy(predictionData, 'region_id')
+				let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
 					return {
 						region_id: key,
-						company_targe: goodsByRegion[key].lastObject.sales.company_target
+						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.sales.company_target, 0)
 					}
 				})
+
+				// let goodsByRegion = groupBy(this.store.peekAll('bind-course-region-goods-ym-sales').filter(elem => elem.region_id !== 'all'), 'region_id')
+				// let regionCompanyTargets = Object.keys(goodsByRegion).map(key => {
+				// 	return {
+				// 		region_id: key,
+				// 		company_targe: goodsByRegion[key].lastObject.sales.company_target
+				// 	}
+				// })
 				controller.set('regionCompanyTargets', regionCompanyTargets)
 
 				return null;
 			})
+			// 获取行动计划列表内容
+			.then(() => {
+				let req = this.store.createRecord('request', {
+					res: 'bind_course_action_plan',
+				});
 
+				let eqValues = [{ type: 'eqcond', key: 'course_id', val: ids.courseid }];
+				let conditions = _conditions(req, eqValues)
+				return this.store.queryMultipleObject('/api/v1/actionPlanLst/0', 'actionplan', conditions)
+			})
+			.then((data) => { // 处理行动计划内容
+				// console.log(data);
+				let readyChoose = data.map((item) => {
+					// console.log(item);
+					return {
+						id: item.id,
+						text: item.content,
+						isChecked: false,
+					}
+				})
+				// console.log(readyChoose);
+				controller.set('readyChoose', readyChoose);
+				return null;
+			})
 			.then(() => { // 获取所有代表
 				let promiseArray = regionCache.map(elem => {
 					req = this.store.createRecord('request', { res: 'bind_course_region_rep' });

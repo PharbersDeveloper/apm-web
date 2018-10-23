@@ -49,7 +49,6 @@ export default Route.extend({
 			})
 			.then(data => { // 获取公司的竞品
 				let that = this;
-				console.log(data);
 				let promiseArray = data.map(reval => {
 					let req = that.store.createRecord('request', {
 						res: 'bind_course_goods_compet',
@@ -58,7 +57,6 @@ export default Route.extend({
 							take: 20
 						})
 					});
-					console.log(reval.id);
 					let eqValues = [
 						{ type: 'eqcond', key: 'course_id', val: ids.courseid },
 						{ type: 'eqcond', key: 'goods_id', val: reval.id },
@@ -85,7 +83,6 @@ export default Route.extend({
 				//
 				// let conditions = _conditions(req, eqValues);
 				let medicines = this.store.peekAll('medicine');
-				console.log(medicines);
 				let promiseArray = medicines.map(elem => {
 					let req = this.store.createRecord('request', {
 						res: 'bind_course_region_goods_ym_sales',
@@ -111,7 +108,6 @@ export default Route.extend({
 				return Promise.all(promiseArray)
 			})
 			.then((data) => {
-				console.log(data)
 				data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
 				let predictionData = temp.filter(elem => elem.ym === '18-01' || elem.ym === '18-02' || elem.ym === '18-03')
 				let predictionGroupData = groupBy(predictionData, 'region_id')
@@ -153,17 +149,38 @@ export default Route.extend({
 		// 	return areaBarData
 		// })
 	},
+
 	model() {
 		let ids = this.modelFor('new-project.project-start');
 		let paramsController = this.modelFor('new-project.project-start');
 		let controller = this.controllerFor('new-project.project-start.index.objective')
-		let region = this.store.peekAll('region')
+		// let region = this.store.peekAll('region');
+		// console.log(region);
+		// 获取所有区域名称与基本信息
+		let req = this.store.createRecord('request', { res: 'bind_course_region' });
+		req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
+			key: 'course_id',
+			val: ids.courseid,
+		}))
+		let conditions = this.store.object2JsonApi('request', req);
 
-		controller.set('params', paramsController);
-		controller.set('regionData', region);
-		controller.set('initSelectedRegionId', region.firstObject.id);
+		return this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
+			.then(data => { // 处理区域基本数据
+				controller.set('params', paramsController);
+				controller.set('regionData', data);
+				controller.set('initSelectedRegionId', data.firstObject.id);
 
-		return this.loadD3Data(paramsController, controller, ids)
+				return data;
+			})
+			.then((data) => {
+				return this.loadD3Data(paramsController, controller, ids);
+			})
+
+		// controller.set('params', paramsController);
+		// controller.set('regionData', region);
+		// controller.set('initSelectedRegionId', region.firstObject.id);
+
+		// return this.loadD3Data(paramsController, controller, ids)
 
 	},
 	activate() {

@@ -65,11 +65,13 @@ export default Component.extend({
 		g.append('g')
 			.attr('class', 'axisY')
 			.call(d3.axisLeft(yScale).ticks(10));
+		if (!noLine) {
+			g.append('g')
+				.attr('class', 'axisY')
+				.attr('transform', 'translate(' + (width - margin.right) + ', 0)')
+				.call(d3.axisRight(yScale2).ticks(10));
+		}
 
-		g.append('g')
-			.attr('class', 'axisY')
-			.attr('transform', 'translate(' + (width - margin.right) + ', 0)')
-			.call(d3.axisRight(yScale2).ticks(10));
 
 		let chart = g.selectAll('bar')
 			.data(this.dataset)

@@ -33,24 +33,8 @@ export default Controller.extend({
 						component.set('represent', res.firstObject);
 					})
 			}
-
-			// .then(data => { // 处理所有区域的负责代表
-			// 	regionBaseInfo.represents = [];
-			// 	data.forEach((elem, index) => {
-			// 		// 绑定区域与人员关系，方便缓存读取
-			// 		this.store.createRecord('bind_course_region_rep', {
-			// 			id: index,
-			// 			region_id: elem.query.included[0].attributes.val,
-			// 			represents: elem.map(x => x.id)
-			// 		})
-			// 		regionBaseInfo.represents.pushObject({
-			// 			region_id: elem.query.included[0].attributes.val,
-			// 			data: elem
-			// 		})
-			// 	})
-			// 	return null
-			// })
 		},
+
 		changeTab(name) {
 			let ids = this.get('ids');
 
@@ -78,10 +62,7 @@ export default Controller.extend({
 			let medicines = [];
 
 			if (name === 'showProduct') {
-
-				/**
-				 * 备注：Promise的链式调用，未做catch处理
-				 */
+				//  备注：Promise的链式调用，未做catch处理
 				this.store.queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
 					.then(data => { // 处理公司产品
 						data.forEach(elem => {
@@ -142,7 +123,6 @@ export default Controller.extend({
 						let lineData = [];
 
 						function d3Data(medicineArrayObject) {
-							// console.log(medicineArrayObject);
 							Object.keys(medicineArrayObject).forEach(key => {
 								let temp = groupBy(medicineArrayObject[key], 'ym');
 								let record = that.store.peekRecord('medicine', key);
@@ -163,13 +143,13 @@ export default Controller.extend({
 						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
 						let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
 						d3Data(medicineAll)
-
 						let productInfo = {
 							medicines,
 							lineData
 						}
 						this.set('ProductModel', productInfo);
 					})
+
 			} else if (name === 'showArea') {
 
 				let regionBaseInfo = {}
@@ -213,7 +193,10 @@ export default Controller.extend({
 						originRegionData.forEach(elem => {
 							let filtrerData = regionData.filter(felem => felem.region_id == elem.id);
 							let sales = {};
-							sales = filtrerData.lastObject;
+							sales = filtrerData.find((item) => {
+								return item.ym === "17-12";
+							})
+							// sales = filtrerData.lastObject;
 							let allYearPotential = 0;
 							filtrerData.forEach((item) => {
 								allYearPotential += item.sales.potential;
@@ -375,15 +358,22 @@ export default Controller.extend({
 					.then(() => { // 柱状图
 						function d3Data(medicineArrayObject) {
 							return Object.keys(medicineArrayObject).map(key => {
+								let id = key;
+								let data = medicineArrayObject[key].map(elem => {
+									return {
+										key: elem.ym,
+										value: elem.sales.sales,
+										value2: (elem.sales.share * 100).toFixed(1)
+									}
+								});
+								data.length = 12;
+								console.log(data);
+								data.sort((a, b) => {
+									return a.key.slice(-2) - b.key.slice(-2);
+								})
 								return {
-									region_id: key,
-									data: medicineArrayObject[key].map(elem => {
-										return {
-											key: elem.ym,
-											value: elem.sales.sales,
-											value2: (elem.sales.share * 100).toFixed(1)
-										}
-									})
+									region_id: id,
+									data: data
 								}
 							})
 						}
@@ -443,30 +433,53 @@ export default Controller.extend({
 						let that = this;
 
 						function d3Data(medicineArrayObject) {
-							console.log(medicineArrayObject)
 							let medicineKeys = Object.keys(medicineArrayObject).sort();
 							return medicineKeys.map(key => {
+								let name = that.store.peekRecord('region', key).name;
+								let values = medicineArrayObject[key].map(elem => {
+									return {
+										ym: elem.ym,
+										value: elem.sales.share,
+									}
+								});
+								values.length = 12;
+								values.sort((a, b) => {
+									return a.ym.slice(-2) - b.ym.slice(-2);
+								})
 								return {
-									name: that.store.peekRecord('region', key).name,
-									values: medicineArrayObject[key].map(elem => {
-										return {
-											ym: elem.ym,
-											value: elem.sales.share,
-										}
-									})
+									name: name,
+									values: values
 								}
-							})
+								// return {
+								// 	name: that.store.peekRecord('region', key).name,
+								// 	values: medicineArrayObject[key].map(elem => {
+								// 		return {
+								// 			ym: elem.ym,
+								// 			value: elem.sales.share,
+								// 		}
+								// 	})
+								// }
+							});
+
 						}
 
 						function tableData(arrayObjec) {
 							let arrayKeys = Object.keys(arrayObjec).sort();
+							// console.log(arrayObjec);
 							return arrayKeys.map(key => {
-								let potential = arrayObjec[key].lastObject.sales.potential.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
-								let potential_contri = arrayObjec[key].lastObject.sales.potential_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
-								let sales = arrayObjec[key].lastObject.sales.sales.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
-								let sales_contri = arrayObjec[key].lastObject.sales.sales_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
-								let contri_index = arrayObjec[key].lastObject.sales.contri_index.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
-								let sales_growth = arrayObjec[key].lastObject.sales.sales_growth.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
+								// console.log(arrayObjec[key]);
+								let decMonth = arrayObjec[key].find((item) => {
+									return item.ym === "17-12"
+								});
+								// console.log(arrayObjec[key].find((item) => {
+								// 	return item.ym === "17-12"
+								// }));
+								let potential = decMonth.sales.potential.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
+								let potential_contri = decMonth.sales.potential_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
+								let sales = decMonth.sales.sales.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
+								let sales_contri = decMonth.sales.sales_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
+								let contri_index = decMonth.sales.contri_index.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
+								let sales_growth = decMonth.sales.sales_growth.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
 								return {
 									name: that.store.peekRecord('region', key).name,
 									potential,

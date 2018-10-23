@@ -11,8 +11,11 @@ export default Controller.extend({
 	},
 	newRegionData: computed('regionResort', function() {
 		let regionResort = JSON.parse(localStorage.getItem('regionResort'));
+		regionResort.sort((a, b) => {
+			return a.id - b.id;
+		})
 		let region = this.store.peekAll('region');
-		console.log(regionResort);
+		// console.log(regionResort);
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
 			region.forEach((ele) => {
@@ -90,7 +93,6 @@ export default Controller.extend({
 				singleRegionJsonApi = this.store.object2JsonApi('region', item, false);
 				return singleRegionJsonApi
 			});
-			// console.log(regionLocalStorage)
 			// let regionJsonApi = this.store.object2JsonApi('region', region, false);
 			localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 		},
@@ -103,9 +105,6 @@ export default Controller.extend({
 				hintBtn: false,
 			}
 			this.set('hint', hint);
-			// this.set('tipsModal', true);
-			// this.set('tipsTitle', region.name);
-			// this.set('tipsContent', region.notes);
 		},
 		nextStep() {
 			let wrongRegionName = '';
@@ -135,9 +134,6 @@ export default Controller.extend({
 					}
 					this.set('hint', hint);
 					this.set('iscoVisitEmpty', false);
-					// this.set('tipsModal', true);
-					// this.set('tipsTitle', '提示');
-					// this.set('tipsContent', '当前输入的总值超出了100%，请检查后重新填写');
 				} else {
 					let hint = {
 						hintModal: true,
@@ -147,9 +143,6 @@ export default Controller.extend({
 						hintBtn: true,
 					}
 					this.set('hint', hint);
-					// this.set('tipsModal', true);
-					// this.set('tipsTitle', '提示');
-					// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 				}
 			} else {
 				let hint = {
@@ -160,9 +153,6 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '请填写全部的预测数据');
 			}
 		},
 		toActionPlan() {
@@ -200,9 +190,6 @@ export default Controller.extend({
 
 			Promise.all(promiseArray).then((res) => {
 				this.transitionToRoute('new-project.project-start.index.action-plan');
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 			}).catch((error) => {
 				console.error(error);
 			});
