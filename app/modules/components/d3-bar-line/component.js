@@ -18,7 +18,12 @@ export default Component.extend({
 		}
 	},
 	drawChart() {
-		d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
+		// d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
+		const parent = d3.select(this.element);
+		parent.selectAll("svg").remove();
+		parent.select('.legendContainer').remove();
+		parent.select('._tooltip_1mas67').remove();
+
 
 		let width = 900;
 		let height = 340;
@@ -38,8 +43,9 @@ export default Component.extend({
 		let maxVal2 = 100;
 		yScale.domain([0, maxVal]);
 		yScale2.domain([0, maxVal2]);
+		let svgContainer = d3.select(this.element);
 
-		let svgContainer = d3.select(`#${this.get('chartId')}`);
+		// let svgContainer = d3.select(`#${this.get('chartId')}`);
 		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
 		let svg = svgContainer.append("svg")
 			.style('background-color', this.get('backgroundColor'))

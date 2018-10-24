@@ -31,6 +31,188 @@ export default Controller.extend({
 				this.store.queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
 					.then((res) => {
 						component.set('represent', res.firstObject);
+						return null;
+					})
+					.then(() => { // 获取平均雷达图数据
+						req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
+						let eqValues = [
+							{ type: 'eqcond', key: 'region_id', val: 'ave' },
+							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+						];
+						eqValues.forEach((elem) => {
+							req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+								key: elem.key,
+								val: elem.val,
+							}))
+						});
+						conditions = this.store.object2JsonApi('request', req);
+						return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
+					})
+					.then((data) => { // 获取雷达图数据
+						req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
+						let eqValues = [
+							{ type: 'eqcond', key: 'region_id', val: id },
+							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+						];
+						eqValues.forEach((elem) => {
+							req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+								key: elem.key,
+								val: elem.val,
+							}))
+						});
+
+						conditions = this.store.object2JsonApi('request', req);
+						return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
+					})
+
+					.then(data => { // 处理雷塔图数据
+						let ave = this.store.peekAll('bind_course_region_radar').find((item) => {
+							return item.region_id === 'ave';
+						});
+
+						function axes(radarfigure) {
+							let axes = [];
+							axes.pushObject({
+								axis: '产品知识',
+								value: radarfigure.prod_knowledge_val
+							})
+
+							axes.pushObject({
+								axis: '目标拜访频次',
+								value: radarfigure.target_call_freq_val
+							})
+
+							axes.pushObject({
+								axis: '拜访次数',
+								value: radarfigure.call_times_val
+							})
+
+							axes.pushObject({
+								axis: '实际工作天数',
+								value: radarfigure.in_field_days_val
+							})
+
+							axes.pushObject({
+								axis: '工作积极性',
+								value: radarfigure.motivation_val
+							})
+
+							axes.pushObject({
+								axis: '区域管理能力',
+								value: radarfigure.territory_manage_val
+							})
+
+							axes.pushObject({
+								axis: '销售能力',
+								value: radarfigure.sales_skills_val
+							})
+							return axes
+						}
+
+						let regionCache = this.store.peekRecord('region', id);
+						let radarData = [{
+								name: '区域平均',
+								axes: axes(ave.radarfigure),
+								color: '#762712'
+							},
+							{
+								name: regionCache.name,
+								axes: axes(data.firstObject.radarfigure),
+								color: '#26AF32'
+							}
+						];
+						component.set('radarData', radarData);
+						return null;
+					})
+					.then(() => { // 获取kpi表格数据
+						req = this.store.createRecord('request', { res: 'bind_course_region_ym_rep_behavior' });
+						let eqValues = [
+							{ type: 'eqcond', key: 'region_id', val: id },
+							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ type: 'gtecond', key: 'ym', val: '17-01' },
+							{ type: 'ltecond', key: 'ym', val: '17-12' },
+						]
+						eqValues.forEach((elem) => {
+							req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+								key: elem.key,
+								val: elem.val,
+							}))
+						});
+						let conditions = this.store.object2JsonApi('request', req);
+						return this.store.queryMultipleObject('/api/v1/findRepBehavior/0', 'bind_course_region_ym_rep_behavior', conditions)
+					})
+					.then(data => { // 处理KPI表格数据
+						let kpiData = {};
+						let region_id = id
+						let yms = data.map(ele => ele.ym)
+						let target_call_freq_vals = data.map(ele => ele.repbehaviorreport.target_call_freq_val);
+						let in_field_days_vals = data.map(ele => ele.repbehaviorreport.in_field_days_val);
+						let call_times_vals = data.map(ele => ele.repbehaviorreport.call_times_val);
+						kpiData = {
+							region_id,
+							yms,
+							target_call_freq_vals,
+							in_field_days_vals,
+							call_times_vals
+						}
+						component.set('kpiData', kpiData);
+
+						return null
+					})
+					.then(() => { // 获取业务报告数据
+						req = this.store.createRecord('request', { res: 'bind_course_region_business' });
+						let eqValues = [
+							{ type: 'eqcond', key: 'region_id', val: id },
+							{ type: 'eqcond', key: 'course_id', val: ids.courseid }
+						]
+						eqValues.forEach((elem) => {
+							req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+								key: elem.key,
+								val: elem.val,
+							}))
+						});
+						let conditions = this.store.object2JsonApi('request', req);
+						return this.store.queryMultipleObject('/api/v1/findBusinessReport/0', 'bind_course_region_business', conditions)
+					})
+					.then(data => { // 处理业务报告数据
+						let report = data.map(ele => {
+							return {
+								title: ele.businessreport.title,
+								des: ele.businessreport.description
+							}
+						})
+						component.set('report', report);
+						return null
+					})
+					.then(() => { // 柱状图
+						console.log("---------------------");
+
+						function d3Data(medicineArrayObject) {
+							let data = medicineArrayObject[id].map(elem => {
+								return {
+									key: elem.ym,
+									value: elem.sales.sales,
+									value2: (elem.sales.share * 100).toFixed(1)
+								}
+							});
+							data.length = 12;
+							data.sort((a, b) => {
+								return a.key.slice(-2) - b.key.slice(-2);
+							})
+							return {
+								id: id,
+								data: data
+							}
+						}
+						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
+
+						let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id === id), 'region_id');
+
+						let data = d3Data(medicineByRegion);
+						console.log(data);
+						component.set('salesBar', data);
+
+						return null;
 					})
 			}
 		},
@@ -71,9 +253,33 @@ export default Controller.extend({
 						});
 						return data;
 					})
+					.then(data => { // 获取公司产品折线图数据
+						let req = this.store.createRecord('request', {
+							res: 'bind_course_region_goods_ym_sales',
+							fmcond: this.store.createRecord('fmcond', {
+								skip: 0,
+								take: 1000
+							})
+						});
+						// let promiseArray = data.map(elem => {
+						let eqValues = [
+							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ type: 'eqcond', key: 'goods_id', val: data.firstObject.id },
+							{ type: 'gtecond', key: 'ym', val: '17-01' },
+							{ type: 'ltecond', key: 'ym', val: '17-12' },
+						]
+						let conditions = _conditions(req, eqValues)
+						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+						// });
+						// return Promise.all(promiseArray)
+					})
 					.then(data => { // 获取公司的竞品
 						let that = this;
-						let promiseArray = data.map(reval => {
+						let companyProd = this.store.peekAll('medicine').filter((item) => {
+							return !item.compete;
+						});
+
+						let promiseArray = companyProd.map(reval => {
 							let req = that.store.createRecord('request', {
 								res: 'bind_course_goods_compet',
 								fmcond: that.store.createRecord('fmcond', {
@@ -98,7 +304,16 @@ export default Controller.extend({
 						})
 						return medicines;
 					})
-					.then(data => { // 获取折线图数据
+					// TODO:
+					// 由于接口返回的数据过慢，目前只好把竞品以PromiseAll的形式，
+					// 换成一个一个请求。
+					// 目前写成了固定了三个竞品。不符合以后的情况。
+					.then(data => { // 获取竞品 firstObject折线图数据
+						let competeProd = this.store.peekAll('medicine').filter((item) => {
+							return item.compete;
+						});
+
+						let firstCompete = competeProd.firstObject;
 						let req = this.store.createRecord('request', {
 							res: 'bind_course_region_goods_ym_sales',
 							fmcond: this.store.createRecord('fmcond', {
@@ -106,21 +321,84 @@ export default Controller.extend({
 								take: 1000
 							})
 						});
-						let promiseArray = data.map(elem => {
-							let eqValues = [
-								{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-								{ type: 'eqcond', key: 'goods_id', val: elem.id },
-								{ type: 'gtecond', key: 'ym', val: '17-01' },
-								{ type: 'ltecond', key: 'ym', val: '17-12' },
-							]
-							let conditions = _conditions(req, eqValues)
-							return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-						});
-						return Promise.all(promiseArray)
+						let eqValues = [
+							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ type: 'eqcond', key: 'goods_id', val: firstCompete.id },
+							{ type: 'gtecond', key: 'ym', val: '17-01' },
+							{ type: 'ltecond', key: 'ym', val: '17-12' },
+						]
+						let conditions = _conditions(req, eqValues)
+						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 					})
+					.then(data => { // 获取竞品 secondObject折线图数据
+						let competeProd = this.store.peekAll('medicine').filter((item) => {
+							return item.compete;
+						});
+
+						let secondCompete = competeProd[1];
+						let req = this.store.createRecord('request', {
+							res: 'bind_course_region_goods_ym_sales',
+							fmcond: this.store.createRecord('fmcond', {
+								skip: 0,
+								take: 1000
+							})
+						});
+						let eqValues = [
+							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ type: 'eqcond', key: 'goods_id', val: secondCompete.id },
+							{ type: 'gtecond', key: 'ym', val: '17-01' },
+							{ type: 'ltecond', key: 'ym', val: '17-12' },
+						]
+						let conditions = _conditions(req, eqValues)
+						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+					})
+					.then(data => { // 获取竞品 thirdObject折线图数据
+						let competeProd = this.store.peekAll('medicine').filter((item) => {
+							return item.compete;
+						});
+
+						let lastCompete = competeProd.lastObject;
+						let req = this.store.createRecord('request', {
+							res: 'bind_course_region_goods_ym_sales',
+							fmcond: this.store.createRecord('fmcond', {
+								skip: 0,
+								take: 1000
+							})
+						});
+						let eqValues = [
+							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ type: 'eqcond', key: 'goods_id', val: lastCompete.id },
+							{ type: 'gtecond', key: 'ym', val: '17-01' },
+							{ type: 'ltecond', key: 'ym', val: '17-12' },
+						]
+						let conditions = _conditions(req, eqValues)
+						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+					})
+					/*
+						.then(data => { // 获取折线图数据
+							let req = this.store.createRecord('request', {
+								res: 'bind_course_region_goods_ym_sales',
+								fmcond: this.store.createRecord('fmcond', {
+									skip: 0,
+									take: 1000
+								})
+							});
+							let promiseArray = data.map(elem => {
+								let eqValues = [
+									{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+									{ type: 'eqcond', key: 'goods_id', val: elem.id },
+									{ type: 'gtecond', key: 'ym', val: '17-01' },
+									{ type: 'ltecond', key: 'ym', val: '17-12' },
+								]
+								let conditions = _conditions(req, eqValues)
+								return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+							});
+							return Promise.all(promiseArray)
+						})
+					*/
 					.finally(() => {
 						let that = this;
-						let lineData = [];
+						let originLineData = [];
 
 						function d3Data(medicineArrayObject) {
 							Object.keys(medicineArrayObject).forEach(key => {
@@ -133,16 +411,25 @@ export default Controller.extend({
 										value: sum
 									}
 								});
-								lineData.pushObject({
+								originLineData.pushObject({
 									name: record.prod_name,
 									values
 								});
-								lineData.reverse();
 							})
 						}
+
 						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
 						let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
-						d3Data(medicineAll)
+						d3Data(medicineAll);
+						let lineData = medicines.map((item) => {
+							let line = {}
+							originLineData.forEach((ele) => {
+								if (item.prod_name === ele.name) {
+									line = ele
+								}
+							});
+							return line;
+						});
 						let productInfo = {
 							medicines,
 							lineData
@@ -207,154 +494,156 @@ export default Controller.extend({
 						});
 						return originRegionData;
 					})
+					/*
+						.then(() => { // 获取雷达图数据
+							req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
+							req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
+								key: 'course_id',
+								val: ids.courseid,
+							}))
+							conditions = this.store.object2JsonApi('request', req);
+							return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
+						})
+						.then(data => { // 处理雷塔图数据
+							let radarArray = data.filter(elem => elem.region_id !== 'ave');
+							let ave = data.find(elem => elem.region_id === 'ave');
 
-					.then(() => { // 获取雷达图数据
-						req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
-						req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
-							key: 'course_id',
-							val: ids.courseid,
-						}))
-						conditions = this.store.object2JsonApi('request', req);
-						return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
-					})
-					.then(data => { // 处理雷塔图数据
-						let radarArray = data.filter(elem => elem.region_id !== 'ave');
-						let ave = data.find(elem => elem.region_id === 'ave');
+							function axes(radarfigure) {
+								let axes = [];
+								axes.pushObject({
+									axis: '产品知识',
+									value: radarfigure.prod_knowledge_val
+								})
 
-						function axes(radarfigure) {
-							let axes = [];
-							axes.pushObject({
-								axis: '产品知识',
-								value: radarfigure.prod_knowledge_val
-							})
+								axes.pushObject({
+									axis: '目标拜访频次',
+									value: radarfigure.target_call_freq_val
+								})
 
-							axes.pushObject({
-								axis: '目标拜访频次',
-								value: radarfigure.target_call_freq_val
-							})
+								axes.pushObject({
+									axis: '拜访次数',
+									value: radarfigure.call_times_val
+								})
 
-							axes.pushObject({
-								axis: '拜访次数',
-								value: radarfigure.call_times_val
-							})
+								axes.pushObject({
+									axis: '实际工作天数',
+									value: radarfigure.in_field_days_val
+								})
 
-							axes.pushObject({
-								axis: '实际工作天数',
-								value: radarfigure.in_field_days_val
-							})
+								axes.pushObject({
+									axis: '工作积极性',
+									value: radarfigure.motivation_val
+								})
 
-							axes.pushObject({
-								axis: '工作积极性',
-								value: radarfigure.motivation_val
-							})
+								axes.pushObject({
+									axis: '区域管理能力',
+									value: radarfigure.territory_manage_val
+								})
 
-							axes.pushObject({
-								axis: '区域管理能力',
-								value: radarfigure.territory_manage_val
-							})
-
-							axes.pushObject({
-								axis: '销售能力',
-								value: radarfigure.sales_skills_val
-							})
-							return axes
-						}
-						let radarData = radarArray.map(elem => {
-							let regionCache = this.store.peekRecord('region', elem.region_id);
-							return {
-								region_id: elem.region_id,
-								data: [{
-										name: '区域平均',
-										axes: axes(ave.radarfigure),
-										color: '#762712'
-									},
-									{
-										name: regionCache.name,
-										axes: axes(elem.radarfigure),
-										color: '#26AF32'
-									}
-								]
+								axes.pushObject({
+									axis: '销售能力',
+									value: radarfigure.sales_skills_val
+								})
+								return axes
 							}
-						});
-						regionBaseInfo.radarData = radarData;
-						return null;
-					})
-
-					.then(() => { // 获取kpi表格数据
-						let regionCache = this.store.peekAll('region');
-						let promiseArray = regionCache.map(elem => {
-							req = this.store.createRecord('request', { res: 'bind_course_region_ym_rep_behavior' });
-							let eqValues = [
-								{ type: 'eqcond', key: 'region_id', val: elem.id },
-								{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-								{ type: 'gtecond', key: 'ym', val: '17-01' },
-								{ type: 'ltecond', key: 'ym', val: '17-12' },
-							]
-							eqValues.forEach((elem) => {
-								req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
-									key: elem.key,
-									val: elem.val,
-								}))
-							});
-							let conditions = this.store.object2JsonApi('request', req);
-							return this.store.queryMultipleObject('/api/v1/findRepBehavior/0', 'bind_course_region_ym_rep_behavior', conditions)
-						})
-						return Promise.all(promiseArray)
-					})
-					.then(data => { // 处理KPI表格数据
-						let kpi = []
-						data.forEach(elem => {
-							let region_id = elem.firstObject.region_id
-							let yms = elem.map(ele => ele.ym)
-							let target_call_freq_vals = elem.map(ele => ele.repbehaviorreport.target_call_freq_val);
-							let in_field_days_vals = elem.map(ele => ele.repbehaviorreport.in_field_days_val);
-							let call_times_vals = elem.map(ele => ele.repbehaviorreport.call_times_val);
-							kpi.pushObject({
-								region_id,
-								yms,
-								target_call_freq_vals,
-								in_field_days_vals,
-								call_times_vals
-							})
-						});
-						regionBaseInfo.kpi = kpi
-						return null
-					})
-					.then(() => { // 获取业务报告数据
-						let regionCache = this.store.peekAll('region');
-						let promiseArray = regionCache.map(elem => {
-							req = this.store.createRecord('request', { res: 'bind_course_region_business' });
-							let eqValues = [
-								{ type: 'eqcond', key: 'region_id', val: elem.id },
-								{ type: 'eqcond', key: 'course_id', val: ids.courseid }
-							]
-							eqValues.forEach((elem) => {
-								req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
-									key: elem.key,
-									val: elem.val,
-								}))
-							});
-							let conditions = this.store.object2JsonApi('request', req);
-							return this.store.queryMultipleObject('/api/v1/findBusinessReport/0', 'bind_course_region_business', conditions)
-						})
-						return Promise.all(promiseArray)
-					})
-					.then(data => { // 处理业务报告数据
-						let reports = data.map(elem => {
-							let content = elem.map(ele => {
+							let radarData = radarArray.map(elem => {
+								let regionCache = this.store.peekRecord('region', elem.region_id);
 								return {
-									title: ele.businessreport.title,
-									des: ele.businessreport.description
+									region_id: elem.region_id,
+									data: [{
+											name: '区域平均',
+											axes: axes(ave.radarfigure),
+											color: '#762712'
+										},
+										{
+											name: regionCache.name,
+											axes: axes(elem.radarfigure),
+											color: '#26AF32'
+										}
+									]
 								}
+							});
+							regionBaseInfo.radarData = radarData;
+							return null;
+						})
+
+							.then(() => { // 获取kpi表格数据
+								let regionCache = this.store.peekAll('region');
+								let promiseArray = regionCache.map(elem => {
+									req = this.store.createRecord('request', { res: 'bind_course_region_ym_rep_behavior' });
+									let eqValues = [
+										{ type: 'eqcond', key: 'region_id', val: elem.id },
+										{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+										{ type: 'gtecond', key: 'ym', val: '17-01' },
+										{ type: 'ltecond', key: 'ym', val: '17-12' },
+									]
+									eqValues.forEach((elem) => {
+										req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+											key: elem.key,
+											val: elem.val,
+										}))
+									});
+									let conditions = this.store.object2JsonApi('request', req);
+									return this.store.queryMultipleObject('/api/v1/findRepBehavior/0', 'bind_course_region_ym_rep_behavior', conditions)
+								})
+								return Promise.all(promiseArray)
 							})
-							return {
-								region_id: elem.query.included[0].attributes.val,
-								data: content
-							}
-						});
-						regionBaseInfo.reports = reports
-						return null
-					})
+							.then(data => { // 处理KPI表格数据
+								let kpi = []
+								data.forEach(elem => {
+									let region_id = elem.firstObject.region_id
+									let yms = elem.map(ele => ele.ym)
+									let target_call_freq_vals = elem.map(ele => ele.repbehaviorreport.target_call_freq_val);
+									let in_field_days_vals = elem.map(ele => ele.repbehaviorreport.in_field_days_val);
+									let call_times_vals = elem.map(ele => ele.repbehaviorreport.call_times_val);
+									kpi.pushObject({
+										region_id,
+										yms,
+										target_call_freq_vals,
+										in_field_days_vals,
+										call_times_vals
+									})
+								});
+								regionBaseInfo.kpi = kpi
+								return null
+							})
+
+							.then(() => { // 获取业务报告数据
+								let regionCache = this.store.peekAll('region');
+								let promiseArray = regionCache.map(elem => {
+									req = this.store.createRecord('request', { res: 'bind_course_region_business' });
+									let eqValues = [
+										{ type: 'eqcond', key: 'region_id', val: elem.id },
+										{ type: 'eqcond', key: 'course_id', val: ids.courseid }
+									]
+									eqValues.forEach((elem) => {
+										req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+											key: elem.key,
+											val: elem.val,
+										}))
+									});
+									let conditions = this.store.object2JsonApi('request', req);
+									return this.store.queryMultipleObject('/api/v1/findBusinessReport/0', 'bind_course_region_business', conditions)
+								})
+								return Promise.all(promiseArray)
+							})
+							.then(data => { // 处理业务报告数据
+								let reports = data.map(elem => {
+									let content = elem.map(ele => {
+										return {
+											title: ele.businessreport.title,
+											des: ele.businessreport.description
+										}
+									})
+									return {
+										region_id: elem.query.included[0].attributes.val,
+										data: content
+									}
+								});
+								regionBaseInfo.reports = reports
+								return null
+							})
+
 					.then(() => { // 柱状图
 						function d3Data(medicineArrayObject) {
 							return Object.keys(medicineArrayObject).map(key => {
@@ -367,7 +656,6 @@ export default Controller.extend({
 									}
 								});
 								data.length = 12;
-								console.log(data);
 								data.sort((a, b) => {
 									return a.key.slice(-2) - b.key.slice(-2);
 								})
@@ -382,7 +670,7 @@ export default Controller.extend({
 						regionBaseInfo.salesBar = d3Data(medicineByRegion)
 						return null;
 					})
-					/*
+
 						.then(() => { // 整体
 							let that = this;
 
@@ -465,15 +753,10 @@ export default Controller.extend({
 
 						function tableData(arrayObjec) {
 							let arrayKeys = Object.keys(arrayObjec).sort();
-							// console.log(arrayObjec);
 							return arrayKeys.map(key => {
-								// console.log(arrayObjec[key]);
 								let decMonth = arrayObjec[key].find((item) => {
 									return item.ym === "17-12"
 								});
-								// console.log(arrayObjec[key].find((item) => {
-								// 	return item.ym === "17-12"
-								// }));
 								let potential = decMonth.sales.potential.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
 								let potential_contri = decMonth.sales.potential_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
 								let sales = decMonth.sales.sales.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);

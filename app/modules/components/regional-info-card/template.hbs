@@ -41,7 +41,9 @@
 					{{/tab.pane}}
 					{{#each data.info as |item|}}
 						{{#tab.pane title=item.name elementId=item.id }}
-							{{regional-intro data=item regionCards=data.cards radarData=data.radarData represent=represent kpi=data.kpi reports=data.reports salesBar=data.salesBar}}
+							{{!-- {{regional-intro data=item regionCards=data.cards radarData=data.radarData represent=represent kpi=data.kpi reports=data.reports salesBar=data.salesBar}} --}}
+							{{regional-intro data=item regionCards=data.cards radarData=radarData represent=represent kpiData=kpiData report=report salesBar=salesBar}}
+
 						{{/tab.pane}}
 					{{/each}}
 				</div>

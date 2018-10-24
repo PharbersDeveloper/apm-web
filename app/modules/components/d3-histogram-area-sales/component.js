@@ -3,7 +3,7 @@ import { run } from '@ember/runloop';
 import d3 from 'd3';
 
 export default Component.extend({
-	classNames: ['histogram-area-sales', 'col-lg-6', 'col-md-6', 'col-sm-6', 'col-xs-12'],
+	classNames: ['histogram-area-sales', 'col-lg-6', 'col-md-6', 'col-sm-6', 'col-xs-6'],
 	init() {
 		this._super(...arguments);
 		// this.data = [{ id: "1", name: "最差结果", value: 61 }, { id: "2", name: "上季", value: 78 }, { id: "3", name: "本季", value: 28 }, { id: "4", name: "最佳结果", value: 35 }];
@@ -37,7 +37,7 @@ export default Component.extend({
 		yMax = d3.max(areaSalesData.map((item) => {
 			return item.value;
 		}));
-		console.log(yMax);
+		// console.log(yMax);
 		let y = d3.scaleLinear()
 			.rangeRound([height, 0])
 			.domain([0, (yMax * 1.33)]);
@@ -56,7 +56,8 @@ export default Component.extend({
 		let yg = svg.append('g')
 			.attr('class', 'y axis')
 			.attr('transform', 'translate(15,0)')
-			.call(y_axis);
+			.call(y_axis)
+			.text("");
 		yg.selectAll('line').attr('x2', 6);
 
 		// yg.selectAll('text').
@@ -83,7 +84,7 @@ export default Component.extend({
 			// .transition()
 			.attr("y", function(d) { return y(d.value); })
 			// .text(function(d) { return d.value; });
-			.text('');
+			.text("");
 
 		// 渐变开始
 		var colorRange = ['#FCA0A8', '#EA919E', '#A5A8CF', '#6177B4', '#A5A8CF', '#6177B4', '#F5D561', '#FBBF9E']

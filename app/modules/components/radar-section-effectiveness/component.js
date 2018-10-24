@@ -8,7 +8,7 @@ export default Component.extend({
 
 	didReceiveAttrs() {
 		this._super(...arguments);
-		if (this.get('gradient') === '') {
+		if (this.get('gradient') === '' && this.get('radarSectionData')) {
 			throw 'gradient is null or undefinde, please set value';
 		} else {
 			if (this.get('radarSectionData')) run.schedule('render', this, this.RadarChart);

@@ -40,7 +40,6 @@ export default Route.extend({
 			})
 		};
 
-
 		// 获取所有区域名称与基本信息
 		let req = this.store.createRecord('request', { res: 'bind_course_region' });
 		req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
