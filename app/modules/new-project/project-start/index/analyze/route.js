@@ -27,7 +27,10 @@ export default Route.extend({
 				let sales_contri = item.lastObject.sales.sales_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
 				let contri_index = item.lastObject.sales.contri_index.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
 				let sales_growth = item.lastObject.sales.sales_growth.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
+				console.log(item.lastObject.region_id);
+				console.log(item.lastObject.region_id);
 
+				console.log(that.store.peekRecord('region', item.lastObject.region_id));
 				return {
 					name: that.store.peekRecord('region', item.lastObject.region_id).name,
 					potential,
@@ -70,7 +73,9 @@ export default Route.extend({
 
 					]
 					let conditions = _conditions(req, eqValues)
-					return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+					return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+
+					// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 				});
 				return {
 					regions: regions,
@@ -78,7 +83,9 @@ export default Route.extend({
 				}
 			})
 			.then((res) => {
+
 				return res.tabledata.then((data) => {
+					console.log(data)
 					return {
 						regionList: res.regions,
 						tableData: tableData(data)

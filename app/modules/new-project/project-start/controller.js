@@ -12,6 +12,8 @@ export default Controller.extend({
 		// 改变显示区域，tab属性调用ember-bs，id为要显示的区域id
 		changeRegion(component, id) {
 			let ids = this.get('ids');
+			let singleRegionData = {};
+			component.set('newDataReady', false);
 			if (id !== 'all') {
 				// 获取区域的负责代表
 				let regionCache = this.store.peekAll('region');
@@ -30,8 +32,23 @@ export default Controller.extend({
 				let conditions = this.store.object2JsonApi('request', req);
 				this.store.queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
 					.then((res) => {
-						component.set('represent', res.firstObject);
+						singleRegionData.represent = res.firstObject;
 						return null;
+					})
+					.then(() => { // 处理卡片数据
+						let regionData = this.store.peekAll('bind_course_region_goods_ym_sales');
+						let filtrerData = regionData.filter(felem => felem.region_id == id);
+						let card = {};
+						card = filtrerData.find((item) => {
+							return item.ym === "17-12";
+						})
+						let allYearPotential = 0;
+						filtrerData.forEach((item) => {
+							allYearPotential += item.sales.potential;
+						});
+						card.sales.set('allyearpotential', allYearPotential);
+						singleRegionData.card = card;
+						return null;;
 					})
 					.then(() => { // 获取平均雷达图数据
 						req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
@@ -64,7 +81,6 @@ export default Controller.extend({
 						conditions = this.store.object2JsonApi('request', req);
 						return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
 					})
-
 					.then(data => { // 处理雷塔图数据
 						let ave = this.store.peekAll('bind_course_region_radar').find((item) => {
 							return item.region_id === 'ave';
@@ -121,7 +137,8 @@ export default Controller.extend({
 								color: '#26AF32'
 							}
 						];
-						component.set('radarData', radarData);
+						// component.set('radarData', radarData);
+						singleRegionData.radarData = radarData;
 						return null;
 					})
 					.then(() => { // 获取kpi表格数据
@@ -155,7 +172,8 @@ export default Controller.extend({
 							in_field_days_vals,
 							call_times_vals
 						}
-						component.set('kpiData', kpiData);
+						// component.set('kpiData', kpiData);
+						singleRegionData.kpiData = kpiData;
 
 						return null
 					})
@@ -181,12 +199,12 @@ export default Controller.extend({
 								des: ele.businessreport.description
 							}
 						})
-						component.set('report', report);
+						// component.set('report', report);
+						singleRegionData.report = report;
+
 						return null
 					})
 					.then(() => { // 柱状图
-						console.log("---------------------");
-
 						function d3Data(medicineArrayObject) {
 							let data = medicineArrayObject[id].map(elem => {
 								return {
@@ -205,12 +223,16 @@ export default Controller.extend({
 							}
 						}
 						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
-
-						let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id === id), 'region_id');
+						let medicineByYm = medicineList.filter(elem => elem.ym !== '18-01' && elem.ym !== '18-02' && elem.ym !== '18-03');
+						let medicineByRegion = groupBy(medicineByYm.filter(elem => elem.region_id === id), 'region_id');
 
 						let data = d3Data(medicineByRegion);
-						console.log(data);
-						component.set('salesBar', data);
+						// console.log(data);
+						// component.set('salesBar', data);
+						singleRegionData.salesBar = data;
+						component.set('newDataReady', true);
+
+						component.set('singleRegionData', singleRegionData);
 
 						return null;
 					})
@@ -270,6 +292,8 @@ export default Controller.extend({
 						]
 						let conditions = _conditions(req, eqValues)
 						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+						// return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+
 						// });
 						// return Promise.all(promiseArray)
 					})
@@ -469,10 +493,12 @@ export default Controller.extend({
 								{ type: 'ltecond', key: 'ym', val: '17-12' },
 							]
 							let conditions = _conditions(req, eqValues)
-							return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+							return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+							// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 						});
 						return Promise.all(promiseArray)
 					})
+					/*
 					.then(data => { // 处理cards数据
 						let originRegionData = this.store.peekAll('region');
 						regionBaseInfo.cards = [];
@@ -494,7 +520,7 @@ export default Controller.extend({
 						});
 						return originRegionData;
 					})
-					/*
+
 						.then(() => { // 获取雷达图数据
 							req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
 							req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
@@ -776,7 +802,10 @@ export default Controller.extend({
 						}
 						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
 						// TODO 这块有疑问 是所有区域还是只有本公司产品？
-						let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
+						let medicineByYm = medicineList.filter(elem => elem.ym !== '18-01' && elem.ym !== '18-02' && elem.ym !== '18-03');
+						// let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
+						let medicineByRegion = groupBy(medicineByYm.filter(elem => elem.region_id !== 'all'), 'region_id');
+
 						regionBaseInfo.overall = {
 							lineData: d3Data(medicineByRegion),
 							tableData: tableData(medicineByRegion)

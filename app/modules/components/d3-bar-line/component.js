@@ -5,6 +5,7 @@ import d3 from 'd3';
 export default Component.extend({
 	tagName: 'div',
 	chartId: '',
+	localClassNames: 'bar-line-container',
 	backgroundColor: '#FFF',
 	laterThreeChangeBg: false,
 	title: '',
@@ -163,8 +164,8 @@ export default Component.extend({
 		chart.on('mouseover', function(d) {
 			tooltip.style("opacity", 1.0);
 			tooltip.html(d.key + "<br>" + "份额：" + d.value2 + "%" + "<br>" + "销售额：" + d.value)
-				.style("left", (d3.event.offsetX + 20) + "px")
-				.style("top", (d3.event.offsetY) + "px")
+				.style("left", (d3.event.clientX + 20) + "px")
+				.style("top", (d3.event.clientY + 80) + "px")
 
 			d3.select(this).attr('opacity', 0.7);
 		}).on('mouseout', function(d) {

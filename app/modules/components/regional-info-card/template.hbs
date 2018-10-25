@@ -4,9 +4,7 @@
 		{{else}}
 			<button type="button" class="close" local-class="turn" {{action "close"}}>
 				<span local-class="clos" aria-hidden="true" >&times;</span>
-			</button>
-
-			{{!-- {{#bs-tab local-class="reginonal-info-content" as |tab|}}
+			</button>{{!-- {{#bs-tab local-class="reginonal-info-content" as |tab|}}
 				{{#tab.pane local-class="section-total" title="整体" }}
 					{{d3-line-multi-legend chooseData=data.overall.lineData title="各区域份额结果" class="pre-area-share" }}
 						<div local-class="analyze-section">
@@ -29,8 +27,8 @@
 						{{#nav.item active=(bs-eq tab.activeId item.id)}}
 							<a href="#all" class="nav-link" role="tab" {{action 'changeRegion' tab item.id}}>{{item.name}}</a>
 						{{/nav.item}}
-						{{/each}}
-					{{/bs-nav}}
+					{{/each}}
+				{{/bs-nav}}
 
 				<div class="tab-content">
 					{{#tab.pane local-class="section-total" elementId="all" title="整体" }}
@@ -42,7 +40,15 @@
 					{{#each data.info as |item|}}
 						{{#tab.pane title=item.name elementId=item.id }}
 							{{!-- {{regional-intro data=item regionCards=data.cards radarData=data.radarData represent=represent kpi=data.kpi reports=data.reports salesBar=data.salesBar}} --}}
-							{{regional-intro data=item regionCards=data.cards radarData=radarData represent=represent kpiData=kpiData report=report salesBar=salesBar}}
+							{{#if newDataReady}}
+								{{!-- {{regional-intro data=item regionCards=data.cards radarData=radarData represent=represent kpiData=kpiData report=report salesBar=salesBar}} --}}
+								{{!-- {{regional-intro data=item regionCards=data.cards radarData=singleRegionData.radarData represent=singleRegionData.represent kpiData=singleRegionData.kpiData report=singleRegionData.report salesBar=singleRegionData.salesBar}} --}}
+								{{regional-intro data=item  singleRegionData=singleRegionData}}
+
+							{{else}}
+								{{svg-loading}}
+							{{/if}}
+							{{!-- {{regional-intro data=item regionCards=data.cards radarData=radarData represent=represent kpiData=kpiData report=report salesBar=salesBar}} --}}
 
 						{{/tab.pane}}
 					{{/each}}
