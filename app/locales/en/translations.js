@@ -8,7 +8,7 @@ export default {
   // },
   //
   // "key.with.interpolation": "Text with {{anInterpolation}}"
-  "": {
+  "common": {
     "": {
       "": ""
     }
