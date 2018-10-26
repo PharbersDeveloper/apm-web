@@ -65,8 +65,7 @@ export default Route.extend({
 				});
 				let conditions = this.store.object2JsonApi('request', req);
 				return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-				// return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-
+				// return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions);
 				// return data;
 			})
 			/*
@@ -220,14 +219,23 @@ export default Route.extend({
 			// 	return Promise.all(promiseArray)
 			// })
 			.then((data) => {
-				let TotalMeds = this.store.peekAll('bind_course_region_goods_ym_sales');
+				// console.log(data);
+				// let TotalMeds = this.store.peekAll('bind_course_region_goods_ym_sales');
+				// console.log(TotalMeds);
 				// data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
-				TotalMeds.forEach(elem => { temp.pushObject(elem) });
-
+				// data.forEach(elem => { temp.pushObject(elem) });
+				data.forEach((elem) => {
+					// if (elem.ym !== '17-q1' && elem.ym !== '17-q2' && elem.ym !== '17-q3' && elem.ym !== '17-q4') {
+					// 	temp.pushObject(elem)
+					// }
+					if (elem.ym.indexOf('q') < 0) {
+						temp.pushObject(elem)
+					}
+				})
 				let predictionData = temp.filter(elem => elem.ym === '18-01' || elem.ym === '18-02' || elem.ym === '18-03')
 				let predictionGroupData = groupBy(predictionData, 'region_id')
 				let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
-					console.log(predictionGroupData[key])
+					// console.log(predictionGroupData[key])
 					return {
 						region_id: key,
 						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.sales.company_target, 0)
@@ -237,6 +245,13 @@ export default Route.extend({
 				controller.set('totalCompanyTarget', predictionData.reduce((acc, cur) => acc + cur.sales.company_target, 0))
 
 				let areaBarData = d3Data(groupBy(temp.filter(elem => elem.region_id !== 'all'), 'region_id'));
+				console.log(areaBarData);
+				areaBarData.forEach((item) => {
+					item.data.sort((a, b) => {
+						// console.log(a)
+						return (a.key.slice(0, 2) + a.key.slice(3)) - (b.key.slice(0, 2) + b.key.slice(3))
+					})
+				})
 				controller.set('areaBarData', areaBarData);
 				controller.set('barData', areaBarData.find(elem => elem.region_id === controller.get('initSelectedRegionId')).data)
 

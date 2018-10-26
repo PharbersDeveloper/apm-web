@@ -124,19 +124,22 @@ export default Component.extend({
 		// 	.text(function(d) { return d.value; });
 
 		if (this.get('laterThreeChangeBg')) {
-			d3.select(`#${this.get('chartId')}`)
+			// d3.select(`#${this.get('chartId')}`)
+			svgContainer
 				.selectAll('._container-g_1mas67')
 				.selectAll('g:nth-last-of-type(3)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
 
-			d3.select(`#${this.get('chartId')}`)
+			// d3.select(`#${this.get('chartId')}`)
+			svgContainer
 				.selectAll('._container-g_1mas67')
 				.selectAll('g:nth-last-of-type(2)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
 
-			d3.select(`#${this.get('chartId')}`)
+			// d3.select(`#${this.get('chartId')}`)
+			svgContainer
 				.selectAll('._container-g_1mas67')
 				.selectAll('g:last-of-type')
 				.select('rect')
@@ -165,7 +168,7 @@ export default Component.extend({
 			tooltip.style("opacity", 1.0);
 			tooltip.html(d.key + "<br>" + "份额：" + d.value2 + "%" + "<br>" + "销售额：" + d.value)
 				.style("left", (d3.event.clientX + 20) + "px")
-				.style("top", (d3.event.clientY + 80) + "px")
+				.style("top", (d3.event.clientY) + "px")
 
 			d3.select(this).attr('opacity', 0.7);
 		}).on('mouseout', function(d) {

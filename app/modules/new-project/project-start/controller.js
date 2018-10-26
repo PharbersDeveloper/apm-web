@@ -352,6 +352,8 @@ export default Controller.extend({
 							{ type: 'ltecond', key: 'ym', val: '17-12' },
 						]
 						let conditions = _conditions(req, eqValues)
+						// return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+
 						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 					})
 					.then(data => { // 获取竞品 secondObject折线图数据
@@ -374,6 +376,8 @@ export default Controller.extend({
 							{ type: 'ltecond', key: 'ym', val: '17-12' },
 						]
 						let conditions = _conditions(req, eqValues)
+						// return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+
 						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 					})
 					.then(data => { // 获取竞品 thirdObject折线图数据
@@ -396,6 +400,8 @@ export default Controller.extend({
 							{ type: 'ltecond', key: 'ym', val: '17-12' },
 						]
 						let conditions = _conditions(req, eqValues)
+						// return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+
 						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 					})
 					/*
@@ -443,7 +449,10 @@ export default Controller.extend({
 						}
 
 						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
-						let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
+						// let outSeason = medicineList.forEach((item) => {
+						// 	return item.ym.indexOf('q') < 0;
+						// });
+						let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all' && elem.ym.indexOf('q') < 0), 'goods_id');
 						d3Data(medicineAll);
 						let lineData = medicines.map((item) => {
 							let line = {}
@@ -493,8 +502,8 @@ export default Controller.extend({
 								{ type: 'ltecond', key: 'ym', val: '17-12' },
 							]
 							let conditions = _conditions(req, eqValues)
-							return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-							// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+							// return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+							return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 						});
 						return Promise.all(promiseArray)
 					})

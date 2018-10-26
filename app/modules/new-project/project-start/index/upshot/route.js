@@ -47,7 +47,8 @@ export default Route.extend({
 					elem.set('compete', false)
 				});
 				return data;
-			}).then(data => { // 获取公司的竞品
+			})
+			.then(data => { // 获取公司的竞品
 				let that = this;
 				let promiseArray = data.map(reval => {
 					let req = that.store.createRecord('request', {
@@ -122,14 +123,21 @@ export default Route.extend({
 					});
 
 					let conditions = this.store.object2JsonApi('request', req);
-					return this.store.queryMultipleObject('/api/v1/findReportMedSales/0', 'bind_paper_region_goods_ym_report', conditions)
+					return this.store.queryMultipleObject('/api/v1/findAllReportMedSales/0', 'bind_paper_region_goods_ym_report', conditions)
+
+					// return this.store.queryMultipleObject('/api/v1/findReportMedSales/0', 'bind_paper_region_goods_ym_report', conditions)
 				})
 				return Promise.all(promiseArray)
 			})
 			.then(data => {
 				let companyMedicine = this.store.peekAll('medicine').find(elem => !elem.compete);
 				let temData = [];
-				data.forEach(x => x.forEach(r => temData.pushObject(r)))
+				console.log(data)
+				data.forEach(x => x.forEach(r => {
+					if (r.ym.indexOf('NA') < 0) {
+						temData.pushObject(r)
+					}
+				}))
 
 				let that = this;
 				let all = temData.filter(elem => elem.region_id === 'all')

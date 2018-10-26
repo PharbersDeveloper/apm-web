@@ -74,7 +74,6 @@ export default Route.extend({
 					]
 					let conditions = _conditions(req, eqValues)
 					return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-
 					// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 				});
 				return {
