@@ -4,16 +4,20 @@ import { groupBy } from '../../../../phtool/tool';
 export default Route.extend({
 	loadD3Data(ids) {
 
-		let req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
-		req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
+		let req = this.get('pmController').get('Store').createModel('request', {
+			id: 'action0',
+			res: 'bind_course_region_radar'
+		});
+		req.get('eqcond').pushObject(this.get('pmController').get('Store').createModel('eqcond', {
+			id: 'action1',
 			key: 'course_id',
 			val: ids.courseid,
 		}))
-		let conditions = this.store.object2JsonApi('request', req);
+		let conditions = this.get('pmController').get('Store').object2JsonApi(req);
 
-		return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
+		return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
 			.then((data) => {
-				let radarCache = this.store.peekAll('bind_course_region_radar');
+				let radarCache = this.get('pmController').get('Store').peekAll('bind_course_region_radar');
 
 				let radarArray = radarCache.filter(elem => elem.region_id !== 'ave');
 				let ave = radarCache.find(elem => elem.region_id === 'ave');
@@ -57,7 +61,7 @@ export default Route.extend({
 					return axes
 				}
 				return radarArray.map(elem => {
-					let regionCache = this.store.peekRecord('region', elem.region_id);
+					let regionCache = this.get('pmController').get('Store').peekRecord('region', elem.region_id);
 					return {
 						region_id: elem.region_id,
 						data: [{
@@ -74,94 +78,36 @@ export default Route.extend({
 					}
 				});
 			})
-		/*
-        let radarCache = this.store.peekAll('bind_course_region_radar');
-		let radarArray = radarCache.filter(elem => elem.region_id !== 'ave');
-		let ave = radarCache.find(elem => elem.region_id === 'ave');
-
-		function axes(radarfigure) {
-			let axes = [];
-			axes.push({
-				axis: '产品知识',
-				value: radarfigure.prod_knowledge_val
-			})
-
-			axes.push({
-				axis: '目标拜访频次',
-				value: radarfigure.target_call_freq_val
-			})
-
-			axes.push({
-				axis: '拜访次数',
-				value: radarfigure.call_times_val
-			})
-
-			axes.push({
-				axis: '实际工作天数',
-				value: radarfigure.in_field_days_val
-			})
-
-			axes.push({
-				axis: '工作积极性',
-				value: radarfigure.motivation_val
-			})
-
-			axes.push({
-				axis: '区域管理能力',
-				value: radarfigure.territory_manage_val
-			})
-
-			axes.push({
-				axis: '销售能力',
-				value: radarfigure.sales_skills_val
-			})
-			return axes
-		}
-
-		return radarArray.map(elem => {
-			let regionCache = this.store.peekRecord('region', elem.region_id);
-			return {
-				region_id: elem.region_id,
-				data: [{
-						name: '区域平均',
-						axes: axes(ave.radarfigure),
-						color: '#762712'
-					},
-					{
-						name: regionCache.name,
-						axes: axes(elem.radarfigure),
-						color: '#26AF32'
-					}
-				]
-			}
-		});*/
 	},
 
 	model() {
 		let ids = this.modelFor('new-project.project-start');
 		let paramsController = this.modelFor('new-project.project-start');
 		let controller = this.controllerFor('new-project.project-start.index.action-plan')
-		let regionCache = this.store.peekAll('region');
+		let regionCache = this.get('pmController').get('Store').peekAll('region');
 
 		function _conditions(request, anyConditions) {
 			anyConditions.forEach((elem, index) => {
 				request.get(elem.type).pushObject(request.store.createRecord(elem.type, {
+					id: elem.id,
 					key: elem.key,
 					val: elem.val,
 				}))
 			});
-			return request.store.object2JsonApi('request', request);
+			return request.store.object2JsonApi(request);
 		}
 
-		let req = this.store.createRecord('request', {
+		let req = this.get('pmController').get('Store').createModel('request', {
+			id: 'action2',
 			res: 'bind_course_goods',
-			fmcond: this.store.createRecord('fmcond', {
+			fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+				id: 'actionFm0',
 				skip: 0,
 				take: 20
 			})
 		});
 
-		let eqValues = [{ type: 'eqcond', key: 'course_id', val: ids.courseid }]
+		let eqValues = [{ id: 'action3', type: 'eqcond', key: 'course_id', val: ids.courseid }]
 
 		let conditions = _conditions(req, eqValues);
 		let medicines = [];
@@ -169,12 +115,11 @@ export default Route.extend({
 		/**
 		 * 备注：Promise的链式调用，未做catch处理
 		 */
-		return this.store.queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
+		return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
 			.then(data => { // 处理公司产品
 				data.forEach(elem => {
 					elem.set('compete', false),
 						medicines.pushObject(elem)
-
 				});
 				return data;
 			})
@@ -207,28 +152,25 @@ export default Route.extend({
 			// })
 			.then(data => { // 获取折线图数据
 
-				let req = this.store.createRecord('request', {
+				let req = this.get('pmController').get('Store').createModel('request', {
+					id: 'actionLine0',
 					res: 'bind_course_region_goods_ym_sales',
-					fmcond: this.store.createRecord('fmcond', {
+					fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+						id: 'actionLineFm0',
 						skip: 0,
 						take: 1000
 					})
 				});
-				// let promiseArray = data.map(elem => {
 				let eqValues = [
-					{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-					{ type: 'eqcond', key: 'goods_id', val: data.firstObject.id },
-					{ type: 'gtecond', key: 'ym', val: '18-01' },
-					{ type: 'ltecond', key: 'ym', val: '18-03' },
+					{ id: 'actionLine1', type: 'eqcond', key: 'course_id', val: ids.courseid },
+					{ id: 'actionLine2', type: 'eqcond', key: 'goods_id', val: data.firstObject.id },
+					{ id: 'actionLine3', type: 'gtecond', key: 'ym', val: '18-01' },
+					{ id: 'actionLine4', type: 'ltecond', key: 'ym', val: '18-03' },
 				]
 				let conditions = _conditions(req, eqValues)
-				return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-
-				// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-				// });
-				// return Promise.all(promiseArray)
+				return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+				// return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 			})
-
 			.then((data) => { // 处理bind-course-region-goods-ym-sales
 				let temp = [];
 				// data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
@@ -251,18 +193,18 @@ export default Route.extend({
 				// 	}
 				// })
 				controller.set('regionCompanyTargets', regionCompanyTargets)
-
 				return null;
 			})
 			// 获取行动计划列表内容
 			.then(() => {
-				let req = this.store.createRecord('request', {
+				let req = this.get('pmController').get('Store').createModel('request', {
+					id: 'actionList0',
 					res: 'bind_course_action_plan',
 				});
 
-				let eqValues = [{ type: 'eqcond', key: 'course_id', val: ids.courseid }];
+				let eqValues = [{ id: 'actionList1', type: 'eqcond', key: 'course_id', val: ids.courseid }];
 				let conditions = _conditions(req, eqValues)
-				return this.store.queryMultipleObject('/api/v1/actionPlanLst/0', 'actionplan', conditions)
+				return this.get('pmController').get('Store').queryMultipleObject('/api/v1/actionPlanLst/0', 'actionplan', conditions)
 			})
 			.then((data) => { // 处理行动计划内容
 				let readyChoose = data.map((item) => {
@@ -277,19 +219,23 @@ export default Route.extend({
 			})
 			.then(() => { // 获取所有代表
 				let promiseArray = regionCache.map(elem => {
-					req = this.store.createRecord('request', { res: 'bind_course_region_rep' });
+					req = this.get('pmController').get('Store').createModel('request', {
+						id: elem.id + 'actionRep0',
+						res: 'bind_course_region_rep'
+					});
 					let eqValues = [
-						{ type: 'eqcond', key: 'region_id', val: elem.id },
-						{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+						{ id: elem.id + 'actionRep1', type: 'eqcond', key: 'region_id', val: elem.id },
+						{ id: elem.id + 'actionRep2', type: 'eqcond', key: 'course_id', val: ids.courseid },
 					]
 					eqValues.forEach((elem) => {
-						req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+						req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+							id: elem.id,
 							key: elem.key,
 							val: elem.val,
 						}))
 					});
-					conditions = this.store.object2JsonApi('request', req);
-					return this.store.queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
+					conditions = this.get('pmController').get('Store').object2JsonApi(req);
+					return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
 				});
 				return Promise.all(promiseArray)
 			})
@@ -314,13 +260,8 @@ export default Route.extend({
 				controller.set('areaRadars', res);
 				return regionCache;
 			})
-
-
-
-
-
-		// let bind_course_region_repCache = this.store.peekAll('bind_course_region_rep')
-		// let representsCache = this.store.peekAll('representative');
+		// let bind_course_region_repCache =this.get('pmController').get('Store').peekAll('bind_course_region_rep')
+		// let representsCache =this.get('pmController').get('Store').peekAll('representative');
 		// let goodsByRegion = groupBy(this.store.peekAll('bind-course-region-goods-ym-sales').filter(elem => elem.region_id !== 'all'), 'region_id')
 		// let areaReps = bind_course_region_repCache.map(elem => {
 		// 	return {

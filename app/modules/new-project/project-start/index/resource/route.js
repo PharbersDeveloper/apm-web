@@ -4,35 +4,34 @@ import { groupBy } from '../../../../phtool/tool';
 export default Route.extend({
 	loadTableTarget(paramsController) {
 		let temp = [];
-		let medicines = this.store.peekAll('medicine');
+		let medicines = this.get('pmController').get('Store').peekAll('medicine');
 		let companyProd = medicines.find((item) => {
 			return !item.compete;
 		});
-		// let promiseArray = medicines.map(elem => {
-		let req = this.store.createRecord('request', {
+		let req = this.get('pmController').get('Store').createModel('request', {
+			id: 'resource0',
 			res: 'bind_course_region_goods_ym_sales',
-			fmcond: this.store.createRecord('fmcond', {
+			fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+				id: 'resourceFm0',
 				skip: 0,
 				take: 1000
 			})
 		});
 
 		let eqValues = [
-			{ type: 'eqcond', key: 'course_id', val: paramsController.courseid },
-			{ type: 'eqcond', key: 'goods_id', val: companyProd.id },
-			{ type: 'gtecond', key: 'ym', val: '18-01' },
-			{ type: 'ltecond', key: 'ym', val: '18-03' }
+			{ id: 'resource1', type: 'eqcond', key: 'course_id', val: paramsController.courseid },
+			{ id: 'resource2', type: 'eqcond', key: 'goods_id', val: companyProd.id },
+			{ id: 'resource3', type: 'gtecond', key: 'ym', val: '18-01' },
+			{ id: 'resource4', type: 'ltecond', key: 'ym', val: '18-03' }
 		]
 
 		eqValues.forEach(elem => {
-			req.get(elem.type).pushObject(this.store.createRecord(elem.type, { key: elem.key, val: elem.val }))
+			req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, { id: elem.id, key: elem.key, val: elem.val }))
 		});
-		let conditions = this.store.object2JsonApi('request', req);
-		return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+		let conditions = this.get('pmController').get('Store').object2JsonApi(req);
+		return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 
-			// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-			// });
-			// return Promise.all(promiseArray)
+			// return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 			.then(data => {
 				// data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
 				data.forEach(elem => { temp.pushObject(elem) });
@@ -56,26 +55,29 @@ export default Route.extend({
 		function _conditions(request, anyConditions) {
 			anyConditions.forEach((elem, index) => {
 				request.get(elem.type).pushObject(request.store.createRecord(elem.type, {
+					id: elem.id,
 					key: elem.key,
 					val: elem.val,
 				}))
 			});
-			return request.store.object2JsonApi('request', request);
+			return request.store.object2JsonApi(request);
 		}
 
-		let req = this.store.createRecord('request', {
+		let req = this.get('pmController').get('Store').createModel('request', {
+			id: 'resourceModel0',
 			res: 'bind_course_goods',
-			fmcond: this.store.createRecord('fmcond', {
+			fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+				id: 'resourceModelFm0',
 				skip: 0,
 				take: 20
 			})
 		});
 
-		let eqValues = [{ type: 'eqcond', key: 'course_id', val: paramsController.courseid }]
+		let eqValues = [{ id: 'resourceModel1', type: 'eqcond', key: 'course_id', val: paramsController.courseid }]
 
 		let conditions = _conditions(req, eqValues);
 
-		return this.store.queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
+		return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
 			.then(data => { // 处理公司产品
 				data.forEach(elem => {
 					elem.set('compete', false)
@@ -86,15 +88,17 @@ export default Route.extend({
 				let that = this;
 				let promiseArray = data.map(reval => {
 					let req = that.store.createRecord('request', {
+						id: 'resourceCompete0',
 						res: 'bind_course_goods_compet',
 						fmcond: that.store.createRecord('fmcond', {
+							id: 'resourceCompeteFm0',
 							skip: 0,
 							take: 20
 						})
 					});
 					let eqValues = [
-						{ type: 'eqcond', key: 'course_id', val: paramsController.courseid },
-						{ type: 'eqcond', key: 'goods_id', val: reval.id },
+						{ id: 'resourceCompete1', type: 'eqcond', key: 'course_id', val: paramsController.courseid },
+						{ id: 'resourceCompete2', type: 'eqcond', key: 'goods_id', val: reval.id },
 					]
 					let conditions = _conditions(req, eqValues);
 					return that.store.queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
@@ -102,20 +106,21 @@ export default Route.extend({
 				return Promise.all(promiseArray)
 			})
 			.then((data) => {
-				let req = this.store.createRecord('request', { res: 'bind_course_exam_require' });
+				let req = this.get('pmController').get('Store').createModel('request', { id: 'resourceCompete3', res: 'bind_course_exam_require' });
 
 				let eqValues = [
-					{ type: 'eqcond', key: 'course_id', val: paramsController.courseid },
+					{ id: 'resourceCompete4', type: 'eqcond', key: 'course_id', val: paramsController.courseid },
 				]
 
 				eqValues.forEach((elem, index) => {
-					req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+					req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+						id: elem.id,
 						key: elem.key,
 						val: elem.val,
 					}))
 				});
-				let conditions = this.store.object2JsonApi('request', req);
-				return this.store.queryObject('/api/v1/findExamRequire/0', 'examrequire', conditions)
+				let conditions = this.get('pmController').get('Store').object2JsonApi(req);
+				return this.get('pmController').get('Store').queryObject('/api/v1/findExamRequire/0', 'examrequire', conditions)
 			})
 			.then((data) => {
 				controller.set('allotData', data)
@@ -125,23 +130,20 @@ export default Route.extend({
 				return this.loadTableTarget(paramsController)
 			})
 
-
-
-
-		// let req = this.store.createRecord('request', { res: 'bind_course_exam_require' });
+		// let req = this.get('pmController').get('Store').createModel('request', { res: 'bind_course_exam_require' });
 		//
 		// let eqValues = [
 		// 	{ type: 'eqcond', key: 'course_id', val: paramsController.courseid },
 		// ]
 		//
 		// eqValues.forEach((elem, index) => {
-		// 	req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+		// 	req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
 		// 		key: elem.key,
 		// 		val: elem.val,
 		// 	}))
 		// });
-		// let conditions = this.store.object2JsonApi('request', req);
-		// this.store.queryObject('/api/v1/findExamRequire/0', 'examrequire', conditions)
+		// let conditions = this.get('pmController').get('Store').object2JsonApi( req);
+		// this.get('pmController').get('Store').queryObject('/api/v1/findExamRequire/0', 'examrequire', conditions)
 		// 	.then(data => {
 		// 		controller.set('allotData', data)
 		// 		return null;
@@ -150,7 +152,4 @@ export default Route.extend({
 		//
 		// return this.loadTableTarget(paramsController)
 	},
-	actions: {
-
-	}
 });

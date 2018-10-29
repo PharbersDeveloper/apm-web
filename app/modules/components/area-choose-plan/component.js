@@ -53,7 +53,7 @@ export default Component.extend({
 						let singleRegionJsonApi = null;
 						let regionLocalStorage = region.map((item) => {
 							singleRegionJsonApi = '';
-							singleRegionJsonApi = this.get('getStore').store.object2JsonApi('region', item, false);
+							singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
 							return singleRegionJsonApi
 						});
 						localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage))
@@ -69,7 +69,7 @@ export default Component.extend({
 					let singleRegionJsonApi = null;
 					let regionLocalStorage = region.map((item) => {
 						singleRegionJsonApi = '';
-						singleRegionJsonApi = this.get('getStore').store.object2JsonApi('region', item, false);
+						singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
 						return singleRegionJsonApi
 					});
 					localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage))

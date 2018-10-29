@@ -7,7 +7,7 @@ export default Controller.extend({
 		let totalRegion = JSON.parse(localStorage.getItem('totalRegion'));
 		if (totalRegion) {
 			totalRegion.forEach((item) => {
-				this.store.pushPayload('region', item);
+				this.get('pmController').get('Store').pushPayload('region', item);
 			})
 		};
 		this.set('hint', {
@@ -20,7 +20,7 @@ export default Controller.extend({
 	actions: {
 		nextStep() {
 			let emptyNotesRegion = "";
-			let region = this.store.peekAll('region');
+			let region = this.get('pmController').get('Store').peekAll('region');
 
 			let isNoteEmpty = region.every(function(item) {
 				if (item.notes.length === 0) {
@@ -64,40 +64,43 @@ export default Controller.extend({
 				hintBtn: true,
 			}
 			this.set('hint', hint);
-			let region = this.store.peekAll('region');
+			let region = this.get('pmController').get('Store').peekAll('region');
 			let params = this.get('params');
 
 			let promiseArray = region.map((reg) => {
-				let req = this.store.createRecord('request', {
+				let req = this.get('pmController').get('Store').createModel('request', {
+					id: reg.id + '0',
 					res: 'paperinput',
 				});
 				let eqValues = [
-					{ key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ key: 'region_id', type: 'eqcond', val: reg.id },
-					{ key: 'hint', type: 'upcond', val: reg.notes }
+					{ id: reg.id + '1', key: 'paper_id', type: 'eqcond', val: params.paperid },
+					{ id: reg.id + '2', key: 'region_id', type: 'eqcond', val: reg.id },
+					{ id: reg.id + '3', key: 'hint', type: 'upcond', val: reg.notes }
 				];
 				eqValues.forEach((item) => {
-					req.get(item.type).pushObject(this.store.createRecord(item.type, {
+					req.get(item.type).pushObject(this.get('pmController').get('Store').createModel(item.type, {
+						id: item.id,
 						key: item.key,
 						val: item.val,
 					}))
 				});
-				let jsonReq = this.store.object2JsonApi('request', req);
-				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
+				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
+				this.get('logger').log(jsonReq);
+				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
 			Promise.all(promiseArray).then((res) => {
 				this.transitionToRoute('new-project.project-start.index.sort')
 			}).catch((error) => {
-				console.error(error);
+				this.get('logger').log(error);
 			});
 			// this.transitionToRoute('new-project.project-start.index.sort')
 		},
 		saveToLocalStorage() {
-			let region = this.store.peekAll('region');
+			let region = this.get('pmController').get('Store').peekAll('region');
 			let singleRegionJsonApi = null;
 			let regionLocalStorage = region.map((item) => {
-				singleRegionJsonApi = this.store.object2JsonApi('region', item, false);
+				singleRegionJsonApi = this.get('pmController').get('Store').object2JsonApi(item, false);
 				return singleRegionJsonApi;
 			});
 			localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
