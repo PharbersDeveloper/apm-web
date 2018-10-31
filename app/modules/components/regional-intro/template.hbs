@@ -138,7 +138,7 @@
 							{{d3-bar-line chartId=(concat "area-sales-chart" data.id) laterThreeChangeBg=false dataset=item.data}}
 						{{/if}}
 					{{/each}} --}}
-					{{d3-bar-line chartId=(concat "area-sales-chart" salesBar.id) laterThreeChangeBg=false dataset=singleRegionData.salesBar.data}}
+					{{d3-bar-line chartId=(concat "area-sales-chart" salesBar.id) laterThreeChangeBg=false noLine=true  dataset=singleRegionData.salesBar.data}}
 
 					<div local-class="table-content">
 						<p local-class="title">公司产品历史销售数据</p>

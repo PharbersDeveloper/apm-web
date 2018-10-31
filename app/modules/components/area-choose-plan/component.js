@@ -42,9 +42,6 @@ export default Component.extend({
 		if (planPaire.length > 2) {
 			later(this, function() {
 				set(planPaire.firstObject, 'isChecked', false);
-				// planPaire.firstObject.set('isChecked', false)
-				// planPaire.firstObject.set('text', planPaire.firstObject.get('text'))
-				// console.info(planPaire);
 				planPaire.forEach((item) => {
 					if (item.isChecked) {
 						checkedString = item.text + ',' + checkedString;

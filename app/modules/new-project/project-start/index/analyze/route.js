@@ -6,8 +6,6 @@ export default Route.extend({
 		let that = this;
 		let ids = this.modelFor('new-project.project-start');
 		this.controllerFor('new-project.project-start.index.analyze').set('params', ids);
-		// let regionList = this.store.peekAll('region');
-		// console.log(regionList)
 
 		function _conditions(request, anyConditions) {
 			anyConditions.forEach((elem, index) => {
@@ -54,15 +52,7 @@ export default Route.extend({
 				return regions;
 			})
 			.then((regions) => {
-				// req = this.get('pmController').get('Store').createModel('request', {
-				// 	id: '0',
-				// 	res: 'bind_course_region_goods_ym_sales',
-				// 	fmcond: this.get('pmController').get('Store').createModel('fmcond', {
-				// 		id: 'fm11',
-				// 		skip: 0,
-				// 		take: 1000
-				// 	})
-				// });
+
 				let promiseArray = regions.map(elem => {
 					req = this.get('pmController').get('Store').createModel('request', {
 						id: elem.id + '0',
@@ -99,38 +89,12 @@ export default Route.extend({
 				}
 			})
 			.then((res) => {
-
 				return res.tabledata.then((data) => {
 					return {
 						regionList: res.regions,
 						tableData: tableData(data)
 					}
 				})
-
 			})
-
-
-		// return Promise.all(promiseArray).then((res) => {
-		// 	return {
-		// 		regionList,
-		// 		tableData: tableData(res)
-		// 	}
-		// })
-
-
-		// let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
-		// let regionList = this.store.peekAll('region');
-
-		// TODO 这块有疑问 是所有区域还是只有本公司产品？
-		// let medicineByRegion = groupBy(medicineList.filter(elem => elem.region_id !== 'all'), 'region_id');
-		// console.log(medicineByRegion);
-		// console.log(medicineList);
-		// console.info(this.modelFor('new-project.project-start'));
-		// let paramsController = this.modelFor('new-project.project-start');
-		// this.controllerFor('new-project.project-start.index.analyze').set('params', ids);
-		// return {
-		// 	regionList,
-		// 	tableData: tableData(medicineByRegion)
-		// }
 	}
 });

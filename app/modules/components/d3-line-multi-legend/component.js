@@ -58,7 +58,6 @@ export default Component.extend({
 		let xDatas = chooseData.map(elem => {
 			return elem.values.map(vals => vals.ym)
 		})[0];
-		// console.log(xDatas);
 		/* Scale */
 		let xScale = d3.scalePoint().rangeRound([0, width])
 		// let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1);

@@ -107,7 +107,7 @@ export default Controller.extend({
 							})
 
 							axes.pushObject({
-								axis: '实际工作天数',
+								axis: '实地工作天数',
 								value: radarfigure.in_field_days_val
 							})
 
@@ -229,11 +229,10 @@ export default Controller.extend({
 						}
 						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
 						let medicineByYm = medicineList.filter(elem => elem.ym !== '18-01' && elem.ym !== '18-02' && elem.ym !== '18-03');
-						let medicineByRegion = groupBy(medicineByYm.filter(elem => elem.region_id === id), 'region_id');
+						let medicineNoSeason = medicineByYm.filter(elem => elem.ym.indexOf('q') < 0);
+						let medicineByRegion = groupBy(medicineNoSeason.filter(elem => elem.region_id === id), 'region_id');
 
 						let data = d3Data(medicineByRegion);
-						// console.log(data);
-						// component.set('salesBar', data);
 						singleRegionData.salesBar = data;
 						component.set('newDataReady', true);
 

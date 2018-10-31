@@ -225,15 +225,10 @@ export default Route.extend({
 			// 	return Promise.all(promiseArray)
 			// })
 			.then((data) => {
-				// console.log(data);
 				// let TotalMeds = this.get('pmController').get('Store').peekAll('bind_course_region_goods_ym_sales');
-				// console.log(TotalMeds);
 				// data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
 				// data.forEach(elem => { temp.pushObject(elem) });
 				data.forEach((elem) => {
-					// if (elem.ym !== '17-q1' && elem.ym !== '17-q2' && elem.ym !== '17-q3' && elem.ym !== '17-q4') {
-					// 	temp.pushObject(elem)
-					// }
 					if (elem.ym.indexOf('q') < 0) {
 						temp.pushObject(elem)
 					}

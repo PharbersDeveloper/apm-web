@@ -28,7 +28,6 @@ export default Controller.extend({
 				}
 				return item.notes.length > 0
 			});
-			// this.set('isNoteEmpty', isNoteEmpty);
 
 			if (isNoteEmpty) {
 				let hint = {
@@ -39,8 +38,6 @@ export default Controller.extend({
 					hintBtn: true,
 				}
 				this.set('hint', hint);
-				// this.set('notesEmpty', true);
-				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 
 			} else {
 				let hint = {
@@ -51,8 +48,6 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
-				// this.set('notesEmpty', true);
-				// this.set('tipsContent', '请填写完成 ' + emptyNotesRegion + ' 的内容！');
 			}
 		},
 		toSort() {
@@ -94,7 +89,6 @@ export default Controller.extend({
 			}).catch((error) => {
 				this.get('logger').log(error);
 			});
-			// this.transitionToRoute('new-project.project-start.index.sort')
 		},
 		saveToLocalStorage() {
 			let region = this.get('pmController').get('Store').peekAll('region');

@@ -157,11 +157,10 @@ export default Route.extend({
 				modelData.quarterD3BarData = modelData.quarterD3BarData.sort(function(o1, o2) {
 					return o1.id - o2.id
 				})
-
 				modelData.quarterTableData.pushObject({
 					name: '本季结果',
-					sales: all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1').lastObject.apmreport.sales,
-					share: (all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1').lastObject.apmreport.share * 100).toFixed(1)
+					sales: all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1' && elem.region_id === 'all').lastObject.apmreport.sales,
+					share: (all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1' && elem.region_id === 'all').lastObject.apmreport.share * 100).toFixed(1)
 				});
 
 				let tempByGroupGoods = groupBy(all, 'goods_id')

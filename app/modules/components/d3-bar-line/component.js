@@ -193,6 +193,12 @@ export default Component.extend({
 			} else {
 				legendData = ["份额", "销售额", "预测销售额"];
 			}
+		}else {
+			if (noLine) {
+				legendData = ["销售额"];
+			} else {
+				legendData = ["份额", "销售额"];
+			}
 		}
 		var legend = legendArea.selectAll("g")
 			.data(legendData)
