@@ -838,23 +838,20 @@ export default Controller.extend({
 										value: elem.sales.share,
 									}
 								});
-								values.length = 12;
-								values.sort((a, b) => {
+								let valuesWithoutSeason = [];
+								values.forEach((elem) => {
+									if (elem.ym.indexOf('q') < 0) {
+										valuesWithoutSeason.pushObject(elem)
+									}
+								});
+								valuesWithoutSeason.length = 12;
+								valuesWithoutSeason.sort((a, b) => {
 									return a.ym.slice(-2) - b.ym.slice(-2);
 								})
 								return {
 									name: name,
-									values: values
+									values: valuesWithoutSeason
 								}
-								// return {
-								// 	name: that.store.peekRecord('region', key).name,
-								// 	values: medicineArrayObject[key].map(elem => {
-								// 		return {
-								// 			ym: elem.ym,
-								// 			value: elem.sales.share,
-								// 		}
-								// 	})
-								// }
 							});
 
 						}
