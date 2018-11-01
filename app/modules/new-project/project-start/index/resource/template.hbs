@@ -2,36 +2,36 @@
 	{{#unless history}}
         <div class="next-step">
             {{#bs-button class="btn-next" onClick=(action "nextStep")}}
-                下一步
+                {{t "apm.newProject.next"}}
             {{/bs-button}}
         </div>
     {{/unless}}
 	<div class="row">
 		<div class="col-md-12 col-lg-12 col-sm-12">
 			<div local-class="resource-content">
-				<p local-class="title-resource"><span>资源分配</span><span> -在资源有限的情况下，做出合适的投入计划，以达到目标。</span></p>
+				<p local-class="title-resource"><span>{{t "apm.newProject.resource.title"}}</span><span> -{{t "apm.newProject.resource.subtitle"}}</span></p>
 
 				<div local-class="card-item-container" class="container">
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-						<p local-class="title-card-item"><span>辅导协访天数</span><span>共{{allotData.field_work_days}}天</span></p>
+						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.coachCoVisitDays"}}</span><span>{{t "apm.newProject.resource.total"}} {{allotData.field_work_days}} {{t "apm.newProject.resource.days"}}</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
 							{{p.bar local-class="progress-bar" showLabel=true value=coVisit maxValue=100 type='info' }}
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-						<p local-class="title-card-item"><span>全国会名额</span><span>共{{allotData.national_meeting}}个</span></p>
+						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.countryQuota"}}</span><span>{{t "apm.newProject.resource.total"}} {{allotData.national_meeting}} {{t "apm.newProject.resource.one"}}</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
 							{{p.bar local-class="progress-bar" showLabel=true value=nationMeeting maxValue=100 type='info' }}
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-						<p local-class="title-card-item"><span>城市会名额</span><span>共{{allotData.city_meeting}}个</span></p>
+						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.cityQuota"}}</span><span>{{t "apm.newProject.resource.total"}} {{allotData.city_meeting}} {{t "apm.newProject.resource.one"}}</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
 							{{p.bar local-class="progress-bar" showLabel=true value=cityMeeting maxValue=100 type='info' }}
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-						<p local-class="title-card-item"><span>科室会名额</span><span>共{{allotData.depart_meeting}}个</span></p>
+						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.departmentQuota"}}</span><span>{{t "apm.newProject.resource.total"}} {{allotData.depart_meeting}} {{t "apm.newProject.resource.one"}}</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
 							{{p.bar local-class="progress-bar" showLabel=true value=departmentMeeting maxValue=100 type='info' }}
 						{{/bs-progress}}
@@ -41,14 +41,14 @@
 					<table local-class="table-container" class="table">
 						<thead>
 							<tr>
-								<td>排序</td>
-								<td>区域</td>
-								<td>公司指标($)</td>
-								<td>预测指标($)</td>
-								<td>协访天数(%)</td>
-								<td>全国会(%)</td>
-								<td>城市会(%)</td>
-								<td>科室会(%)</td>
+								<td>{{t "apm.newProject.resource.sort"}}</td>
+								<td>{{t "apm.newProject.resource.area"}}</td>
+								<td>{{t "apm.newProject.resource.corporateIndicators"}}($)</td>
+								<td>{{t "apm.newProject.resource.forecastIndex"}}($)</td>
+								<td>{{t "apm.newProject.resource.coVisitDays"}}(%)</td>
+								<td>{{t "apm.newProject.resource.country"}}(%)</td>
+								<td>{{t "apm.newProject.resource.city"}}(%)</td>
+								<td>{{t "apm.newProject.resource.department"}}(%)</td>
 							</tr>
 						</thead>
 						<tbody>

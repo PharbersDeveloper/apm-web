@@ -1,9 +1,11 @@
 import Route from '@ember/routing/route';
 import { groupBy } from '../../../../phtool/tool';
+import { inject } from '@ember/service';
 
 export default Route.extend({
+	i18n: inject(),
 	loadD3Data(ids) {
-
+		let that = this;
 		let req = this.get('pmController').get('Store').createModel('request', {
 			id: 'action0',
 			res: 'bind_course_region_radar'
@@ -22,89 +24,89 @@ export default Route.extend({
 				let radarArray = radarCache.filter(elem => elem.region_id !== 'ave');
 				let ave = radarCache.find(elem => elem.region_id === 'ave');
 
-				function axes(radarfigure) {
-					let axes = [];
-					axes.push({
-						axis: '产品知识',
-						value: radarfigure.prod_knowledge_val
-					})
-
-					axes.push({
-						axis: '目标拜访频次',
-						value: radarfigure.target_call_freq_val
-					})
-
-					axes.push({
-						axis: '拜访次数',
-						value: radarfigure.call_times_val
-					})
-
-					axes.push({
-						axis: '实际工作天数',
-						value: radarfigure.in_field_days_val
-					})
-
-					axes.push({
-						axis: '工作积极性',
-						value: radarfigure.motivation_val
-					})
-
-					axes.push({
-						axis: '区域管理能力',
-						value: radarfigure.territory_manage_val
-					})
-
-					axes.push({
-						axis: '销售能力',
-						value: radarfigure.sales_skills_val
-					})
-					return axes
-				}
 				// function axes(radarfigure) {
 				// 	let axes = [];
 				// 	axes.push({
-				// 		axis: this.i18n.t('apm.component.radar.prodKnowledge') + "",
+				// 		axis: '产品知识',
 				// 		value: radarfigure.prod_knowledge_val
 				// 	})
 
 				// 	axes.push({
-				// 		axis: this.i18n.t('apm.component.radar.targetVisit') + "",
+				// 		axis: '目标拜访频次',
 				// 		value: radarfigure.target_call_freq_val
 				// 	})
 
 				// 	axes.push({
-				// 		axis: this.i18n.t('apm.component.radar.visitTime') + "",
+				// 		axis: '拜访次数',
 				// 		value: radarfigure.call_times_val
 				// 	})
 
 				// 	axes.push({
-				// 		axis: this.i18n.t('apm.component.radar.localWorkDay') + "",
+				// 		axis: '实际工作天数',
 				// 		value: radarfigure.in_field_days_val
 				// 	})
 
 				// 	axes.push({
-				// 		axis: this.i18n.t('apm.component.radar.workEnthusiasm') + "",
+				// 		axis: '工作积极性',
 				// 		value: radarfigure.motivation_val
 				// 	})
 
 				// 	axes.push({
-				// 		axis: this.i18n.t('apm.component.radar.areaManageAbility') + "",
+				// 		axis: '区域管理能力',
 				// 		value: radarfigure.territory_manage_val
 				// 	})
 
 				// 	axes.push({
-				// 		axis: this.i18n.t('apm.component.radar.saleAbility') + "",
+				// 		axis: '销售能力',
 				// 		value: radarfigure.sales_skills_val
 				// 	})
 				// 	return axes
 				// }
+				function axes(radarfigure) {
+					let axes = [];
+					axes.push({
+						axis: that.i18n.t('apm.component.radar.prodKnowledge') + "",
+						value: radarfigure.prod_knowledge_val
+					})
+
+					axes.push({
+						axis: that.i18n.t('apm.component.radar.targetVisit') + "",
+						value: radarfigure.target_call_freq_val
+					})
+
+					axes.push({
+						axis: that.i18n.t('apm.component.radar.visitTime') + "",
+						value: radarfigure.call_times_val
+					})
+
+					axes.push({
+						axis: that.i18n.t('apm.component.radar.localWorkDay') + "",
+						value: radarfigure.in_field_days_val
+					})
+
+					axes.push({
+						axis: that.i18n.t('apm.component.radar.workEnthusiasm') + "",
+						value: radarfigure.motivation_val
+					})
+
+					axes.push({
+						axis: that.i18n.t('apm.component.radar.areaManageAbility') + "",
+						value: radarfigure.territory_manage_val
+					})
+
+					axes.push({
+						axis: that.i18n.t('apm.component.radar.saleAbility') + "",
+						value: radarfigure.sales_skills_val
+					})
+					return axes
+				}
 
 				return radarArray.map(elem => {
 					let regionCache = this.get('pmController').get('Store').peekRecord('region', elem.region_id);
 					return {
 						region_id: elem.region_id,
 						data: [{
-								name: '区域平均',
+								name: that.i18n.t('apm.component.radar.areaAvg') + "",
 								axes: axes(ave.radarfigure),
 								color: '#762712'
 							},

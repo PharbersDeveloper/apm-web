@@ -16,7 +16,7 @@
 			{{#bs-collapse local-class="content-container" collapsed=collapsed}}
                 {{#each areaReps as |item|}}
                     {{#if (eq item.region_id data.id)}}
-                        {{area-order-rep data=data represents=item.data index=index}}
+					{{area-order-rep data=data represents=item.data index=index}}
                     {{/if}}
                 {{/each}}
                 {{#each regionCompanyTargets as |item|}}

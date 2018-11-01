@@ -1,8 +1,10 @@
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
+import { inject } from '@ember/service';
 import d3 from 'd3';
 
 export default Component.extend({
+	i18n:inject(),
 	tagName: 'div',
 	chartId: '',
 	localClassNames: 'bar-line-container',
@@ -19,6 +21,7 @@ export default Component.extend({
 		}
 	},
 	drawChart() {
+		let that = this;
 		// d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
 		const parent = d3.select(this.element);
 		parent.selectAll("svg").remove();
@@ -167,7 +170,7 @@ export default Component.extend({
 
 		chart.on('mouseover', function(d) {
 			tooltip.style("opacity", 1.0);
-			tooltip.html(d.key + "<br>" + "份额：" + d.value2 + "%" + "<br>" + "销售额：" + d.value)
+			tooltip.html(d.key + "<br>" + that.i18n.t('apm.component.d3BarLine.share') + "" + "：" + d.value2 + "%" + "<br>" + that.i18n.t('apm.component.d3BarLine.sales') + "" + "：" + d.value)
 				.style("left", (d3.event.clientX + 20) + "px")
 				.style("top", (d3.event.clientY) + "px")
 
@@ -187,18 +190,18 @@ export default Component.extend({
 			.attr('width', 200)
 			.attr('height', 20)
 
-		let legendData = ["份额", "销售额"];
+		let legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + ""];
 		if (this.get('laterThreeChangeBg')) {
 			if (noLine) {
-				legendData = ["销售额", "预测销售额"];
+				legendData = [this.i18n.t('apm.component.d3BarLine.sales') + "", this.i18n.t('apm.component.d3BarLine.forecastSales') + ""];
 			} else {
-				legendData = ["份额", "销售额", "预测销售额"];
+				legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + "", this.i18n.t('apm.component.d3BarLine.forecastSales') + ""];
 			}
 		}else {
 			if (noLine) {
-				legendData = ["销售额"];
+				legendData = [this.i18n.t('apm.component.d3BarLine.sales') + ""];
 			} else {
-				legendData = ["份额", "销售额"];
+				legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + ""];
 			}
 		}
 		var legend = legendArea.selectAll("g")
@@ -216,29 +219,29 @@ export default Component.extend({
 			.attr("x", 10)
 			.attr("y", 5)
 			.attr('width', function(d, i) {
-				if (d == '份额') {
+				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
 					return 20;
 				} else {
 					return 10;
 				}
 			})
 			.attr('height', function(d, i) {
-				if (d == '份额') {
+				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
 					return 5;
 				} else {
 					return 30;
 				}
 			})
 			.style("fill", function(d, i) {
-				if (d == '份额') {
+				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
 					return '#FA6F80';
-				} else if (d == '销售额') {
+				} else if (d == that.i18n.t('apm.component.d3BarLine.sales') + "") {
 					return '#4A90E2';
 				} else {
 					return '#F5A623';
 				}
 			}).attr("transform", function(d, i) {
-				if (d == '份额') {
+				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
 					return "translate(0 ,5)";
 				}
 			});
