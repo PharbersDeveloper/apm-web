@@ -41,7 +41,6 @@ export default Component.extend({
 	computeareaArray: computed('areaArray.[]', function() {
 		let areaArray = this.get('areaArray');
 		let levelArray = this.get('computeLevelArray');
-		console.log(areaArray);
 		return areaArray;
 	}),
 	actions: {

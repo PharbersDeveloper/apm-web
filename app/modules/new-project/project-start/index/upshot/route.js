@@ -4,86 +4,98 @@ import { groupBy } from '../../../../phtool/tool';
 export default Route.extend({
 
 	model() {
-		this.store.peekAll('bind_course_region_rep').forEach(elem => elem.destroyRecord().then(rec => rec.unloadRecord()));
+		this.get('pmController').get('Store').peekAll('bind_course_region_rep').forEach(elem => elem.destroyRecord().then(rec => rec.unloadRecord()));
 
 		let parentModel = this.modelFor('new-project.project-start');
-		// let medicine = this.store.peekAll('medicine').filter(elem => !elem.compete).firstObject;
+		// let medicine = this.get('pmController').get('Store').peekAll('medicine').filter(elem => !elem.compete).firstObject;
 		function _conditions(request, anyConditions) {
 			anyConditions.forEach((elem, index) => {
 				request.get(elem.type).pushObject(request.store.createRecord(elem.type, {
+					id: elem.id,
 					key: elem.key,
 					val: elem.val,
 				}))
 			});
-			return request.store.object2JsonApi('request', request);
-		}
+			return request.store.object2JsonApi(request);
+		};
+		this.get('logger').log(parentModel.paperid);
 
-		let req = this.store.createRecord('callapmr', {
+		let req = this.get('pmController').get('Store').createModel('callapmr', {
+			id: 'callR0',
 			paper_id: parentModel.paperid,
 		});
-		let conditions = this.store.object2JsonApi('callapmr', req);
+		this.get('logger').log(req);
+		let conditions = this.get('pmController').get('Store').object2JsonApi(req, false);
 		let modelData = {};
-
-		return this.store.transaction('/api/v1/callAPMr/0', 'callapmr', conditions)
+		return this.get('pmController').get('Store').transaction('/api/v1/callAPMr/0', 'callapmr', conditions)
 			.then(data => { // call R
-				return data
+				return data;
 			})
 			.then(() => { // 获取公司产品
-				let req = this.store.createRecord('request', {
+				let req = this.get('pmController').get('Store').createModel('request', {
+					id: 'upshotProd0',
 					res: 'bind_course_goods',
-					fmcond: this.store.createRecord('fmcond', {
+					fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+						id: 'upshotProdFm0',
 						skip: 0,
 						take: 20
 					})
 				});
 
-				let eqValues = [{ type: 'eqcond', key: 'course_id', val: parentModel.courseid }]
+				let eqValues = [{ id: 'upshotProd1', type: 'eqcond', key: 'course_id', val: parentModel.courseid }];
 				let conditions = _conditions(req, eqValues);
 
-				return this.store.queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
+				return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
 			})
 			.then(data => { // 处理公司产品
 				data.forEach(elem => {
 					elem.set('compete', false)
 				});
 				return data;
-			}).then(data => { // 获取公司的竞品
+			})
+			.then(data => { // 获取公司的竞品
 				let that = this;
 				let promiseArray = data.map(reval => {
-					let req = that.store.createRecord('request', {
+					let req = this.get('pmController').get('Store').createRecord('request', {
+						id: 'upshotCompete0',
 						res: 'bind_course_goods_compet',
-						fmcond: that.store.createRecord('fmcond', {
+						fmcond: this.get('pmController').get('Store').createRecord('fmcond', {
+							id: 'upshotCompeteFm0',
 							skip: 0,
 							take: 20
 						})
 					});
 					let eqValues = [
-						{ type: 'eqcond', key: 'course_id', val: parentModel.courseid },
-						{ type: 'eqcond', key: 'goods_id', val: reval.id },
+						{ id: 'upshotCompete1', type: 'eqcond', key: 'course_id', val: parentModel.courseid },
+						{ id: 'upshotCompete2', type: 'eqcond', key: 'goods_id', val: reval.id },
 					]
 					let conditions = _conditions(req, eqValues);
-					return that.store.queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
+					return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
 				});
 				return Promise.all(promiseArray)
 			})
 			.then(() => {
-				let medicine = this.store.peekAll('medicine').filter(elem => !elem.compete).firstObject;
+				let medicine = this.get('pmController').get('Store').peekAll('medicine').filter(elem => !elem.compete).firstObject;
 
-				req = this.store.createRecord('request', { res: 'bind_course_goods_quarter_report' });
+				req = this.get('pmController').get('Store').createModel('request', {
+					id: 'upshotMedicine0',
+					res: 'bind_course_goods_quarter_report'
+				});
 
 				let eqValues = [
-					{ type: 'eqcond', key: 'course_id', val: parentModel.courseid },
-					{ type: 'eqcond', key: 'goods_id', val: medicine.id }
+					{ id: 'upshotMedicine1', type: 'eqcond', key: 'course_id', val: parentModel.courseid },
+					{ id: 'upshotMedicine2', type: 'eqcond', key: 'goods_id', val: medicine.id }
 				]
 				eqValues.forEach((elem) => {
-					req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+					req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+						id: elem.id,
 						key: elem.key,
 						val: elem.val,
 					}))
 				});
-				conditions = this.store.object2JsonApi('request', req);
+				conditions = this.get('pmController').get('Store').object2JsonApi(req);
 
-				return this.store.queryObject('/api/v1/findQuarterReport/0', 'apmquarterreport', conditions)
+				return this.get('pmController').get('Store').queryObject('/api/v1/findQuarterReport/0', 'apmquarterreport', conditions)
 			})
 			.then(data => {
 				modelData.quarterD3BarData = [
@@ -99,37 +111,44 @@ export default Route.extend({
 				return data;
 			})
 			.then(data => {
-				let medicineAll = this.store.peekAll('medicine');
+				let medicineAll = this.get('pmController').get('Store').peekAll('medicine');
 				let promiseArray = medicineAll.map(medicine => {
-					req = this.store.createRecord('request', {
+					req = this.get('pmController').get('Store').createModel('request', {
+						id: medicine.id + 'upshotMedicine00',
 						res: 'bind_paper_region_goods_ym_report',
-						fmcond: this.store.createRecord('fmcond', {
+						fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+							id: medicine.id + 'upshotMedicine01',
 							skip: 0,
 							take: 1000
 						})
 					});
 					let eqValues = [
-						{ type: 'eqcond', key: 'goods_id', val: medicine.id }, //medicine.id
-						{ type: 'eqcond', key: 'paper_id', val: parentModel.paperid }, //parentModel.paperid
-						{ type: 'gtecond', key: 'ym', val: '17-q1' },
-						{ type: 'ltecond', key: 'ym', val: '18-q1' },
+						{ id: medicine.id + 'upshotMedicine02', type: 'eqcond', key: 'goods_id', val: medicine.id }, //medicine.id
+						{ id: medicine.id + 'upshotMedicine03', type: 'eqcond', key: 'paper_id', val: parentModel.paperid }, //parentModel.paperid
+						{ id: medicine.id + 'upshotMedicine04', type: 'gtecond', key: 'ym', val: '17-q1' },
+						{ id: medicine.id + 'upshotMedicine05', type: 'ltecond', key: 'ym', val: '18-q1' },
 					]
 					eqValues.forEach((elem) => {
-						req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+						req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+							id: elem.id,
 							key: elem.key,
 							val: elem.val,
 						}))
 					});
 
-					let conditions = this.store.object2JsonApi('request', req);
-					return this.store.queryMultipleObject('/api/v1/findReportMedSales/0', 'bind_paper_region_goods_ym_report', conditions)
+					let conditions = this.get('pmController').get('Store').object2JsonApi(req);
+					return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllReportMedSales/0', 'bind_paper_region_goods_ym_report', conditions)
 				})
 				return Promise.all(promiseArray)
 			})
 			.then(data => {
-				let companyMedicine = this.store.peekAll('medicine').find(elem => !elem.compete);
+				let companyMedicine = this.get('pmController').get('Store').peekAll('medicine').find(elem => !elem.compete);
 				let temData = [];
-				data.forEach(x => x.forEach(r => temData.pushObject(r)))
+				data.forEach(x => x.forEach(r => {
+					if (r.ym.indexOf('NA') < 0) {
+						temData.pushObject(r)
+					}
+				}))
 
 				let that = this;
 				let all = temData.filter(elem => elem.region_id === 'all')
@@ -138,16 +157,15 @@ export default Route.extend({
 				modelData.quarterD3BarData = modelData.quarterD3BarData.sort(function(o1, o2) {
 					return o1.id - o2.id
 				})
-
 				modelData.quarterTableData.pushObject({
 					name: '本季结果',
-					sales: all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1').lastObject.apmreport.sales,
-					share: (all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1').lastObject.apmreport.share * 100).toFixed(1)
+					sales: all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1' && elem.region_id === 'all').lastObject.apmreport.sales,
+					share: (all.filter(elem => elem.goods_id === companyMedicine.id && elem.ym === '18-q1' && elem.region_id === 'all').lastObject.apmreport.share * 100).toFixed(1)
 				});
 
 				let tempByGroupGoods = groupBy(all, 'goods_id')
 				modelData.areaD3LineShareData = Object.keys(tempByGroupGoods).map(key => {
-					let goodCache = that.store.peekRecord('medicine', key);
+					let goodCache = this.get('pmController').get('Store').peekRecord('medicine', key);
 					return {
 						name: goodCache.prod_name,
 						values: tempByGroupGoods[key].map((elem) => {
@@ -161,7 +179,7 @@ export default Route.extend({
 
 				let tempByGroupRegion = groupBy(region, 'region_id');
 				modelData.areaD3LineRegionData = Object.keys(tempByGroupRegion).map(key => {
-					let regionCache = that.store.peekRecord('region', key);
+					let regionCache = this.get('pmController').get('Store').peekRecord('region', key);
 					return {
 						name: regionCache.name,
 						values: tempByGroupRegion[key].map(elem => {
@@ -174,7 +192,6 @@ export default Route.extend({
 				}).reverse()
 				return modelData
 			})
-
 	},
 	actions: {
 

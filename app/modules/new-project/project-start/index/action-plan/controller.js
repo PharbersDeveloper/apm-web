@@ -31,7 +31,7 @@ export default Controller.extend({
 		regionResort.sort((a, b) => {
 			return a.id - b.id
 		});
-		let region = this.store.peekAll('region');
+		let region = this.get('pmController').get('Store').peekAll('region');
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
 			region.forEach((ele) => {
@@ -52,7 +52,7 @@ export default Controller.extend({
 			this.set('radarData', data)
 		},
 		nextStep() {
-			let region = this.store.peekAll('region');
+			let region = this.get('pmController').get('Store').peekAll('region');
 			let isActionplanEmpty = region.every((item) => {
 				return item.actionplan
 			});
@@ -86,32 +86,34 @@ export default Controller.extend({
 				hintBtn: true,
 			}
 			this.set('hint', hint);
-			let region = this.store.peekAll('region');
+			let region = this.get('pmController').get('Store').peekAll('region');
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
-				let req = this.store.createRecord('request', {
+				let req = this.get('pmController').get('Store').createModel('request', {
+					id: reg.id + 'actionHint0',
 					res: 'paperinput',
 				});
 				let actionPlans = reg.actionplan.split(',').filter(item => item.length > 0);
 				let eqValues = [
-					{ key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ key: 'region_id', type: 'eqcond', val: reg.id },
-					{ key: 'action_plans', type: 'upcond', val: actionPlans },
+					{ id: reg.id + 'actionHint1', key: 'paper_id', type: 'eqcond', val: params.paperid },
+					{ id: reg.id + 'actionHint2', key: 'region_id', type: 'eqcond', val: reg.id },
+					{ id: reg.id + 'actionHint3', key: 'action_plans', type: 'upcond', val: actionPlans },
 				];
 				eqValues.forEach((item) => {
-					req.get(item.type).pushObject(this.store.createRecord(item.type, {
+					req.get(item.type).pushObject(this.get('pmController').get('Store').createModel(item.type, {
+						id: item.id,
 						key: item.key,
 						val: item.val,
 					}))
 				});
-				let jsonReq = this.store.object2JsonApi('request', req);
-				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
+				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
+				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 			Promise.all(promiseArray).then(() => {
 					this.transitionToRoute('new-project.project-start.index.upshot')
 				})
 				.catch((error) => {
-					this.set('error', error);
+					this.get('logger').log(error);
 				});
 		}
 	}

@@ -15,7 +15,6 @@ export default Controller.extend({
 				localStorage.clear();
 				return resolve(true)
 			}).then(data => {
-				console.info(123)
 				window.location.reload()
 			})
 		}

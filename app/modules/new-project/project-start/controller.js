@@ -18,18 +18,19 @@ export default Controller.extend({
 				// 获取区域的负责代表
 				let regionCache = this.store.peekAll('region');
 
-				let req = this.store.createRecord('request', { res: 'bind_course_region_rep' });
+				let req = this.get('pmController').get('Store').createModel('request', { id: '0', res: 'bind_course_region_rep' });
 				let eqValues = [
-					{ type: 'eqcond', key: 'region_id', val: id },
-					{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+					{ id: 1, type: 'eqcond', key: 'region_id', val: id },
+					{ id: 2, type: 'eqcond', key: 'course_id', val: ids.courseid },
 				]
 				eqValues.forEach((elem) => {
-					req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+					req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+						id: elem.id,
 						key: elem.key,
 						val: elem.val,
 					}))
 				});
-				let conditions = this.store.object2JsonApi('request', req);
+				let conditions = this.store.object2JsonApi(req);
 				this.store.queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
 					.then((res) => {
 						singleRegionData.represent = res.firstObject;
@@ -51,34 +52,36 @@ export default Controller.extend({
 						return null;;
 					})
 					.then(() => { // 获取平均雷达图数据
-						req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
+						req = this.get('pmController').get('Store').createModel('request', { id: '0', res: 'bind_course_region_radar' });
 						let eqValues = [
-							{ type: 'eqcond', key: 'region_id', val: 'ave' },
-							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ id: 1, type: 'eqcond', key: 'region_id', val: 'ave' },
+							{ id: 2, type: 'eqcond', key: 'course_id', val: ids.courseid },
 						];
 						eqValues.forEach((elem) => {
-							req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+							req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+								id: elem.id,
 								key: elem.key,
 								val: elem.val,
 							}))
 						});
-						conditions = this.store.object2JsonApi('request', req);
+						conditions = this.store.object2JsonApi(req);
 						return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
 					})
 					.then((data) => { // 获取雷达图数据
-						req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
+						req = this.get('pmController').get('Store').createModel('request', { id: '0', res: 'bind_course_region_radar' });
 						let eqValues = [
-							{ type: 'eqcond', key: 'region_id', val: id },
-							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ id: 1, type: 'eqcond', key: 'region_id', val: id },
+							{ id: 2, type: 'eqcond', key: 'course_id', val: ids.courseid },
 						];
 						eqValues.forEach((elem) => {
-							req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+							req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+								id: elem.id,
 								key: elem.key,
 								val: elem.val,
 							}))
 						});
 
-						conditions = this.store.object2JsonApi('request', req);
+						conditions = this.store.object2JsonApi(req);
 						return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
 					})
 					.then(data => { // 处理雷塔图数据
@@ -104,7 +107,7 @@ export default Controller.extend({
 							})
 
 							axes.pushObject({
-								axis: '实际工作天数',
+								axis: '实地工作天数',
 								value: radarfigure.in_field_days_val
 							})
 
@@ -142,20 +145,21 @@ export default Controller.extend({
 						return null;
 					})
 					.then(() => { // 获取kpi表格数据
-						req = this.store.createRecord('request', { res: 'bind_course_region_ym_rep_behavior' });
+						req = this.get('pmController').get('Store').createModel('request', { id: '0', res: 'bind_course_region_ym_rep_behavior' });
 						let eqValues = [
-							{ type: 'eqcond', key: 'region_id', val: id },
-							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-							{ type: 'gtecond', key: 'ym', val: '17-01' },
-							{ type: 'ltecond', key: 'ym', val: '17-12' },
+							{ id: 1, type: 'eqcond', key: 'region_id', val: id },
+							{ id: 2, type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ id: 3, type: 'gtecond', key: 'ym', val: '17-01' },
+							{ id: 4, type: 'ltecond', key: 'ym', val: '17-12' },
 						]
 						eqValues.forEach((elem) => {
-							req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+							req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+								id: elem.id,
 								key: elem.key,
 								val: elem.val,
 							}))
 						});
-						let conditions = this.store.object2JsonApi('request', req);
+						let conditions = this.store.object2JsonApi(req);
 						return this.store.queryMultipleObject('/api/v1/findRepBehavior/0', 'bind_course_region_ym_rep_behavior', conditions)
 					})
 					.then(data => { // 处理KPI表格数据
@@ -178,18 +182,19 @@ export default Controller.extend({
 						return null
 					})
 					.then(() => { // 获取业务报告数据
-						req = this.store.createRecord('request', { res: 'bind_course_region_business' });
+						req = this.get('pmController').get('Store').createModel('request', { id: '0', res: 'bind_course_region_business' });
 						let eqValues = [
-							{ type: 'eqcond', key: 'region_id', val: id },
-							{ type: 'eqcond', key: 'course_id', val: ids.courseid }
+							{ id: 1, type: 'eqcond', key: 'region_id', val: id },
+							{ id: 2, type: 'eqcond', key: 'course_id', val: ids.courseid }
 						]
 						eqValues.forEach((elem) => {
-							req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+							req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+								id: elem.id,
 								key: elem.key,
 								val: elem.val,
 							}))
 						});
-						let conditions = this.store.object2JsonApi('request', req);
+						let conditions = this.store.object2JsonApi(req);
 						return this.store.queryMultipleObject('/api/v1/findBusinessReport/0', 'bind_course_region_business', conditions)
 					})
 					.then(data => { // 处理业务报告数据
@@ -224,11 +229,10 @@ export default Controller.extend({
 						}
 						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
 						let medicineByYm = medicineList.filter(elem => elem.ym !== '18-01' && elem.ym !== '18-02' && elem.ym !== '18-03');
-						let medicineByRegion = groupBy(medicineByYm.filter(elem => elem.region_id === id), 'region_id');
+						let medicineNoSeason = medicineByYm.filter(elem => elem.ym.indexOf('q') < 0);
+						let medicineByRegion = groupBy(medicineNoSeason.filter(elem => elem.region_id === id), 'region_id');
 
 						let data = d3Data(medicineByRegion);
-						// console.log(data);
-						// component.set('salesBar', data);
 						singleRegionData.salesBar = data;
 						component.set('newDataReady', true);
 
@@ -245,22 +249,25 @@ export default Controller.extend({
 			function _conditions(request, anyConditions) {
 				anyConditions.forEach((elem, index) => {
 					request.get(elem.type).pushObject(request.store.createRecord(elem.type, {
+						id: elem.id,
 						key: elem.key,
 						val: elem.val,
 					}))
 				});
-				return request.store.object2JsonApi('request', request);
+				return request.store.object2JsonApi(request);
 			};
 
-			let req = this.store.createRecord('request', {
+			let req = this.get('pmController').get('Store').createModel('request', {
+				id: '0',
 				res: 'bind_course_goods',
-				fmcond: this.store.createRecord('fmcond', {
+				fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+					id: 'fm01',
 					skip: 0,
 					take: 20
 				})
 			});
 
-			let eqValues = [{ type: 'eqcond', key: 'course_id', val: ids.courseid }]
+			let eqValues = [{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid }]
 
 			let conditions = _conditions(req, eqValues);
 			let medicines = [];
@@ -276,23 +283,25 @@ export default Controller.extend({
 						return data;
 					})
 					.then(data => { // 获取公司产品折线图数据
-						let req = this.store.createRecord('request', {
+						let req = this.get('pmController').get('Store').createModel('request', {
+							id: '0',
 							res: 'bind_course_region_goods_ym_sales',
-							fmcond: this.store.createRecord('fmcond', {
+							fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+								id: 'fmline',
 								skip: 0,
 								take: 1000
 							})
 						});
 						// let promiseArray = data.map(elem => {
 						let eqValues = [
-							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-							{ type: 'eqcond', key: 'goods_id', val: data.firstObject.id },
-							{ type: 'gtecond', key: 'ym', val: '17-01' },
-							{ type: 'ltecond', key: 'ym', val: '17-12' },
+							{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ id: 2, type: 'eqcond', key: 'goods_id', val: data.firstObject.id },
+							{ id: 3, type: 'gtecond', key: 'ym', val: '17-01' },
+							{ id: 4, type: 'ltecond', key: 'ym', val: '17-12' },
 						]
 						let conditions = _conditions(req, eqValues)
-						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-						// return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+						// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+						return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 
 						// });
 						// return Promise.all(promiseArray)
@@ -305,15 +314,17 @@ export default Controller.extend({
 
 						let promiseArray = companyProd.map(reval => {
 							let req = that.store.createRecord('request', {
+								id: '0',
 								res: 'bind_course_goods_compet',
 								fmcond: that.store.createRecord('fmcond', {
+									id: 'fmcompete',
 									skip: 0,
 									take: 20
 								})
 							});
 							let eqValues = [
-								{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-								{ type: 'eqcond', key: 'goods_id', val: reval.id },
+								{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
+								{ id: 2, type: 'eqcond', key: 'goods_id', val: reval.id },
 							]
 							let conditions = _conditions(req, eqValues);
 							return that.store.queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
@@ -338,21 +349,25 @@ export default Controller.extend({
 						});
 
 						let firstCompete = competeProd.firstObject;
-						let req = this.store.createRecord('request', {
+						let req = this.get('pmController').get('Store').createModel('request', {
+							id: '0',
 							res: 'bind_course_region_goods_ym_sales',
-							fmcond: this.store.createRecord('fmcond', {
+							fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+								id: 'fmfirstcompete',
 								skip: 0,
 								take: 1000
 							})
 						});
 						let eqValues = [
-							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-							{ type: 'eqcond', key: 'goods_id', val: firstCompete.id },
-							{ type: 'gtecond', key: 'ym', val: '17-01' },
-							{ type: 'ltecond', key: 'ym', val: '17-12' },
+							{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ id: 2, type: 'eqcond', key: 'goods_id', val: firstCompete.id },
+							{ id: 3, type: 'gtecond', key: 'ym', val: '17-01' },
+							{ id: 4, type: 'ltecond', key: 'ym', val: '17-12' },
 						]
 						let conditions = _conditions(req, eqValues)
-						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+						return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+
+						// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 					})
 					.then(data => { // 获取竞品 secondObject折线图数据
 						let competeProd = this.store.peekAll('medicine').filter((item) => {
@@ -360,21 +375,25 @@ export default Controller.extend({
 						});
 
 						let secondCompete = competeProd[1];
-						let req = this.store.createRecord('request', {
+						let req = this.get('pmController').get('Store').createModel('request', {
+							id: '0',
 							res: 'bind_course_region_goods_ym_sales',
-							fmcond: this.store.createRecord('fmcond', {
+							fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+								id: 'fmsecondcompete',
 								skip: 0,
 								take: 1000
 							})
 						});
 						let eqValues = [
-							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-							{ type: 'eqcond', key: 'goods_id', val: secondCompete.id },
-							{ type: 'gtecond', key: 'ym', val: '17-01' },
-							{ type: 'ltecond', key: 'ym', val: '17-12' },
+							{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ id: 2, type: 'eqcond', key: 'goods_id', val: secondCompete.id },
+							{ id: 3, type: 'gtecond', key: 'ym', val: '17-01' },
+							{ id: 4, type: 'ltecond', key: 'ym', val: '17-12' },
 						]
 						let conditions = _conditions(req, eqValues)
-						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+						return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+
+						// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 					})
 					.then(data => { // 获取竞品 thirdObject折线图数据
 						let competeProd = this.store.peekAll('medicine').filter((item) => {
@@ -382,27 +401,31 @@ export default Controller.extend({
 						});
 
 						let lastCompete = competeProd.lastObject;
-						let req = this.store.createRecord('request', {
+						let req = this.get('pmController').get('Store').createModel('request', {
+							id: '0',
 							res: 'bind_course_region_goods_ym_sales',
-							fmcond: this.store.createRecord('fmcond', {
+							fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+								id: 'fmThirdCompete',
 								skip: 0,
 								take: 1000
 							})
 						});
 						let eqValues = [
-							{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-							{ type: 'eqcond', key: 'goods_id', val: lastCompete.id },
-							{ type: 'gtecond', key: 'ym', val: '17-01' },
-							{ type: 'ltecond', key: 'ym', val: '17-12' },
+							{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ id: 2, type: 'eqcond', key: 'goods_id', val: lastCompete.id },
+							{ id: 3, type: 'gtecond', key: 'ym', val: '17-01' },
+							{ id: 4, type: 'ltecond', key: 'ym', val: '17-12' },
 						]
 						let conditions = _conditions(req, eqValues)
-						return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+						return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+
+						// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
 					})
 					/*
 						.then(data => { // 获取折线图数据
-							let req = this.store.createRecord('request', {
+							let req = this.get('pmController').get('Store').createModel('request', {
 								res: 'bind_course_region_goods_ym_sales',
-								fmcond: this.store.createRecord('fmcond', {
+								fmcond: this.get('pmController').get('Store').createModel('fmcond', {
 									skip: 0,
 									take: 1000
 								})
@@ -435,6 +458,9 @@ export default Controller.extend({
 										value: sum
 									}
 								});
+								values.sort((a, b) => {
+									return a.ym.slice(-2) - b.ym.slice(-2);
+								})
 								originLineData.pushObject({
 									name: record.prod_name,
 									values
@@ -443,7 +469,10 @@ export default Controller.extend({
 						}
 
 						let medicineList = this.store.peekAll('bind_course_region_goods_ym_sales');
-						let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all'), 'goods_id');
+						// let outSeason = medicineList.forEach((item) => {
+						// 	return item.ym.indexOf('q') < 0;
+						// });
+						let medicineAll = groupBy(medicineList.filter(elem => elem.region_id === 'all' && elem.ym.indexOf('q') < 0), 'goods_id');
 						d3Data(medicineAll);
 						let lineData = medicines.map((item) => {
 							let line = {}
@@ -465,12 +494,13 @@ export default Controller.extend({
 
 				let regionBaseInfo = {}
 				// 获取所有区域名称与基本信息
-				let req = this.store.createRecord('request', { res: 'bind_course_region' });
-				req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
+				let req = this.get('pmController').get('Store').createModel('request', { id: 'region0', res: 'bind_course_region' });
+				req.get('eqcond').pushObject(this.get('pmController').get('Store').createModel('eqcond', {
+					id: 'region1',
 					key: 'course_id',
 					val: ids.courseid,
 				}))
-				let conditions = this.store.object2JsonApi('request', req);
+				let conditions = this.store.object2JsonApi(req);
 
 				return this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
 					.then(data => { // 处理区域基本数据
@@ -478,19 +508,30 @@ export default Controller.extend({
 						return data;
 					})
 					.then(data => { // 获取折线图数据
-						let req = this.store.createRecord('request', {
-							res: 'bind_course_region_goods_ym_sales',
-							fmcond: this.store.createRecord('fmcond', {
-								skip: 0,
-								take: 1000
-							})
-						});
+						// let req = this.get('pmController').get('Store').createModel('request', {
+						// 	id: 'line0',
+						// 	res: 'bind_course_region_goods_ym_sales',
+						// 	fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+						// 		id: 'fmline',
+						// 		skip: 0,
+						// 		take: 1000
+						// 	})
+						// });
 						let promiseArray = data.map(elem => {
+							let req = this.get('pmController').get('Store').createModel('request', {
+								id: elem.id + 'line0',
+								res: 'bind_course_region_goods_ym_sales',
+								fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+									id: elem.id + 'fmline',
+									skip: 0,
+									take: 1000
+								})
+							});
 							let eqValues = [
-								{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-								{ type: 'eqcond', key: 'region_id', val: elem.id },
-								{ type: 'gtecond', key: 'ym', val: '17-01' },
-								{ type: 'ltecond', key: 'ym', val: '17-12' },
+								{ id: elem.id + '1', type: 'eqcond', key: 'course_id', val: ids.courseid },
+								{ id: elem.id + '2', type: 'eqcond', key: 'region_id', val: elem.id },
+								{ id: elem.id + '3', type: 'gtecond', key: 'ym', val: '17-01' },
+								{ id: elem.id + '4', type: 'ltecond', key: 'ym', val: '17-12' },
 							]
 							let conditions = _conditions(req, eqValues)
 							return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
@@ -522,12 +563,12 @@ export default Controller.extend({
 					})
 
 						.then(() => { // 获取雷达图数据
-							req = this.store.createRecord('request', { res: 'bind_course_region_radar' });
-							req.get('eqcond').pushObject(this.store.createRecord('eqcond', {
+							req = this.get('pmController').get('Store').createModel('request', { res: 'bind_course_region_radar' });
+							req.get('eqcond').pushObject(this.get('pmController').get('Store').createModel('eqcond', {
 								key: 'course_id',
 								val: ids.courseid,
 							}))
-							conditions = this.store.object2JsonApi('request', req);
+							conditions = this.store.object2JsonApi( req);
 							return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
 						})
 						.then(data => { // 处理雷塔图数据
@@ -596,7 +637,7 @@ export default Controller.extend({
 							.then(() => { // 获取kpi表格数据
 								let regionCache = this.store.peekAll('region');
 								let promiseArray = regionCache.map(elem => {
-									req = this.store.createRecord('request', { res: 'bind_course_region_ym_rep_behavior' });
+									req = this.get('pmController').get('Store').createModel('request', { res: 'bind_course_region_ym_rep_behavior' });
 									let eqValues = [
 										{ type: 'eqcond', key: 'region_id', val: elem.id },
 										{ type: 'eqcond', key: 'course_id', val: ids.courseid },
@@ -604,12 +645,12 @@ export default Controller.extend({
 										{ type: 'ltecond', key: 'ym', val: '17-12' },
 									]
 									eqValues.forEach((elem) => {
-										req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+										req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
 											key: elem.key,
 											val: elem.val,
 										}))
 									});
-									let conditions = this.store.object2JsonApi('request', req);
+									let conditions = this.store.object2JsonApi( req);
 									return this.store.queryMultipleObject('/api/v1/findRepBehavior/0', 'bind_course_region_ym_rep_behavior', conditions)
 								})
 								return Promise.all(promiseArray)
@@ -637,18 +678,18 @@ export default Controller.extend({
 							.then(() => { // 获取业务报告数据
 								let regionCache = this.store.peekAll('region');
 								let promiseArray = regionCache.map(elem => {
-									req = this.store.createRecord('request', { res: 'bind_course_region_business' });
+									req = this.get('pmController').get('Store').createModel('request', { res: 'bind_course_region_business' });
 									let eqValues = [
 										{ type: 'eqcond', key: 'region_id', val: elem.id },
 										{ type: 'eqcond', key: 'course_id', val: ids.courseid }
 									]
 									eqValues.forEach((elem) => {
-										req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
+										req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
 											key: elem.key,
 											val: elem.val,
 										}))
 									});
-									let conditions = this.store.object2JsonApi('request', req);
+									let conditions = this.store.object2JsonApi( req);
 									return this.store.queryMultipleObject('/api/v1/findBusinessReport/0', 'bind_course_region_business', conditions)
 								})
 								return Promise.all(promiseArray)

@@ -6,7 +6,6 @@ export default Component.extend({
 	classNames: ['histogram-area-sales', 'col-lg-6', 'col-md-6', 'col-sm-6', 'col-xs-6'],
 	init() {
 		this._super(...arguments);
-		// this.data = [{ id: "1", name: "最差结果", value: 61 }, { id: "2", name: "上季", value: 78 }, { id: "3", name: "本季", value: 28 }, { id: "4", name: "最佳结果", value: 35 }];
 	},
 	didReceiveAttrs() {
 		this._super(...arguments);
@@ -37,7 +36,6 @@ export default Component.extend({
 		yMax = d3.max(areaSalesData.map((item) => {
 			return item.value;
 		}));
-		// console.log(yMax);
 		let y = d3.scaleLinear()
 			.rangeRound([height, 0])
 			.domain([0, (yMax * 1.33)]);
@@ -58,7 +56,7 @@ export default Component.extend({
 			.attr('transform', 'translate(15,0)')
 			.call(y_axis)
 			.text("");
-		yg.selectAll('line').attr('x2', 6);
+		yg.selectAll('.tick line').attr('x2', 6);
 
 		// yg.selectAll('text').
 

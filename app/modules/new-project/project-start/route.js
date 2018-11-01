@@ -16,22 +16,25 @@ export default Route.extend({
 		function _conditions(request, anyConditions) {
 			anyConditions.forEach((elem, index) => {
 				request.get(elem.type).pushObject(request.store.createRecord(elem.type, {
+					id: elem.id,
 					key: elem.key,
 					val: elem.val,
 				}))
 			});
-			return request.store.object2JsonApi('request', request);
+			return request.store.object2JsonApi(request);
 		}
 
 		let req = this.store.createRecord('request', {
+			id: '0',
 			res: 'bind_course_goods',
 			fmcond: this.store.createRecord('fmcond', {
+				id: 'fm0',
 				skip: 0,
 				take: 20
 			})
 		});
 
-		let eqValues = [{ type: 'eqcond', key: 'course_id', val: ids.courseid }]
+		let eqValues = [{ id: '1', type: 'eqcond', key: 'course_id', val: ids.courseid }]
 
 		let conditions = _conditions(req, eqValues);
 		let medicines = [];
@@ -52,15 +55,17 @@ export default Route.extend({
 				let that = this;
 				let promiseArray = data.map(reval => {
 					let req = that.store.createRecord('request', {
+						id: '0',
 						res: 'bind_course_goods_compet',
 						fmcond: that.store.createRecord('fmcond', {
+							id: 'fm01',
 							skip: 0,
 							take: 20
 						})
 					});
 					let eqValues = [
-						{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-						{ type: 'eqcond', key: 'goods_id', val: reval.id },
+						{ id: '1', type: 'eqcond', key: 'course_id', val: ids.courseid },
+						{ id: '2', type: 'eqcond', key: 'goods_id', val: reval.id },
 					]
 					let conditions = _conditions(req, eqValues);
 					return that.store.queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
@@ -77,18 +82,20 @@ export default Route.extend({
 			})
 			.then(data => { // 获取折线图数据
 				let req = this.store.createRecord('request', {
+					id: '0',
 					res: 'bind_course_region_goods_ym_sales',
 					fmcond: this.store.createRecord('fmcond', {
+						id: 'fm02',
 						skip: 0,
 						take: 1000
 					})
 				});
 				let promiseArray = data.map(elem => {
 					let eqValues = [
-						{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-						{ type: 'eqcond', key: 'goods_id', val: elem.id },
-						{ type: 'gtecond', key: 'ym', val: '17-01' },
-						{ type: 'ltecond', key: 'ym', val: '17-12' },
+						{ id: '1', type: 'eqcond', key: 'course_id', val: ids.courseid },
+						{ id: '2', type: 'eqcond', key: 'goods_id', val: elem.id },
+						{ id: '3', type: 'gtecond', key: 'ym', val: '17-01' },
+						{ id: '4', type: 'ltecond', key: 'ym', val: '17-12' },
 					]
 					let conditions = _conditions(req, eqValues)
 					return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
@@ -127,7 +134,6 @@ export default Route.extend({
 				return this.areaInfo(ids, controller)
 			})
 			.finally(() => {
-
 				let productInfo = {
 					medicines,
 					lineData
@@ -143,7 +149,7 @@ export default Route.extend({
 				key: 'course_id',
 				val: courseid,
 			}))
-			let conditions = this.store.object2JsonApi('request', req);
+			let conditions = this.store.object2JsonApi( req);
 			this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
 		},
 
@@ -155,7 +161,7 @@ export default Route.extend({
 				key: 'course_id',
 				val: ids.courseid,
 			}))
-			let conditions = this.store.object2JsonApi('request', req);
+			let conditions = this.store.object2JsonApi( req);
 
 			return this.store.queryMultipleObject('/api/v1/regionLst/0', 'region', conditions)
 				.then(data => { // 处理区域基本数据
@@ -177,7 +183,7 @@ export default Route.extend({
 						key: 'course_id',
 						val: ids.courseid,
 					}))
-					conditions = this.store.object2JsonApi('request', req);
+					conditions = this.store.object2JsonApi( req);
 					return this.store.queryMultipleObject('/api/v1/findRadarFigure/0', 'bind_course_region_radar', conditions)
 				})
 				.then(data => { // 处理雷塔图数据
@@ -256,7 +262,7 @@ export default Route.extend({
 								val: elem.val,
 							}))
 						});
-						conditions = this.store.object2JsonApi('request', req);
+						conditions = this.store.object2JsonApi( req);
 						return this.store.queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
 					})
 					return Promise.all(promiseArray);
@@ -293,7 +299,7 @@ export default Route.extend({
 								val: elem.val,
 							}))
 						});
-						let conditions = this.store.object2JsonApi('request', req);
+						let conditions = this.store.object2JsonApi( req);
 						return this.store.queryMultipleObject('/api/v1/findRepBehavior/0', 'bind_course_region_ym_rep_behavior', conditions)
 					})
 					return Promise.all(promiseArray)
@@ -331,7 +337,7 @@ export default Route.extend({
 								val: elem.val,
 							}))
 						});
-						let conditions = this.store.object2JsonApi('request', req);
+						let conditions = this.store.object2JsonApi( req);
 						return this.store.queryMultipleObject('/api/v1/findBusinessReport/0', 'bind_course_region_business', conditions)
 					})
 					return Promise.all(promiseArray)

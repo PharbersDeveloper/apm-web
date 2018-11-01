@@ -23,8 +23,7 @@
 		}
 
 		p {
-			margin-bottom: 0;
-			font-family: PingFangSC-Regular;
+			margin: 10px 0;
 			font-size: 18px;
 			letter-spacing: 2px;
 
@@ -39,26 +38,25 @@
 	}
 
 	.headline {
-        position: relative;
-        line-height: 28px;
-        font-family: PingFangSC-Regular;
-        font-size: 20px;
-        color: #767A80;
-        letter-spacing: 2.86px;
+		position: relative;
+		line-height: 28px;
+		font-size: 20px;
+		color: #767A80;
+		letter-spacing: 2.86px;
 
-        .point-span {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #5570B4;
-        }
+		.point-span {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background-color: #5570B4;
+		}
 
-        span:last-child {
-            padding-left: 18px;
-        }
-    }
+		span:last-child {
+			padding-left: 18px;
+		}
+	}
 }

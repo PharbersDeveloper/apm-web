@@ -42,9 +42,6 @@ export default Component.extend({
 		if (planPaire.length > 2) {
 			later(this, function() {
 				set(planPaire.firstObject, 'isChecked', false);
-				// planPaire.firstObject.set('isChecked', false)
-				// planPaire.firstObject.set('text', planPaire.firstObject.get('text'))
-				// console.info(planPaire);
 				planPaire.forEach((item) => {
 					if (item.isChecked) {
 						checkedString = item.text + ',' + checkedString;
@@ -53,7 +50,7 @@ export default Component.extend({
 						let singleRegionJsonApi = null;
 						let regionLocalStorage = region.map((item) => {
 							singleRegionJsonApi = '';
-							singleRegionJsonApi = this.get('getStore').store.object2JsonApi('region', item, false);
+							singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
 							return singleRegionJsonApi
 						});
 						localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage))
@@ -69,7 +66,7 @@ export default Component.extend({
 					let singleRegionJsonApi = null;
 					let regionLocalStorage = region.map((item) => {
 						singleRegionJsonApi = '';
-						singleRegionJsonApi = this.get('getStore').store.object2JsonApi('region', item, false);
+						singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
 						return singleRegionJsonApi
 					});
 					localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage))

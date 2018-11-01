@@ -6,7 +6,6 @@ export default Component.extend({
 			this.sendAction('close')
 		},
 		changeRegion(tab, id) {
-			// console.log(id);
 			tab.select(id);
 			this.sendAction('changeRegion', this, id)
 		},

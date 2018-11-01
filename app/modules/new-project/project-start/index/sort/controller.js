@@ -46,28 +46,30 @@ export default Controller.extend({
 			let resortRegion = JSON.parse(localStorage.getItem('regionResort'));
 			let params = this.get('params');
 			let promiseArray = resortRegion.map((reg) => {
-				let req = this.store.createRecord('request', {
+				let req = this.get('pmController').get('Store').createModel('request', {
+					id: reg.id + 'paperinput0',
 					res: 'paperinput',
 				});
 				let eqValues = [
-					{ key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ key: 'region_id', type: 'eqcond', val: reg.selected.data.id },
-					{ key: 'sorting', type: 'upcond', val: reg.name }
+					{ id: reg.id + '1', key: 'paper_id', type: 'eqcond', val: params.paperid },
+					{ id: reg.id + '2', key: 'region_id', type: 'eqcond', val: reg.selected.data.id },
+					{ id: reg.id + '3', key: 'sorting', type: 'upcond', val: reg.name }
 				];
 				eqValues.forEach((item) => {
-					req.get(item.type).pushObject(this.store.createRecord(item.type, {
+					req.get(item.type).pushObject(this.get('pmController').get('Store').createModel(item.type, {
+						id: item.id,
 						key: item.key,
 						val: item.val,
 					}))
 				});
-				let jsonReq = this.store.object2JsonApi('request', req);
-				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
+				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
+				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
 			Promise.all(promiseArray).then((res) => {
 				this.transitionToRoute('new-project.project-start.index.objective')
 			}).catch((error) => {
-				console.log(error);
+				this.get('logger').log(error);
 			});
 		}
 	}
