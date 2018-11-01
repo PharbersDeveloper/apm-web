@@ -17,9 +17,9 @@
             </p>
             {{#bs-collapse local-class="content-container" collapsed=collapsed}}
                 {{#if history}}
-                    {{textarea rows=10 placeholder="请输入您对该区域的要点分析(最多300字)." key-up=(action 'keyUp') value=data.notes maxlength=600 disabled=true}}
+                    {{textarea rows=10 placeholder=(t 'apm.component.areaAnalyzeInput.placeholder') key-up=(action 'keyUp') value=data.notes maxlength=600 disabled=true}}
                 {{else}}
-                    {{textarea rows=10 placeholder="请输入您对该区域的要点分析(最多300字)." key-up=(action 'keyUp') value=data.notes maxlength=600 }}
+                    {{textarea rows=10 placeholder=(t 'apm.component.areaAnalyzeInput.placeholder') key-up=(action 'keyUp') value=data.notes maxlength=600 }}
                 {{/if}}
                 
             {{/bs-collapse}}

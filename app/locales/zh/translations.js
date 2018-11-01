@@ -74,6 +74,68 @@ export default {
 
     "newProject": {
       "title": "New project",
+      "wholeAnalysis": "总体分析",
+      "sort": "排序",
+      "targetSet": "目标设定",
+      "res": "资源分配",
+      "actionPlan": "行动计划",
+      "result": "结果",
+      "next": "下一步",
+      "analyze": {
+      },
+
+      "sortPage": {
+        "title": "重要度排序",
+        "subtutle": "根据分析，寻找增长点，并以即将发生增长的可能性进行排序。",
+        "pleaseSort": "排序-请拖动区域卡片进行排序",
+      },
+
+      "objective": {
+        "title": "设定目标",
+        "subtitle": "为接下来三个月，各区域预测您期望达成目标，基于总体分析中您的分析，并参考公司指标，区域背景信息，竞争情况，做出您的目标设定。",
+        "companyGeneralIndexOfQuarter": "公司本季度总指标",
+        "yourForecast": "您的预测总指标",
+        "sort": "排序",
+        "area": "区域",
+        "companyIndex": "公司指标Corporate indicators",
+        "lqSalesContribution": "上季销售贡献率",
+        "tqForecastIndex": "本季预测指标",
+        "tqIndexContributionRate": "本季指标贡献率",
+      },
+
+      "resource": {
+        "title": "资源分配",
+        "subtitle": "在资源有限的情况下，做出合适的投入计划，以达到目标。",
+        "coachCoVisitDays": "辅导协访天数",
+        "countryQuota": "全国会名额",
+        "cityQuota": "城市会名额",
+        "departmentQuota": "科室会名额",
+        "sort": "排序",
+        "area": "区域",
+        "corporateIndicators": "公司指标",
+        "forecastIndex": "预测指标",
+        "coVisitDays": "协访天数",
+        "country": "全国会",
+        "city": "城市会",
+        "department": "科室会",
+        "total": "共",
+        "days": "天",
+        "one": "个",
+      },
+
+      "upshot": {
+        "output": "导出",
+        "saveExit": "保存退出",
+        "areaSales": "地区季度销售结果",
+        "share": "份额",
+        "sales": "销售额",
+        "areaShareChange": "地区产品份额变化",
+        "areaShareResult": "各区域份额结果",
+        "tips": "提示",
+        "tipContent": "本次课程中的内容将进行保存,<br/>您将可以在“历史报告”中查看本次的课程内容与结果.",
+        "tipContent2": "确认进入下一步后，将不可修改当前内容。",
+      }
+        
     },
 
     "hisProject": {
@@ -103,6 +165,8 @@ export default {
         "prodInfo": "产品信息",
         "info": "区域信息",
         "quit": "退出",
+        "tips": "提示",
+        "tipContent": "将保存您当前的填写纪录,未完成的课程,可在 \"历史项目>进行中\" ,继续完成.",
       },
 
       "productInfoCard":{
@@ -157,6 +221,7 @@ export default {
         "workEnthusiasm": "工作积极性",
         "areaManageAbility": "区域管理能力",
         "saleAbility": "销售能力",
+        "areaAvg": "区域平均",
       },
 
       "chargeRepresent":{
@@ -169,6 +234,32 @@ export default {
 
       "d3BarLine":{
         "title": "公司产品历史销售图表",
+        "share": "份额",
+        "sales": "销售额",
+        "forecastSales": "预测销售额",
+      },
+
+      "areaAnalyzeInput":{
+        "placeholder": "请输入您对该区域的要点分析(最多300字).",
+      },
+
+      "hintModal":{
+        "cancel": "取消",
+        "confirm": "确认",
+        "continue": "继续",
+      },
+
+      "areaChoosePlan":{
+        "title": "行动计划",
+        "subTitle": "针对区域情況作出行动计划优化区域有效性问题。（最多两项）",
+        "choosePlan": "选择行动计划",
+        "choosePlan2": "选择行动计划（最多两项）",
+        "confirm": "确认",
+      },
+
+      "areaOrderRep":{
+        "sort": "排序",
+        "rep": "代表",
       },
 
     },

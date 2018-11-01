@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject } from '@ember/service';
 
 export default Component.extend({
+	i18n:inject(),
 	introduced: inject('introduced-service'),
 	actions: {
 		showScenario(name) {
@@ -20,8 +21,8 @@ export default Component.extend({
 			let hint = {
 				hintModal: true,
 				hintImg: true,
-				title: '提示',
-				content: '将保存您当前的填写纪录,未完成的课程,可在 "历史项目>进行中" ,继续完成.',
+				title: this.i18n.t('apm.component.sceneTab.tips') + "",
+				content: this.i18n.t('apm.component.sceneTab.tipContent') + "",
 				hintBtn: true,
 			}
 			this.set('hint', hint);

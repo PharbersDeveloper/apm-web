@@ -2,7 +2,7 @@
     {{#unless history}}
         <div class="next-step">
             {{#bs-button class="btn-next" onClick=(action "nextStep")}}
-                下一步
+                {{t "apm.newProject.next"}}
             {{/bs-button}}
         </div>
     {{/unless}}
@@ -23,16 +23,16 @@
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
 				<p local-class="title-objective">
-					<span>设定目标-</span>
-					<span>为接下来三个月，各区域预测您期望达成目标，基于总体分析中您的分析，并参考公司指标，区域背景信息，竞争情况，做出您的目标设定。</span>
+					<span>{{t "apm.newProject.objective.title"}}-</span>
+					<span>{{t "apm.newProject.objective.subtitle"}}</span>
 				</p>
 				<div class="row" local-class="summary">
 					<div class="col-md-2 col-lg-2 col-sm-2">
-						<p>公司本季度总指标</p>
+						<p>{{t "apm.newProject.objective.companyGeneralIndexOfQuarter"}}</p>
 						<p>{{number-format totalCompanyTarget}}</p>
 					</div>
 					<div class="col-md-2 col-lg-2 col-sm-2">
-						<p>您的预测总指标</p>
+						<p>{{t "apm.newProject.objective.yourForecast"}}</p>
 						<p>{{number-format totalForecast}}</p>
 					</div>
 
@@ -41,12 +41,12 @@
 					<table local-class="table-container" class="table">
 						<thead>
 							<tr>
-								<td>排序</td>
-								<td>区域</td>
-								<td>公司指标($)</td>
-                                <td>上季销售贡献率(%)</td>
-								<td>本季预测指标($)</td>
-                                <td>本季指标贡献率(%)</td>
+								<td>{{t "apm.newProject.objective.sort"}}</td>
+								<td>{{t "apm.newProject.objective.area"}}</td>
+								<td>{{t "apm.newProject.objective.companyIndex"}}($)</td>
+                                <td>{{t "apm.newProject.objective.lqSalesContribution"}}(%)</td>
+								<td>{{t "apm.newProject.objective.tqForecastIndex"}}($)</td>
+                                <td>{{t "apm.newProject.objective.tqIndexContributionRate"}}(%)</td>
 							</tr>
 						</thead>
 						<tbody>

@@ -74,6 +74,68 @@ export default {
 
     "newProject": {
       "title": "New project",
+      "wholeAnalysis": "General analysis",
+      "sort": "Sort",
+      "targetSet": "Target setting",
+      "res": "Resource allocation",
+      "actionPlan": "Action plan",
+      "result": "Result",
+      "next": "Next step",
+      "analyze": {
+      },
+
+      "sortPage": {
+        "title": "Importance ranking",
+        "subtutle": "Based on the analysis, look for growth points and sort them in the light of the possibility of growth.",
+        "pleaseSort": "Sort-Drag the area cards to sort them",
+      },
+
+      "objective": {
+        "title": "Setting goals",
+        "subtitle": "For the next three months, each region predicts that you expect to achieve your goals, and based on your analysis of the overall analysis, and referring to company indicators, regional background information, competition, make your goal setting.",
+        "companyGeneralIndexOfQuarter": "Total index of the company in the current quarter",
+        "yourForecast": "Total indicators of your forecast",
+        "sort": "Sort",
+        "area": "Area",
+        "companyIndex": "Corporate indicators",
+        "lqSalesContribution": "Contribution rate of last quarter sales",
+        "tqForecastIndex": "Forecast indicators for the quarter",
+        "tqIndexContributionRate": "Index contribution rate this quarter",
+      },
+
+      "resource": {
+        "title": "Resource allocation",
+        "subtitle": "In the case of limited resources, make appropriate input plan to achieve the goal.",
+        "coachCoVisitDays": "Counseling days",
+        "countryQuota": "National meeting quota",
+        "cityQuota": "City meeting quota",
+        "departmentQuota": "Department meeting quota",
+        "sort": "Sort",
+        "area": "Area",
+        "corporateIndicators": "Corporate indicators",
+        "forecastIndex": "Forecast index",
+        "coVisitDays": "Co visit days",
+        "country": "National meeting",
+        "city": "City meeting",
+        "department": "Department meeting",
+        "total": "Total",
+        "days": "Days",
+        "one": "",
+      },
+
+      "upshot": {
+        "output": "export",
+        "saveExit": "Save and exit",
+        "areaSales": "Regional quarterly sales results",
+        "share": "Share",
+        "sales": "Sales",
+        "areaShareChange": "Regional product share change",
+        "areaShareResult": "Regional share results",
+        "tips": "Tips",
+        "tipContent": "The contents of this course will be preserved,<br/>You will be able to check the contents and results of this course in the \"history report\".",
+        "tipContent2": "Confirm that after entering the next step, you will not be able to modify the current content.",
+      }
+
     },
 
     "hisProject": {
@@ -103,6 +165,9 @@ export default {
         "prodInfo": "Product information",
         "info": "Regional information",
         "quit": "Quit",
+        "tips": "Tip",
+        "tipContent": "You will keep your current record and unfinished courses can be completed in \"Historical projects>Ongoing\"",
+
       },
 
       "productInfoCard":{
@@ -157,6 +222,7 @@ export default {
         "workEnthusiasm": "Work enthusiasm",
         "areaManageAbility": "Area manage ability",
         "saleAbility": "Sale ability",
+        "areaAvg": "Regional average",
       },
 
       "chargeRepresent":{
@@ -169,6 +235,32 @@ export default {
 
       "d3BarLine":{
         "title": "Product history sales chart",
+        "share": "Share",
+        "sales": "Sales",
+        "forecastSales": "Forecast sales",
+      },
+
+      "areaAnalyzeInput":{
+        "placeholder": "Please input your analysis of the key points in the area (up to 300 words).",
+      },
+
+      "hintModal":{
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "continue": "Continue",
+      },
+
+      "areaChoosePlan":{
+        "title": "Action plan",
+        "subTitle": "Plan for regional situation and optimize regional efficiency. (up to two items)",
+        "choosePlan": "Select action plan",
+        "choosePlan2": "Select action plan. (up to two items)",
+        "confirm": "Confirm",
+      },
+
+      "areaOrderRep":{
+        "sort": "Sort",
+        "rep": "Representative",
       },
 
     },

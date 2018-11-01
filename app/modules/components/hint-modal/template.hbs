@@ -16,10 +16,10 @@
 	{{/modal.body}}
 	{{#modal.footer}}
 		{{#if hint.hintBtn}}
-			{{#bs-button type="warning" onClick=(action modal.close)}}取消{{/bs-button}}
-			{{#bs-button type="success" onClick=(action modal.submit)}}确认{{/bs-button}}
+			{{#bs-button type="warning" onClick=(action modal.close)}}{{t "apm.component.hintModal.cancel"}}{{/bs-button}}
+			{{#bs-button type="success" onClick=(action modal.submit)}}{{t "apm.component.hintModal.confirm"}}{{/bs-button}}
 		{{else}}
-			{{#bs-button type="success"  onClick=(action modal.close)}}继续{{/bs-button}}
+			{{#bs-button type="success"  onClick=(action modal.close)}}{{t "apm.component.hintModal.continue"}}{{/bs-button}}
 		{{/if}}
 	{{/modal.footer}}
 {{/bs-modal}}

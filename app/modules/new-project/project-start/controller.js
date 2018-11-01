@@ -12,6 +12,7 @@ export default Controller.extend({
 		},
 		// 改变显示区域，tab属性调用ember-bs，id为要显示的区域id
 		changeRegion(component, id) {
+			let that = this;
 			let ids = this.get('ids');
 			let singleRegionData = {};
 			component.set('newDataReady', false);
@@ -90,87 +91,87 @@ export default Controller.extend({
 							return item.region_id === 'ave';
 						});
 
-						function axes(radarfigure) {
-							let axes = [];
-							axes.pushObject({
-								axis: '产品知识',
-								value: radarfigure.prod_knowledge_val
-							})
-
-							axes.pushObject({
-								axis: '目标拜访频次',
-								value: radarfigure.target_call_freq_val
-							})
-
-							axes.pushObject({
-								axis: '拜访次数',
-								value: radarfigure.call_times_val
-							})
-
-							axes.pushObject({
-								axis: '实地工作天数',
-								value: radarfigure.in_field_days_val
-							})
-
-							axes.pushObject({
-								axis: '工作积极性',
-								value: radarfigure.motivation_val
-							})
-
-							axes.pushObject({
-								axis: '区域管理能力',
-								value: radarfigure.territory_manage_val
-							})
-
-							axes.pushObject({
-								axis: '销售能力',
-								value: radarfigure.sales_skills_val
-							})
-							return axes
-						}
-
 						// function axes(radarfigure) {
 						// 	let axes = [];
 						// 	axes.pushObject({
-						// 		axis: i18n.t('apm.component.radar.prodKnowledge') + "",
+						// 		axis: '产品知识',
 						// 		value: radarfigure.prod_knowledge_val
 						// 	})
 
 						// 	axes.pushObject({
-						// 		axis: i18n.t('apm.component.radar.targetVisit') + "",
+						// 		axis: '目标拜访频次',
 						// 		value: radarfigure.target_call_freq_val
 						// 	})
 
 						// 	axes.pushObject({
-						// 		axis: i18n.t('apm.component.radar.visitTime') + "",
+						// 		axis: '拜访次数',
 						// 		value: radarfigure.call_times_val
 						// 	})
 
 						// 	axes.pushObject({
-						// 		axis: i18n.t('apm.component.radar.localWorkDay') + "",
+						// 		axis: '实地工作天数',
 						// 		value: radarfigure.in_field_days_val
 						// 	})
 
 						// 	axes.pushObject({
-						// 		axis: i18n.t('apm.component.radar.workEnthusiasm') + "",
+						// 		axis: '工作积极性',
 						// 		value: radarfigure.motivation_val
 						// 	})
 
 						// 	axes.pushObject({
-						// 		axis: i18n.t('apm.component.radar.areaManageAbility') + "",
+						// 		axis: '区域管理能力',
 						// 		value: radarfigure.territory_manage_val
 						// 	})
 
 						// 	axes.pushObject({
-						// 		axis: i18n.t('apm.component.radar.saleAbility') + "",
+						// 		axis: '销售能力',
 						// 		value: radarfigure.sales_skills_val
 						// 	})
 						// 	return axes
 						// }
 
+						function axes(radarfigure) {
+							let axes = [];
+							axes.pushObject({
+								axis: that.i18n.t('apm.component.radar.prodKnowledge') + "",
+								value: radarfigure.prod_knowledge_val
+							})
+
+							axes.pushObject({
+								axis: that.i18n.t('apm.component.radar.targetVisit') + "",
+								value: radarfigure.target_call_freq_val
+							})
+
+							axes.pushObject({
+								axis: that.i18n.t('apm.component.radar.visitTime') + "",
+								value: radarfigure.call_times_val
+							})
+
+							axes.pushObject({
+								axis: that.i18n.t('apm.component.radar.localWorkDay') + "",
+								value: radarfigure.in_field_days_val
+							})
+
+							axes.pushObject({
+								axis: that.i18n.t('apm.component.radar.workEnthusiasm') + "",
+								value: radarfigure.motivation_val
+							})
+
+							axes.pushObject({
+								axis: that.i18n.t('apm.component.radar.areaManageAbility') + "",
+								value: radarfigure.territory_manage_val
+							})
+
+							axes.pushObject({
+								axis: that.i18n.t('apm.component.radar.saleAbility') + "",
+								value: radarfigure.sales_skills_val
+							})
+							return axes
+						}
+
 						let regionCache = this.store.peekRecord('region', id);
 						let radarData = [{
-								name: '区域平均',
+								name: that.i18n.t('apm.component.radar.areaAvg') + "",
 								axes: axes(ave.radarfigure),
 								color: '#762712'
 							},

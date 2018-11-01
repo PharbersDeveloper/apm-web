@@ -1,8 +1,8 @@
 <p local-class="choose-plan">
-    <span>行动计划-</span>
-    <span local-class='sub-desc'>针对区域情況作出行动计划优化区域有效性问题。（最多两项）</span>
+    <span>{{t "apm.component.areaChoosePlan.title"}}-</span>
+    <span local-class='sub-desc'>{{t "apm.component.areaChoosePlan.subTitle"}}</span>
     {{#unless history}}
-        {{#bs-button local-class="checkbox-choose-plan" onClick=(action (mut chooseModal) true)}}选择行动计划{{/bs-button}}
+        {{#bs-button local-class="checkbox-choose-plan" onClick=(action (mut chooseModal) true)}}{{t "apm.component.areaChoosePlan.choosePlan"}}{{/bs-button}}
     {{/unless}}
 </p>
 <p local-class="show-plan">
@@ -16,7 +16,7 @@
 {{#bs-modal local-class="hint-modal" open=chooseModal  onHidden=(action (mut chooseModal) false) as |modal|}}
 	{{#modal.header}}
 		<h4 class="modal-title">
-            <span></span>选择行动计划（最多两项）
+            <span></span>{{t "apm.component.areaChoosePlan.choosePlan2"}}
         </h4>
 	{{/modal.header}}
 	{{#modal.body}}
@@ -29,6 +29,6 @@
 
 	{{/modal.body}}
 	{{#modal.footer}}
-			{{#bs-button type="success" onClick=(action modal.close)}}确认{{/bs-button}}
+			{{#bs-button type="success" onClick=(action modal.close)}}{{t "apm.component.areaChoosePlan.confirm"}}{{/bs-button}}
 	{{/modal.footer}}
 {{/bs-modal}}
