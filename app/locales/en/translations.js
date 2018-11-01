@@ -51,6 +51,19 @@ export default {
       "position": "Position",
       "signUpSuccess": "Sign up success",
       "goToLogin": "Go to login",
+      "inputName": "Please input name",
+      "inputMail": "Please input mail",
+      "inputPassword": "Please input password",
+      "password": "Password",
+      "eightLetter": "Up to eight characters",
+      "nameSuccess": "Successful name verification",
+      "inputRightMail": "Please input the correct mailbox format",
+      "mailSuccess": "Mailbox validation is successful",
+      "passwordLength": "The password length should be between 8~20 characters",
+      "passwordSuccess": "Password authentication successful",
+      "tips": "Tips",
+      "signUpOk": "Registration is successful, click confirmation to enter the login interface",
+      "signUpFail": "Registration failed",
     },
 
     "projectSort": {
@@ -63,10 +76,11 @@ export default {
       "title": "New project",
     },
 
-    "historyProject": {
+    "hisProject": {
       "hisPlan": "Historical plan",
       "ongoing": "Ongoing",
       "done": "Done",
+      "noDoneClass": "No done class",
     },
 
     "component": {

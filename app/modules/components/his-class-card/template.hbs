@@ -4,11 +4,7 @@
         {{#if data.state}}
             <p local-class="date">{{t "apm.component.hisClassCard.date"}}{{data.start_time}}</p>
         {{else}}
-<<<<<<< HEAD
             <p local-class="date">{{t "apm.component.hisClassCard.date"}}{{data.end_time}}</p> 
-=======
-            <p local-class="date">日期：{{data.end_time}}</p>
->>>>>>> frank_1018
         {{/if}}
     </div>
     <div local-class="btn">
@@ -17,5 +13,5 @@
         {{else}}
             <p {{action "continue" data.id data.course.id}}>{{t "apm.component.hisClassCard.examine"}}</p> 
         {{/if}}
-    </div>
+</div>
 </div>
