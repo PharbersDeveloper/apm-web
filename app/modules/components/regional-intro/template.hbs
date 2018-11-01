@@ -14,7 +14,7 @@
 				{{#if (eq data.id card.region_id)}} --}}
 					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						<div local-class="card-inside-content">
-							<p local-class="headline">市场潜力(年)($)</p>
+							<p local-class="headline">{{t "apm.component.regionalIntro.marketPotentialYear"}}($)</p>
 							<p local-class="num">{{number-format singleRegionData.card.sales.allyearpotential}}</p>
 						</div>
 
@@ -22,14 +22,14 @@
 					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						<div local-class="card-inside-content">
 
-							<p local-class="headline">上月销售额($)</p>
+							<p local-class="headline">{{t "apm.component.regionalIntro.lmSales"}}($)</p>
 							<p local-class="num">{{number-format singleRegionData.card.sales.sales}}</p>
 						</div>
 					</div>
 					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						<div local-class="card-inside-content">
 
-							<p local-class="headline">上月达成率(%)</p>
+							<p local-class="headline">{{t "apm.component.regionalIntro.lmReachRate"}}(%)</p>
 							<p local-class="num">{{number-percent singleRegionData.card.sales.achieve_rate}}</p>
 						</div>
 					</div>
@@ -40,7 +40,7 @@
 
 	<div local-class="sub-tab">
 		{{#bs-tab as |tab|}}
-			{{#tab.pane title="代表与执行" }}
+			{{#tab.pane title=(t "apm.component.regionalIntro.representationExec")}}
 				{{!-- {{#each radarData as |item|}}
 					{{#if (eq item.region_id data.id)}}
 						{{radar-section-effectiveness gradient=(concat 'glowarea' data.id) radarSectionData=item.data}}
@@ -60,12 +60,12 @@
 
 					</div>
 					<div local-class="action">
-						<p local-class="title-action">行动KPI</p>
+						<p local-class="title-action">{{t "apm.component.regionalIntro.kpi"}}</p>
 						<div class="table-responsive" local-class="table-action">
 							<table class="table table-striped" local-class="table-sales">
 								<thead>
 									<tr>
-										<td> 年/月</td>
+										<td>{{t "apm.component.regionalIntro.yearMonth"}}</td>
 										{{!-- {{#each kpi as |item|}}
 										{{#if (eq item.region_id data.id)}}
 											{{#each item.yms as |ym|}}
@@ -80,7 +80,7 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td>目标医生拜访次数</td>
+										<td>{{t "apm.component.regionalIntro.targetVisitTime"}}</td>
 										{{!-- {{#each kpi as |item|}}
 										{{#if (eq item.region_id data.id)}}
 											{{#each item.target_call_freq_vals as |target_call_freq_val|}}
@@ -93,7 +93,7 @@
 										{{/each}}
 									</tr>
 									<tr>
-										<td>实地工作天数</td>
+										<td>{{t "apm.component.regionalIntro.localWorkDay"}}</td>
 										{{!-- {{#each kpi as |item|}}
 										{{#if (eq item.region_id data.id)}}
 											{{#each item.in_field_days_vals as |in_field_days_val|}}
@@ -106,7 +106,7 @@
 										{{/each}}
 									</tr>
 									<tr>
-										<td>拜访次数</td>
+										<td>{{t "apm.component.regionalIntro.visitTime"}}</td>
 										{{!-- {{#each kpi as |item|}}
 										{{#if (eq item.region_id data.id)}}
 											{{#each item.call_times_vals as |call_times_val|}}
@@ -131,7 +131,7 @@
 						{{represent-report data=singleRegionData.report}}
 					</div>
 			{{/tab.pane}}
-			{{#tab.pane title="区域销售情況" }}
+			{{#tab.pane title=(t "apm.component.regionalIntro.areaSalesInfo")}}
 				<div local-class="analyze">
 					{{!-- {{#each salesBar as |item|}}
 						{{#if (eq item.region_id data.id)}}
@@ -141,7 +141,7 @@
 					{{d3-bar-line chartId=(concat "area-sales-chart" salesBar.id) laterThreeChangeBg=false noLine=true  dataset=singleRegionData.salesBar.data}}
 
 					<div local-class="table-content">
-						<p local-class="title">公司产品历史销售数据</p>
+						<p local-class="title">{{t "apm.component.regionalIntro.hisSalesData"}}</p>
 						{{!-- <div class="table-responsive"> --}}
 						<table class="table table-striped" local-class="table-sales">
 							<thead>
@@ -161,7 +161,7 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>销售额($)</td>
+									<td>{{t "apm.component.regionalIntro.sales"}}($)</td>
 									{{!-- {{#each salesBar as |item|}}
 										{{#if (eq item.region_id data.id)}}
 											{{#each item.data as |item|}}
@@ -174,7 +174,7 @@
 									{{/each}}
 								</tr>
 								<tr>
-									<td>份额(%)</td>
+									<td>{{t "apm.component.regionalIntro.share"}}(%)</td>
 									{{!-- {{#each salesBar as |item|}}
 										{{#if (eq item.region_id data.id)}}
 											{{#each item.data as |item|}}

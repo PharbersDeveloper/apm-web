@@ -5,6 +5,7 @@ import { inject } from '@ember/service';
 import loginModel from './login';
 
 export default Controller.extend({
+	i18n: inject(),
 	cookies: inject(),
 	email: null,
 	password: null,

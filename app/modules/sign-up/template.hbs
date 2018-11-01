@@ -2,9 +2,15 @@
     <div local-class="content">
         <div local-class="head">
             <img src="" alt="">
-            <p>用户注册</p>
+            <p>{{t "apm.sign.userSignUp"}}</p>
         </div>
         <div local-class="input-area">
+            {{!-- {{#bs-form model=this.model novalidate=false  as |form|}}
+              <a href="#" local-class="code">{{t "apm.sign.sendVerificationCode"}}</a>
+              {{form.element controlType="email" label=(t "apm.sign.mail") placeholder=(t "apm.sign.mail") property="email" required=true local-class="email"}}
+              {{form.element controlType="string" label=(t "apm.sign.mailVerificationCode") placeholder="" property="password" required=true}}
+              {{form.element controlType="password" label=(t "apm.sign.loginPassword") placeholder=(t "apm.sign.passwordHint") property="password" required=true}}
+              {{form.element controlType="password" label=(t "apm.sign.confirmPassword") placeholder=(t "apm.sign.passwordHint") property="password" required=true}} --}}
             {{!-- {{#bs-form model=singup onSubmit=(action "submit") novalidate=false  as |form|}}
               <a href="#" local-class="code">发送验证码</a>
               {{form.element controlType="email" label="邮箱" placeholder="邮箱" property="email" required=true local-class="email"}}
@@ -15,42 +21,44 @@
 
               <div local-class="clicks">
                   {{#link-to 'perfect-info'}}
-                    {{bs-button defaultText="确定注册" type="primary" buttonType="submit"}}
+                    {{bs-button defaultText=(t "apm.sign.confirmSignUp") type="primary" buttonType="submit"}}
                   {{/link-to}}
                   <div local-class="log">
-                      已有帐号？
+                      {{t "apm.sign.hadAccount"}}
                       {{#link-to 'index'}}
-                            点击登录
+                            {{t "apm.sign.clickLogin"}}
                       {{/link-to}}
                   </div>
              </div>
             {{/bs-form}} --}}
             <div local-class="userinfo">
-                <label local-class="title">名称</label>
-                {{input id="userename" type="text" value=userName label="email" placeholder="请填写名称" required=true local-class="name"}}
+                <label local-class="title">{{t "apm.sign.name"}}</label>
+                {{input id="userename" type="text" value=userName label="email" placeholder=(t "apm.sign.inputName") required=true local-class="name"}}
                 <p local-class="hint">{{nameHint.text}}</p>
 
             </div>
             <div local-class="userinfo">
-                <label local-class="title" for="useremail">邮箱</label>
-                {{input id="useremail" type="email" value=userEmail placeholder="请填写邮箱" required=true local-class="email"}}
+                <label local-class="title" for="useremail">{{t "apm.sign.mail"}}</label>
+                {{input id="useremail" type="email" value=userEmail placeholder=(t "apm.sign.inputMail") required=true local-class="email"}}
                 <p local-class="hint">{{emailHint.text}}</p>
             </div>
             <div local-class="userinfo">
-                <label local-class="title">密码</label>
-                {{input id="userpassword" type="password" value=userPassword placeholder="请填写密码" required=true local-class="password"}}
+                <label local-class="title">{{t "apm.sign.password"}}</label>
+                {{input id="userpassword" type="password" value=userPassword placeholder=(t "apm.sign.inputPassword") required=true local-class="password"}}
                 <p local-class="hint">{{pwHint.text}}</p>
 
             </div>
             <div local-class="clicks">
                 {{!-- {{#link-to 'perfect-info'}} --}}
-                {{#bs-button type="primary" onClick=(action "submit")}}确定注册{{/bs-button}}
+                {{#bs-button type="primary" onClick=(action "submit")}}{{t "apm.sign.confirmSignUp"}}{{/bs-button}}
                   {{!-- {{bs-button defaultText="确定注册" type="primary" onClick=(action 'submit')}} --}}
                 {{!-- {{/link-to}} --}}
                 <div local-class="log">
-                    已有帐号？
+                    {{!-- 已有帐号？ --}}
+                    {{t "apm.sign.hadAccount"}}
                     {{#link-to 'index'}}
-                          点击登录
+                          {{!-- 点击登录 --}}
+                          {{t "apm.sign.clickLogin"}}
                     {{/link-to}}
                 </div>
             </div>

@@ -1,8 +1,10 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
+import { inject } from '@ember/service';
 import SignupLogic from '../../mixins/signup-logic';
 
 export default Controller.extend(SignupLogic, {
+	i18n:inject(),
 	init() {
 		this._super(...arguments);
 		this.get('pmController').get('BusinessLogic').funcInjection(this.signUpSuccess)
@@ -15,25 +17,25 @@ export default Controller.extend(SignupLogic, {
 	nameHint: computed('userName', function() {
 		let name = this.get('userName');
 		if (name.length == 0 || name.length > 8) {
-			return { text: '最多八字符', status: false }
+			return { text: this.i18n.t('apm.sign.eightLetter') + "", status: false }
 		} else {
-			return { text: '姓名验证成功', status: true }
+			return { text: this.i18n.t('apm.sign.nameSuccess') + "", status: true }
 		}
 	}),
 	emailHint: computed('userEmail', function() {
 		let email = this.get('userEmail');
 		if (email.indexOf('@') < 0 || email.indexOf('.com') < 0) {
-			return { text: '请输入正确的邮箱格式', status: false };
+			return { text: this.i18n.t('apm.sign.inputRightMail') + "", status: false };
 		} else {
-			return { text: '邮箱验证成功', status: true };
+			return { text: this.i18n.t('apm.sign.mailSuccess') + "", status: true };
 		}
 	}),
 	pwHint: computed('userPassword', function() {
 		let pw = this.get('userPassword');
 		if (pw.length < 8 || pw.length > 20) {
-			return { text: '密码长度应在8～20个字符之间', status: false };
+			return { text: this.i18n.t('apm.sign.passwordLength') + "", status: false };
 		} else {
-			return { text: '密码验证成功', status: true };
+			return { text: this.i18n.t('apm.sign.passwordSuccess') + "", status: true };
 		}
 	}),
 	actions: {
@@ -74,8 +76,8 @@ export default Controller.extend(SignupLogic, {
                         let hint = {
             				hintModal: true,
             				hintImg: true,
-            				title: '提示',
-            				content: '注册成功,点击确认进入登陆界面.',
+            				title: this.i18n.t('apm.sign.tips') + "",
+            				content: this.i18n.t('apm.sign.signUpOk') + "",
             				hintBtn: true,
             			}
             			this.set('hint', hint);
@@ -86,8 +88,8 @@ export default Controller.extend(SignupLogic, {
                         let hint = {
             				hintModal: true,
             				hintImg: true,
-            				title: '提示',
-            				content: '注册失败。',
+            				title: this.i18n.t('apm.sign.tips') + "",
+            				content: this.i18n.t('apm.sign.signUpFail') + "",
             				hintBtn: false,
             			}
             			this.set('hint', hint);

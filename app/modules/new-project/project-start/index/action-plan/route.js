@@ -60,6 +60,45 @@ export default Route.extend({
 					})
 					return axes
 				}
+				// function axes(radarfigure) {
+				// 	let axes = [];
+				// 	axes.push({
+				// 		axis: this.i18n.t('apm.component.radar.prodKnowledge') + "",
+				// 		value: radarfigure.prod_knowledge_val
+				// 	})
+
+				// 	axes.push({
+				// 		axis: this.i18n.t('apm.component.radar.targetVisit') + "",
+				// 		value: radarfigure.target_call_freq_val
+				// 	})
+
+				// 	axes.push({
+				// 		axis: this.i18n.t('apm.component.radar.visitTime') + "",
+				// 		value: radarfigure.call_times_val
+				// 	})
+
+				// 	axes.push({
+				// 		axis: this.i18n.t('apm.component.radar.localWorkDay') + "",
+				// 		value: radarfigure.in_field_days_val
+				// 	})
+
+				// 	axes.push({
+				// 		axis: this.i18n.t('apm.component.radar.workEnthusiasm') + "",
+				// 		value: radarfigure.motivation_val
+				// 	})
+
+				// 	axes.push({
+				// 		axis: this.i18n.t('apm.component.radar.areaManageAbility') + "",
+				// 		value: radarfigure.territory_manage_val
+				// 	})
+
+				// 	axes.push({
+				// 		axis: this.i18n.t('apm.component.radar.saleAbility') + "",
+				// 		value: radarfigure.sales_skills_val
+				// 	})
+				// 	return axes
+				// }
+
 				return radarArray.map(elem => {
 					let regionCache = this.get('pmController').get('Store').peekRecord('region', elem.region_id);
 					return {

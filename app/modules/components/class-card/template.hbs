@@ -4,12 +4,12 @@
             <div local-class="title">
                 <p local-class="name">{{course.name}}</p>
                 {{#unless course.state}}
-                    <p local-class="time">即将推出</p>
+                    <p local-class="time">{{t "apm.component.classCard.soon"}}</p>
                 {{/unless}}
             </div>
             <div local-class="btn">
                 {{#if course.state}}
-                    {{#bs-button onClick=(action 'sendTitle' course.name course.prompt course.id) local-class="start"}}Start{{/bs-button}}
+                    {{#bs-button onClick=(action 'sendTitle' course.name course.prompt course.id) local-class="start"}}{{t "apm.component.classCard.start"}}{{/bs-button}}
                 {{/if}}
             </div>
         </div>
@@ -27,8 +27,8 @@
             </div>
         {{/modal.body}}
         {{#modal.footer}}
-            {{#bs-button local-class="jump" onClick=(action 'skip') }}跳过{{/bs-button}}
-            {{#bs-button local-class="enter" onClick=(action 'goScenarioDescribe')}}进入场景信息{{/bs-button}}
+            {{#bs-button local-class="jump" onClick=(action 'skip') }}{{t "apm.component.classCard.skip"}}{{/bs-button}}
+            {{#bs-button local-class="enter" onClick=(action 'goScenarioDescribe')}}{{t "apm.component.classCard.enterSceneInfo"}}{{/bs-button}}
         {{/modal.footer}}
     {{/bs-modal}}
 </div>

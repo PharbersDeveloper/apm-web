@@ -24,6 +24,10 @@ module.exports = function(environment) {
 		}
 	};
 
+	ENV.i18n = {
+		defaultLocale: 'zh'
+		};
+
 	if (environment === 'development') {
 		ENV['ember-cli-mirage'] = {
             enabled: false
