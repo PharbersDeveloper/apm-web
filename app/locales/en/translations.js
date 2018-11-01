@@ -98,6 +98,79 @@ export default {
         "examine": "Examine",
       },
 
+      "sceneTab":{
+        "scene": "Scene introduction",
+        "prodInfo": "Product information",
+        "info": "Regional information",
+        "quit": "Quit",
+      },
+
+      "productInfoCard":{
+        "title": "Product share competition trend",
+      },
+
+      "productCard":{
+        "compete": "Competitive product",
+        "corpProd": "Company production",
+        "manu": "Manufacturer",
+        "type": "R & D type",
+      },
+
+      "regionalInfoCard":{
+        "overview": "Whole",
+        "areaShare": "Regional share results",
+      },
+
+      "areaBaseInfoTable":{
+        "monthData": "Monthly data",
+        "area": "Area",
+        "marketPotential": "Market potential",
+        "potentialContribution": "Potential contribution",
+        "lmSale": "Last month sales",
+        "lmSaleContribution": "Last month sales contribution",
+        "contributionCoefficient": "Contribution coefficient",
+        "growthRate": "Last month growth rate",
+      },
+
+      "regionalIntro":{
+        "marketPotentialYear": "Market potential(Year)",
+        "lmSales": "Last month sales",
+        "lmReachRate": "Last month reach rate",
+        "representationExec": "Representation and execution",
+        "kpi": "Action KPI",
+        "yearMonth": "Year/Month",
+        "targetVisitTime": "target Doc visit time",
+        "localWorkDay": "Days of field work",
+        "visitTime": "Visit time",
+        "areaSalesInfo": "Regional sales situation",
+        "hisSalesData": "Historical sales data of company products",
+        "sales": "Sales",
+        "share": "Share",
+      },
+
+      "radar":{
+        "title": "Regional validity analysis",
+        "prodKnowledge": "Product knowledge",
+        "targetVisit": "Target visits frequency",
+        "visitTime": "Number of visits",
+        "localWorkDay": "Days of field work",
+        "workEnthusiasm": "Work enthusiasm",
+        "areaManageAbility": "Area manage ability",
+        "saleAbility": "Sale ability",
+      },
+
+      "chargeRepresent":{
+        "title": "Responsible representative",
+      },
+      
+      "representReport":{
+        "title": "Regional business report",
+      },
+
+      "d3BarLine":{
+        "title": "Product history sales chart",
+      },
+
     },
 
   },

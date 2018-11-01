@@ -7,13 +7,13 @@
         <div local-class="head">
             {{!-- TODO 张璐: 下次你在写这么模糊的class name 你就自己打屁股 --}}
             {{#if data.compete}}
-                <p local-class="label">竞品</p>
+                <p local-class="label">{{t "apm.component.productCard.compete"}}</p>
             {{else}}
-                <p local-class="labels">公司生产</p>
+                <p local-class="labels">{{t "apm.component.productCard.corpProd"}}</p>
             {{/if}}
 
-            <p local-class="factory">生产商：{{data.corp_name}}</p>
-            <p local-class="sort">研发类型：{{data.research_type}}</p>
+            <p local-class="factory">{{t "apm.component.productCard.manu"}}:{{data.corp_name}}</p>
+            <p local-class="sort">{{t "apm.component.productCard.type"}}:{{data.research_type}}</p>
         </div>
         <div local-class="intro">
             <p>{{data.prod_describe}}</p>

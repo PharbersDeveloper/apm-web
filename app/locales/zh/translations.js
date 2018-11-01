@@ -98,6 +98,79 @@ export default {
         "examine": "查看",
       },
 
+      "sceneTab":{
+        "scene": "场景介绍",
+        "prodInfo": "产品信息",
+        "info": "区域信息",
+        "quit": "退出",
+      },
+
+      "productInfoCard":{
+        "title": "产品份额竞争趋势",
+      },
+
+      "productCard":{
+        "compete": "竞品",
+        "corpProd": "公司生产",
+        "manu": "生产商",
+        "type": "研发类型",
+      },
+
+      "regionalInfoCard":{
+        "overview": "整体",
+        "areaShare": "各区域份额结果",
+      },
+
+      "areaBaseInfoTable":{
+        "monthData": "月度数据",
+        "area": "区域",
+        "marketPotential": "市场潜力",
+        "potentialContribution": "潜力贡献度",
+        "lmSale": "上月销售额",
+        "lmSaleContribution": "上月销售贡献度",
+        "contributionCoefficient": "贡献度系数",
+        "growthRate": "上月销售增长率",
+      },
+      
+      "regionalIntro":{
+        "marketPotentialYear": "市场潜力(年)",
+        "lmSales": "上月销售额",
+        "lmReachRate": "上月达成率",
+        "representationExec": "代表与执行",
+        "kpi": "行动KPI",
+        "yearMonth": "年/月",
+        "targetVisitTime": "目标医生拜访次数",
+        "localWorkDay": "实地工作天数",
+        "visitTime": "拜访次数",
+        "areaSalesInfo": "区域销售情況",
+        "hisSalesData": "公司产品历史销售数据",
+        "sales": "销售额",
+        "share": "份额",
+      },
+
+      "radar":{
+        "title": "区域有效性分析",
+        "prodKnowledge": "产品知识",
+        "targetVisit": "目标拜访频次",
+        "visitTime": "拜访次数",
+        "localWorkDay": "实地工作天数",
+        "workEnthusiasm": "工作积极性",
+        "areaManageAbility": "区域管理能力",
+        "saleAbility": "销售能力",
+      },
+
+      "chargeRepresent":{
+        "title": "负责代表",
+      },
+      
+      "representReport":{
+        "title": "区域业务报告",
+      },
+
+      "d3BarLine":{
+        "title": "公司产品历史销售图表",
+      },
+
     },
 
   },

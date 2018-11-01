@@ -4,6 +4,7 @@ import { groupBy } from '../../phtool/tool';
 import { set } from '@ember/object';
 
 export default Controller.extend({
+	i18n: inject(),
 	introduced: inject('introduced-service'),
 	actions: {
 		close() {
@@ -127,6 +128,45 @@ export default Controller.extend({
 							})
 							return axes
 						}
+
+						// function axes(radarfigure) {
+						// 	let axes = [];
+						// 	axes.pushObject({
+						// 		axis: i18n.t('apm.component.radar.prodKnowledge') + "",
+						// 		value: radarfigure.prod_knowledge_val
+						// 	})
+
+						// 	axes.pushObject({
+						// 		axis: i18n.t('apm.component.radar.targetVisit') + "",
+						// 		value: radarfigure.target_call_freq_val
+						// 	})
+
+						// 	axes.pushObject({
+						// 		axis: i18n.t('apm.component.radar.visitTime') + "",
+						// 		value: radarfigure.call_times_val
+						// 	})
+
+						// 	axes.pushObject({
+						// 		axis: i18n.t('apm.component.radar.localWorkDay') + "",
+						// 		value: radarfigure.in_field_days_val
+						// 	})
+
+						// 	axes.pushObject({
+						// 		axis: i18n.t('apm.component.radar.workEnthusiasm') + "",
+						// 		value: radarfigure.motivation_val
+						// 	})
+
+						// 	axes.pushObject({
+						// 		axis: i18n.t('apm.component.radar.areaManageAbility') + "",
+						// 		value: radarfigure.territory_manage_val
+						// 	})
+
+						// 	axes.pushObject({
+						// 		axis: i18n.t('apm.component.radar.saleAbility') + "",
+						// 		value: radarfigure.sales_skills_val
+						// 	})
+						// 	return axes
+						// }
 
 						let regionCache = this.store.peekRecord('region', id);
 						let radarData = [{
