@@ -58,13 +58,18 @@
 											{{region.name}}
 											<img src="/assets/images/note.png" width="16px" height="20px" alt="note">
 										</span>
-								</td>
+								    </td>
                                     {{#each regionCompanyTargets as |item|}}
                                         {{#if (eq region.id item.region_id)}}
                                             <td>{{number-format item.company_targe}}</td>
                                         {{/if}}
                                     {{/each}}
-                                    <td>30%</td>
+                                    {{#each regionSalesContri as |item|}}
+                                        {{#if (eq region.id item.region_id)}}
+                                            <td>{{number-percent item.sales_contri}}</td>
+                                        {{/if}}
+                                    {{/each}}
+                                    {{!-- <td>30%</td> --}}
 									<td>{{input type="text" value=region.forecast maxlength="10" dir="ltr" disabled=(if history true false)}} </td>
                                     {{#each regionCotri as |item|}}
                                         {{#if (eq region.id item.id)}}

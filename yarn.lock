@@ -4241,9 +4241,8 @@ electron-to-chromium@^1.3.47:
   integrity sha512-h3zEBLdHvsKfaXv1SHAtykJyNtwYFEKkrWGSFyW1BzGgPQ4ykAzD5Hd8C5MZGTAEhkCKmtyIwYUrapsI0xfKww==
 
 electron-to-chromium@^1.3.82:
-  version "1.3.82"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.82.tgz#7d13ae4437d2a783de3f4efba96b186c540b67b1"
-  integrity sha512-NI4nB2IWGcU4JVT1AE8kBb/dFor4zjLHMLsOROPahppeHrR0FG5uslxMmkp/thO1MvPjM2xhlKoY29/I60s0ew==
+  version "1.3.83"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.83.tgz#74584eb0972bb6777811c5d68d988c722f5e6666"
 
 elliptic@^6.0.0:
   version "6.4.1"
@@ -8881,10 +8880,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-pharbers-emberbasis-library@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/pharbers-emberbasis-library/-/pharbers-emberbasis-library-1.0.0.tgz#17d055f8bbdf581e38bc5a9d02f0427ae5fd4070"
-  integrity sha512-Bwiup4NmhPbnXksVpMMOxv+NsO2xW5TCBlgaNNJ2ZyP2N//BqvGZr/qQSwq8QXdZKAR8Dgno4E0NqcbaAbpXhw==
+pharbers-emberbasis-library@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/pharbers-emberbasis-library/-/pharbers-emberbasis-library-1.0.1.tgz#5cd5247adc1c4e0d5f8975722c8e8559ec033e72"
   dependencies:
     ember-auto-import "^1.2.13"
     ember-cli-babel "^7.1.2"

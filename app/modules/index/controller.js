@@ -21,15 +21,12 @@ export default Controller.extend({
 			let RSA = this.get('pmController').get('RSA');
 			RSA.setPublicKey(PublicKey);
 			let req = this.store.createRecord('request', { id: '0', res: 'user' });
-			this.get('logger').log(this.login.password);
 			let privatePw = RSA.encrypt(this.login.password);
-			this.get('logger').log(privatePw);
 			let eqValues = [
 				{ id: '1', type: 'eqcond', key: 'email', val: this.login.email },
 				{ id: '2', type: 'eqcond', key: 'password', val: privatePw },
 				{ id: '3', type: 'eqcond', key: 'login_source', val: 'APM' }
 			]
-
 			eqValues.forEach((elem) => {
 				req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
 					id: elem.id,
@@ -38,15 +35,31 @@ export default Controller.extend({
 				}))
 			});
 			let conditions = this.store.object2JsonApi(req);
-			this.get('logger').log(conditions);
-			this.get('pmController').get('Store').queryObject('/api/v1/login/0', 'auth', conditions).then(data => {
-				this.get('cookies').write('token', data.token, { path: '/', maxAge: data.token_expire });
-				localStorage.setItem('userName', data.user.get('user_name'))
-				localStorage.setItem('userPhone', data.user.get('user_phone'))
-				localStorage.setItem('userEmail', data.user.get('email'))
-				localStorage.setItem('userImage', data.user.get('image'))
-				this.transitionToRoute('project-sort')
-			});
+			this.get('pmController').get('Store').queryObject('/api/v1/login/0', 'auth', conditions)
+				.then(data => {
+					this.get('cookies').write('token', data.token, { path: '/', maxAge: data.token_expire });
+					localStorage.setItem('userName', data.user.get('user_name'))
+					localStorage.setItem('userPhone', data.user.get('user_phone'))
+					localStorage.setItem('userEmail', data.user.get('email'))
+					localStorage.setItem('userImage', data.user.get('image'))
+					this.transitionToRoute('project-sort')
+				})
+				.catch(error => {
+					let content = "";
+					error.errors.forEach(ele => {
+						content += ele.detail +'</br>'
+					});
+					this.get('logger').log(content);
+					let hint = {
+						hintModal: true,
+						hintImg: true,
+						title: '提示',
+						content:content,
+						hintBtn: false,
+					}
+					this.set('hint', hint);
+					this.set('errors',error);
+				});
 
 		}
 	}

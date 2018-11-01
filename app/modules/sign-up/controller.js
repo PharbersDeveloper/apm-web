@@ -10,7 +10,6 @@ export default Controller.extend(SignupLogic, {
 		this.get('pmController').get('BusinessLogic').funcInjection(this.signUpSuccess)
 
 	},
-	errorText: '',
 	userName: '',
 	userEmail: '',
 	userPassword: '',
@@ -40,6 +39,14 @@ export default Controller.extend(SignupLogic, {
 	}),
 	actions: {
         toLogin(){
+			let hint = {
+				hintModal: false,
+				hintImg: true,
+				title: '提示',
+				content: '跳转中...',
+				hintBtn: false,
+			}
+			this.set('hint', hint);
             this.transitionToRoute('index');
         },
 		submit() {
@@ -82,19 +89,22 @@ export default Controller.extend(SignupLogic, {
             			}
             			this.set('hint', hint);
 						// this.transitionToRoute('index');
-
 					})
 					.catch((error) => {
+						let content = "";
+						error.errors.forEach(ele => {
+							content += ele.detail +'</br>'
+						});
+						this.get('logger').log(content);
                         let hint = {
             				hintModal: true,
             				hintImg: true,
             				title: this.i18n.t('apm.sign.tips') + "",
-            				content: this.i18n.t('apm.sign.signUpFail') + "",
+            				content:content,
             				hintBtn: false,
             			}
             			this.set('hint', hint);
-
-						this.set('errorText', error.detail)
+						this.set('errors',error);
 					});
 			}
 		}
