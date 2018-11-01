@@ -50,7 +50,8 @@ export default Component.extend({
 		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
 		let svg = svgContainer.append("svg")
 			.style('background-color', this.get('backgroundColor'))
-			.style('padding', '0 10px')
+			// .style('padding', '0 10px')
+			.style('padding', '0 0')
 			.attr('preserveAspectRatio', 'xMidYMid meet')
 			.attr('viewBox', '0 0 960 420')
 

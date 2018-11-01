@@ -65,6 +65,6 @@
 		"bootstrap-sass": "3.3.7",
 		"ember-cookies": "^0.3.1",
 		"mapping-components": "^1.0.0",
-		"pharbers-emberbasis-library": "^1.0.0"
+		"pharbers-emberbasis-library": "^1.0.1"
 	}
 }

@@ -25,7 +25,9 @@ export default Controller.extend({
 			component.set('startTip', false);
 			this.get('introduced').set('isSelectedName', 'showScenario');
 			this.getPaper(component.get('courseid')).then(data => {
-				localStorage.setItem('history', false)
+				localStorage.setItem('history', false);
+				localStorage.removeItem('totalRegion');
+				localStorage.removeItem('regionResort');
 				this.transitionToRoute('new-project.project-start.index.analyze', component.get('courseid'), data.id)
 			})
 

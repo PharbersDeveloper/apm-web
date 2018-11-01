@@ -33,7 +33,6 @@ export default Controller.extend({
 				localStorage.removeItem('totalRegion')
 				return resolve(true)
 			}).then(data => {
-				// this.transitionToRoute('project-sort')；
 				window.location = '/project-sort'
 			})
 		}

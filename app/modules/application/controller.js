@@ -6,7 +6,7 @@ export default Controller.extend({
 	userName: '',
 	init() {
 		this._super(...arguments);
-		this.set('userName', localStorage.getItem('userName') || '您好，请注册')
+		this.set('userName',localStorage.getItem('userName'));
 	},
 	actions: {
 		exitSystem() {

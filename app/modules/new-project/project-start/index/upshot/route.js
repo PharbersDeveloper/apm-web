@@ -2,12 +2,15 @@ import Route from '@ember/routing/route';
 import { groupBy } from '../../../../phtool/tool';
 
 export default Route.extend({
-
+	init() {
+		this._super(...arguments);
+		this.set('history', JSON.parse(localStorage.getItem('history')));
+	},
 	model() {
 		this.get('pmController').get('Store').peekAll('bind_course_region_rep').forEach(elem => elem.destroyRecord().then(rec => rec.unloadRecord()));
 
 		let parentModel = this.modelFor('new-project.project-start');
-		// let medicine = this.get('pmController').get('Store').peekAll('medicine').filter(elem => !elem.compete).firstObject;
+
 		function _conditions(request, anyConditions) {
 			anyConditions.forEach((elem, index) => {
 				request.get(elem.type).pushObject(request.store.createRecord(elem.type, {
@@ -18,35 +21,48 @@ export default Route.extend({
 			});
 			return request.store.object2JsonApi(request);
 		};
-		this.get('logger').log(parentModel.paperid);
 
-		let req = this.get('pmController').get('Store').createModel('callapmr', {
-			id: 'callR0',
-			paper_id: parentModel.paperid,
-		});
-		this.get('logger').log(req);
-		let conditions = this.get('pmController').get('Store').object2JsonApi(req, false);
-		let modelData = {};
-		return this.get('pmController').get('Store').transaction('/api/v1/callAPMr/0', 'callapmr', conditions)
-			.then(data => { // call R
-				return data;
-			})
-			.then(() => { // 获取公司产品
-				let req = this.get('pmController').get('Store').createModel('request', {
-					id: 'upshotProd0',
-					res: 'bind_course_goods',
-					fmcond: this.get('pmController').get('Store').createModel('fmcond', {
-						id: 'upshotProdFm0',
-						skip: 0,
-						take: 20
-					})
+		function _callR(that) {
+			let req = that.get('pmController').get('Store').createModel('callapmr', {
+				id: 'callR0',
+				paper_id: parentModel.paperid,
+			});
+			let conditions = that.get('pmController').get('Store').object2JsonApi(req, false);
+			return that.get('pmController').get('Store').transaction('/api/v1/callAPMr/0', 'callapmr', conditions)
+				.then(data => { // call R
+					return data;
+				})
+		};
+		/*
+				let req = this.get('pmController').get('Store').createModel('callapmr', {
+					id: 'callR0',
+					paper_id: parentModel.paperid,
 				});
+				let conditions = this.get('pmController').get('Store').object2JsonApi(req, false);
+				let modelData = {};
 
-				let eqValues = [{ id: 'upshotProd1', type: 'eqcond', key: 'course_id', val: parentModel.courseid }];
-				let conditions = _conditions(req, eqValues);
-
-				return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
+				return this.get('pmController').get('Store').transaction('/api/v1/callAPMr/0', 'callapmr', conditions)
+					.then(data => { // call R
+						return data;
+					})
+					.then(() => { // 获取公司产品
+					*/
+		let modelData = {};
+		let req = this.get('pmController').get('Store').createModel('request', {
+			id: 'upshotProd0',
+			res: 'bind_course_goods',
+			fmcond: this.get('pmController').get('Store').createModel('fmcond', {
+				id: 'upshotProdFm0',
+				skip: 0,
+				take: 20
 			})
+		});
+
+		let eqValues = [{ id: 'upshotProd1', type: 'eqcond', key: 'course_id', val: parentModel.courseid }];
+		let conditions = _conditions(req, eqValues);
+		// 获取公司产品
+		return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findCourseGoods/0', 'medicine', conditions)
+			// })
 			.then(data => { // 处理公司产品
 				data.forEach(elem => {
 					elem.set('compete', false)
@@ -73,6 +89,16 @@ export default Route.extend({
 					return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
 				});
 				return Promise.all(promiseArray)
+			})
+			.then(() => {
+				let history = this.get('history');
+				this.get('logger').log(history);
+				let that = this;
+				if (!history) {
+					return _callR(that);
+				} else {
+					return null;
+				}
 			})
 			.then(() => {
 				let medicine = this.get('pmController').get('Store').peekAll('medicine').filter(elem => !elem.compete).firstObject;
@@ -164,7 +190,8 @@ export default Route.extend({
 				});
 
 				let tempByGroupGoods = groupBy(all, 'goods_id')
-				modelData.areaD3LineShareData = Object.keys(tempByGroupGoods).map(key => {
+
+				let _areaD3LineShareData = Object.keys(tempByGroupGoods).map(key => {
 					let goodCache = this.get('pmController').get('Store').peekRecord('medicine', key);
 					return {
 						name: goodCache.prod_name,
@@ -175,10 +202,17 @@ export default Route.extend({
 							}
 						})
 					}
-				})
+				});
+				_areaD3LineShareData.forEach(ele => {
+					ele.values.sort((a, b) => {
+						return (a.ym.slice(0, 2) + a.ym.slice(-1)) - (b.ym.slice(0, 2) + b.ym.slice(-1))
+					})
+				});
 
+				modelData.areaD3LineShareData = _areaD3LineShareData;
 				let tempByGroupRegion = groupBy(region, 'region_id');
-				modelData.areaD3LineRegionData = Object.keys(tempByGroupRegion).map(key => {
+
+				let _areaD3LineRegionData = Object.keys(tempByGroupRegion).map(key => {
 					let regionCache = this.get('pmController').get('Store').peekRecord('region', key);
 					return {
 						name: regionCache.name,
@@ -189,11 +223,24 @@ export default Route.extend({
 							}
 						})
 					}
-				}).reverse()
-				return modelData
+				});
+				_areaD3LineRegionData.forEach(ele => {
+					ele.values.sort((a, b) => {
+						return (a.ym.slice(0, 2) + a.ym.slice(-1)) - (b.ym.slice(0, 2) + b.ym.slice(-1))
+					})
+				});
+				modelData.areaD3LineRegionData = _areaD3LineRegionData.reverse();
+				return modelData;
 			})
+		// .then((data) => {
+		// 	let history = this.get('history');
+		// 	this.get('logger').log(history);
+		// 	if (!history) {
+		// 		this.callR(data);
+		// 	} else {
+		// 		return data;
+		// 	}
+		// })
+		// */
 	},
-	actions: {
-
-	}
 });

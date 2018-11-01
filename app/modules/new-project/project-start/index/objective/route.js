@@ -228,11 +228,15 @@ export default Route.extend({
 				// let TotalMeds = this.get('pmController').get('Store').peekAll('bind_course_region_goods_ym_sales');
 				// data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
 				// data.forEach(elem => { temp.pushObject(elem) });
+				let contTemp =[];
 				data.forEach((elem) => {
 					if (elem.ym.indexOf('q') < 0) {
 						temp.pushObject(elem)
+					} else {
+						contTemp.pushObject(elem)
 					}
-				})
+				});
+
 				let predictionData = temp.filter(elem => elem.ym === '18-01' || elem.ym === '18-02' || elem.ym === '18-03')
 				let predictionGroupData = groupBy(predictionData, 'region_id')
 				let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
@@ -241,7 +245,17 @@ export default Route.extend({
 						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.sales.company_target, 0)
 					}
 				})
-				controller.set('regionCompanyTargets', regionCompanyTargets)
+				// sales_contri x销售贡献度
+				let _predictionDataForContri = contTemp.filter(elem => elem.ym === '17-q4');
+				let _predictionGroupDataForContri = groupBy(_predictionDataForContri, 'region_id');
+				let regionSalesContri = Object.keys(_predictionGroupDataForContri).map(key => {
+					return {
+						region_id: key,
+						sales_contri: _predictionGroupDataForContri[key].reduce((acc, cur) => acc + cur.sales.sales_contri, 0)
+					}
+				});
+				controller.set('regionSalesContri', regionSalesContri);
+				controller.set('regionCompanyTargets', regionCompanyTargets);
 				controller.set('totalCompanyTarget', predictionData.reduce((acc, cur) => acc + cur.sales.company_target, 0))
 
 				let areaBarData = d3Data(groupBy(temp.filter(elem => elem.region_id !== 'all'), 'region_id'));
