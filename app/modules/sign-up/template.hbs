@@ -34,18 +34,23 @@
             <div local-class="userinfo">
                 <label local-class="title">{{t "apm.sign.name"}}</label>
                 {{input id="userename" type="text" value=userName label="email" placeholder=(t "apm.sign.inputName") required=true local-class="name"}}
-                <p local-class="hint">{{nameHint.text}}</p>
+                {{!-- <p local-class="hint">{{nameHint.text}}</p> --}}
+                <p local-class={{if nameHint.status 'hint' 'wrongText'}}>{{nameHint.text}}</p>
+
 
             </div>
             <div local-class="userinfo">
                 <label local-class="title" for="useremail">{{t "apm.sign.mail"}}</label>
                 {{input id="useremail" type="email" value=userEmail placeholder=(t "apm.sign.inputMail") required=true local-class="email"}}
-                <p local-class="hint">{{emailHint.text}}</p>
+                <p local-class={{if emailHint.status 'hint' 'wrongText'}}>{{emailHint.text}}</p>
+
             </div>
             <div local-class="userinfo">
                 <label local-class="title">{{t "apm.sign.password"}}</label>
                 {{input id="userpassword" type="password" value=userPassword placeholder=(t "apm.sign.inputPassword") required=true local-class="password"}}
-                <p local-class="hint">{{pwHint.text}}</p>
+                {{!-- <p local-class="hint">{{pwHint.text}}</p> --}}
+                <p local-class={{if pwHint.status 'hint' 'wrongText'}}>{{pwHint.text}}</p>
+
 
             </div>
             <div local-class="clicks">

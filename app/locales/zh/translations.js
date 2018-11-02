@@ -24,7 +24,7 @@ export default {
     "determine": "确定",
     "signUp": "注册",
     "logOut": "退出系统",
-    
+
     "index": {
       "slogan": "slogan",
       "forgetPassword": "忘记密码?",
@@ -59,10 +59,10 @@ export default {
       "nameSuccess": "姓名验证成功",
       "inputRightMail": "请输入正确的邮箱格式",
       "mailSuccess": "邮箱验证成功",
-      "passwordLength": "密码长度应在8～20个字符之间",
+      "passwordLength": "密码长度应在6～18个字符之间",
       "passwordSuccess": "密码验证成功",
       "tips": "提示",
-      "signUpOk": "注册成功,点击确认进入登陆界面.",
+      "signUpOk": "注册成功,点击确认跳转登录页面.",
       "signUpFail": "注册失败。",
     },
 
@@ -97,7 +97,7 @@ export default {
         "yourForecast": "您的预测总指标",
         "sort": "排序",
         "area": "区域",
-        "companyIndex": "公司指标Corporate indicators",
+        "companyIndex": "公司指标",
         "lqSalesContribution": "上季销售贡献率",
         "tqForecastIndex": "本季预测指标",
         "tqIndexContributionRate": "本季指标贡献率",
@@ -106,7 +106,7 @@ export default {
       "resource": {
         "title": "资源分配",
         "subtitle": "在资源有限的情况下，做出合适的投入计划，以达到目标。",
-        "coachCoVisitDays": "辅导协访天数",
+        "coachCoVisitDays": "辅导协访时间",
         "countryQuota": "全国会名额",
         "cityQuota": "城市会名额",
         "departmentQuota": "科室会名额",
@@ -114,7 +114,7 @@ export default {
         "area": "区域",
         "corporateIndicators": "公司指标",
         "forecastIndex": "预测指标",
-        "coVisitDays": "协访天数",
+        "coVisitDays": "协访时间",
         "country": "全国会",
         "city": "城市会",
         "department": "科室会",
@@ -135,7 +135,7 @@ export default {
         "tipContent": "本次课程中的内容将进行保存,<br/>您将可以在“历史报告”中查看本次的课程内容与结果.",
         "tipContent2": "确认进入下一步后，将不可修改当前内容。",
       }
-        
+
     },
 
     "hisProject": {
@@ -195,7 +195,7 @@ export default {
         "contributionCoefficient": "贡献度系数",
         "growthRate": "上月销售增长率",
       },
-      
+
       "regionalIntro":{
         "marketPotentialYear": "市场潜力(年)",
         "lmSales": "上月销售额",
@@ -227,7 +227,7 @@ export default {
       "chargeRepresent":{
         "title": "负责代表",
       },
-      
+
       "representReport":{
         "title": "区域业务报告",
       },

@@ -71,7 +71,7 @@ export default Controller.extend({
 					hintModal: true,
 					hintImg: true,
 					title: '提示',
-					content: '选择全部的行动计划,并保证最多两项！',
+					content: '请为所有的区域选择适当的行动计划,并保证最多两项！',
 					hintBtn: false,
 				}
 				this.set('hint', hint);

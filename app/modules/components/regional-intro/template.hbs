@@ -173,19 +173,12 @@
 										<td>{{number-format item.value}}</td>
 									{{/each}}
 								</tr>
-								<tr>
+								{{!-- <tr>
 									<td>{{t "apm.component.regionalIntro.share"}}(%)</td>
-									{{!-- {{#each salesBar as |item|}}
-										{{#if (eq item.region_id data.id)}}
-											{{#each item.data as |item|}}
-												<td>{{item.value2}}%</td>
-											{{/each}}
-										{{/if}}
-									{{/each}} --}}
 									{{#each singleRegionData.salesBar.data as |item|}}
 										<td>{{item.value2}}%</td>
 									{{/each}}
-								</tr>
+								</tr> --}}
 							</tbody>
 						</table>
 						{{!-- </div> --}}

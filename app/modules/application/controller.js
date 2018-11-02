@@ -14,7 +14,7 @@ export default Controller.extend({
 				this.get('cookies').clear('token');
 				localStorage.clear();
 				return resolve(true)
-			}).then(data => {
+			}).then(() => {
 				window.location.reload()
 			})
 		}
