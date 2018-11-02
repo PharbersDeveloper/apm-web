@@ -1,10 +1,10 @@
 <div local-class="center">
     <div local-class="content-page" class="container">
         <div local-class="head">
-            <p local-class="title">{{#link-to 'project-sort'}}<span class="glyphicon glyphicon-triangle-left"></span>Historical plan{{/link-to}}</p>
+            <p local-class="title">{{#link-to 'project-sort'}}<span class="glyphicon glyphicon-triangle-left"></span>{{t "apm.hisProject.hisPlan"}}{{/link-to}}</p>
         </div>
         <div>
-            <p local-class="headline"><span local-class="point-span"></span><span>进行中</span></p>
+            <p local-class="headline"><span local-class="point-span"></span><span>{{t "apm.hisProject.ongoing"}}</span></p>
             {{#each model as |item|}}
                 {{#if item.state}}
                     {{his-class-card data=item lookOver=(action 'lookOver')}}
@@ -12,11 +12,13 @@
             {{/each}}
         </div>
         <div>
-            <p local-class="headline"><span local-class="point-span"></span><span>已完成</span></p>
+            <p local-class="headline"><span local-class="point-span"></span><span>{{t "apm.hisProject.done"}}</span></p>
              {{#each model as |item|}}
                 {{#unless item.state}}
                     {{his-class-card data=item continue=(action 'continue')}} 
                 {{/unless}}
+				{{else}}
+					<h3>{{t "apm.hisProject.noDoneClass"}}</h3>
             {{/each}}
         </div>
     </div>

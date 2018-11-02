@@ -2,24 +2,24 @@
 {{#unless history}}
     <div class="next-step">
         {{#bs-button class="btn-next" local-class="output"}}
-            导出
+            {{t "apm.newProject.upshot.output"}}
         {{/bs-button}}
         {{#bs-button class="btn-next" onClick=(action "saveUpshot")}}
-            保存退出
+            {{t "apm.newProject.upshot.saveExit"}}
         {{/bs-button}}
     </div>
 {{/unless}}
 
 <div  local-class="area-sales">
-    <p>地区季度销售结果</p>
+    <p>{{t "apm.newProject.upshot.areaSales"}}</p>
 	{{d3-histogram-area-sales data=model.quarterD3BarData}}
-	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 		<table class="table table-striped" local-class="table-sales">
 			<thead>
 				<tr>
 					<td> </td>
-					<td>份额</td>
-					<td>销售额</td>
+					<td>{{t "apm.newProject.upshot.share"}}</td>
+					<td>{{t "apm.newProject.upshot.sales"}}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,7 +34,7 @@
 		</table>
 	</div>
 </div>
-{{d3-line-multi-legend chooseData=model.areaD3LineShareData title="地区产品份额变化" class="multiline-area-prod-share"}}
-{{d3-line-multi-legend chooseData=model.areaD3LineRegionData title="各区域份额结果" class="rea-share"}}
-{{d3-stacked-bar }}
+{{d3-line-multi-legend chooseData=model.areaD3LineShareData title=(t "apm.newProject.upshot.areaShareChange") class="multiline-area-prod-share"}}
+{{d3-line-multi-legend chooseData=model.areaD3LineRegionData title=(t "apm.newProject.upshot.areaShareResult") class="rea-share"}}
+{{!-- {{d3-stacked-bar }} --}}
 {{hint-modal hint=hint confirm=(action 'confirmSaveUpshot')}}

@@ -1,27 +1,21 @@
 <div class="table-responsive" local-class="table-no-border">
-    <p local-class="title">月度数据<span></span></p>
+    <p local-class="title">{{t "apm.component.areaBaseInfoTable.monthData"}}<span></span></p>
     <table local-class="table-container" class="table">
         <thead>
             <tr>
-                <td>区域</td>
-                <td>市场潜力</td>
-                <td>潜力贡献度</td>
-                <td>上次销售额</td>
-                <td>销售贡献度</td>
-                <td>贡献度系数</td>
-                <td>上期销售增长率</td>
+                <td>{{t "apm.component.areaBaseInfoTable.area"}}</td>
+                <td>{{t "apm.component.areaBaseInfoTable.marketPotential"}}</td>
+                <td>{{t "apm.component.areaBaseInfoTable.potentialContribution"}}</td>
+                <td>{{t "apm.component.areaBaseInfoTable.lmSale"}}</td>
+                <td>{{t "apm.component.areaBaseInfoTable.lmSaleContribution"}}</td>
+                <td>{{t "apm.component.areaBaseInfoTable.contributionCoefficient"}}</td>
+                <td>{{t "apm.component.areaBaseInfoTable.growthRate"}}</td>
             </tr>
         </thead>
         <tbody>
             {{#each data as |item|}}
                 <tr>
                     <td>{{item.name}}</td>
-                    {{!-- <td>{{input type="text" dir="rtl" disabled=true value=item.potential}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.potential_contri}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.sales}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.sales_contri}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.contri_index}}</td>
-                    <td>{{input type="text" dir="rtl" disabled=true value=item.sales_growth}}</td> --}}
                     <td>{{number-format item.potential}}</td>
                     <td>{{number-tofixed2 item.potential_contri}}</td>
                     <td>{{number-format item.sales}}</td>

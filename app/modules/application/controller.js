@@ -6,7 +6,7 @@ export default Controller.extend({
 	userName: '',
 	init() {
 		this._super(...arguments);
-		this.set('userName', localStorage.getItem('userName') || '您好，请注册')
+		this.set('userName',localStorage.getItem('userName'));
 	},
 	actions: {
 		exitSystem() {
@@ -15,7 +15,6 @@ export default Controller.extend({
 				localStorage.clear();
 				return resolve(true)
 			}).then(data => {
-				console.info(123)
 				window.location.reload()
 			})
 		}

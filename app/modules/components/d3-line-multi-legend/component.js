@@ -7,9 +7,9 @@ export default Component.extend({
 
 	didReceiveAttrs() {
 		this._super(...arguments);
-		if (this.get('chooseData')) run.schedule('render', this, this.drawMultiLineChoose);
+		if (this.get('chooseData')) run.schedule('render', this, this.drawMultiLine);
 	},
-	drawMultiLineChoose() {
+	drawMultiLine() {
 		let localClass = this.get('class');
 		let title = this.get('title');
 		d3.select('.' + localClass + ' svg.much-lines').remove();
@@ -58,7 +58,6 @@ export default Component.extend({
 		let xDatas = chooseData.map(elem => {
 			return elem.values.map(vals => vals.ym)
 		})[0];
-		// console.log(xDatas);
 		/* Scale */
 		let xScale = d3.scalePoint().rangeRound([0, width])
 		// let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1);
@@ -225,7 +224,7 @@ export default Component.extend({
 		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer');
 		let legendArea = legendContainer.append("svg")
 			// .attr('width', 90)
-			.attr('width', 180 * data.length)
+			.attr('width', 100 * data.length)
 			.attr('height', 20)
 
 		//绑定数据，设置每个图例的位置
@@ -241,7 +240,7 @@ export default Component.extend({
 			.enter()
 			.append("g")
 			.attr("transform", function(d, i) {
-				return "translate(" + (i * 200) + ",0)";
+				return "translate(" + (i * 100) + ",0)";
 			});
 		//添加图例的矩形色块
 		// legend.append("rect")

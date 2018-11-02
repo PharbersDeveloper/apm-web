@@ -2,7 +2,8 @@
     {{#unless history}}
         <div class="next-step">
             {{#bs-button class="btn-next" onClick=(action "nextStep")}}
-                下一步
+                {{!-- 下一步 --}}
+				{{t "apm.newProject.next"}}
             {{/bs-button}}
         </div>
     {{/unless}}
@@ -10,35 +11,18 @@
 	<div local-class="sort-conent">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
-				<p local-class="title-sort"><span>重要度排序-</span><span> 根据分析，寻找增长点，并已即将发生增长的可能性进行排序。</span></p>
+				<p local-class="title-sort"><span>{{t "apm.newProject.sortPage.title"}}-</span><span> {{t "apm.newProject.sortPage.subtutle"}}</span></p>
 				<div class="row" local-class="tips-sort">
 					<div class="col-md-6 col-lg-6 col-sm-6"></div>
 					<div class="col-md-6 col-lg-6 col-sm-6">
-						<p class="text-center">排序-请多动区域卡片进行排序</p>
+						<p class="text-center">{{t "apm.newProject.sortPage.pleaseSort"}}</p>
 					</div>
 				</div>
-				{{sort-drag-drop areaArray=model history=history}}
+				{{sort-drag-drop areaArray=model represents=represents history=history}}
 			</div>
 		</div>
 	</div>
 </div>
 
-{{!-- {{#bs-modal local-class="hint-modal" open=tipsModal onSubmit=(action 'toObjective') onHidden=(action (mut tipsModal) false) as |modal|}}
-	{{#modal.header}}
-		<h4 class="modal-title">
-      <span></span>提示
-    </h4>
-	{{/modal.header}}
-	{{#modal.body}}
-		<p>{{tipsContent}}</p>
-	{{/modal.body}}
-	{{#modal.footer}}
-		{{#if isAllResort}}
-			{{#bs-button onClick=(action modal.close)}}取消{{/bs-button}}
-			{{#bs-button type="success" onClick=(action modal.submit)}}下一步{{/bs-button}}
-		{{else}}
-			{{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
-		{{/if}}
-	{{/modal.footer}}
-{{/bs-modal}} --}}
+
 {{hint-modal hint=hint confirm=(action 'toObjective')}}

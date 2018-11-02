@@ -2,11 +2,12 @@
     {{#unless history}}
         <div class="next-step">
             {{#bs-button class="btn-next" onClick=(action "nextStep")}}
-                下一步
+                {{!-- 下一步 --}}
+                {{t "apm.newProject.next"}}
             {{/bs-button}}
         </div>
     {{/unless}}
-	
+
 	<div local-class="analyze-section">
 		{{area-base-info-table data=model.tableData}}
 	</div>
@@ -15,23 +16,5 @@
 	{{/each}}
 	{{!-- {{area-analyze-input }} --}}
 </div>
-{{!-- {{#bs-modal local-class="hint-modal" open=notesEmpty onSubmit=(action 'toSort') onHidden=(action (mut notesEmpty) false) as |modal|}}
-  {{#modal.header}}
-    <h4 class="modal-title">
-      <span></span>提示
-    </h4>
-  {{/modal.header}}
-  {{#modal.body}}
-	<p>{{tipsContent}}</p>
 
-  {{/modal.body}}
-  {{#modal.footer}}
-	  {{#if isNoteEmpty}}
-		  {{#bs-button onClick=(action modal.close)}}取消{{/bs-button}}
-		  {{#bs-button type="success" onClick=(action modal.submit)}}下一步{{/bs-button}}
-	  {{else}}
-		  {{#bs-button onClick=(action modal.close)}}继续填写{{/bs-button}}
-	  {{/if}}
-  {{/modal.footer}}
-{{/bs-modal}} --}}
 {{hint-modal hint=hint confirm=(action 'toSort')}}

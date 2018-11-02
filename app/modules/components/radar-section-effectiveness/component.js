@@ -8,11 +8,16 @@ export default Component.extend({
 
 	didReceiveAttrs() {
 		this._super(...arguments);
-		run.schedule('render', this, this.RadarChart);
+		if (this.get('gradient') === '' && this.get('radarSectionData')) {
+			throw 'gradient is null or undefinde, please set value';
+		} else {
+			if (this.get('radarSectionData')) run.schedule('render', this, this.RadarChart);
+		}
+		// run.schedule('render', this, this.RadarChart);
 	},
 
 	RadarChart() {
-		let data = this.get('radarSectionData')//.reverse();
+		let data = this.get('radarSectionData') //.reverse();
 		let _currentColor = data.map((item) => {
 			return item.color;
 		});
@@ -171,7 +176,7 @@ export default Component.extend({
 			.attr("x", 4)
 			.attr("y", d => -d * radius / cfg.levels)
 			.attr("dy", "0.4em")
-			.style("font-size", "10px")
+			.style("font-size", "14px")
 			.attr("fill", "#737373")
 			.text(d => Format(maxValue * d / cfg.levels) + cfg.unit);
 
@@ -198,7 +203,7 @@ export default Component.extend({
 		//Append the labels at each axis
 		axis.append("text")
 			.attr("class", "legend")
-			.style("font-size", "13px")
+			.style("font-size", "14px")
 			.style('letter-spacing', '1.5px')
 			.attr("text-anchor", "middle")
 			.attr("dy", "0.35em")
@@ -316,7 +321,7 @@ export default Component.extend({
 			.attr("class", "tooltip")
 			.attr('x', 0)
 			.attr('y', 0)
-			.style("font-size", "13px")
+			.style("font-size", "14px")
 			.style('display', 'none')
 			.attr("text-anchor", "middle")
 			.attr("dy", "0.35em");
@@ -332,7 +337,7 @@ export default Component.extend({
 					.attr('transform', `translate(${cfg.legend.translateX},${cfg.legend.translateY})`)
 					.attr("x", cfg.w - 70)
 					.attr("y", 10)
-					.attr("font-size", "13px")
+					.attr("font-size", "14px")
 					.attr("fill", "#404040")
 					.text(cfg.legend.title);
 			}
@@ -358,7 +363,7 @@ export default Component.extend({
 				.append("text")
 				.attr("x", cfg.w - 52)
 				.attr("y", (d, i) => i * 20 + 9)
-				.attr("font-size", "11px")
+				.attr("font-size", "14px")
 				.attr("fill", "#737373")
 				.text(d => d);
 		}

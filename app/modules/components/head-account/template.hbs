@@ -1,6 +1,6 @@
 <div local-class="head">
     <div local-class="title">
-        <p>ＳＹＳ  ＮＡＭＥ</p>
+        <p>{{t "apm.sysName"}}</p>
     </div>
     <div local-class="account">
         <div class="dropdown">
@@ -9,7 +9,7 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li {{action 'exitSystem'}}>退出系统</li>
+            <li {{action 'exitSystem'}}>{{t "apm.logOut"}}</li>
 
             {{!-- <li role="separator" class="divider"></li> --}}
           </ul>

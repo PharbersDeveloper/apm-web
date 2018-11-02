@@ -6,13 +6,15 @@ export default Controller.extend({
 	init() {
 		this._super(...arguments);
 		this.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
-		this.set('region', this.store.peekAll('region'));
-        this.set('history',  JSON.parse(localStorage.getItem('history')));
+		this.set('region', this.get('pmController').get('Store').peekAll('region'));
+		this.set('history', JSON.parse(localStorage.getItem('history')));
 	},
 	newRegionData: computed('regionResort', function() {
 		let regionResort = JSON.parse(localStorage.getItem('regionResort'));
-		let region = this.store.peekAll('region');
-		console.log(regionResort);
+		regionResort.sort((a, b) => {
+			return a.id - b.id;
+		})
+		let region = this.get('pmController').get('Store').peekAll('region');
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
 			region.forEach((ele) => {
@@ -84,14 +86,13 @@ export default Controller.extend({
 	}),
 	actions: {
 		saveToLocalStorage() {
-			let region = this.store.peekAll('region');
+			let region = this.get('pmController').get('Store').peekAll('region');
 			let singleRegionJsonApi = null;
 			let regionLocalStorage = region.map((item) => {
-				singleRegionJsonApi = this.store.object2JsonApi('region', item, false);
+				singleRegionJsonApi = this.get('pmController').get('Store').object2JsonApi(item, false);
 				return singleRegionJsonApi
 			});
-			// console.log(regionLocalStorage)
-			// let regionJsonApi = this.store.object2JsonApi('region', region, false);
+			// let regionJsonApi = this.get('pmController').get('Store').object2JsonApi('region', region, false);
 			localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 		},
 		openTips(region) {
@@ -103,9 +104,6 @@ export default Controller.extend({
 				hintBtn: false,
 			}
 			this.set('hint', hint);
-			// this.set('tipsModal', true);
-			// this.set('tipsTitle', region.name);
-			// this.set('tipsContent', region.notes);
 		},
 		nextStep() {
 			let wrongRegionName = '';
@@ -113,8 +111,6 @@ export default Controller.extend({
 			let iscoVisitEmpty = region.every((item) => {
 				let total = '';
 				total = item.covisit + item.nationMeeting + item.cityMeeting + item.departmentMeeting;
-				console.log(isNaN(total));
-				console.log(total);
 				if (isNaN(total)) {
 					wrongRegionName = item.name;
 				}
@@ -135,9 +131,6 @@ export default Controller.extend({
 					}
 					this.set('hint', hint);
 					this.set('iscoVisitEmpty', false);
-					// this.set('tipsModal', true);
-					// this.set('tipsTitle', '提示');
-					// this.set('tipsContent', '当前输入的总值超出了100%，请检查后重新填写');
 				} else {
 					let hint = {
 						hintModal: true,
@@ -147,9 +140,6 @@ export default Controller.extend({
 						hintBtn: true,
 					}
 					this.set('hint', hint);
-					// this.set('tipsModal', true);
-					// this.set('tipsTitle', '提示');
-					// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 				}
 			} else {
 				let hint = {
@@ -160,45 +150,48 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '请填写全部的预测数据');
 			}
 		},
 		toActionPlan() {
+			let hint = {
+				hintModal: false,
+				hintImg: true,
+				title: '提示',
+				content: '确认进入下一步后，将不可修改当前内容。',
+				hintBtn: true,
+			}
+			this.set('hint', hint);
 			let region = this.get('region');
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
-				let req = this.store.createRecord('request', {
+				let req = this.get('pmController').get('Store').createRecord('request', {
+					id: reg.id + 'toAction0',
 					res: 'paperinput',
 				});
 				let eqValues = [
-					{ key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ key: 'region_id', type: 'eqcond', val: reg.id },
-					{ key: 'field_work_days', type: 'upcond', val: parseInt(reg.covisit) },
-					{ key: 'national_meeting', type: 'upcond', val: parseInt(reg.nationMeeting) },
-					{ key: 'city_meeting', type: 'upcond', val: parseInt(reg.cityMeeting) },
-					{ key: 'depart_meeting', type: 'upcond', val: parseInt(reg.departmentMeeting) },
+					{ id: reg.id + 'toAction1', key: 'paper_id', type: 'eqcond', val: params.paperid },
+					{ id: reg.id + 'toAction2', key: 'region_id', type: 'eqcond', val: reg.id },
+					{ id: reg.id + 'toAction3', key: 'field_work_days', type: 'upcond', val: parseInt(reg.covisit) },
+					{ id: reg.id + 'toAction4', key: 'national_meeting', type: 'upcond', val: parseInt(reg.nationMeeting) },
+					{ id: reg.id + 'toAction5', key: 'city_meeting', type: 'upcond', val: parseInt(reg.cityMeeting) },
+					{ id: reg.id + 'toAction6', key: 'depart_meeting', type: 'upcond', val: parseInt(reg.departmentMeeting) },
 				];
 				eqValues.forEach((item) => {
-					req.get(item.type).pushObject(this.store.createRecord(item.type, {
+					req.get(item.type).pushObject(this.get('pmController').get('Store').createRecord(item.type, {
+						id: item.id,
 						key: item.key,
 						val: item.val,
 					}))
 				});
-				let jsonReq = this.store.object2JsonApi('request', req);
-				return this.store.transaction('/api/v1/answer/0', 'region', jsonReq)
+				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
+				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
 			Promise.all(promiseArray).then((res) => {
 				this.transitionToRoute('new-project.project-start.index.action-plan');
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '确认进入下一步后，将不可修改当前内容。');
 			}).catch((error) => {
-				console.error(error);
+				this.get('logger').log(error);
 			});
-			// this.transitionToRoute('new-project.project-start.index.action-plan');
 		}
 	}
 });

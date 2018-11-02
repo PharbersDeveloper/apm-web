@@ -1,17 +1,17 @@
 <div local-class="content">
     <div local-class="head">
-        <p local-class="title">区域计划培训课</p>
+        <p local-class="title">{{t "apm.component.hisClassCard.title"}}</p>
         {{#if data.state}}
-            <p local-class="date">日期：{{data.start_time}}</p>
+            <p local-class="date">{{t "apm.component.hisClassCard.date"}}{{data.start_time}}</p>
         {{else}}
-            <p local-class="date">日期：{{data.end_time}}</p> 
+            <p local-class="date">{{t "apm.component.hisClassCard.date"}}{{data.end_time}}</p> 
         {{/if}}
     </div>
     <div local-class="btn">
         {{#if data.state}}
-            <p {{action "lookOver" data.id data.course.id}}>继续</p>
+            <p {{action "lookOver" data.id data.course.id}}>{{t "apm.component.hisClassCard.continue"}}</p>
         {{else}}
-            <p {{action "continue" data.id data.course.id}}>查看</p> 
+            <p {{action "continue" data.id data.course.id}}>{{t "apm.component.hisClassCard.examine"}}</p> 
         {{/if}}
-    </div>
+</div>
 </div>

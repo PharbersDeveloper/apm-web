@@ -1,15 +1,18 @@
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
+import { inject } from '@ember/service';
 import d3 from 'd3';
 
 export default Component.extend({
+	i18n:inject(),
 	tagName: 'div',
 	chartId: '',
+	localClassNames: 'bar-line-container',
 	backgroundColor: '#FFF',
 	laterThreeChangeBg: false,
 	title: '',
 	dataset: [],
-
+	noLine: false,
 	didReceiveAttrs() {
 		if (this.get('chartId') === '') {
 			throw 'chartId is null or undefinde, please set value';
@@ -18,7 +21,13 @@ export default Component.extend({
 		}
 	},
 	drawChart() {
-		d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
+		let that = this;
+		// d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
+		const parent = d3.select(this.element);
+		parent.selectAll("svg").remove();
+		parent.select('.legendContainer').remove();
+		parent.select('._tooltip_1mas67').remove();
+
 
 		let width = 900;
 		let height = 340;
@@ -31,19 +40,21 @@ export default Component.extend({
 		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 			yScale = d3.scaleLinear().rangeRound([height, 0]),
 			yScale2 = d3.scaleLinear().rangeRound([height, 0]);
-
+		let noLine = this.get('noLine');
 		xScale.domain(xDatas);
 		let maxVal = d3.max(values) * 1.3
 		// let maxVal2 = d3.max(values2) * 3;
 		let maxVal2 = 100;
 		yScale.domain([0, maxVal]);
 		yScale2.domain([0, maxVal2]);
+		let svgContainer = d3.select(this.element);
 
-		let svgContainer = d3.select(`#${this.get('chartId')}`);
+		// let svgContainer = d3.select(`#${this.get('chartId')}`);
 		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
 		let svg = svgContainer.append("svg")
 			.style('background-color', this.get('backgroundColor'))
-			.style('padding', '0 10px')
+			// .style('padding', '0 10px')
+			.style('padding', '0 0')
 			.attr('preserveAspectRatio', 'xMidYMid meet')
 			.attr('viewBox', '0 0 960 420')
 
@@ -65,11 +76,13 @@ export default Component.extend({
 		g.append('g')
 			.attr('class', 'axisY')
 			.call(d3.axisLeft(yScale).ticks(10));
+		if (!noLine) {
+			g.append('g')
+				.attr('class', 'axisY')
+				.attr('transform', 'translate(' + (width - margin.right) + ', 0)')
+				.call(d3.axisRight(yScale2).ticks(10));
+		}
 
-		g.append('g')
-			.attr('class', 'axisY')
-			.attr('transform', 'translate(' + (width - margin.right) + ', 0)')
-			.call(d3.axisRight(yScale2).ticks(10));
 
 		let chart = g.selectAll('bar')
 			.data(this.dataset)
@@ -115,19 +128,22 @@ export default Component.extend({
 		// 	.text(function(d) { return d.value; });
 
 		if (this.get('laterThreeChangeBg')) {
-			d3.select(`#${this.get('chartId')}`)
+			// d3.select(`#${this.get('chartId')}`)
+			svgContainer
 				.selectAll('._container-g_1mas67')
 				.selectAll('g:nth-last-of-type(3)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
 
-			d3.select(`#${this.get('chartId')}`)
+			// d3.select(`#${this.get('chartId')}`)
+			svgContainer
 				.selectAll('._container-g_1mas67')
 				.selectAll('g:nth-last-of-type(2)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
 
-			d3.select(`#${this.get('chartId')}`)
+			// d3.select(`#${this.get('chartId')}`)
+			svgContainer
 				.selectAll('._container-g_1mas67')
 				.selectAll('g:last-of-type')
 				.select('rect')
@@ -138,23 +154,25 @@ export default Component.extend({
 		let line = d3.line()
 			.x(function(d) { return xScale(d.key); })
 			.y(function(d) { return yScale2(d.value2); });
-
+		if (!noLine) {
+			g.append("path")
+				.datum(this.dataset)
+				.attr("fill", "none")
+				.attr("stroke", "#FF8190")
+				.attr("stroke-linejoin", "round")
+				.attr("stroke-linecap", "round")
+				.attr("transform", "translate(" + xScale.bandwidth() / 4 + ",0)")
+				.attr("stroke-width", 1.5)
+				.attr("d", line);
+		}
 		// Line
-		g.append("path")
-			.datum(this.dataset)
-			.attr("fill", "none")
-			.attr("stroke", "#FF8190")
-			.attr("stroke-linejoin", "round")
-			.attr("stroke-linecap", "round")
-			.attr("transform", "translate(" + xScale.bandwidth() / 4 + ",0)")
-			.attr("stroke-width", 1.5)
-			.attr("d", line);
+
 
 		chart.on('mouseover', function(d) {
 			tooltip.style("opacity", 1.0);
-			tooltip.html(d.key + "<br>" + "份额：" + d.value2 + "%" + "<br>" + "销售额：" + d.value)
-				.style("left", (d3.event.offsetX + 20) + "px")
-				.style("top", (d3.event.offsetY) + "px")
+			tooltip.html(d.key + "<br>" + that.i18n.t('apm.component.d3BarLine.share') + "" + "：" + d.value2 + "%" + "<br>" + that.i18n.t('apm.component.d3BarLine.sales') + "" + "：" + d.value)
+				.style("left", (d3.event.clientX + 20) + "px")
+				.style("top", (d3.event.clientY) + "px")
 
 			d3.select(this).attr('opacity', 0.7);
 		}).on('mouseout', function(d) {
@@ -172,11 +190,20 @@ export default Component.extend({
 			.attr('width', 200)
 			.attr('height', 20)
 
-		let legendData = ["份额", "销售额"];
+		let legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + ""];
 		if (this.get('laterThreeChangeBg')) {
-			legendData = ["份额", "销售额", "预测销售额"];
+			if (noLine) {
+				legendData = [this.i18n.t('apm.component.d3BarLine.sales') + "", this.i18n.t('apm.component.d3BarLine.forecastSales') + ""];
+			} else {
+				legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + "", this.i18n.t('apm.component.d3BarLine.forecastSales') + ""];
+			}
+		}else {
+			if (noLine) {
+				legendData = [this.i18n.t('apm.component.d3BarLine.sales') + ""];
+			} else {
+				legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + ""];
+			}
 		}
-
 		var legend = legendArea.selectAll("g")
 			.data(legendData)
 			.enter()
@@ -192,29 +219,29 @@ export default Component.extend({
 			.attr("x", 10)
 			.attr("y", 5)
 			.attr('width', function(d, i) {
-				if (d == '份额') {
+				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
 					return 20;
 				} else {
 					return 10;
 				}
 			})
 			.attr('height', function(d, i) {
-				if (d == '份额') {
+				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
 					return 5;
 				} else {
 					return 30;
 				}
 			})
 			.style("fill", function(d, i) {
-				if (d == '份额') {
+				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
 					return '#FA6F80';
-				} else if (d == '销售额') {
+				} else if (d == that.i18n.t('apm.component.d3BarLine.sales') + "") {
 					return '#4A90E2';
 				} else {
 					return '#F5A623';
 				}
 			}).attr("transform", function(d, i) {
-				if (d == '份额') {
+				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
 					return "translate(0 ,5)";
 				}
 			});

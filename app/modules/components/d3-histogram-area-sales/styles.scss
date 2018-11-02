@@ -20,6 +20,10 @@
 		font-weight: 100;
 	}
 
+	:global .y .tick text {
+		display: none;
+	}
+
 	:global .domain {
 		stroke: #979797;
 	}

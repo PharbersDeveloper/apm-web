@@ -17,8 +17,6 @@ export default Component.extend({
 		this.set('existSort', JSON.parse(localStorage.getItem('regionResort')));
 	},
 	computeLevelArray: computed('levelArray.[]', 'existSort.[]', function() {
-		// console.log(this.get('existSort'));
-		// console.log('in the component');
 		let existSort = this.get('existSort');
 		let areaArray = this.get('areaArray');
 		if (existSort) {
@@ -28,8 +26,6 @@ export default Component.extend({
 						if (ele.get('id') === sort.id) {
 							ele.set('selected', sort.selected);
 							areaArray.forEach((item) => {
-								// console.log(item);
-								// console.log(sort.selected.data.id)
 								if (item.data.id == sort.selected.data.id) {
 									this.get('areaArray').removeObject(item);
 								}
@@ -39,16 +35,12 @@ export default Component.extend({
 					}
 				})
 			});
-			// return this.
 		}
 		return this.get('levelArray');
 	}),
 	computeareaArray: computed('areaArray.[]', function() {
-
 		let areaArray = this.get('areaArray');
-		let levelArray = this.get('computeLevelArray')
-
-
+		let levelArray = this.get('computeLevelArray');
 		return areaArray;
 	}),
 	actions: {
@@ -80,8 +72,6 @@ export default Component.extend({
 				content: currentRegion.data.attributes.notes,
 				hintBtn: false,
 			})
-			// this.set('tipModal', true);
-			// this.set('currentRegion', currentRegion)
 		}
 	}
 });
