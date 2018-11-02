@@ -15,25 +15,29 @@
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.coachCoVisitDays"}}</span><span>{{t "apm.newProject.resource.total"}} {{allotData.field_work_days}} {{t "apm.newProject.resource.days"}}</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
-							{{p.bar local-class="progress-bar" showLabel=true value=coVisit maxValue=100 type='info' }}
+							{{!-- {{p.bar local-class="progress-bar" showLabel=true value=coVisit maxValue=100 type='info' }} --}}
+							{{p.bar local-class=(if coVisit.overHundred 'progress-bar-danger' 'progress-bar') showLabel=(if coVisit.overHundred false true) value=coVisit.value maxValue=(if coVisit.overHundred coVisit.value 100) type='info' }}
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.countryQuota"}}</span><span>{{t "apm.newProject.resource.total"}} {{allotData.national_meeting}} {{t "apm.newProject.resource.one"}}</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
-							{{p.bar local-class="progress-bar" showLabel=true value=nationMeeting maxValue=100 type='info' }}
+							{{!-- {{p.bar local-class="progress-bar" showLabel=true value=nationMeeting maxValue=100 type='info' }} --}}
+							{{p.bar local-class=(if nationMeeting.overHundred 'progress-bar-danger' 'progress-bar') showLabel=(if nationMeeting.overHundred false true) value=nationMeeting.value maxValue=(if nationMeeting.overHundred nationMeeting.value 100) type='info' }}
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.cityQuota"}}</span><span>{{t "apm.newProject.resource.total"}} {{allotData.city_meeting}} {{t "apm.newProject.resource.one"}}</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
-							{{p.bar local-class="progress-bar" showLabel=true value=cityMeeting maxValue=100 type='info' }}
+							{{!-- {{p.bar local-class="progress-bar" showLabel=true value=cityMeeting maxValue=100 type='info' }} --}}
+							{{p.bar local-class=(if cityMeeting.overHundred 'progress-bar-danger' 'progress-bar') showLabel=(if cityMeeting.overHundred false true) value=cityMeeting.value maxValue=(if cityMeeting.overHundred cityMeeting.value 100) type='info' }}
+
 						{{/bs-progress}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.departmentQuota"}}</span><span>{{t "apm.newProject.resource.total"}} {{allotData.depart_meeting}} {{t "apm.newProject.resource.one"}}</span></p>
 						{{#bs-progress local-class="progress" as |p|}}
-							{{p.bar local-class="progress-bar" showLabel=true value=departmentMeeting maxValue=100 type='info' }}
+							{{p.bar local-class=(if departmentMeeting.overHundred 'progress-bar-danger' 'progress-bar') showLabel=(if departmentMeeting.overHundred false true) value=departmentMeeting.value maxValue=(if departmentMeeting.overHundred departmentMeeting.value 100) type='info' }}
 						{{/bs-progress}}
 					</div>
 				</div>

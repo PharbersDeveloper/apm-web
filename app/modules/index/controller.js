@@ -45,13 +45,11 @@ export default Controller.extend({
 					let previousTransition = this.get('previousTransition');
 					if(previousTransition) {
 						this.set('previousTransition',null);
-						// this.routeFor('application').controllerFor('application').set('userName',localStorage.getItem('userName'));
-						// this.transitionToRoute(previousTransition.targetName);
+						this.get('applicationController').set('userName',localStorage.getItem('userName'));
 						previousTransition.retry();
 					} else {
 						this.transitionToRoute('project-sort');
 					}
-					// this.transitionToRoute('project-sort');
 				})
 				.catch(error => {
 					let content = "";
@@ -68,7 +66,6 @@ export default Controller.extend({
 					this.set('hint', hint);
 					this.set('errors',error);
 				});
-
 		}
 	}
 });

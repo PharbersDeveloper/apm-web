@@ -15,6 +15,7 @@ export default Route.extend({
 			if (transition.targetName !== 'index') {
 				let loginController = this.controllerFor('index');
 				loginController.set('previousTransition', transition);
+				loginController.set('applicationController',this.controllerFor('application'));
 			}
 			this.transitionTo('index');
 		} else {
