@@ -31,8 +31,7 @@ export default Controller.extend({
 		let region = this.get('region');
 		let covisit = 0;
 		region.forEach((item) => {
-			this.get('logger').log(item.covisit);
-			if (item.covisit > 100 || item.covisit <0 || isNaN(item.covisit)) {
+			if (item.covisit > 100 || item.covisit < 0 || isNaN(item.covisit)) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -41,23 +40,21 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '单个协访天数数据不能超过100%');
 				set(item, 'covisit', '');
 			}
 			covisit += parseInt(item.covisit - 0);
 		})
-		return covisit;
+		// return covisit;
+		return {
+			value: covisit,
+			overHundred: covisit > 100 ? true : false
+		}
 	}),
 	nationMeeting: computed('region.@each.nationMeeting', function() {
 		let region = this.get('region');
 		let nationMeeting = 0;
 		region.forEach((item) => {
-			if (item.nationMeeting > 100 || item.nationMeeting <0 || isNaN(item.nationMeeting)) {
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '单个全国会数据不能超过100%');
+			if (item.nationMeeting > 100 || item.nationMeeting < 0 || isNaN(item.nationMeeting)) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -70,14 +67,18 @@ export default Controller.extend({
 			}
 			nationMeeting += parseInt(item.nationMeeting - 0) || 0;
 		});
-		return nationMeeting;
+		// return nationMeeting;
+		return {
+			value: nationMeeting,
+			overHundred: nationMeeting > 100 ? true : false
+		}
 	}),
 	cityMeeting: computed('region.@each.cityMeeting', function() {
 		let region = this.get('region');
 		let cityMeeting = 0;
 		let total = this.get('totalCityMeeting');
 		region.forEach((item) => {
-			if (item.cityMeeting > 100 || item.cityMeeting <0 || isNaN(item.cityMeeting)) {
+			if (item.cityMeeting > 100 || item.cityMeeting < 0 || isNaN(item.cityMeeting)) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -90,13 +91,17 @@ export default Controller.extend({
 			}
 			cityMeeting += parseInt(item.cityMeeting - 0) || 0;
 		})
-		return cityMeeting;
+		// return cityMeeting;
+		return {
+			value: cityMeeting,
+			overHundred: cityMeeting > 100 ? true : false
+		}
 	}),
 	departmentMeeting: computed('region.@each.departmentMeeting', function() {
 		let region = this.get('region');
 		let departmentMeeting = 0;
 		region.forEach((item) => {
-			if (item.departmentMeeting > 100 || item.departmentMeeting <0 || isNaN(item.departmentMeeting)) {
+			if (item.departmentMeeting > 100 || item.departmentMeeting < 0 || isNaN(item.departmentMeeting)) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -109,7 +114,12 @@ export default Controller.extend({
 			}
 			departmentMeeting += parseInt(item.departmentMeeting - 0) || 0;
 		})
-		return departmentMeeting;
+
+		// this.get('logger').log(departmentMeeting);
+		return {
+			value: departmentMeeting,
+			overHundred: departmentMeeting > 100 ? true : false
+		}
 	}),
 	actions: {
 		saveToLocalStorage() {

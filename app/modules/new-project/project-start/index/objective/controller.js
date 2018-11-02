@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-
+import { set } from '@ember/object';
 
 export default Controller.extend({
 	init() {
@@ -22,6 +22,20 @@ export default Controller.extend({
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 
 		region.forEach((item) => {
+			if (isNaN(item.forecast) || item.forecast< 0) {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请输入正整数.若不分配,请输入0.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				// this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				// this.set('tipsContent', '单个协访天数数据不能超过100%');
+				set(item, 'forecast', '');
+			}
 			total += parseInt(item.forecast) || 0;
 		});
 		return total;

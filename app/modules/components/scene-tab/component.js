@@ -19,7 +19,8 @@ export default Component.extend({
 			this.sendAction('changeTab', name);
 		},
 		exit() {
-			let history = localStorage.getItem('history');
+			let history = JSON.parse(localStorage.getItem('history'));
+
 			if(history) {
 				let hint = {
 					hintModal: true,

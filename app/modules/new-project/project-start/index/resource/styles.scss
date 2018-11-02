@@ -30,11 +30,9 @@
 				padding: 0;
 				height: 30px;
 				line-height: 30px;
-				font-family: PingFangTC-Semibold;
 				font-size: 14px;
 				letter-spacing: 1px;
 				background: #FFF;
-				// box-shadow: 0 0 4px 0 rgba(196,196,196,0.50);
 				&:global(.active) {
 					color: #FFF;
 					background-color: #859EE3;
@@ -55,7 +53,6 @@
 					// margin: 0;
 					height: 20px;
 					line-height: 20px;
-					font-family: PingFangSC-Regular;
 					font-size: 14px;
 					color: #767A80;
 					letter-spacing: 2px;
@@ -73,6 +70,10 @@
 					.progress-bar {
 						border-radius: 100px;
 						background-color: #7F91BF;
+					}
+					.progress-bar-danger {
+						border-radius: 100px;
+						background-color: #ffc107;
 					}
 				}
 			}
@@ -130,6 +131,5 @@
 				}
 			}
 		}
-		// margin: 0 auto;
 	}
 }
