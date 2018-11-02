@@ -4,17 +4,17 @@ import { inject } from '@ember/service';
 import SignupLogic from '../../mixins/signup-logic';
 
 export default Controller.extend(SignupLogic, {
-	i18n:inject(),
+	i18n: inject(),
 	init() {
 		this._super(...arguments);
 		this.get('pmController').get('BusinessLogic').funcInjection(this.signUpSuccess)
-
 	},
 	userName: '',
 	userEmail: '',
 	userPassword: '',
 	nameHint: computed('userName', function() {
-		let name = this.get('userName');
+		let userName = this.get('userName');
+		let name = userName.replace(/(^s*)|(s*$)/g,"")
 		if (name.length == 0 || name.length > 8) {
 			return { text: this.i18n.t('apm.sign.eightLetter') + "", status: false }
 		} else {
@@ -31,14 +31,14 @@ export default Controller.extend(SignupLogic, {
 	}),
 	pwHint: computed('userPassword', function() {
 		let pw = this.get('userPassword');
-		if (pw.length < 8 || pw.length > 20) {
+		if (pw.length < 6 || pw.length > 18) {
 			return { text: this.i18n.t('apm.sign.passwordLength') + "", status: false };
 		} else {
 			return { text: this.i18n.t('apm.sign.passwordSuccess') + "", status: true };
 		}
 	}),
 	actions: {
-        toLogin(){
+		toLogin() {
 			let hint = {
 				hintModal: false,
 				hintImg: true,
@@ -47,8 +47,11 @@ export default Controller.extend(SignupLogic, {
 				hintBtn: false,
 			}
 			this.set('hint', hint);
-            this.transitionToRoute('index');
-        },
+			this.set('userName', '');
+			this.set('userEmail', '');
+			this.set('userPassword', '');
+			this.transitionToRoute('index');
+		},
 		submit() {
 			// this.get('pmController').get('Store').peekRecord('user', 'sign0').destroyRecord();
 			let status = [this.get('nameHint').status, this.get('emailHint').status, this.get('pwHint').status, ]
@@ -75,36 +78,36 @@ export default Controller.extend(SignupLogic, {
 				// 		val: elem.val,
 				// 	}))
 				// });
-				let conditions = this.get('pmController').get('Store').object2JsonApi(req,false);
-                this.get('pmController').get('Store').removeModelByID('user','sign0');
+				let conditions = this.get('pmController').get('Store').object2JsonApi(req, false);
+				this.get('pmController').get('Store').removeModelByID('user', 'sign0');
 
 				this.get('pmController').get('Store').queryObject('/api/v1/userRegister/0', 'user', conditions)
 					.then(data => {
-                        let hint = {
-            				hintModal: true,
-            				hintImg: true,
-            				title: this.i18n.t('apm.sign.tips') + "",
-            				content: this.i18n.t('apm.sign.signUpOk') + "",
-            				hintBtn: true,
-            			}
-            			this.set('hint', hint);
+						let hint = {
+							hintModal: true,
+							hintImg: true,
+							title: this.i18n.t('apm.sign.tips') + "",
+							content: this.i18n.t('apm.sign.signUpOk') + "",
+							hintBtn: true,
+						}
+						this.set('hint', hint);
 						// this.transitionToRoute('index');
 					})
 					.catch((error) => {
 						let content = "";
 						error.errors.forEach(ele => {
-							content += ele.detail +'</br>'
+							content += ele.detail + '</br>'
 						});
 						this.get('logger').log(content);
-                        let hint = {
-            				hintModal: true,
-            				hintImg: true,
-            				title: this.i18n.t('apm.sign.tips') + "",
-            				content:content,
-            				hintBtn: false,
-            			}
-            			this.set('hint', hint);
-						this.set('errors',error);
+						let hint = {
+							hintModal: true,
+							hintImg: true,
+							title: this.i18n.t('apm.sign.tips') + "",
+							content: content,
+							hintBtn: false,
+						}
+						this.set('hint', hint);
+						this.set('errors', error);
 					});
 			}
 		}

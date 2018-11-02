@@ -9,7 +9,7 @@ export function numberFormat(params /*, hash*/ ) {
 		let groups = zznf.exec("" + p),
 			mask = groups[1], //符号位
 			integers = (groups[2] || "").split(""), //整数部分
-			decimal = groups[3] || "", //小数部分
+			// decimal = groups[3] || "", //小数部分
 			remain = integers.length % 3;
 
 		let temp = integers.reduce(function(previousValue, currentValue, index) {

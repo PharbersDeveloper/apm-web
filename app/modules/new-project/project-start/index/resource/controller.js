@@ -31,10 +31,19 @@ export default Controller.extend({
 		let region = this.get('region');
 		let covisit = 0;
 		region.forEach((item) => {
-			if (item.covisit > 100) {
-				this.set('tipsModal', true);
-				this.set('tipsTitle', '提示');
-				this.set('tipsContent', '单个协访天数数据不能超过100%');
+			this.get('logger').log(item.covisit);
+			if (item.covisit > 100 || item.covisit <0 || isNaN(item.covisit)) {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请输入正整数.若不分配,请输入0.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				// this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				// this.set('tipsContent', '单个协访天数数据不能超过100%');
 				set(item, 'covisit', '');
 			}
 			covisit += parseInt(item.covisit - 0);
@@ -45,10 +54,18 @@ export default Controller.extend({
 		let region = this.get('region');
 		let nationMeeting = 0;
 		region.forEach((item) => {
-			if (item.nationMeeting > 100) {
-				this.set('tipsModal', true);
-				this.set('tipsTitle', '提示');
-				this.set('tipsContent', '单个全国会数据不能超过100%');
+			if (item.nationMeeting > 100 || item.nationMeeting <0 || isNaN(item.nationMeeting)) {
+				// this.set('tipsModal', true);
+				// this.set('tipsTitle', '提示');
+				// this.set('tipsContent', '单个全国会数据不能超过100%');
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请输入正整数.若不分配,请输入0.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
 				set(item, 'nationMeeting', '');
 			}
 			nationMeeting += parseInt(item.nationMeeting - 0) || 0;
@@ -60,10 +77,15 @@ export default Controller.extend({
 		let cityMeeting = 0;
 		let total = this.get('totalCityMeeting');
 		region.forEach((item) => {
-			if (item.cityMeeting > 100) {
-				this.set('tipsModal', true);
-				this.set('tipsTitle', '提示');
-				this.set('tipsContent', '单个城市会数据不能超过100%');
+			if (item.cityMeeting > 100 || item.cityMeeting <0 || isNaN(item.cityMeeting)) {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请输入正整数.若不分配,请输入0.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
 				set(item, 'cityMeeting', '');
 			}
 			cityMeeting += parseInt(item.cityMeeting - 0) || 0;
@@ -74,10 +96,15 @@ export default Controller.extend({
 		let region = this.get('region');
 		let departmentMeeting = 0;
 		region.forEach((item) => {
-			if (item.departmentMeeting > 100) {
-				this.set('tipsModal', true);
-				this.set('tipsTitle', '提示');
-				this.set('tipsContent', '单个科室会数据不能超过100%');
+			if (item.departmentMeeting > 100 || item.departmentMeeting <0 || isNaN(item.departmentMeeting)) {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请输入正整数.若不分配,请输入0.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
 				set(item, 'departmentMeeting', '');
 			}
 			departmentMeeting += parseInt(item.departmentMeeting - 0) || 0;

@@ -37,7 +37,7 @@ export default DS.Model.extend({
                 num: this.get('prod_knowledge_val')
             },
             {
-                title: '区域规划管理能力',
+                title: '区域管理能力',
                 num: this.get('territory_manage_val')
             },
             {
@@ -49,6 +49,6 @@ export default DS.Model.extend({
                 num: this.get('motivation_val')
             },
         ]
-        return tempArray 
+        return tempArray
     })
 });

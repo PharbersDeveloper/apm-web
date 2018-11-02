@@ -42,14 +42,22 @@ export default Controller.extend({
 					localStorage.setItem('userPhone', data.user.get('user_phone'))
 					localStorage.setItem('userEmail', data.user.get('email'))
 					localStorage.setItem('userImage', data.user.get('image'))
-					this.transitionToRoute('project-sort')
+					let previousTransition = this.get('previousTransition');
+					if(previousTransition) {
+						this.set('previousTransition',null);
+						// this.routeFor('application').controllerFor('application').set('userName',localStorage.getItem('userName'));
+						// this.transitionToRoute(previousTransition.targetName);
+						previousTransition.retry();
+					} else {
+						this.transitionToRoute('project-sort');
+					}
+					// this.transitionToRoute('project-sort');
 				})
 				.catch(error => {
 					let content = "";
 					error.errors.forEach(ele => {
 						content += ele.detail +'</br>'
 					});
-					this.get('logger').log(content);
 					let hint = {
 						hintModal: true,
 						hintImg: true,

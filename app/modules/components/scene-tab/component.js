@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject } from '@ember/service';
 
 export default Component.extend({
+
 	i18n:inject(),
 	introduced: inject('introduced-service'),
 	actions: {
@@ -18,14 +19,26 @@ export default Component.extend({
 			this.sendAction('changeTab', name);
 		},
 		exit() {
-			let hint = {
-				hintModal: true,
-				hintImg: true,
-				title: this.i18n.t('apm.component.sceneTab.tips') + "",
-				content: this.i18n.t('apm.component.sceneTab.tipContent') + "",
-				hintBtn: true,
+			let history = localStorage.getItem('history');
+			if(history) {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: this.i18n.t('apm.component.sceneTab.tips') + "",
+					content: '确认退出',
+					hintBtn: true,
+				}
+				this.set('hint', hint);
+			} else {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: this.i18n.t('apm.component.sceneTab.tips') + "",
+					content: this.i18n.t('apm.component.sceneTab.tipContent') + "",
+					hintBtn: true,
+				}
+				this.set('hint', hint);
 			}
-			this.set('hint', hint);
 		},
 		exitTest() {
 			localStorage.removeItem('regionResort')
