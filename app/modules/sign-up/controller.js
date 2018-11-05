@@ -7,14 +7,43 @@ export default Controller.extend(SignupLogic, {
 	i18n: inject(),
 	init() {
 		this._super(...arguments);
-		this.get('pmController').get('BusinessLogic').funcInjection(this.signUpSuccess)
+		this.get('pmController').get('BusinessLogic').funcInjection(this.signUpSuccess);
+		this.set('whichStep', 0);
 	},
 	userName: '',
 	userEmail: '',
 	userPassword: '',
+	confirmPassword: '',
+	userPhone: '',
+	userCompanyName: '',
+	userPosition: '',
+	stepFlow: computed('whichStep', function() {
+		let step = this.get('whichStep');
+		switch (true) {
+			case (step === 1):
+				return {
+					second: true,
+					last: false
+				};
+				break;
+			case (step === 2):
+				return {
+					second: true,
+					last: true
+				}
+				break;
+			default:
+				return {
+					second: false,
+					last: false
+				}
+
+		}
+
+	}),
 	nameHint: computed('userName', function() {
 		let userName = this.get('userName');
-		let name = userName.replace(/(^s*)|(s*$)/g,"")
+		let name = userName.replace(/(^s*)|(s*$)/g, "")
 		if (name.length == 0 || name.length > 8) {
 			return { text: this.i18n.t('apm.sign.eightLetter') + "", status: false }
 		} else {
@@ -52,6 +81,9 @@ export default Controller.extend(SignupLogic, {
 			this.set('userPassword', '');
 			this.transitionToRoute('index');
 		},
+		nextStep() {
+			this.set('whichStep', 1);
+		},
 		submit() {
 			// this.get('pmController').get('Store').peekRecord('user', 'sign0').destroyRecord();
 			let status = [this.get('nameHint').status, this.get('emailHint').status, this.get('pwHint').status, ]
@@ -78,8 +110,8 @@ export default Controller.extend(SignupLogic, {
 				// 		val: elem.val,
 				// 	}))
 				// });
-				let conditions = this.get('pmController').get('Store').object2JsonApi(req, false);
-				this.get('pmController').get('Store').removeModelByID('user', 'sign0');
+				let conditions = this.get('pmController').get('Store').object2JsonApi(req);
+				// this.get('pmController').get('Store').removeModelByID('user', 'sign0');
 
 				this.get('pmController').get('Store').queryObject('/api/v1/userRegister/0', 'user', conditions)
 					.then(data => {

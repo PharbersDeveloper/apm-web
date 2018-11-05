@@ -105,7 +105,7 @@ export default Controller.extend({
 
 						// 	axes.pushObject({
 						// 		axis: '拜访次数',
-						// 		value: radarfigure.call_times_val
+						// 		value: radarfigure.target_ocupation_val || 0
 						// 	})
 
 						// 	axes.pushObject({
@@ -144,7 +144,7 @@ export default Controller.extend({
 
 							axes.pushObject({
 								axis: that.i18n.t('apm.component.radar.visitTime') + "",
-								value: radarfigure.call_times_val
+								value: radarfigure.target_ocupation_val || 0
 							})
 
 							axes.pushObject({
@@ -209,13 +209,14 @@ export default Controller.extend({
 						let yms = data.map(ele => ele.ym)
 						let target_call_freq_vals = data.map(ele => ele.repbehaviorreport.target_call_freq_val);
 						let in_field_days_vals = data.map(ele => ele.repbehaviorreport.in_field_days_val);
-						let call_times_vals = data.map(ele => ele.repbehaviorreport.call_times_val);
+						let target_ocupation_vals = data.map(ele => ele.repbehaviorreport.target_ocupation_val);
+
 						kpiData = {
 							region_id,
 							yms,
 							target_call_freq_vals,
 							in_field_days_vals,
-							call_times_vals
+							target_ocupation_vals
 						}
 						// component.set('kpiData', kpiData);
 						singleRegionData.kpiData = kpiData;
@@ -247,7 +248,6 @@ export default Controller.extend({
 						})
 						// component.set('report', report);
 						singleRegionData.report = report;
-
 						return null
 					})
 					.then(() => { // 柱状图
@@ -630,7 +630,7 @@ export default Controller.extend({
 
 								axes.pushObject({
 									axis: '拜访次数',
-									value: radarfigure.call_times_val
+									value: radarfigure.target_ocupation_val
 								})
 
 								axes.pushObject({
@@ -703,13 +703,13 @@ export default Controller.extend({
 									let yms = elem.map(ele => ele.ym)
 									let target_call_freq_vals = elem.map(ele => ele.repbehaviorreport.target_call_freq_val);
 									let in_field_days_vals = elem.map(ele => ele.repbehaviorreport.in_field_days_val);
-									let call_times_vals = elem.map(ele => ele.repbehaviorreport.call_times_val);
+									let target_ocupation_vals = elem.map(ele => ele.repbehaviorreport.target_ocupation_val);
 									kpi.pushObject({
 										region_id,
 										yms,
 										target_call_freq_vals,
 										in_field_days_vals,
-										call_times_vals
+										target_ocupation_vals
 									})
 								});
 								regionBaseInfo.kpi = kpi

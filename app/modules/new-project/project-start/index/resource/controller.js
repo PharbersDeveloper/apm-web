@@ -156,7 +156,8 @@ export default Controller.extend({
 			});
 			this.set('iscoVisitEmpty', iscoVisitEmpty);
 			if (iscoVisitEmpty) {
-				let [_totalCoVisit, _totalNationMeeting, _totalCityMeeting, _totalDepartMeeting] = [this.get('coVisit'), this.get('nationMeeting'), this.get('cityMeeting'), this.get('departmentMeeting')];
+				let [_totalCoVisit, _totalNationMeeting, _totalCityMeeting, _totalDepartMeeting] =
+				[this.get('coVisit').value, this.get('nationMeeting').value, this.get('cityMeeting').value, this.get('departmentMeeting').value];
 				if (_totalCoVisit > 100 || _totalNationMeeting > 100 ||
 					_totalCityMeeting > 100 || _totalDepartMeeting > 100) {
 					let hint = {

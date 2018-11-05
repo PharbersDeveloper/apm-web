@@ -87,7 +87,7 @@ export default Component.extend({
 		svg.attr("width", "100%")
 			.attr("height", 380)
 			.attr('preserveAspectRatio', 'none')
-			.attr('viewBox', '-40 -10 950 380')
+			.attr('viewBox', '-30 10 950 380')
 			.append('g');
 
 		function make_y_gridlines() {
@@ -171,7 +171,7 @@ export default Component.extend({
 					.style("cursor", "pointer")
 					.append("text")
 					.attr("class", "text")
-					.text(`${d.value}`)
+					.text(`${d.value}%`)
 					.attr("x", d => xScale(d.ym) + 5)
 					.attr("y", d => yScale(d.value) - 10);
 			})

@@ -187,7 +187,7 @@ export default Component.extend({
 			// .attr('preserveAspectRatio', 'xMidYMid meet')
 			// .attr('viewBox', '0 0 960 20')
 			.attr('class', 'legendArea')
-			.attr('width', 200)
+			.attr('width', 240)
 			.attr('height', 20)
 
 		let legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + ""];
@@ -210,7 +210,7 @@ export default Component.extend({
 			.append("g")
 			.attr("transform", function(d, i) {
 				// return "translate(" + parseInt(i * 2 + 2) * 100 + ",0)";
-				return "translate(" + parseInt(i * 100) + ",0)";
+				return "translate(" + parseInt(i * 120) + ",0)";
 
 			});
 
@@ -251,7 +251,7 @@ export default Component.extend({
 			.attr("x", 40)
 			.attr("y", 12)
 			.style("fill", '#485465')
-			.style('font-size', '12px')
+			.style('font-size', '14px')
 			.attr("dy", ".35em")
 			.text(function(d, i) {
 				return d;

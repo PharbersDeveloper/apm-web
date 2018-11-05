@@ -92,9 +92,6 @@ export default Route.extend({
 			})
 			.then(() => {
 				let history = this.get('history');
-				this.get('logger').log('-----------');
-
-				this.get('logger').log(history);
 				let that = this;
 				if (!history) {
 					return _callR(that);
