@@ -51,14 +51,14 @@ export default Controller.extend({
 			}
 		},
 		toSort() {
-			let hint = {
-				hintModal: false,
-				hintImg: true,
-				title: '提示',
-				content: '确认进入下一步后，将不可修改当前内容。',
-				hintBtn: true,
-			}
-			this.set('hint', hint);
+			// let hint = {
+			// 	hintModal: false,
+			// 	hintImg: true,
+			// 	title: '提示',
+			// 	content: '确认进入下一步后，将不可修改当前内容。',
+			// 	hintBtn: true,
+			// }
+			// this.set('hint', hint);
 			let region = this.get('pmController').get('Store').peekAll('region');
 			let params = this.get('params');
 
@@ -80,14 +80,32 @@ export default Controller.extend({
 					}))
 				});
 				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
-				this.get('logger').log(jsonReq);
 				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
 			Promise.all(promiseArray).then((res) => {
+				let hint = {
+					hintModal: false,
+					hintImg: true,
+					title: '提示',
+					content: '确认进入下一步后，将不可修改当前内容。',
+					hintBtn: true,
+				}
+				this.set('hint', hint);
 				this.transitionToRoute('new-project.project-start.index.sort')
 			}).catch((error) => {
-				this.get('logger').log(error);
+				let content = "";
+				error.errors.forEach(ele => {
+					content += ele.detail + '</br>'
+				});
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: "提示",
+					content: content,
+					hintBtn: false,
+				}
+				this.set('hint', hint);
 			});
 		},
 		saveToLocalStorage() {

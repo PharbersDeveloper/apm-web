@@ -57,16 +57,19 @@
 						<p local-class= {{if nameHint.status 'hint' 'wrongText'}}>{{nameHint.text}}</p>
 					</div> --}}
 					<div local-class="userinfo">
-						<label local-class="title" for="useremail">{{t "apm.sign.mail"}}</label> {{input id="useremail" name="user-email" type="email" value=userEmail placeholder=(t "apm.sign.inputMail") required=true local-class="email"}}
+						<label local-class="title" for="useremail">{{t "apm.sign.mail"}}</label>
+						{{input id="useremail" name="user-email" type="email" value=userEmail placeholder=(t "apm.sign.inputMail") required=true local-class="email"}}
 						<p local-class= {{if emailHint.status 'hint' 'wrongText'}}>{{emailHint.text}}</p>
 					</div>
 					<div local-class="userinfo">
-						<label local-class="title" for="userpassword">{{t "apm.sign.password"}}</label> {{input id="userpassword" type="password" value=userPassword placeholder=(t "apm.sign.inputPassword") required=true local-class="password"}}
+						<label local-class="title" for="userpassword">{{t "apm.sign.password"}}</label>
+						{{input id="userpassword" type="password" value=userPassword placeholder=(t "apm.sign.inputPassword") required=true local-class="password"}}
 						<p local-class= {{if pwHint.status 'hint' 'wrongText'}}>{{pwHint.text}}</p>
 					</div>
 					<div local-class="userinfo">
-						<label local-class="title" for="confirmpassword">{{t "apm.sign.confirmpassword"}}</label> {{input id="confirmpassword" type="password" value=confirmPassword placeholder=(t "apm.sign.inputPassword") required=true local-class="password"}}
-						<p local-class= {{if pwHint.status 'hint' 'wrongText'}}>{{cpwHint.text}}</p>
+						<label local-class="title" for="confirmpassword">{{t "apm.sign.confirmpassword"}}</label>
+						{{input id="confirmpassword" type="password" value=confirmPassword placeholder=(t "apm.sign.inputPassword") required=true local-class="password"}}
+						<p local-class= {{if cpwHint.status 'hint' 'wrongText'}}>{{cpwHint.text}}</p>
 					</div>
 					<div local-class="clicks">
 						{{#bs-button type="primary" onClick=(action "nextStep")}}
@@ -90,17 +93,17 @@
 					<div local-class="userinfo">
 						<label local-class="title" for="userphone">{{t "apm.sign.mobile"}}</label>
                         {{input id="userphone" type="text" value=userPhone placeholder=(t "apm.sign.inputPhone") required=true local-class="email"}}
-						<p local-class= {{if emailHint.status 'hint' 'wrongText'}}>{{phoneHint.text}}</p>
+						<p local-class= {{if phoneHint.status 'hint' 'wrongText'}}>{{phoneHint.text}}</p>
 					</div>
 					<div local-class="userinfo">
 						<label local-class="title" for="companyName">{{t "apm.sign.corpName"}}</label>
-                        {{input id="companyName" type="text" value=companyName placeholder=(t "apm.sign.inputPhone") required=true local-class="phone"}}
-						<p local-class= {{if pwHint.status 'hint' 'wrongText'}}>{{pwHint.text}}</p>
+                        {{input id="companyName" type="text" value=userCompanyName placeholder=(t "apm.sign.inputCompany") required=true local-class="phone"}}
+						<p local-class= {{if cNameHint.status 'hint' 'wrongText'}}>{{cNameHint.text}}</p>
 					</div>
 					<div local-class="userinfo">
-						<label local-class="title" for="position">{{t "apm.sign.corpName"}}</label>
-                        {{input id="position" type="text" value=userPosition placeholder=(t "apm.sign.inputPhone") required=true local-class="phone"}}
-						<p local-class= {{if pwHint.status 'hint' 'wrongText'}}>{{pwHint.text}}</p>
+						<label local-class="title" for="position">{{t "apm.sign.position"}}</label>
+                        {{input id="position" type="text" value=userPosition placeholder=(t "apm.sign.inputPosition") required=true local-class="phone"}}
+						<p local-class= {{if positionHint.status 'hint' 'wrongText'}}>{{positionHint.text}}</p>
 					</div>
 					<div local-class="clicks">
 						{{#bs-button type="primary" onClick=(action "submit")}}
@@ -115,8 +118,11 @@
 					</div>
 				</div>
 			{{else}}
-				<div local-class="input-area">
-					<p>success</p>
+				<div local-class="input-area success">
+					<p> <img src="assets/images/success.png" alt=""><span>注册成功</span></p>
+					{{#bs-button type="primary"  onClick=(action "toLogin")}}
+						{{t "apm.sign.toLogin"}}
+					{{/bs-button}}
 				</div>
 			{{/if}}
 
