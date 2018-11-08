@@ -38,18 +38,41 @@ export default Controller.extend({
 						singleRegionData.represent = res.firstObject;
 						return null;
 					})
-					.then(() => { // 处理卡片数据
+					.then(()=> {	// 获取卡片病人人数
+						// TODO: 目前只有一个公司产品，就没有添加goods_id 的查询条件，
+						// 当公司产品有两个及以上后，需添加goods_id
+						req = this.get('pmController').get('Store').createModel('request',
+							{ id: '0', res: 'bind_course_region_goods_time_patient' });
+						let eqValues = [
+							{ id: 5, type: 'eqcond', key: 'time_type', val: 'month' },
+							{ id: 1, type: 'eqcond', key: 'region_id', val: id },
+							{ id: 2, type: 'eqcond', key: 'course_id', val: ids.courseid },
+							{ id: 4, type: 'eqcond', key: 'time', val: '17-12' },
+						]
+						eqValues.forEach((elem) => {
+							req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
+								id: elem.id,
+								key: elem.key,
+								val: elem.val,
+							}))
+						});
+						let conditions = this.store.object2JsonApi(req);
+						return this.store.queryMultipleObject('/api/v1/findAllMedPatient/0', 'bind_course_region_goods_time_patient', conditions)
+					})
+					.then((data) => { // 处理卡片数据
+						let patient = data.firstObject.patient;
+						this.get('logger').log(patient);
 						let regionData = this.store.peekAll('bind_course_region_goods_time_unit');
 						let filtrerData = regionData.filter(felem => felem.region_id == id);
 						let card = {};
 						card = filtrerData.find((item) => {
 							return item.time === "17-12";
 						})
-						let allYearPotential = 0;
-						filtrerData.forEach((item) => {
-							allYearPotential += item.unit.potential;
-						});
-						card.unit.set('allyearpotential', allYearPotential);
+						// let allYearPotential = 0;
+						// filtrerData.forEach((item) => {
+						// 	allYearPotential += item.unit.potential;
+						// });
+						card.unit.set('patient', patient);
 						singleRegionData.card = card;
 						return null;;
 					})

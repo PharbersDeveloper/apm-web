@@ -12,28 +12,28 @@
 		<div local-class="bottom" class="row">
 			{{!-- {{#each regionCards as |card|}}
 				{{#if (eq data.id card.region_id)}} --}}
-					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-						<div local-class="card-inside-content">
-							<p local-class="headline">{{t "apm.component.regionalIntro.marketPotentialYear"}}($)</p>
-							<p local-class="num">{{number-format singleRegionData.card.unit.allyearpotential}}</p>
-						</div>
+			<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<div local-class="card-inside-content">
+					<p local-class="headline">{{t "apm.component.regionalIntro.patientNum"}}</p>
+					<p local-class="num">{{number-format singleRegionData.card.unit.patient.patient_num}}</p>
+				</div>
 
-					</div>
-					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-						<div local-class="card-inside-content">
+			</div>
+			<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<div local-class="card-inside-content">
 
-							<p local-class="headline">{{t "apm.component.regionalIntro.lmSales"}}($)</p>
-							<p local-class="num">{{number-format singleRegionData.card.unit.unit}}</p>
-						</div>
-					</div>
-					<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-						<div local-class="card-inside-content">
+					<p local-class="headline">{{t "apm.component.regionalIntro.lmSales"}}</p>
+					<p local-class="num">{{number-format singleRegionData.card.unit.unit}}</p>
+				</div>
+			</div>
+			<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<div local-class="card-inside-content">
 
-							<p local-class="headline">{{t "apm.component.regionalIntro.lmReachRate"}}(%)</p>
-							<p local-class="num">{{number-percent singleRegionData.card.unit.achieve_rate}}</p>
-						</div>
-					</div>
-				{{!-- {{/if}}
+					<p local-class="headline">{{t "apm.component.regionalIntro.lmReachRate"}}(%)</p>
+					<p local-class="num">{{number-percent singleRegionData.card.unit.achieve_rate}}</p>
+				</div>
+			</div>
+			{{!-- {{/if}}
 			{{/each}} --}}
 		</div>
 	</div>
@@ -96,18 +96,10 @@
 
 					<div local-class="table-content">
 						<p local-class="title">{{t "apm.component.regionalIntro.hisSalesData"}}</p>
-						{{!-- <div class="table-responsive"> --}}
 						<table class="table table-striped" local-class="table-sales">
 							<thead>
 								<tr>
 									<td> </td>
-									{{!-- {{#each salesBar as |item|}}
-										{{#if (eq item.region_id data.id)}}
-											{{#each item.data as |item|}}
-												<td>{{item.key}}</td>
-											{{/each}}
-										{{/if}}
-									{{/each}} --}}
 									{{#each singleRegionData.salesBar.data as |item|}}
 										<td>{{item.key}}</td>
 									{{/each}}
@@ -115,27 +107,14 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>{{t "apm.component.regionalIntro.sales"}}($)</td>
-									{{!-- {{#each salesBar as |item|}}
-										{{#if (eq item.region_id data.id)}}
-											{{#each item.data as |item|}}
-												<td>{{number-format item.value}}</td>
-											{{/each}}
-										{{/if}}
-									{{/each}} --}}
+									<td>{{t "apm.component.regionalIntro.sales"}}</td>
 									{{#each singleRegionData.salesBar.data as |item|}}
 										<td>{{number-format item.value}}</td>
 									{{/each}}
 								</tr>
-								{{!-- <tr>
-									<td>{{t "apm.component.regionalIntro.share"}}(%)</td>
-									{{#each singleRegionData.salesBar.data as |item|}}
-										<td>{{item.value2}}%</td>
-									{{/each}}
-								</tr> --}}
+
 							</tbody>
 						</table>
-						{{!-- </div> --}}
 					</div>
 				</div>
 			{{/tab.pane}}

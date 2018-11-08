@@ -51,14 +51,6 @@ export default Controller.extend({
 			}
 		},
 		toSort() {
-			// let hint = {
-			// 	hintModal: false,
-			// 	hintImg: true,
-			// 	title: '提示',
-			// 	content: '确认进入下一步后，将不可修改当前内容。',
-			// 	hintBtn: true,
-			// }
-			// this.set('hint', hint);
 			let region = this.get('pmController').get('Store').peekAll('region');
 			let params = this.get('params');
 

@@ -134,7 +134,7 @@ export default {
         "saveExit": "保存退出",
         "areaSales": "地区季度销售结果",
         "share": "份额",
-        "sales": "销售额",
+        "sales": "销售量",
         "areaShareChange": "地区产品份额变化",
         "areaShareResult": "各区域份额结果",
         "tips": "提示",
@@ -196,7 +196,7 @@ export default {
         "area": "区域",
         "marketPotential": "市场潜力",
         "potentialContribution": "潜力贡献度",
-        "lmSale": "上月销售额",
+        "lmSale": "上月销售量",
         "lmSaleContribution": "上月销售贡献度",
         "contributionCoefficient": "贡献度系数",
         "growthRate": "上月销售增长率",
@@ -204,7 +204,8 @@ export default {
 
       "regionalIntro":{
         "marketPotentialYear": "市场潜力(年)",
-        "lmSales": "上月销售额",
+        "patientNum":"患病人数",
+        "lmSales": "上月销售量",
         "lmReachRate": "上月达成率",
         "representationExec": "代表与执行",
         "kpi": "行动KPI",
@@ -214,7 +215,7 @@ export default {
         "visitTime": "目标覆盖率",
         "areaSalesInfo": "区域销售情況",
         "hisSalesData": "公司产品历史销售数据",
-        "sales": "销售额",
+        "sales": "销售量",
         "share": "份额",
       },
 
@@ -241,8 +242,8 @@ export default {
       "d3BarLine":{
         "title": "公司产品历史销售图表",
         "share": "份额",
-        "sales": "销售额",
-        "forecastSales": "预测销售额",
+        "sales": "销售量",
+        "forecastSales": "预测销售量",
       },
 
       "areaAnalyzeInput":{

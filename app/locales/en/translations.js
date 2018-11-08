@@ -8,7 +8,7 @@ export default {
   // },
   //
   // "key.with.interpolation": "Text with {{anInterpolation}}"
-  
+
   "apm": {
     "sysName": "ＳＹＳ ＮＡＭＥ",
     "account": "Account",
@@ -199,6 +199,7 @@ export default {
 
       "regionalIntro":{
         "marketPotentialYear": "Market potential(Year)",
+        "patientNum": "Patient number",
         "lmSales": "Last month sales",
         "lmReachRate": "Last month reach rate",
         "representationExec": "Representation and execution",
@@ -228,7 +229,7 @@ export default {
       "chargeRepresent":{
         "title": "Responsible representative",
       },
-      
+
       "representReport":{
         "title": "Regional business report",
       },
