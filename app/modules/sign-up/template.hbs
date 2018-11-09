@@ -1,42 +1,8 @@
-{{!-- <div local-class="content-page">
-	<div local-class="content">
-		<div local-class="head">
-			<img src="" alt="">
-			<p>{{t "apm.sign.userSignUp"}}</p>
-		</div>
-		<div local-class="input-area">
-			<div local-class="userinfo">
-				<label local-class="title">{{t "apm.sign.name"}}</label>
-                {{input id="userename" type="text" value=userName label="email" placeholder=(t "apm.sign.inputName") required=true local-class="name"}}
-				<p local-class= {{if nameHint.status 'hint' 'wrongText'}}>{{nameHint.text}}</p>
-			</div>
-			<div local-class="userinfo">
-				<label local-class="title" for="useremail">{{t "apm.sign.mail"}}</label>
-                {{input id="useremail" type="email" value=userEmail placeholder=(t "apm.sign.inputMail") required=true local-class="email"}}
-				<p local-class= {{if emailHint.status 'hint' 'wrongText'}}>{{emailHint.text}}</p>
-			</div>
-			<div local-class="userinfo">
-				<label local-class="title">{{t "apm.sign.password"}}</label>
-                {{input id="userpassword" type="password" value=userPassword placeholder=(t "apm.sign.inputPassword") required=true local-class="password"}}
-				<p local-class= {{if pwHint.status 'hint' 'wrongText'}}>{{pwHint.text}}</p>
-			</div>
-			<div local-class="clicks">
-				{{#bs-button type="primary" onClick=(action "submit")}}{{t "apm.sign.confirmSignUp"}}{{/bs-button}}
-				<div local-class="log">
-					{{t "apm.sign.hadAccount"}}
-					{{#link-to 'index'}}
-						{{t "apm.sign.clickLogin"}}
-					{{/link-to}}
-				</div>
-			</div>
-		</div>
-	</div>
-</div> --}}
-{{hint-modal hint=hint confirm=(action 'toLogin')}} {{outlet}}
+{{hint-modal hint=hint confirm=(action 'toLogin')}}
+{{!-- {{outlet}} --}}
 	<div local-class="content-page">
 		<div local-class="content">
 			<div local-class="step-by-step">
-				{{!-- <div local-class="step"> --}}
 				<div local-class='step on'>
 					<p> <span>1</span> </p>
 					<p>用户注册</p>
@@ -52,10 +18,6 @@
 			</div>
 			{{#if (eq whichStep 0)}}
 				<div local-class="input-area">
-					{{!-- <div local-class="userinfo">
-						<label local-class="title">{{t "apm.sign.name"}}</label> {{input id="userename" type="text" value=userName label="email" placeholder=(t "apm.sign.inputName") required=true local-class="name"}}
-						<p local-class= {{if nameHint.status 'hint' 'wrongText'}}>{{nameHint.text}}</p>
-					</div> --}}
 					<div local-class="userinfo">
 						<label local-class="title" for="useremail">{{t "apm.sign.mail"}}</label>
 						{{input id="useremail" name="user-email" type="email" value=userEmail placeholder=(t "apm.sign.inputMail") required=true local-class="email"}}
@@ -72,7 +34,7 @@
 						<p local-class= {{if cpwHint.status 'hint' 'wrongText'}}>{{cpwHint.text}}</p>
 					</div>
 					<div local-class="clicks">
-						{{#bs-button type="primary" onClick=(action "nextStep")}}
+						{{#bs-button type="primary" disabled=firstStepDisabled onClick=(action "nextStep")}}
 							{{t "apm.sign.nextStep"}}
 						{{/bs-button}}
 						<div local-class="log">
@@ -106,7 +68,7 @@
 						<p local-class= {{if positionHint.status 'hint' 'wrongText'}}>{{positionHint.text}}</p>
 					</div>
 					<div local-class="clicks">
-						{{#bs-button type="primary" onClick=(action "submit")}}
+						{{#bs-button type="primary" disabled=submitDisabled onClick=(action "submit")}}
 							{{t "apm.sign.confirmSignUp"}}
 						{{/bs-button}}
 						<div local-class="log">

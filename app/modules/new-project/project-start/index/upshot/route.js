@@ -160,9 +160,9 @@ export default Route.extend({
 					{ id: 4, name: '最佳结果', value: (data.best_share * 100).toFixed(1) }
 				];
 				modelData.quarterTableData = [
-					{ name: '最差结果', sales: data.worst_sales, share: (data.worst_share * 100).toFixed(1) },
-					{ name: '上季结果', sales: data.pre_sales, share: (data.pre_share * 100).toFixed(1) },
-					{ name: '最佳结果', sales: data.best_sales, share: (data.best_share * 100).toFixed(1) }
+					{ name: '最差结果', sales: data.worst_unit, share: (data.worst_share * 100).toFixed(1) },
+					{ name: '上季结果', sales: data.pre_unit, share: (data.pre_share * 100).toFixed(1) },
+					{ name: '最佳结果', sales: data.best_unit, share: (data.best_share * 100).toFixed(1) }
 				]
 				return data;
 			})

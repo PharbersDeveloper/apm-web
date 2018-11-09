@@ -42,7 +42,9 @@ export default Controller.extend(SignupLogic, {
 
 	emailHint: computed('userEmail', function() {
 		let email = this.get('userEmail');
-		if (email.indexOf('@') < 0 || email.indexOf('.com') < 0) {
+		if (email === "") {
+			return { text: "", status: false };
+		} else if (email.indexOf('@') < 0 || email.indexOf('.com') < 0) {
 			return { text: this.i18n.t('apm.sign.inputRightMail') + "", status: false };
 		} else {
 			return { text: "", status: true };
@@ -116,6 +118,20 @@ export default Controller.extend(SignupLogic, {
 			return { text: '', status: true };
 		}
 	}),
+	firstStepDisabled: computed('emailHint','pwHint','cpwHint', function() {
+		let status = [this.get('emailHint').status, this.get('pwHint').status, this.get('cpwHint').status, ]
+		let allIsOk = status.every((item) => {
+			return true === item;
+		});
+		return !allIsOk;
+	}),
+	submitDisabled: computed('nameHint','phoneHint','cNameHint','positionHint', function() {
+		let status = [this.get('nameHint').status, this.get('phoneHint').status, this.get('cNameHint').status, this.get('positionHint').status, ]
+		let allIsOk = status.every((item) => {
+			return true === item;
+		});
+		return !allIsOk;
+	}),
 	actions: {
 		toLogin() {
 			let hint = {
@@ -129,8 +145,14 @@ export default Controller.extend(SignupLogic, {
 			this.set('userName', '');
 			this.set('userEmail', '');
 			this.set('userPassword', '');
+			this.set('confirmPassword', '');
+			this.set('userPhone', '');
+			this.set('userCompanyName', '');
+			this.set('userPosition', '');
+			this.set('whichStep', 0);
 			this.transitionToRoute('index');
 		},
+
 		nextStep() {
 			let status = [this.get('emailHint').status, this.get('pwHint').status, this.get('cpwHint').status, ]
 			let allIsOk = status.every((item) => {
@@ -191,24 +213,11 @@ export default Controller.extend(SignupLogic, {
 					company_name: this.get('userCompanyName'),
 					position_name: this.get('userPosition')
 				});
-				// let eqValues = [
-				// 	{ id: '1', type: 'eqcond', key: 'email', val: this.signup.email },
-				// 	{ id: '2', type: 'eqcond', key: 'password', val: privatePw },
-				// 	{ id: '3', type: 'eqcond', key: 'login_source', val: 'APM' }
-				// ]
 
-				// eqValues.forEach((elem) => {
-				// 	req.get(elem.type).pushObject(this.store.createRecord(elem.type, {
-				// 		id: elem.id,
-				// 		key: elem.key,
-				// 		val: elem.val,
-				// 	}))
-				// });
 				let conditions = this.get('pmController').get('Store').object2JsonApi(req);
 
 				this.get('pmController').get('Store').queryObject('/api/v1/userRegister/0', 'user', conditions)
 					.then(data => {
-						// this.get('logger').log('success');
 						this.set('whichStep', 2);
 					})
 					.catch((error) => {
@@ -225,6 +234,15 @@ export default Controller.extend(SignupLogic, {
 						}
 						this.set('hint', hint);
 					});
+			} else {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: this.i18n.t('apm.sign.tips') + "",
+					content: '请填写全部内容.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
 			}
 		}
 	}

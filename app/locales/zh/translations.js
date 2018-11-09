@@ -65,7 +65,7 @@ export default {
       "nameSuccess": "姓名验证成功",
       "inputRightMail": "*邮箱格式错误",
       "mailSuccess": "邮箱验证成功",
-      "passwordLength": "*登录密码需为6～18位，不能全部是数字",
+      "passwordLength": "*登录密码需为6～18位.",
       "passwordSuccess": "密码验证成功",
       "tips": "提示",
       "signUpOk": "注册成功,点击确认跳转登录页面.",
@@ -194,7 +194,7 @@ export default {
       "areaBaseInfoTable":{
         "monthData": "月度数据",
         "area": "区域",
-        "marketPotential": "市场潜力",
+        "marketPotential": "潜力(患病人数)",
         "potentialContribution": "潜力贡献度",
         "lmSale": "上月销售量",
         "lmSaleContribution": "上月销售贡献度",
