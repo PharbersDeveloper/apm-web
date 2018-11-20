@@ -12,7 +12,6 @@ export default Controller.extend({
 		exitSystem() {
 			new Promise((resolve, reject) => {
 				this.get('cookies').clear('token', {path: '/'});
-				// this.get('pmController').get('cookie').clean('token');
 				localStorage.clear();
 				return resolve(true)
 			}).then(() => {
