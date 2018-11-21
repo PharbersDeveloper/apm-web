@@ -1,12 +1,12 @@
 <div local-class="content">
-    <p local-class='title'>{{t "apm.component.representReport.title"}}</p>
-    <div local-class="lists">
-        {{#each data as |list|}}
-            <div local-class="list">
-                <p local-class="headline">{{list.title}}</p>
-                <p local-class="des">{{list.des}}</p>
-            </div>
-        {{/each}}
-    </div>
+	<p local-class='title'>{{t "apm.component.representReport.title"}}</p>
+	<div local-class="lists">
+		{{#each data as |list|}}
+			<div local-class="list">
+				<p local-class="headline">{{list.title}}</p>
+				<p local-class="des">{{content-bound-helper list.des}}</p>
+			</div>
+		{{/each}}
+	</div>
 </div>
 {{yield}}

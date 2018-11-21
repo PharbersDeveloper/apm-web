@@ -3,97 +3,82 @@
 		<div local-class="top">
 			<div local-class="head">
 				<p local-class="title">{{data.name}}</p>
-				<img src= {{data.image}} alt="">
+				<img src={{data.image}} alt="">
 			</div>
 			<div local-class="intro">
 				<p>{{data.describe}}</p>
 			</div>
 		</div>
 		<div local-class="bottom" class="row">
-			{{!-- {{#each regionCards as |card|}}
-				{{#if (eq data.id card.region_id)}} --}}
 			<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 				<div local-class="card-inside-content">
 					<p local-class="headline">{{t "apm.component.regionalIntro.patientNum"}}</p>
 					<p local-class="num">{{number-format singleRegionData.card.unit.patient.patient_num}}</p>
 				</div>
-
 			</div>
 			<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 				<div local-class="card-inside-content">
-
 					<p local-class="headline">{{t "apm.component.regionalIntro.lmSales"}}</p>
 					<p local-class="num">{{number-format singleRegionData.card.unit.unit}}</p>
 				</div>
 			</div>
 			<div local-class="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 				<div local-class="card-inside-content">
-
 					<p local-class="headline">{{t "apm.component.regionalIntro.lmReachRate"}}(%)</p>
 					<p local-class="num">{{number-percent singleRegionData.card.unit.achieve_rate}}</p>
 				</div>
 			</div>
-			{{!-- {{/if}}
-			{{/each}} --}}
 		</div>
 	</div>
-
 	<div local-class="sub-tab">
 		{{#bs-tab as |tab|}}
 			{{#tab.pane title=(t "apm.component.regionalIntro.representationExec")}}
-				{{!-- {{#each radarData as |item|}}
-					{{#if (eq item.region_id data.id)}}
-						{{radar-section-effectiveness gradient=(concat 'glowarea' data.id) radarSectionData=item.data}}
-					{{/if}}
-				{{/each}} --}}
 				{{radar-section-effectiveness gradient=(concat 'glowarea' data.id) radarSectionData=singleRegionData.radarData}}
-					<div local-class="represent">
-						{{charge-represent data=singleRegionData.represent}}
+				<div local-class="represent">
+					{{charge-represent data=singleRegionData.represent}}
+				</div>
+				<div local-class="action">
+					<p local-class="title-action">{{t "apm.component.regionalIntro.kpi"}}</p>
+					<div class="table-responsive" local-class="table-action">
+						<table class="table table-striped" local-class="table-sales">
+							<thead>
+								<tr>
+									<td>{{t "apm.component.regionalIntro.yearMonth"}}</td>
+									{{#each singleRegionData.kpiData.yms as |ym|}}
+										<td>{{ym}}</td>
+									{{/each}}
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{t "apm.component.regionalIntro.targetVisitTime"}}</td>
+									{{#each singleRegionData.kpiData.target_call_freq_vals as |target_call_freq_val|}}
+										<td>{{target_call_freq_val}}</td>
+									{{/each}}
+								</tr>
+								<tr>
+									<td>{{t "apm.component.regionalIntro.localWorkDay"}}</td>
+									{{#each singleRegionData.kpiData.in_field_days_vals as |in_field_days_val|}}
+										<td>{{in_field_days_val}}</td>
+									{{/each}}
+								</tr>
+								<tr>
+									<td>{{t "apm.component.regionalIntro.visitTime"}}</td>
+									{{#each singleRegionData.kpiData.target_occupation_vals as |target_occupation_val|}}
+										<td>{{target_occupation_val}}</td>
+									{{/each}}
+								</tr>
+							</tbody>
+						</table>
 					</div>
-					<div local-class="action">
-						<p local-class="title-action">{{t "apm.component.regionalIntro.kpi"}}</p>
-						<div class="table-responsive" local-class="table-action">
-							<table class="table table-striped" local-class="table-sales">
-								<thead>
-									<tr>
-										<td>{{t "apm.component.regionalIntro.yearMonth"}}</td>
-										{{#each singleRegionData.kpiData.yms as |ym|}}
-											<td>{{ym}}</td>
-										{{/each}}
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>{{t "apm.component.regionalIntro.targetVisitTime"}}</td>
-										{{#each singleRegionData.kpiData.target_call_freq_vals as |target_call_freq_val|}}
-											<td>{{target_call_freq_val}}</td>
-										{{/each}}
-									</tr>
-									<tr>
-										<td>{{t "apm.component.regionalIntro.localWorkDay"}}</td>
-										{{#each singleRegionData.kpiData.in_field_days_vals as |in_field_days_val|}}
-											<td>{{in_field_days_val}}</td>
-										{{/each}}
-									</tr>
-									<tr>
-										<td>{{t "apm.component.regionalIntro.visitTime"}}</td>
-
-										{{#each singleRegionData.kpiData.target_occupation_vals as |target_occupation_val|}}
-											<td>{{target_occupation_val}}</td>
-										{{/each}}
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div local-class="report">
-						{{represent-report data=singleRegionData.report}}
-					</div>
+				</div>
+				<div local-class="report">
+					{{represent-report data=singleRegionData.report}}
+				</div>
 			{{/tab.pane}}
 			{{#tab.pane title=(t "apm.component.regionalIntro.areaSalesInfo")}}
 				<div local-class="analyze">
 					{{d3-bar-line chartId=(concat "area-sales-chart" salesBar.id) laterThreeChangeBg=false noLine=true  dataset=singleRegionData.salesBar.data}}
-
 					<div local-class="table-content">
 						<p local-class="title">{{t "apm.component.regionalIntro.hisSalesData"}}</p>
 						<table class="table table-striped" local-class="table-sales">
@@ -112,7 +97,6 @@
 										<td>{{number-format item.value}}</td>
 									{{/each}}
 								</tr>
-
 							</tbody>
 						</table>
 					</div>

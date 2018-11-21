@@ -1,17 +1,18 @@
 {{!-- {{outlet}} --}}
-{{#unless history}}
-    <div class="next-step">
-        {{#bs-button class="btn-next" local-class="output"}}
-            {{t "apm.newProject.upshot.output"}}
-        {{/bs-button}}
-        {{#bs-button class="btn-next" onClick=(action "saveUpshot")}}
-            {{t "apm.newProject.upshot.saveExit"}}
-        {{/bs-button}}
-    </div>
-{{/unless}}
-
-<div  local-class="area-sales">
-    <p>{{t "apm.newProject.upshot.areaSales"}}</p>
+{{!-- {{#unless history}} --}}
+<div class="next-step">
+	{{#bs-button class="btn-next" local-class="output" onClick=(action "commitResult")}}
+		{{t "apm.newProject.upshot.output"}}
+	{{/bs-button}}
+	{{#unless history}}
+		{{#bs-button class="btn-next" onClick=(action "saveUpshot")}}
+			{{t "apm.newProject.upshot.saveExit"}}
+		{{/bs-button}}
+	{{/unless}}
+</div>
+{{!-- {{/unless}} --}}
+<div local-class="area-sales">
+	<p>{{t "apm.newProject.upshot.areaSales"}}</p>
 	{{d3-histogram-area-sales data=model.quarterD3BarData}}
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 		<table class="table table-striped" local-class="table-sales">
@@ -23,13 +24,13 @@
 				</tr>
 			</thead>
 			<tbody>
-                {{#each model.quarterTableData as |item|}}
-                    <tr>
-                        <td>{{item.name}}</td>
-                        <td>{{item.share}}%</td>
-                        <td>{{number-format item.sales}}</td>
-                    </tr>
-                {{/each}}
+				{{#each model.quarterTableData as |item|}}
+					<tr>
+						<td>{{item.name}}</td>
+						<td>{{item.share}}%</td>
+						<td>{{number-format item.sales}}</td>
+					</tr>
+				{{/each}}
 			</tbody>
 		</table>
 	</div>
@@ -38,3 +39,27 @@
 {{d3-line-multi-legend chooseData=model.areaD3LineRegionData title=(t "apm.newProject.upshot.areaShareResult") class="rea-share"}}
 {{!-- {{d3-stacked-bar }} --}}
 {{hint-modal hint=hint confirm=(action 'confirmSaveUpshot')}}
+{{!-- choose teacher modal --}}
+{{#bs-modal local-class="hint-modal" open=hintCT.hintModal onSubmit=(action 'confirmCommit') onHidden=(action (mut hintCT.hintModal) false) as |modal|}}
+	{{#modal.header}}
+		<h4 class="modal-title">
+			<span></span>
+			{{#if hintCT.hintImg}}
+				<img width='25px' height="25px" src="/assets/images/hint.png" alt=""> {{hintCT.title}}
+			{{else}}
+				{{hintCT.title}}
+			{{/if}}
+		</h4>
+	{{/modal.header}}
+	{{#modal.body}}
+		<select name="chooset" id="chooset" onchange={{action 'changeTeacher' value="target.value"}}>
+			{{#each hintCT.content as |ct|}}
+				<option value={{ct.id}}>{{ct.name}}</option>
+			{{/each}}
+		</select>
+	{{/modal.body}}
+	{{#modal.footer}}
+		{{#bs-button type="warning" onClick=(action modal.close)}}{{t "apm.component.hintModal.cancel"}}{{/bs-button}}
+		{{#bs-button type="success" onClick=(action modal.submit)}}{{t "apm.component.hintModal.confirm"}}{{/bs-button}}
+	{{/modal.footer}}
+{{/bs-modal}}
