@@ -11,7 +11,7 @@ export default Controller.extend({
 	actions: {
 		exitSystem() {
 			new Promise((resolve, reject) => {
-				this.get('cookies').clear('token');
+				this.get('cookies').clear('token', {path: '/'});
 				localStorage.clear();
 				return resolve(true)
 			}).then(() => {

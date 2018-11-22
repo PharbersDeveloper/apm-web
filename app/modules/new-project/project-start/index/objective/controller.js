@@ -135,14 +135,6 @@ export default Controller.extend({
 			}
 		},
 		toResource() {
-			let hint = {
-				hintModal: false,
-				hintImg: true,
-				title: '提示',
-				content: '确认进入下一步后，将不可修改当前内容。',
-				hintBtn: true,
-			}
-			this.set('hint', hint);
 			let region = this.set('region', this.get('pmController').get('Store').peekAll('region'));
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
@@ -167,9 +159,28 @@ export default Controller.extend({
 			});
 
 			Promise.all(promiseArray).then((res) => {
+				let hint = {
+					hintModal: false,
+					hintImg: true,
+					title: '提示',
+					content: '确认进入下一步后，将不可修改当前内容。',
+					hintBtn: true,
+				}
+				this.set('hint', hint);
 				this.transitionToRoute('new-project.project-start.index.resource')
 			}).catch((error) => {
-				this.get('logger').log(error);
+				let content = "";
+				error.errors.forEach(ele => {
+					content += ele.detail + '</br>'
+				});
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: "提示",
+					content: content,
+					hintBtn: false,
+				}
+				this.set('hint', hint);
 			});
 		},
 		openTips(region) {

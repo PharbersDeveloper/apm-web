@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { inject } from '@ember/service';
 
 export default Controller.extend({
-	i18n:inject(),
+	i18n: inject(),
 	cookies: inject(),
 	init() {
 		this._super(...arguments);
@@ -19,6 +19,22 @@ export default Controller.extend({
 			})
 			// this.set('tipsModal', true);
 			// this.set('tipsContent', '本次课程中的内容将进行保存。<br/>您将可以在“历史报告”中查看本次的课程内容与结果。')
+		},
+		commitResult() {
+			this.set('hintCT', {
+				hintModal: true,
+				hintImg: true,
+				title: this.i18n.t('apm.newProject.upshot.chooseTeacherTips') + "",
+				content: [{ name: 'teacher one', id: 'teacherone' }, { name: 'teacher two', id: 'teachertwo' }],
+				hintBtn: true,
+			})
+		},
+		confirmCommit() {
+
+		},
+		changeTeacher(value) {
+			this.get('logger').log(value);
+
 		},
 		confirmSaveUpshot() {
 			let hint = {

@@ -156,7 +156,8 @@ export default Controller.extend({
 			});
 			this.set('iscoVisitEmpty', iscoVisitEmpty);
 			if (iscoVisitEmpty) {
-				let [_totalCoVisit, _totalNationMeeting, _totalCityMeeting, _totalDepartMeeting] = [this.get('coVisit'), this.get('nationMeeting'), this.get('cityMeeting'), this.get('departmentMeeting')];
+				let [_totalCoVisit, _totalNationMeeting, _totalCityMeeting, _totalDepartMeeting] =
+				[this.get('coVisit').value, this.get('nationMeeting').value, this.get('cityMeeting').value, this.get('departmentMeeting').value];
 				if (_totalCoVisit > 100 || _totalNationMeeting > 100 ||
 					_totalCityMeeting > 100 || _totalDepartMeeting > 100) {
 					let hint = {
@@ -190,14 +191,7 @@ export default Controller.extend({
 			}
 		},
 		toActionPlan() {
-			let hint = {
-				hintModal: false,
-				hintImg: true,
-				title: '提示',
-				content: '确认进入下一步后，将不可修改当前内容。',
-				hintBtn: true,
-			}
-			this.set('hint', hint);
+
 			let region = this.get('region');
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
@@ -225,9 +219,28 @@ export default Controller.extend({
 			});
 
 			Promise.all(promiseArray).then((res) => {
+				let hint = {
+					hintModal: false,
+					hintImg: true,
+					title: '提示',
+					content: '确认进入下一步后，将不可修改当前内容。',
+					hintBtn: true,
+				}
+				this.set('hint', hint);
 				this.transitionToRoute('new-project.project-start.index.action-plan');
 			}).catch((error) => {
-				this.get('logger').log(error);
+				let content = "";
+				error.errors.forEach(ele => {
+					content += ele.detail + '</br>'
+				});
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: "提示",
+					content: content,
+					hintBtn: false,
+				}
+				this.set('hint', hint);
 			});
 		}
 	}

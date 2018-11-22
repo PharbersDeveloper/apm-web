@@ -46,7 +46,9 @@ export default Controller.extend({
 					if(previousTransition) {
 						this.set('previousTransition',null);
 						this.get('applicationController').set('userName',localStorage.getItem('userName'));
-						previousTransition.retry();
+						// previousTransition.retry();
+						this.transitionToRoute('project-sort');
+
 					} else {
 						this.transitionToRoute('project-sort');
 					}

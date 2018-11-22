@@ -20,26 +20,27 @@ export default Route.extend({
 
 		function tableData(arrayObjec) {
 			return arrayObjec.map((item) => {
-				let potential = item.lastObject.sales.potential.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
-				let potential_contri = item.lastObject.sales.potential_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
-				let sales = item.lastObject.sales.sales.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
-				let sales_contri = item.lastObject.sales.sales_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
-				let contri_index = item.lastObject.sales.contri_index.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
-				let sales_growth = item.lastObject.sales.sales_growth.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
+				let potential = item.lastObject.unit.potential.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
+				let potential_contri = item.lastObject.unit.potential_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
+				let unit = item.lastObject.unit.unit.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
+				let contri = item.lastObject.unit.contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
+				let contri_index = item.lastObject.unit.contri_index.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
+				let growth = item.lastObject.unit.growth.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
 				return {
 					name: that.store.peekRecord('region', item.lastObject.region_id).name,
 					potential,
 					potential_contri,
-					sales,
-					sales_contri,
+					unit,
+					contri,
 					contri_index,
-					sales_growth
+					growth
 				}
 			})
 		};
 
 		// 获取所有区域名称与基本信息
-		let req = this.get('pmController').get('Store').createModel('request', { id: '0', res: 'bind_course_region' });
+		let req = this.get('pmController').get('Store').createModel('request',
+			{ id: '0', res: 'bind_course_region' });
 		req.get('eqcond').pushObject(this.get('pmController').get('Store').createModel('eqcond', {
 			id: '1',
 			key: 'course_id',
@@ -52,11 +53,10 @@ export default Route.extend({
 				return regions;
 			})
 			.then((regions) => {
-
 				let promiseArray = regions.map(elem => {
 					req = this.get('pmController').get('Store').createModel('request', {
 						id: elem.id + '0',
-						res: 'bind_course_region_goods_ym_sales',
+						res: 'bind_course_region_goods_time_unit',
 						fmcond: this.get('pmController').get('Store').createModel('fmcond', {
 							id: elem.id + 'fm',
 							skip: 0,
@@ -64,10 +64,10 @@ export default Route.extend({
 						})
 					});
 					let eqValues = [
+						{ id: elem.id + '4', type: 'eqcond', key: 'time_type', val: 'month' },
 						{ id: elem.id + '1', type: 'eqcond', key: 'course_id', val: ids.courseid },
 						{ id: elem.id + '2', type: 'eqcond', key: 'region_id', val: elem.id },
-						{ id: elem.id + '3', type: 'eqcond', key: 'ym', val: '17-12' },
-
+						{ id: elem.id + '3', type: 'eqcond', key: 'time', val: '17-12' },
 					];
 					eqValues.forEach((elem) => {
 						req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
@@ -78,10 +78,7 @@ export default Route.extend({
 					});
 					let conditions = this.get('pmController').get('Store').object2JsonApi(req);
 
-					this.get('logger').log(conditions);
-
-					return this.store.queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-					// return this.store.queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+					return this.store.queryMultipleObject('/api/v1/findAllMedUnit/0', 'bind_course_region_goods_time_unit', conditions)
 				});
 				return {
 					regions: regions,

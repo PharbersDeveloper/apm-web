@@ -10,7 +10,7 @@ export default Route.extend({
 		});
 		let req = this.get('pmController').get('Store').createModel('request', {
 			id: 'resource0',
-			res: 'bind_course_region_goods_ym_sales',
+			res: 'bind_course_region_goods_time_unit',
 			fmcond: this.get('pmController').get('Store').createModel('fmcond', {
 				id: 'resourceFm0',
 				skip: 0,
@@ -19,29 +19,26 @@ export default Route.extend({
 		});
 
 		let eqValues = [
+			{ id:'resource5', type: 'eqcond', key: 'time_type', val: 'month' },
 			{ id: 'resource1', type: 'eqcond', key: 'course_id', val: paramsController.courseid },
 			{ id: 'resource2', type: 'eqcond', key: 'goods_id', val: companyProd.id },
-			{ id: 'resource3', type: 'gtecond', key: 'ym', val: '18-01' },
-			{ id: 'resource4', type: 'ltecond', key: 'ym', val: '18-03' }
+			{ id: 'resource3', type: 'gtecond', key: 'time', val: '18-01' },
+			{ id: 'resource4', type: 'ltecond', key: 'time', val: '18-03' }
 		]
 
 		eqValues.forEach(elem => {
 			req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, { id: elem.id, key: elem.key, val: elem.val }))
 		});
 		let conditions = this.get('pmController').get('Store').object2JsonApi(req);
-		return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-
-			// return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+		return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllMedUnit/0', 'bind_course_region_goods_time_unit', conditions)
 			.then(data => {
-				// data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
 				data.forEach(elem => { temp.pushObject(elem) });
-
-				let predictionData = temp.filter(elem => elem.ym === '18-01' || elem.ym === '18-02' || elem.ym === '18-03')
+				let predictionData = temp.filter(elem => elem.time === '18-01' || elem.time === '18-02' || elem.time === '18-03')
 				let predictionGroupData = groupBy(predictionData, 'region_id')
 				let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
 					return {
 						region_id: key,
-						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.sales.company_target, 0)
+						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.unit.company_target, 0)
 					}
 				});
 				return regionCompanyTargets
@@ -130,26 +127,5 @@ export default Route.extend({
 				return this.loadTableTarget(paramsController)
 			})
 
-		// let req = this.get('pmController').get('Store').createModel('request', { res: 'bind_course_exam_require' });
-		//
-		// let eqValues = [
-		// 	{ type: 'eqcond', key: 'course_id', val: paramsController.courseid },
-		// ]
-		//
-		// eqValues.forEach((elem, index) => {
-		// 	req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
-		// 		key: elem.key,
-		// 		val: elem.val,
-		// 	}))
-		// });
-		// let conditions = this.get('pmController').get('Store').object2JsonApi( req);
-		// this.get('pmController').get('Store').queryObject('/api/v1/findExamRequire/0', 'examrequire', conditions)
-		// 	.then(data => {
-		// 		controller.set('allotData', data)
-		// 		return null;
-		// 	})
-		// 	.then(() => {})
-		//
-		// return this.loadTableTarget(paramsController)
 	},
 });

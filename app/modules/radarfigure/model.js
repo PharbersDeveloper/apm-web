@@ -7,5 +7,6 @@ export default DS.Model.extend({
     prod_knowledge_val: DS.attr('number'), // 产品知识
     sales_skills_val: DS.attr('number'), // 销售能力
     target_call_freq_val: DS.attr('number'), // 目标拜访频次
-    territory_manage_val: DS.attr('number') // 区域管理能力
+    territory_manage_val: DS.attr('number'), // 区域管理能力
+    target_occupation_val: DS.attr('number')
 });

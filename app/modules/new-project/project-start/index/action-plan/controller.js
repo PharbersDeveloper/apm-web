@@ -11,26 +11,28 @@ export default Controller.extend({
 		this.set('history', JSON.parse(localStorage.getItem('history')));
 		this.set('readyChoose', []);
 	},
-	planPaire: computed('readyChoose.@each.isChecked', function() {
-		let chooses = this.get('readyChoose');
-		let planPaire = chooses.filterBy('isChecked', true);
-		let dealPlan = planPaire;
-		if (planPaire.length > 2) {
-			let booleanChooses = chooses.map((choose) => {
-				return choose.isChecked;
-			});
-			let index = booleanChooses.indexOf(true);
-			set(chooses[index], 'isChecked', false);
-			this.set('readyChoose', chooses);
-			dealPlan.shift()
-		}
-		return dealPlan;
-	}),
+	// planPaire: computed('readyChoose.@each.isChecked', function() {
+	// 	let chooses = this.get('readyChoose');
+	// 	let planPaire = chooses.filterBy('isChecked', true);
+	// 	let dealPlan = planPaire;
+	// 	if (planPaire.length > 2) {
+	// 		let booleanChooses = chooses.map((choose) => {
+	// 			return choose.isChecked;
+	// 		});
+	// 		let index = booleanChooses.indexOf(true);
+	// 		set(chooses[index], 'isChecked', false);
+	// 		this.set('readyChoose', chooses);
+	// 		dealPlan.shift()
+	// 	}
+	// 	return dealPlan;
+	// }),
 	resortRegionModel: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');
 		regionResort.sort((a, b) => {
 			return a.id - b.id
 		});
+		let localStorageRegion = JSON.parse(localStorage.getItem('totalRegion'));
+		// debugger;
 		let region = this.get('pmController').get('Store').peekAll('region');
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
@@ -41,6 +43,13 @@ export default Controller.extend({
 			})
 			return singleRegion
 		});
+		// newRegion.forEach(ele=> {
+		// 	localStorageRegion.forEach(localele=> {
+		// 			if(ele.id === localele.data.id) {
+		// 				set(ele,'actionplan',localele.data.attributes.actionplan)
+		// 			}
+		// 	})
+		// });
 		return newRegion;
 	}),
 	actions: {
@@ -78,14 +87,7 @@ export default Controller.extend({
 			}
 		},
 		toUpshot() {
-			let hint = {
-				hintModal: false,
-				hintImg: true,
-				title: '提示',
-				content: '确认进入下一步后，将不可修改当前内容。',
-				hintBtn: true,
-			}
-			this.set('hint', hint);
+
 			let region = this.get('pmController').get('Store').peekAll('region');
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
@@ -110,10 +112,29 @@ export default Controller.extend({
 				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 			Promise.all(promiseArray).then(() => {
+				let hint = {
+					hintModal: false,
+					hintImg: true,
+					title: '提示',
+					content: '确认进入下一步后，将不可修改当前内容。',
+					hintBtn: true,
+				}
+				this.set('hint', hint);
 					this.transitionToRoute('new-project.project-start.index.upshot')
 				})
 				.catch((error) => {
-					this.get('logger').log(error);
+					let content = "";
+					error.errors.forEach(ele => {
+						content += ele.detail + '</br>'
+					});
+					let hint = {
+						hintModal: true,
+						hintImg: true,
+						title: "提示",
+						content: content,
+						hintBtn: false,
+					}
+					this.set('hint', hint);
 				});
 		}
 	}

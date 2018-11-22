@@ -7,6 +7,9 @@ export default Component.extend({
 	readyChoose: computed('originChoose', function() {
 		let originChoose = this.get('originChoose');
 		let localStorageRegion = JSON.parse(localStorage.getItem('totalRegion'));
+		let existPlan = this.get('data').actionplan.split(',').filter((item) => {
+			return item.length > 0;
+		});
 		return originChoose.map((item) => {
 			return {
 				id: item.id,
@@ -20,7 +23,7 @@ export default Component.extend({
 			return item.length > 0;
 		});
 		let initChoose = this.get('readyChoose');
-		initChoose.forEach((item) => {
+		this.get('readyChoose').forEach((item) => {
 			if (existPlan.length > 0) {
 				existPlan.forEach((ele) => {
 					if (item.text == ele) {
@@ -32,14 +35,13 @@ export default Component.extend({
 		return this.get('data');
 	}),
 	planPaireComputed: computed('readyChoose.@each.isChecked', function() {
-		this.get('logger').log('in component planPaireComputed');
 		let chooses = this.get('readyChoose');
+		let _toRungetStoreComputed = this.get('getStore');
+		
 		let planPaire = chooses.filterBy('isChecked', true);
-		let _planPaire = chooses.map((ele) => {
-			return ele.isChecked === true;
-		});
+
 		let checkedString = "";
-		let currentId = this.get('getStore').id;
+		let currentId = _toRungetStoreComputed.id;
 		let localStorageRegion = JSON.parse(localStorage.getItem('totalRegion'));
 
 		if (planPaire.length > 2) {
@@ -52,7 +54,6 @@ export default Component.extend({
 						let region = this.get('getStore').store.peekAll('region');
 						let singleRegionJsonApi = null;
 						let regionLocalStorage = region.map((item) => {
-							singleRegionJsonApi = '';
 							singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
 							return singleRegionJsonApi
 						});
@@ -60,56 +61,24 @@ export default Component.extend({
 					}
 				})
 			}, 100);
-		} else if (0 < planPaire.length < 2) {
+		} else if (planPaire.length === 1 || planPaire.length === 2) {
 			planPaire.forEach((item) => {
-				if (item.isChecked) {
 					checkedString = item.text + ',' + checkedString;
 					this.get('getStore').set('actionplan', checkedString);
 					let region = this.get('getStore').store.peekAll('region');
 					let singleRegionJsonApi = null;
 					let regionLocalStorage = region.map((item) => {
-						singleRegionJsonApi = '';
 						singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
 						return singleRegionJsonApi
 					});
 					localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage))
-				}
 			})
-
-			// if (planPaire.length === 0) {
-			// 	this.get('getStore').set('actionplan', '');
-			// 	let region = this.get('getStore').store.peekAll('region');
-			// 	let singleRegionJsonApi = null;
-			// 	let regionLocalStorage = region.map((item) => {
-			// 		singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
-			// 		return singleRegionJsonApi
-			// 	});
-			// 	localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage))
-			// } else {
-			// 	this.get('logger').log('length === 1');
-			//
-			// 	planPaire.forEach((item) => {
-			// 		if (item.isChecked) {
-			// 			checkedString = item.text + ',' + checkedString;
-			// 			this.get('getStore').set('actionplan', checkedString);
-			// 			let region = this.get('getStore').store.peekAll('region');
-			// 			let singleRegionJsonApi = null;
-			// 			let regionLocalStorage = region.map((item) => {
-			// 				singleRegionJsonApi = '';
-			// 				singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
-			// 				return singleRegionJsonApi
-			// 			});
-			// 			localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage))
-			// 		}
-			// 	})
-			// }
-
-		} else {
+		} else if(planPaire.length === 0){
 			this.get('getStore').set('actionplan', '');
 			let region = this.get('getStore').store.peekAll('region');
 			let singleRegionJsonApi = null;
 			let regionLocalStorage = region.map((item) => {
-				singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item, false);
+				singleRegionJsonApi = this.get('getStore').store.object2JsonApi(item,false);
 				return singleRegionJsonApi
 			});
 			localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage))

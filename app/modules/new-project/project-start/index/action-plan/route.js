@@ -24,44 +24,7 @@ export default Route.extend({
 				let radarArray = radarCache.filter(elem => elem.region_id !== 'ave');
 				let ave = radarCache.find(elem => elem.region_id === 'ave');
 
-				// function axes(radarfigure) {
-				// 	let axes = [];
-				// 	axes.push({
-				// 		axis: '产品知识',
-				// 		value: radarfigure.prod_knowledge_val
-				// 	})
 
-				// 	axes.push({
-				// 		axis: '目标拜访频次',
-				// 		value: radarfigure.target_call_freq_val
-				// 	})
-
-				// 	axes.push({
-				// 		axis: '拜访次数',
-				// 		value: radarfigure.call_times_val
-				// 	})
-
-				// 	axes.push({
-				// 		axis: '实际工作天数',
-				// 		value: radarfigure.in_field_days_val
-				// 	})
-
-				// 	axes.push({
-				// 		axis: '工作积极性',
-				// 		value: radarfigure.motivation_val
-				// 	})
-
-				// 	axes.push({
-				// 		axis: '区域管理能力',
-				// 		value: radarfigure.territory_manage_val
-				// 	})
-
-				// 	axes.push({
-				// 		axis: '销售能力',
-				// 		value: radarfigure.sales_skills_val
-				// 	})
-				// 	return axes
-				// }
 				function axes(radarfigure) {
 					let axes = [];
 					axes.push({
@@ -76,7 +39,7 @@ export default Route.extend({
 
 					axes.push({
 						axis: that.i18n.t('apm.component.radar.visitTime') + "",
-						value: radarfigure.call_times_val
+						value: radarfigure.target_occupation_val
 					})
 
 					axes.push({
@@ -195,7 +158,7 @@ export default Route.extend({
 
 				let req = this.get('pmController').get('Store').createModel('request', {
 					id: 'actionLine0',
-					res: 'bind_course_region_goods_ym_sales',
+					res: 'bind_course_region_goods_time_unit',
 					fmcond: this.get('pmController').get('Store').createModel('fmcond', {
 						id: 'actionLineFm0',
 						skip: 0,
@@ -203,36 +166,28 @@ export default Route.extend({
 					})
 				});
 				let eqValues = [
+					{ id: 'actionLine5', type: 'eqcond', key: 'time_type', val: 'month' },
 					{ id: 'actionLine1', type: 'eqcond', key: 'course_id', val: ids.courseid },
 					{ id: 'actionLine2', type: 'eqcond', key: 'goods_id', val: data.firstObject.id },
-					{ id: 'actionLine3', type: 'gtecond', key: 'ym', val: '18-01' },
-					{ id: 'actionLine4', type: 'ltecond', key: 'ym', val: '18-03' },
+					{ id: 'actionLine3', type: 'gtecond', key: 'time', val: '18-01' },
+					{ id: 'actionLine4', type: 'ltecond', key: 'time', val: '18-03' },
 				]
 				let conditions = _conditions(req, eqValues)
-				return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
-				// return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findMedSales/0', 'bind_course_region_goods_ym_sales', conditions)
+				return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllMedUnit/0', 'bind_course_region_goods_time_unit', conditions)
 			})
-			.then((data) => { // 处理bind-course-region-goods-ym-sales
+			.then((data) => { // 处理bind-course-region-goods-time-unit
 				let temp = [];
-				// data.forEach(elem => { elem.forEach(good => temp.pushObject(good)) });
 				data.forEach(elem => { temp.pushObject(elem) });
 
-				let predictionData = temp.filter(elem => elem.ym === '18-01' || elem.ym === '18-02' || elem.ym === '18-03')
+				let predictionData = temp.filter(elem => elem.time === '18-01' || elem.time === '18-02' || elem.time === '18-03')
 				let predictionGroupData = groupBy(predictionData, 'region_id')
 				let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
 					return {
 						region_id: key,
-						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.sales.company_target, 0)
+						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.unit.company_target, 0)
 					}
 				})
 
-				// let goodsByRegion = groupBy(this.store.peekAll('bind-course-region-goods-ym-sales').filter(elem => elem.region_id !== 'all'), 'region_id')
-				// let regionCompanyTargets = Object.keys(goodsByRegion).map(key => {
-				// 	return {
-				// 		region_id: key,
-				// 		company_targe: goodsByRegion[key].lastObject.sales.company_target
-				// 	}
-				// })
 				controller.set('regionCompanyTargets', regionCompanyTargets)
 				return null;
 			})
