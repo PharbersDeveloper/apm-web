@@ -130,6 +130,7 @@ export default {
 			},
 
 			"upshot": {
+				"outputted": "已提交",
 				"output": "提交",
 				"saveExit": "保存退出",
 				"areaSales": "地区季度销售结果",
