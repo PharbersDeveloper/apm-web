@@ -2,7 +2,11 @@
 {{!-- {{#unless history}} --}}
 <div class="next-step">
 	{{#bs-button class="btn-next" local-class="output" onClick=(action "commitResult")}}
-		{{t "apm.newProject.upshot.output"}}
+		{{#if isCommit}}
+			{{t "apm.newProject.upshot.outputted"}}
+		{{else}}
+			{{t "apm.newProject.upshot.output"}}
+		{{/if}}
 	{{/bs-button}}
 	{{#unless history}}
 		{{#bs-button class="btn-next" onClick=(action "saveUpshot")}}
@@ -53,6 +57,7 @@
 	{{/modal.header}}
 	{{#modal.body}}
 		<select name="chooset" id="chooset" onchange={{action 'changeTeacher' value="target.value"}}>
+			<option value="none" disabled="disabled" selected="selected">请选择老师</option>
 			{{#each hintCT.content as |ct|}}
 				<option value={{ct.id}}>{{ct.name}}</option>
 			{{/each}}
