@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { inject } from '@ember/service';
+import rsvp from 'rsvp';
 
 export default Controller.extend({
 	cookies: inject(),
@@ -10,7 +11,7 @@ export default Controller.extend({
 	},
 	actions: {
 		exitSystem() {
-			new Promise((resolve, reject) => {
+			new rsvp.Promise((resolve, reject) => {
 				this.get('cookies').clear('token', {path: '/'});
 				localStorage.clear();
 				return resolve(true)

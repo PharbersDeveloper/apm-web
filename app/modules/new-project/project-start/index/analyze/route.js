@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { groupBy } from '../../../../phtool/tool';
+import rsvp from 'rsvp';
 
 export default Route.extend({
 	model() {
@@ -16,18 +17,18 @@ export default Route.extend({
 				}))
 			});
 			return request.store.object2JsonApi(request);
-		};
+		}
 
 		function tableData(arrayObjec) {
 			return arrayObjec.map((item) => {
-				let potential = item.lastObject.unit.potential.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
-				let potential_contri = item.lastObject.unit.potential_contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
-				let unit = item.lastObject.unit.unit.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
-				let contri = item.lastObject.unit.contri.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
-				let contri_index = item.lastObject.unit.contri_index.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
-				let growth = item.lastObject.unit.growth.toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
+				let potential = item.get('lastObject.unit.potential').toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential, 0).toFixed(2);
+				let potential_contri = item.get('lastObject.unit.potential_contri').toFixed(2) //.reduce((acc, cur) => acc + cur.sales.potential_contri, 0).toFixed(2);
+				let unit = item.get('lastObject.unit.unit').toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales, 0).toFixed(2);
+				let contri = item.get('lastObject.unit.contri').toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_contri, 0).toFixed(2);
+				let contri_index = item.get('lastObject.unit.contri_index').toFixed(2) //.reduce((acc, cur) => acc + cur.sales.contri_index, 0).toFixed(2);
+				let growth = item.get('lastObject.unit.growth').toFixed(2) //.reduce((acc, cur) => acc + cur.sales.sales_growth, 0).toFixed(2);
 				return {
-					name: that.store.peekRecord('region', item.lastObject.region_id).name,
+					name: that.store.peekRecord('region', item.get('lastObject.region_id')).get('name'),
 					potential,
 					potential_contri,
 					unit,
@@ -36,7 +37,7 @@ export default Route.extend({
 					growth
 				}
 			})
-		};
+		}
 
 		// 获取所有区域名称与基本信息
 		let req = this.get('pmController').get('Store').createModel('request',
@@ -82,7 +83,7 @@ export default Route.extend({
 				});
 				return {
 					regions: regions,
-					tabledata: Promise.all(promiseArray)
+					tabledata: rsvp.Promise.all(promiseArray)
 				}
 			})
 			.then((res) => {

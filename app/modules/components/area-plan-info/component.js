@@ -10,8 +10,8 @@ export default Component.extend({
 			this.set('hint', {
 				hintModal: true,
 				hintImg: false,
-				title: data.name,
-				content: data.notes,
+				title: data.get('name'),
+				content: data.get('notes'),
 				hintBtn: false,
 			})
 		}

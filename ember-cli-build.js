@@ -15,8 +15,10 @@ module.exports = function(defaults) {
 			includePaths: [
 				'node_modules/bootstrap-sass/assets/stylesheets'
 			]
+		},
+		babel: {
+			sourceMaps: 'inline'
 		}
-
 	});
 	//第三方静态文件导入
 	return app.toTree();

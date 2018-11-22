@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { groupBy } from '../../../../phtool/tool';
+import rsvp from 'rsvp';
 
 export default Route.extend({
 	init() {
@@ -88,12 +89,12 @@ export default Route.extend({
 					});
 					let eqValues = [
 						{ id: 'upshotCompete1', type: 'eqcond', key: 'course_id', val: parentModel.courseid },
-						{ id: 'upshotCompete2', type: 'eqcond', key: 'goods_id', val: reval.id },
+						{ id: 'upshotCompete2', type: 'eqcond', key: 'goods_id', val: reval.get('id') },
 					]
 					let conditions = _conditions(req, eqValues);
 					return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
 				});
-				return Promise.all(promiseArray)
+				return rsvp.Promise.all(promiseArray)
 			})
 			.then(() => {
 				let history = this.get('history');
@@ -105,7 +106,7 @@ export default Route.extend({
 				}
 			})
 			.then(() => {
-				let medicine = this.get('pmController').get('Store').peekAll('medicine').filter(elem => !elem.compete).firstObject;
+				let medicine = this.get('pmController').get('Store').peekAll('medicine').filter(elem => !elem.get('compete')).get('firstObject');
 
 				req = this.get('pmController').get('Store').createModel('request', {
 					id: 'upshotMedicine0',
@@ -114,7 +115,7 @@ export default Route.extend({
 
 				let eqValues = [
 					{ id: 'upshotMedicine1', type: 'eqcond', key: 'course_id', val: parentModel.courseid },
-					{ id: 'upshotMedicine2', type: 'eqcond', key: 'goods_id', val: medicine.id }
+					{ id: 'upshotMedicine2', type: 'eqcond', key: 'goods_id', val: medicine.get('id') }
 				]
 				eqValues.forEach((elem) => {
 					req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
@@ -129,14 +130,14 @@ export default Route.extend({
 			})
 			.then(data => {
 				modelData.quarterD3BarData = [
-					{ id: 1, name: '最差结果', value: (data.worst_share * 100).toFixed(1) },
-					{ id: 2, name: '上季结果', value: (data.pre_share * 100).toFixed(1) },
-					{ id: 4, name: '最佳结果', value: (data.best_share * 100).toFixed(1) }
+					{ id: 1, name: '最差结果', value: (data.get('worst_share') * 100).toFixed(1) },
+					{ id: 2, name: '上季结果', value: (data.get('pre_share') * 100).toFixed(1) },
+					{ id: 4, name: '最佳结果', value: (data.get('best_share') * 100).toFixed(1) }
 				];
 				modelData.quarterTableData = [
-					{ name: '最差结果', sales: data.worst_unit, share: (data.worst_share * 100).toFixed(1) },
-					{ name: '上季结果', sales: data.pre_unit, share: (data.pre_share * 100).toFixed(1) },
-					{ name: '最佳结果', sales: data.best_unit, share: (data.best_share * 100).toFixed(1) }
+					{ name: '最差结果', sales: data.get('worst_unit'), share: (data.get('worst_share') * 100).toFixed(1) },
+					{ name: '上季结果', sales: data.get('pre_unit'), share: (data.get('pre_share') * 100).toFixed(1) },
+					{ name: '最佳结果', sales: data.get('best_unit'), share: (data.get('best_share') * 100).toFixed(1) }
 				]
 				return data;
 			})
@@ -144,19 +145,19 @@ export default Route.extend({
 				let medicineAll = this.get('pmController').get('Store').peekAll('medicine');
 				let promiseArray = medicineAll.map(medicine => {
 					req = this.get('pmController').get('Store').createModel('request', {
-						id: medicine.id + 'upshotMedicine00',
+						id: medicine.get('id') + 'upshotMedicine00',
 						res: 'bind_paper_region_goods_time_report',
 						fmcond: this.get('pmController').get('Store').createModel('fmcond', {
-							id: medicine.id + 'upshotMedicine01',
+							id: medicine.get('id') + 'upshotMedicine01',
 							skip: 0,
 							take: 1000
 						})
 					});
 					let eqValues = [
-						{ id: medicine.id + 'upshotMedicine06', type: 'eqcond', key: 'time_type', val: 'season' },
-						{ id: medicine.id + 'upshotMedicine02', type: 'eqcond', key: 'goods_id', val: medicine.id }, //medicine.id
-						{ id: medicine.id + 'upshotMedicine03', type: 'eqcond', key: 'paper_id', val: parentModel.paperid },
-						{ id: medicine.id + 'upshotMedicine05', type: 'eqcond', key: 'time', val: '18-q1' },
+						{ id: medicine.get('id')  + 'upshotMedicine06', type: 'eqcond', key: 'time_type', val: 'season' },
+						{ id: medicine.get('id')  + 'upshotMedicine02', type: 'eqcond', key: 'goods_id', val: medicine.get('id') },
+						{ id: medicine.get('id')  + 'upshotMedicine03', type: 'eqcond', key: 'paper_id', val: parentModel.paperid },
+						{ id: medicine.get('id')  + 'upshotMedicine05', type: 'eqcond', key: 'time', val: '18-q1' },
 					]
 					eqValues.forEach((elem) => {
 						req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {
@@ -169,45 +170,45 @@ export default Route.extend({
 					let conditions = this.get('pmController').get('Store').object2JsonApi(req);
 					return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllReportMedUnit/0', 'bind_paper_region_goods_time_report', conditions)
 				})
-				return Promise.all(promiseArray)
+				return rsvp.Promise.all(promiseArray)
 			})
 			.then(data => {
-				let companyMedicine = this.get('pmController').get('Store').peekAll('medicine').find(elem => !elem.compete);
+				let companyMedicine = this.get('pmController').get('Store').peekAll('medicine').find(elem => !elem.get('compete'));
 				let temData = [];
 				data.forEach(x => x.forEach(r => {
-					if (r.time.indexOf('NA') < 0) {
+					if (r.get('time').indexOf('NA') < 0) {
 						temData.pushObject(r)
 					}
 				}));
 
 				let that = this;
-				let all = temData.filter(elem => elem.region_id === 'all')
-				let region = temData.filter(elem => elem.region_id !== 'all');
-				modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: (all.filter(elem => elem.goods_id === companyMedicine.id).lastObject.apmreport.share * 100).toFixed(1) });
+				let all = temData.filter(elem => elem.get('region_id') === 'all')
+				let region = temData.filter(elem => elem.get('region_id') !== 'all');
+				modelData.quarterD3BarData.pushObject({ id: 3, name: '本季结果', value: (all.filter(elem => elem.get('goods_id') === companyMedicine.get('id')).get('lastObject.apmreport.share') * 100).toFixed(1) });
 				modelData.quarterD3BarData = modelData.quarterD3BarData.sort(function (o1, o2) {
 					return o1.id - o2.id
 				})
 				modelData.quarterTableData.pushObject({
 					name: '本季结果',
-					sales: all.filter(elem => elem.goods_id === companyMedicine.id && elem.region_id === 'all').lastObject.apmreport.unit,
-					share: (all.filter(elem => elem.goods_id === companyMedicine.id && elem.region_id === 'all').lastObject.apmreport.share * 100).toFixed(1)
+					sales: all.filter(elem => elem.get('goods_id') === companyMedicine.id && elem.get('region_id') === 'all').get('lastObject.apmreport.unit'),
+					share: (all.filter(elem => elem.get('goods_id') === companyMedicine.id && elem.get('region_id') === 'all').get('lastObject.apmreport.share') * 100).toFixed(1)
 				});
 
 				let prodForRegionidIsAll = all.map(item => {
 					return {
-						goods_id: item.goods_id,
-						time: item.time,
-						share: item.apmreport.share,
-						contri: item.apmreport.contri,
+						goods_id: item.get('goods_id'),
+						time: item.get('time'),
+						share: item.get('apmreport.share'),
+						contri: item.get('apmreport.contri'),
 					}
 				});
 				let regionForProdIsOwn = region.map(item => {
 					return {
-						goods_id: item.goods_id,
-						region_id: item.region_id,
-						time: item.time,
-						share: item.apmreport.share,
-						contri: item.apmreport.contri,
+						goods_id: item.get('goods_id'),
+						region_id: item.get('region_id'),
+						time: item.get('time'),
+						share: item.get('apmreport.share'),
+						contri: item.get('apmreport.contri'),
 					}
 				})
 
@@ -248,17 +249,17 @@ export default Route.extend({
 				let all = this.get('allProdAndAllRegion').all;
 				data.forEach(ele => {
 					all.pushObject({
-						goods_id: ele.goods_id,
-						time: ele.time,
-						share: ele.unit.share,
-						contri: ele.unit.contri,
+						goods_id: ele.get('goods_id'),
+						time: ele.get('time'),
+						share: ele.get('unit.share'),
+						contri: ele.get('unit.contri'),
 					});
 				});
 				let tempByGroupGoods = groupBy(all, 'goods_id');
 				let _areaD3LineShareData = Object.keys(tempByGroupGoods).map(key => {
 					let goodCache = this.get('pmController').get('Store').peekRecord('medicine', key);
 					return {
-						name: goodCache.prod_name,
+						name: goodCache.get('prod_name'),
 						values: tempByGroupGoods[key].map((elem) => {
 							return {
 								ym: elem.time,
@@ -309,11 +310,11 @@ export default Route.extend({
 
 				data.forEach(ele => {
 					region.pushObject({
-						goods_id: ele.goods_id,
-						region_id: ele.region_id,
-						time: ele.time,
-						share: ele.unit.share,
-						contri: ele.unit.contri,
+						goods_id: ele.get('goods_id'),
+						region_id: ele.get('region_id'),
+						time: ele.get('time'),
+						share: ele.get('unit.share'),
+						contri: ele.get('unit.contri'),
 					});
 				});
 				let tempByGroupRegion = groupBy(region, 'region_id');
@@ -321,7 +322,7 @@ export default Route.extend({
 				let _areaD3LineRegionData = Object.keys(tempByGroupRegion).map(key => {
 					let regionCache = this.get('pmController').get('Store').peekRecord('region', key);
 					return {
-						name: regionCache.name,
+						name: regionCache.get('name'),
 						values: tempByGroupRegion[key].map(elem => {
 							return {
 								ym: elem.time,

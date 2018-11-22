@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import rsvp from 'rsvp';
 
 export default Controller.extend({
 	loadInputData(paperid, courseid) {
@@ -28,27 +29,27 @@ export default Controller.extend({
 			this.get('pmController').get('Store').queryMultipleObject('/api/v1/paperInputLst/0', 'paperinput', paperConditions),
 			this.get('pmController').get('Store').queryMultipleObject('/api/v1/regionLst/0', 'region', regionConditions)
 		]
-		return Promise.all(promistArray).then(data => {
+		return rsvp.Promise.all(promistArray).then(data => {
 			let paperArray = data[0];
 			let regionArray = data[1];
 
-			let step = paperArray.firstObject.paperinputstep.step
+			let step = paperArray.get('firstObject.paperinputstep.step')
 			let regionResort = [];
 			let totalRegion = []
 			paperArray.forEach(paper => {
-				let region = regionArray.find(elem => elem.id === paper.region_id)
-				region.set('notes', paper.hint)
-				region.set('forecast', paper.predicted_target)
-				region.set('covisit', paper.field_work_days)
-				region.set('nationMeeting', paper.national_meeting)
-				region.set('cityMeeting', paper.city_meeting)
-				region.set('departmentMeeting', paper.depart_meeting)
-				region.set('actionplan', paper.action_plans.toString())
+				let region = regionArray.find(elem => elem.get('id') === paper.get('region_id'))
+				region.set('notes', paper.get('hint'))
+				region.set('forecast', paper.get('predicted_target'))
+				region.set('covisit', paper.get('field_work_days'))
+				region.set('nationMeeting', paper.get('national_meeting'))
+				region.set('cityMeeting', paper.get('city_meeting'))
+				region.set('departmentMeeting', paper.get('depart_meeting'))
+				region.set('actionplan', paper.get('action_plans').toString())
 				let data = this.get('pmController').get('Store').object2JsonApi(region, false);
 				totalRegion.pushObject(data)
 				regionResort.pushObject({
-					id: paper.sorting,
-					name: paper.sorting,
+					id: paper.get('sorting'),
+					name: paper.get('sorting'),
 					selected: {
 						data: data.data,
 						isDraggingObject: true

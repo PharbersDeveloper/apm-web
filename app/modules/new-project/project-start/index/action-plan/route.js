@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { groupBy } from '../../../../phtool/tool';
 import { inject } from '@ember/service';
+import rsvp from 'rsvp';
 
 export default Route.extend({
 	i18n: inject(),
@@ -21,61 +22,61 @@ export default Route.extend({
 			.then((data) => {
 				let radarCache = this.get('pmController').get('Store').peekAll('bind_course_region_radar');
 
-				let radarArray = radarCache.filter(elem => elem.region_id !== 'ave');
-				let ave = radarCache.find(elem => elem.region_id === 'ave');
+				let radarArray = radarCache.filter(elem => elem.get('region_id') !== 'ave');
+				let ave = radarCache.find(elem => elem.get('region_id') === 'ave');
 
 
 				function axes(radarfigure) {
 					let axes = [];
 					axes.push({
-						axis: that.i18n.t('apm.component.radar.prodKnowledge') + "",
-						value: radarfigure.prod_knowledge_val
+						axis: that.get('i18n').t('apm.component.radar.prodKnowledge') + "",
+						value: radarfigure.get('prod_knowledge_val')
 					})
 
 					axes.push({
-						axis: that.i18n.t('apm.component.radar.targetVisit') + "",
-						value: radarfigure.target_call_freq_val
+						axis: that.get('i18n').t('apm.component.radar.targetVisit') + "",
+						value: radarfigure.get('target_call_freq_val')
 					})
 
 					axes.push({
-						axis: that.i18n.t('apm.component.radar.visitTime') + "",
-						value: radarfigure.target_occupation_val
+						axis: that.get('i18n').t('apm.component.radar.visitTime') + "",
+						value: radarfigure.get('target_occupation_val')
 					})
 
 					axes.push({
-						axis: that.i18n.t('apm.component.radar.localWorkDay') + "",
-						value: radarfigure.in_field_days_val
+						axis: that.get('i18n').t('apm.component.radar.localWorkDay') + "",
+						value: radarfigure.get('in_field_days_val')
 					})
 
 					axes.push({
-						axis: that.i18n.t('apm.component.radar.workEnthusiasm') + "",
-						value: radarfigure.motivation_val
+						axis: that.get('i18n').t('apm.component.radar.workEnthusiasm') + "",
+						value: radarfigure.get('motivation_val')
 					})
 
 					axes.push({
-						axis: that.i18n.t('apm.component.radar.areaManageAbility') + "",
-						value: radarfigure.territory_manage_val
+						axis: that.get('i18n').t('apm.component.radar.areaManageAbility') + "",
+						value: radarfigure.get('territory_manage_val')
 					})
 
 					axes.push({
-						axis: that.i18n.t('apm.component.radar.saleAbility') + "",
-						value: radarfigure.sales_skills_val
+						axis: that.get('i18n').t('apm.component.radar.saleAbility') + "",
+						value: radarfigure.get('sales_skills_val')
 					})
 					return axes
 				}
 
 				return radarArray.map(elem => {
-					let regionCache = this.get('pmController').get('Store').peekRecord('region', elem.region_id);
+					let regionCache = this.get('pmController').get('Store').peekRecord('region', elem.get('region_id'));
 					return {
-						region_id: elem.region_id,
+						region_id: elem.get('region_id'),
 						data: [{
-								name: that.i18n.t('apm.component.radar.areaAvg') + "",
-								axes: axes(ave.radarfigure),
+								name: that.get('i18n').t('apm.component.radar.areaAvg') + "",
+								axes: axes(ave.get('radarfigure')),
 								color: '#762712'
 							},
 							{
-								name: regionCache.name,
-								axes: axes(elem.radarfigure),
+								name: regionCache.get('name'),
+								axes: axes(elem.get('radarfigure')),
 								color: '#26AF32'
 							}
 						]
@@ -127,33 +128,6 @@ export default Route.extend({
 				});
 				return data;
 			})
-			// .then(data => { // 获取公司的竞品
-			// 	let that = this;
-			// 	let promiseArray = data.map(reval => {
-			// 		let req = that.store.createRecord('request', {
-			// 			res: 'bind_course_goods_compet',
-			// 			fmcond: that.store.createRecord('fmcond', {
-			// 				skip: 0,
-			// 				take: 20
-			// 			})
-			// 		});
-			// 		let eqValues = [
-			// 			{ type: 'eqcond', key: 'course_id', val: ids.courseid },
-			// 			{ type: 'eqcond', key: 'goods_id', val: reval.id },
-			// 		]
-			// 		let conditions = _conditions(req, eqValues);
-			// 		return that.store.queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
-			// 	});
-			// 	return Promise.all(promiseArray)
-			// })
-			// .then(data => { // 处理竞品
-			// 	data.forEach(reVal => {
-			// 		reVal.forEach(elem => {
-			// 			medicines.pushObject(elem)
-			// 		})
-			// 	})
-			// 	return medicines;
-			// })
 			.then(data => { // 获取折线图数据
 
 				let req = this.get('pmController').get('Store').createModel('request', {
@@ -168,7 +142,7 @@ export default Route.extend({
 				let eqValues = [
 					{ id: 'actionLine5', type: 'eqcond', key: 'time_type', val: 'month' },
 					{ id: 'actionLine1', type: 'eqcond', key: 'course_id', val: ids.courseid },
-					{ id: 'actionLine2', type: 'eqcond', key: 'goods_id', val: data.firstObject.id },
+					{ id: 'actionLine2', type: 'eqcond', key: 'goods_id', val: data.get('firstObject.id') },
 					{ id: 'actionLine3', type: 'gtecond', key: 'time', val: '18-01' },
 					{ id: 'actionLine4', type: 'ltecond', key: 'time', val: '18-03' },
 				]
@@ -179,12 +153,12 @@ export default Route.extend({
 				let temp = [];
 				data.forEach(elem => { temp.pushObject(elem) });
 
-				let predictionData = temp.filter(elem => elem.time === '18-01' || elem.time === '18-02' || elem.time === '18-03')
+				let predictionData = temp.filter(elem => elem.get('time') === '18-01' || elem.get('time') === '18-02' || elem.get('time') === '18-03')
 				let predictionGroupData = groupBy(predictionData, 'region_id')
 				let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
 					return {
 						region_id: key,
-						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.unit.company_target, 0)
+						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.get('unit.company_target'), 0)
 					}
 				})
 
@@ -205,8 +179,8 @@ export default Route.extend({
 			.then((data) => { // 处理行动计划内容
 				let readyChoose = data.map((item) => {
 					return {
-						id: item.id,
-						text: item.content,
+						id: item.get('id'),
+						text: item.get('content'),
 						isChecked: false,
 					}
 				})
@@ -216,11 +190,11 @@ export default Route.extend({
 			.then(() => { // 获取所有代表
 				let promiseArray = regionCache.map(elem => {
 					req = this.get('pmController').get('Store').createModel('request', {
-						id: elem.id + 'actionRep0',
+						id: elem.get('id') + 'actionRep0',
 						res: 'bind_course_region_rep'
 					});
 					let eqValues = [
-						{ id: elem.id + 'actionRep1', type: 'eqcond', key: 'region_id', val: elem.id },
+						{ id: elem.id + 'actionRep1', type: 'eqcond', key: 'region_id', val: elem.get('id') },
 						{ id: elem.id + 'actionRep2', type: 'eqcond', key: 'course_id', val: ids.courseid },
 					]
 					eqValues.forEach((elem) => {
@@ -233,7 +207,7 @@ export default Route.extend({
 					conditions = this.get('pmController').get('Store').object2JsonApi(req);
 					return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
 				});
-				return Promise.all(promiseArray)
+				return rsvp.Promise.all(promiseArray)
 			})
 			.then((data) => { // 处理所有代表
 				let represents = [];
@@ -252,39 +226,10 @@ export default Route.extend({
 				controller.set('params', paramsController);
 				controller.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
 
-				controller.set('radarData', res.find(elem => elem.region_id === regionCache.firstObject.id).data);
+				controller.set('radarData', res.find(elem => elem.region_id === regionCache.get('firstObject.id')).data);
 				controller.set('areaRadars', res);
 				return regionCache;
 			})
-		// let bind_course_region_repCache =this.get('pmController').get('Store').peekAll('bind_course_region_rep')
-		// let representsCache =this.get('pmController').get('Store').peekAll('representative');
-		// let goodsByRegion = groupBy(this.store.peekAll('bind-course-region-goods-ym-sales').filter(elem => elem.region_id !== 'all'), 'region_id')
-		// let areaReps = bind_course_region_repCache.map(elem => {
-		// 	return {
-		// 		region_id: elem.region_id,
-		// 		data: elem.represents.map(ele => representsCache.find(x => x.id === ele).rep_name)
-		// 	}
-		// })
-		// let regionCompanyTargets = Object.keys(goodsByRegion).map(key => {
-		// 	return {
-		// 		region_id: key,
-		// 		company_targe: goodsByRegion[key].lastObject.sales.company_target
-		// 	}
-		// })
-		// controller.set('areaReps', areaReps)
-		// controller.set('regionCompanyTargets', regionCompanyTargets)
-
-		// let d3Data = this.loadD3Data(ids);
-		// controller.set('params', paramsController);
-		// controller.set('radarData', d3Data.find(elem => elem.region_id === regionCache.firstObject.id).data);
-		// controller.set('areaRadars', d3Data);
-		// controller.set('regionResort', JSON.parse(localStorage.getItem('regionResort')));
-		// this.loadD3Data(ids).then((res) => {
-		// 	controller.set('radarData', res.find(elem => elem.region_id === regionCache.firstObject.id).data);
-		// 	controller.set('areaRadars', res);
-		// })
-
-		// return regionCache;
 	},
 	actions: {
 

@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { set } from '@ember/object';
+import rsvp from 'rsvp';
 
 export default Controller.extend({
 	init() {
@@ -18,7 +19,7 @@ export default Controller.extend({
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
 			region.forEach((ele) => {
-				if (item.selected.data.id === ele.id) {
+				if (item.selected.data.id === ele.get('id')) {
 					singleRegion = ele;
 				}
 			})
@@ -31,7 +32,7 @@ export default Controller.extend({
 		let region = this.get('region');
 		let covisit = 0;
 		region.forEach((item) => {
-			if (item.covisit > 100 || item.covisit < 0 || isNaN(item.covisit)) {
+			if (item.get('covisit') > 100 || item.get('covisit') < 0 || isNaN(item.get('covisit'))) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -42,7 +43,7 @@ export default Controller.extend({
 				this.set('hint', hint);
 				set(item, 'covisit', '');
 			}
-			covisit += parseInt(item.covisit - 0);
+			covisit += parseInt(item.get('covisit') - 0);
 		})
 		// return covisit;
 		return {
@@ -54,7 +55,7 @@ export default Controller.extend({
 		let region = this.get('region');
 		let nationMeeting = 0;
 		region.forEach((item) => {
-			if (item.nationMeeting > 100 || item.nationMeeting < 0 || isNaN(item.nationMeeting)) {
+			if (item.get('nationMeeting') > 100 || item.get('nationMeeting') < 0 || isNaN(item.get('nationMeeting'))) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -65,7 +66,7 @@ export default Controller.extend({
 				this.set('hint', hint);
 				set(item, 'nationMeeting', '');
 			}
-			nationMeeting += parseInt(item.nationMeeting - 0) || 0;
+			nationMeeting += parseInt(item.get('nationMeeting') - 0) || 0;
 		});
 		// return nationMeeting;
 		return {
@@ -78,7 +79,7 @@ export default Controller.extend({
 		let cityMeeting = 0;
 		let total = this.get('totalCityMeeting');
 		region.forEach((item) => {
-			if (item.cityMeeting > 100 || item.cityMeeting < 0 || isNaN(item.cityMeeting)) {
+			if (item.get('cityMeeting') > 100 || item.get('cityMeeting') < 0 || isNaN(item.get('cityMeeting'))) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -89,7 +90,7 @@ export default Controller.extend({
 				this.set('hint', hint);
 				set(item, 'cityMeeting', '');
 			}
-			cityMeeting += parseInt(item.cityMeeting - 0) || 0;
+			cityMeeting += parseInt(item.get('cityMeeting') - 0) || 0;
 		})
 		// return cityMeeting;
 		return {
@@ -101,7 +102,7 @@ export default Controller.extend({
 		let region = this.get('region');
 		let departmentMeeting = 0;
 		region.forEach((item) => {
-			if (item.departmentMeeting > 100 || item.departmentMeeting < 0 || isNaN(item.departmentMeeting)) {
+			if (item.get('departmentMeeting') > 100 || item.get('departmentMeeting') < 0 || isNaN(item.get('departmentMeeting'))) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -112,7 +113,7 @@ export default Controller.extend({
 				this.set('hint', hint);
 				set(item, 'departmentMeeting', '');
 			}
-			departmentMeeting += parseInt(item.departmentMeeting - 0) || 0;
+			departmentMeeting += parseInt(item.get('departmentMeeting') - 0) || 0;
 		})
 
 		// this.get('logger').log(departmentMeeting);
@@ -136,8 +137,8 @@ export default Controller.extend({
 			let hint = {
 				hintModal: true,
 				hintImg: false,
-				title: region.name,
-				content: region.notes,
+				title: region.get('name'),
+				content: region.get('notes'),
 				hintBtn: false,
 			}
 			this.set('hint', hint);
@@ -147,12 +148,12 @@ export default Controller.extend({
 			let region = this.get('region');
 			let iscoVisitEmpty = region.every((item) => {
 				let total = '';
-				total = item.covisit + item.nationMeeting + item.cityMeeting + item.departmentMeeting;
+				total = item.get('covisit') + item.get('nationMeeting') + item.get('cityMeeting') + item.get('departmentMeeting');
 				if (isNaN(total)) {
-					wrongRegionName = item.name;
+					wrongRegionName = item.get('name');
 				}
-				return item.covisit.length > 0 && item.nationMeeting.length > 0 &&
-					item.cityMeeting.length > 0 && item.departmentMeeting.length > 0 && !isNaN(total);
+				return item.get('covisit').length > 0 && item.get('nationMeeting').length > 0 &&
+					item.get('cityMeeting').length > 0 && item.get('departmentMeeting').length > 0 && !isNaN(total);
 			});
 			this.set('iscoVisitEmpty', iscoVisitEmpty);
 			if (iscoVisitEmpty) {
@@ -201,11 +202,11 @@ export default Controller.extend({
 				});
 				let eqValues = [
 					{ id: reg.id + 'toAction1', key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ id: reg.id + 'toAction2', key: 'region_id', type: 'eqcond', val: reg.id },
-					{ id: reg.id + 'toAction3', key: 'field_work_days', type: 'upcond', val: parseInt(reg.covisit) },
-					{ id: reg.id + 'toAction4', key: 'national_meeting', type: 'upcond', val: parseInt(reg.nationMeeting) },
-					{ id: reg.id + 'toAction5', key: 'city_meeting', type: 'upcond', val: parseInt(reg.cityMeeting) },
-					{ id: reg.id + 'toAction6', key: 'depart_meeting', type: 'upcond', val: parseInt(reg.departmentMeeting) },
+					{ id: reg.id + 'toAction2', key: 'region_id', type: 'eqcond', val: reg.get('id') },
+					{ id: reg.id + 'toAction3', key: 'field_work_days', type: 'upcond', val: parseInt(reg.get('covisit')) },
+					{ id: reg.id + 'toAction4', key: 'national_meeting', type: 'upcond', val: parseInt(reg.get('nationMeeting')) },
+					{ id: reg.id + 'toAction5', key: 'city_meeting', type: 'upcond', val: parseInt(reg.get('cityMeeting')) },
+					{ id: reg.id + 'toAction6', key: 'depart_meeting', type: 'upcond', val: parseInt(reg.get('departmentMeeting')) },
 				];
 				eqValues.forEach((item) => {
 					req.get(item.type).pushObject(this.get('pmController').get('Store').createRecord(item.type, {
@@ -218,7 +219,7 @@ export default Controller.extend({
 				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
-			Promise.all(promiseArray).then((res) => {
+			rsvp.Promise.all(promiseArray).then((res) => {
 				let hint = {
 					hintModal: false,
 					hintImg: true,

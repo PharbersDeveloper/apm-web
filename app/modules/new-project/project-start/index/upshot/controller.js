@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { inject } from '@ember/service';
+import rsvp from 'rsvp';
 
 export default Controller.extend({
 	i18n: inject(),
@@ -15,8 +16,8 @@ export default Controller.extend({
 			this.set('hint', {
 				hintModal: true,
 				hintImg: true,
-				title: this.i18n.t('apm.newProject.upshot.tips') + "",
-				content: this.i18n.t('apm.newProject.upshot.tipContent') + "",
+				title: this.get('i18n').t('apm.newProject.upshot.tips') + "",
+				content: this.get('i18n').t('apm.newProject.upshot.tipContent') + "",
 				hintBtn: true,
 			})
 		},
@@ -24,7 +25,7 @@ export default Controller.extend({
 			this.set('hintCT', {
 				hintModal: true,
 				hintImg: true,
-				title: this.i18n.t('apm.newProject.upshot.chooseTeacherTips') + "",
+				title: this.get('i18n').t('apm.newProject.upshot.chooseTeacherTips') + "",
 				content: this.get('teachers'),
 				hintBtn: true,
 			})
@@ -51,7 +52,7 @@ export default Controller.extend({
 							this.set('hintCT', {
 								hintModal: false,
 								hintImg: true,
-								title: this.i18n.t('apm.newProject.upshot.chooseTeacherTips') + "",
+								title: this.get('i18n').t('apm.newProject.upshot.chooseTeacherTips') + "",
 								content: this.get('teachers'),
 								hintBtn: true,
 							});
@@ -67,12 +68,12 @@ export default Controller.extend({
 			let hint = {
 				hintModal: false,
 				hintImg: true,
-				title: this.i18n.t('apm.newProject.upshot.tips') + "",
-				content: this.i18n.t('apm.newProject.upshot.tipContent2') + "",
+				title: this.get('i18n').t('apm.newProject.upshot.tips') + "",
+				content: this.get('i18n').t('apm.newProject.upshot.tipContent2') + "",
 				hintBtn: true,
 			}
 			this.set('hint', hint);
-			new Promise((resolve) => {
+			new rsvp.Promise((resolve) => {
 				localStorage.removeItem('regionResort')
 				localStorage.removeItem('totalRegion')
 				return resolve(true)

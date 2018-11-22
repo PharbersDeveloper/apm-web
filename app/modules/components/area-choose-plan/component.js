@@ -7,7 +7,7 @@ export default Component.extend({
 	readyChoose: computed('originChoose', function() {
 		let originChoose = this.get('originChoose');
 		let localStorageRegion = JSON.parse(localStorage.getItem('totalRegion'));
-		let existPlan = this.get('data').actionplan.split(',').filter((item) => {
+		let existPlan = this.get('data').get('actionplan').split(',').filter((item) => {
 			return item.length > 0;
 		});
 		return originChoose.map((item) => {
@@ -19,7 +19,7 @@ export default Component.extend({
 		})
 	}),
 	getStore: computed('data', 'readyChoose', function() {
-		let existPlan = this.get('data').actionplan.split(',').filter((item) => {
+		let existPlan = this.get('data').get('actionplan').split(',').filter((item) => {
 			return item.length > 0;
 		});
 		let initChoose = this.get('readyChoose');
@@ -36,17 +36,18 @@ export default Component.extend({
 	}),
 	planPaireComputed: computed('readyChoose.@each.isChecked', function() {
 		let chooses = this.get('readyChoose');
+
 		let _toRungetStoreComputed = this.get('getStore');
-		
+
 		let planPaire = chooses.filterBy('isChecked', true);
 
 		let checkedString = "";
-		let currentId = _toRungetStoreComputed.id;
+		let currentId = _toRungetStoreComputed.get('id');
 		let localStorageRegion = JSON.parse(localStorage.getItem('totalRegion'));
 
 		if (planPaire.length > 2) {
 			later(this, function() {
-				set(planPaire.firstObject, 'isChecked', false);
+				set(planPaire.get('firstObject'), 'isChecked', false);
 				planPaire.forEach((item) => {
 					if (item.isChecked) {
 						checkedString = item.text + ',' + checkedString;

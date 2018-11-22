@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import rsvp from 'rsvp';
 
 export default Controller.extend({
 	init() {
@@ -66,7 +67,7 @@ export default Controller.extend({
 				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
-			Promise.all(promiseArray).then((res) => {
+			rsvp.Promise.all(promiseArray).then((res) => {
 				this.transitionToRoute('new-project.project-start.index.objective')
 			}).catch((error) => {
 				this.get('logger').log(error);
