@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { set } from '@ember/object';
+import rsvp from 'rsvp';
 
 export default Controller.extend({
 	init() {
@@ -22,7 +23,7 @@ export default Controller.extend({
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 
 		region.forEach((item) => {
-			if (isNaN(item.forecast) || item.forecast< 0) {
+			if (isNaN(item.get('forecast')) || item.get('forecast')< 0) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -36,7 +37,7 @@ export default Controller.extend({
 				// this.set('tipsContent', '单个协访天数数据不能超过100%');
 				set(item, 'forecast', '');
 			}
-			total += parseInt(item.forecast) || 0;
+			total += parseInt(item.get('forecast')) || 0;
 		});
 		return total;
 	}),
@@ -47,10 +48,10 @@ export default Controller.extend({
 		let total = this.get('totalForecast');
 
 		let data = region.map((item) => {
-			let contri = parseInt(item.forecast) || 0;
+			let contri = parseInt(item.get('forecast')) || 0;
 			if (contri == 0) {
 				return {
-					id: item.id,
+					id: item.get('id'),
 					contri: '0%',
 				}
 			} else {
@@ -88,13 +89,13 @@ export default Controller.extend({
 			// let region = this.set('region', this.get('pmController').get('Store').peekAll('region'));
 			let region = this.get('regionData');
 			let isForecastEmpty = region.every((item) => {
-				if (item.forecast.length == 0) {
-					emptyForecastRegion = item.name;
+				if (item.get('forecast').length == 0) {
+					emptyForecastRegion = item.get('name');
 				}
-				if (isNaN(Boolean(item.forecast) ? item.forecast : 0)) {
-					emptyForecastRegion = item.name;
+				if (isNaN(Boolean(item.get('forecast')) ? item.get('forecast') : 0)) {
+					emptyForecastRegion = item.get('name');
 				}
-				return item.forecast.length > 0 && !isNaN(Boolean(item.forecast) ? item.forecast : 0)
+				return item.get('forecast').length > 0 && !isNaN(Boolean(item.get('forecast')) ? item.get('forecast') : 0)
 			});
 			this.set('isForecastEmpty', isForecastEmpty);
 			// this.set('tipsTitle', '提示');
@@ -139,13 +140,13 @@ export default Controller.extend({
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
 				let req = this.get('pmController').get('Store').createModel('request', {
-					id: reg.id + 'objectiveHint0',
+					id: reg.get('id') + 'objectiveHint0',
 					res: 'paperinput',
 				});
 				let eqValues = [
 					{ id: reg.id + 'objectiveHint1', key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ id: reg.id + 'objectiveHint2', key: 'region_id', type: 'eqcond', val: reg.id },
-					{ id: reg.id + 'objectiveHint3', key: 'predicted_target', type: 'upcond', val: parseInt(reg.forecast) }
+					{ id: reg.id + 'objectiveHint2', key: 'region_id', type: 'eqcond', val: reg.get('id') },
+					{ id: reg.id + 'objectiveHint3', key: 'predicted_target', type: 'upcond', val: parseInt(reg.get('forecast')) }
 				];
 				eqValues.forEach((item) => {
 					req.get(item.type).pushObject(this.get('pmController').get('Store').createModel(item.type, {
@@ -158,7 +159,7 @@ export default Controller.extend({
 				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
-			Promise.all(promiseArray).then((res) => {
+			rsvp.Promise.all(promiseArray).then((res) => {
 				let hint = {
 					hintModal: false,
 					hintImg: true,
@@ -187,8 +188,8 @@ export default Controller.extend({
 			let hint = {
 				hintModal: true,
 				hintImg: false,
-				title: region.name,
-				content: region.notes,
+				title: region.get('name'),
+				content: region.get('notes'),
 				hintBtn: false,
 			}
 			this.set('hint', hint);

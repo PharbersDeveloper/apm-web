@@ -170,7 +170,7 @@ export default Component.extend({
 
 		chart.on('mouseover', function(d) {
 			tooltip.style("opacity", 1.0);
-			tooltip.html(d.key + "<br>" + that.i18n.t('apm.component.d3BarLine.share') + "" + "：" + d.value2 + "%" + "<br>" + that.i18n.t('apm.component.d3BarLine.sales') + "" + "：" + d.value)
+			tooltip.html(d.key + "<br>" + that.get('i18n').t('apm.component.d3BarLine.share') + "" + "：" + d.value2 + "%" + "<br>" + that.get('i18n').t('apm.component.d3BarLine.sales') + "" + "：" + d.value)
 				.style("left", (d3.event.clientX + 20) + "px")
 				.style("top", (d3.event.clientY) + "px")
 
@@ -190,18 +190,18 @@ export default Component.extend({
 			.attr('width', 240)
 			.attr('height', 20)
 
-		let legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + ""];
+		let legendData = [this.get('i18n').t('apm.component.d3BarLine.share') + "", this.get('i18n').t('apm.component.d3BarLine.sales') + ""];
 		if (this.get('laterThreeChangeBg')) {
 			if (noLine) {
-				legendData = [this.i18n.t('apm.component.d3BarLine.sales') + "", this.i18n.t('apm.component.d3BarLine.forecastSales') + ""];
+				legendData = [this.get('i18n').t('apm.component.d3BarLine.sales') + "", this.get('i18n').t('apm.component.d3BarLine.forecastSales') + ""];
 			} else {
-				legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + "", this.i18n.t('apm.component.d3BarLine.forecastSales') + ""];
+				legendData = [this.get('i18n').t('apm.component.d3BarLine.share') + "", this.get('i18n').t('apm.component.d3BarLine.sales') + "", this.get('i18n').t('apm.component.d3BarLine.forecastSales') + ""];
 			}
 		}else {
 			if (noLine) {
-				legendData = [this.i18n.t('apm.component.d3BarLine.sales') + ""];
+				legendData = [this.get('i18n').t('apm.component.d3BarLine.sales') + ""];
 			} else {
-				legendData = [this.i18n.t('apm.component.d3BarLine.share') + "", this.i18n.t('apm.component.d3BarLine.sales') + ""];
+				legendData = [this.get('i18n').t('apm.component.d3BarLine.share') + "", this.get('i18n').t('apm.component.d3BarLine.sales') + ""];
 			}
 		}
 		var legend = legendArea.selectAll("g")
@@ -219,29 +219,29 @@ export default Component.extend({
 			.attr("x", 10)
 			.attr("y", 5)
 			.attr('width', function(d, i) {
-				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
+				if (d == that.get('i18n').t('apm.component.d3BarLine.share') + "") {
 					return 20;
 				} else {
 					return 10;
 				}
 			})
 			.attr('height', function(d, i) {
-				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
+				if (d == that.get('i18n').t('apm.component.d3BarLine.share') + "") {
 					return 5;
 				} else {
 					return 30;
 				}
 			})
 			.style("fill", function(d, i) {
-				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
+				if (d == that.get('i18n').t('apm.component.d3BarLine.share') + "") {
 					return '#FA6F80';
-				} else if (d == that.i18n.t('apm.component.d3BarLine.sales') + "") {
+				} else if (d == that.get('i18n').t('apm.component.d3BarLine.sales') + "") {
 					return '#4A90E2';
 				} else {
 					return '#F5A623';
 				}
 			}).attr("transform", function(d, i) {
-				if (d == that.i18n.t('apm.component.d3BarLine.share') + "") {
+				if (d == that.get('i18n').t('apm.component.d3BarLine.share') + "") {
 					return "translate(0 ,5)";
 				}
 			});

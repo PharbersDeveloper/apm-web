@@ -18,9 +18,9 @@ export default Route.extend({
                 region_id: key,
                 data: medicineArrayObject[key].map(elem => {
                     return {
-                        key: elem.time,
-                        value: elem.unit.unit,
-                        value2: (elem.unit.share * 100).toFixed(1)
+                        key: elem.get('time'),
+                        value: elem.get('unit.unit'),
+                        value2: (elem.get('unit.share') * 100).toFixed(1)
                     }
                 })
             }
@@ -44,7 +44,7 @@ export default Route.extend({
             .then(data => { // 处理区域基本数据
                 controller.set('params', paramsController);
                 controller.set('regionData', data);
-                controller.set('initSelectedRegionId', data.firstObject.id);
+                controller.set('initSelectedRegionId', data.get('firstObject.id'));
                 return data;
             })
             // .then((data) => {
@@ -84,7 +84,7 @@ export default Route.extend({
                 let eqValues = [
                     { id: 'objectiveCompete5', type: 'eqcond', key: 'time_type', val: 'month' },
                     { id: 'objectiveCompete1', type: 'eqcond', key: 'course_id', val: paramsController.courseid },
-                    { id: 'objectiveCompete2', type: 'eqcond', key: 'goods_id', val: data.firstObject.id },
+                    { id: 'objectiveCompete2', type: 'eqcond', key: 'goods_id', val: data.get('firstObject.id') },
                     { id: 'objectiveCompete3', type: 'gtecond', key: 'time', val: '17-01' },
                     { id: 'objectiveCompete4', type: 'ltecond', key: 'time', val: '18-03' }
                 ];
@@ -100,26 +100,26 @@ export default Route.extend({
                 let temp = [];
                 let contTemp = [];
                 data.forEach((elem) => {
-                    if (elem.time.indexOf('q') < 0) {
+                    if (elem.get('time').indexOf('q') < 0) {
                         temp.pushObject(elem)
                     } else {
                         contTemp.pushObject(elem)
                     }
                 });
 
-                let predictionData = temp.filter(elem => elem.time === '18-01' || elem.time === '18-02' || elem.time === '18-03')
+                let predictionData = temp.filter(elem => elem.get('time') === '18-01' || elem.get('time') === '18-02' || elem.get('time') === '18-03')
                 let predictionGroupData = groupBy(predictionData, 'region_id')
                 let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
                     return {
                         region_id: key,
-                        company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.unit.company_target, 0)
+                        company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.get('unit.company_target'), 0)
                     }
                 })
 
                 controller.set('regionCompanyTargets', regionCompanyTargets);
-                controller.set('totalCompanyTarget', predictionData.reduce((acc, cur) => acc + cur.unit.company_target, 0))
+                controller.set('totalCompanyTarget', predictionData.reduce((acc, cur) => acc + cur.get('unit.company_target'), 0))
 
-                let areaBarData = this._d3Data(groupBy(temp.filter(elem => elem.region_id !== 'all'), 'region_id'));
+                let areaBarData = this._d3Data(groupBy(temp.filter(elem => elem.get('region_id') !== 'all'), 'region_id'));
                 areaBarData.forEach((item) => {
                     item.data.sort((a, b) => {
                         return (a.key.slice(0, 2) + a.key.slice(3)) - (b.key.slice(0, 2) + b.key.slice(3))
@@ -133,7 +133,7 @@ export default Route.extend({
             .then((data) => { // 获取公司产品季度数据
                 let medicines = this.get('pmController').get('Store').peekAll('medicine');
                 let companyProd = medicines.find((item) => {
-                    return !item.compete;
+                    return !item.get('compete');
                 });
                 let req = this.get('pmController').get('Store').createModel('request', {
                     id: 'objectiveCompete0',
@@ -148,7 +148,7 @@ export default Route.extend({
                 let eqValues = [
                     { id: 'objectiveCompete5', type: 'eqcond', key: 'time_type', val: 'season' },
                     { id: 'objectiveCompete1', type: 'eqcond', key: 'course_id', val: paramsController.courseid },
-                    { id: 'objectiveCompete2', type: 'eqcond', key: 'goods_id', val: companyProd.id },
+                    { id: 'objectiveCompete2', type: 'eqcond', key: 'goods_id', val: companyProd.get('id') },
                     { id: 'objectiveCompete3', type: 'gtecond', key: 'time', val: '17-q1' },
                     { id: 'objectiveCompete4', type: 'ltecond', key: 'time', val: '18-q1' }
                 ];
@@ -161,12 +161,12 @@ export default Route.extend({
                     .queryMultipleObject('/api/v1/findAllMedUnit/0', 'bind_course_region_goods_time_unit', conditions);
             })
             .then((data) => { // 处理公司产品季度数据
-                let _predictionDataForContri = data.filter(elem => elem.time === '17-q4');
+                let _predictionDataForContri = data.filter(elem => elem.get('time') === '17-q4');
                 let _predictionGroupDataForContri = groupBy(_predictionDataForContri, 'region_id');
                 let regionSalesContri = Object.keys(_predictionGroupDataForContri).map(key => {
                     return {
                         region_id: key,
-                        sales_contri: _predictionGroupDataForContri[key].reduce((acc, cur) => acc + cur.unit.contri, 0)
+                        sales_contri: _predictionGroupDataForContri[key].reduce((acc, cur) => acc + cur.get('unit.contri'), 0)
                     }
                 });
                 controller.set('regionSalesContri', regionSalesContri);

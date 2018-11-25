@@ -1,12 +1,13 @@
 import Route from '@ember/routing/route';
 import { groupBy } from '../../../../phtool/tool';
+import rsvp from 'rsvp';
 
 export default Route.extend({
 	loadTableTarget(paramsController) {
 		let temp = [];
 		let medicines = this.get('pmController').get('Store').peekAll('medicine');
 		let companyProd = medicines.find((item) => {
-			return !item.compete;
+			return !item.get('compete');
 		});
 		let req = this.get('pmController').get('Store').createModel('request', {
 			id: 'resource0',
@@ -21,7 +22,7 @@ export default Route.extend({
 		let eqValues = [
 			{ id:'resource5', type: 'eqcond', key: 'time_type', val: 'month' },
 			{ id: 'resource1', type: 'eqcond', key: 'course_id', val: paramsController.courseid },
-			{ id: 'resource2', type: 'eqcond', key: 'goods_id', val: companyProd.id },
+			{ id: 'resource2', type: 'eqcond', key: 'goods_id', val: companyProd.get('id') },
 			{ id: 'resource3', type: 'gtecond', key: 'time', val: '18-01' },
 			{ id: 'resource4', type: 'ltecond', key: 'time', val: '18-03' }
 		]
@@ -33,12 +34,12 @@ export default Route.extend({
 		return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findAllMedUnit/0', 'bind_course_region_goods_time_unit', conditions)
 			.then(data => {
 				data.forEach(elem => { temp.pushObject(elem) });
-				let predictionData = temp.filter(elem => elem.time === '18-01' || elem.time === '18-02' || elem.time === '18-03')
+				let predictionData = temp.filter(elem => elem.get('time') === '18-01' || elem.get('time') === '18-02' || elem.get('time') === '18-03')
 				let predictionGroupData = groupBy(predictionData, 'region_id')
 				let regionCompanyTargets = Object.keys(predictionGroupData).map(key => {
 					return {
 						region_id: key,
-						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.unit.company_target, 0)
+						company_targe: predictionGroupData[key].reduce((acc, cur) => acc + cur.get('unit.company_target'), 0)
 					}
 				});
 				return regionCompanyTargets
@@ -95,12 +96,12 @@ export default Route.extend({
 					});
 					let eqValues = [
 						{ id: 'resourceCompete1', type: 'eqcond', key: 'course_id', val: paramsController.courseid },
-						{ id: 'resourceCompete2', type: 'eqcond', key: 'goods_id', val: reval.id },
+						{ id: 'resourceCompete2', type: 'eqcond', key: 'goods_id', val: reval.get('id') },
 					]
 					let conditions = _conditions(req, eqValues);
 					return that.store.queryMultipleObject('/api/v1/findCompetGoods/0', 'medicine', conditions)
 				});
-				return Promise.all(promiseArray)
+				return rsvp.Promise.all(promiseArray)
 			})
 			.then((data) => {
 				let req = this.get('pmController').get('Store').createModel('request', { id: 'resourceCompete3', res: 'bind_course_exam_require' });

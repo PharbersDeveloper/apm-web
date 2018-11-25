@@ -21,9 +21,9 @@ export default Controller.extend({
 			let RSA = this.get('pmController').get('RSA');
 			RSA.setPublicKey(PublicKey);
 			let req = this.store.createRecord('request', { id: '0', res: 'user' });
-			let privatePw = RSA.encrypt(this.login.password);
+			let privatePw = RSA.encrypt(this.get('login.password'));
 			let eqValues = [
-				{ id: '1', type: 'eqcond', key: 'email', val: this.login.email },
+				{ id: '1', type: 'eqcond', key: 'email', val: this.get('login.email') },
 				{ id: '2', type: 'eqcond', key: 'password', val: privatePw },
 				{ id: '3', type: 'eqcond', key: 'login_source', val: 'APM' }
 			]
@@ -37,11 +37,11 @@ export default Controller.extend({
 			let conditions = this.store.object2JsonApi(req);
 			this.get('pmController').get('Store').queryObject('/api/v1/login/0', 'auth', conditions)
 				.then(data => {
-					this.get('cookies').write('token', data.token, { path: '/', maxAge: data.token_expire });
-					localStorage.setItem('userName', data.user.get('user_name'))
-					localStorage.setItem('userPhone', data.user.get('user_phone'))
-					localStorage.setItem('userEmail', data.user.get('email'))
-					localStorage.setItem('userImage', data.user.get('image'))
+					this.get('cookies').write('token', data.get('token'), { path: '/', maxAge: data.token_expire });
+					localStorage.setItem('userName', data.get('user.user_name'))
+					localStorage.setItem('userPhone', data.get('user.user_phone'))
+					localStorage.setItem('userEmail', data.get('user.email'))
+					localStorage.setItem('userImage', data.get('user.image'))
 					let previousTransition = this.get('previousTransition');
 					if(previousTransition) {
 						this.set('previousTransition',null);

@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { set } from '@ember/object';
+import rsvp from 'rsvp';
 
 export default Controller.extend({
 	collapsed: false,
@@ -11,21 +12,6 @@ export default Controller.extend({
 		this.set('history', JSON.parse(localStorage.getItem('history')));
 		this.set('readyChoose', []);
 	},
-	// planPaire: computed('readyChoose.@each.isChecked', function() {
-	// 	let chooses = this.get('readyChoose');
-	// 	let planPaire = chooses.filterBy('isChecked', true);
-	// 	let dealPlan = planPaire;
-	// 	if (planPaire.length > 2) {
-	// 		let booleanChooses = chooses.map((choose) => {
-	// 			return choose.isChecked;
-	// 		});
-	// 		let index = booleanChooses.indexOf(true);
-	// 		set(chooses[index], 'isChecked', false);
-	// 		this.set('readyChoose', chooses);
-	// 		dealPlan.shift()
-	// 	}
-	// 	return dealPlan;
-	// }),
 	resortRegionModel: computed('regionResort', function() {
 		let regionResort = this.get('regionResort');
 		regionResort.sort((a, b) => {
@@ -37,19 +23,12 @@ export default Controller.extend({
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
 			region.forEach((ele) => {
-				if (item.selected.data.id === ele.id) {
+				if (item.selected.data.id === ele.get('id')) {
 					singleRegion = ele;
 				}
 			})
 			return singleRegion
 		});
-		// newRegion.forEach(ele=> {
-		// 	localStorageRegion.forEach(localele=> {
-		// 			if(ele.id === localele.data.id) {
-		// 				set(ele,'actionplan',localele.data.attributes.actionplan)
-		// 			}
-		// 	})
-		// });
 		return newRegion;
 	}),
 	actions: {
@@ -63,7 +42,7 @@ export default Controller.extend({
 		nextStep() {
 			let region = this.get('pmController').get('Store').peekAll('region');
 			let isActionplanEmpty = region.every((item) => {
-				return item.actionplan
+				return item.get('actionplan')
 			});
 			this.set('isActionplanEmpty', isActionplanEmpty);
 			if (isActionplanEmpty) {
@@ -92,13 +71,13 @@ export default Controller.extend({
 			let params = this.get('params');
 			let promiseArray = region.map((reg) => {
 				let req = this.get('pmController').get('Store').createModel('request', {
-					id: reg.id + 'actionHint0',
+					id: reg.get('id') + 'actionHint0',
 					res: 'paperinput',
 				});
-				let actionPlans = reg.actionplan.split(',').filter(item => item.length > 0);
+				let actionPlans = reg.get('actionplan').split(',').filter(item => item.length > 0);
 				let eqValues = [
 					{ id: reg.id + 'actionHint1', key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ id: reg.id + 'actionHint2', key: 'region_id', type: 'eqcond', val: reg.id },
+					{ id: reg.id + 'actionHint2', key: 'region_id', type: 'eqcond', val: reg.get('id') },
 					{ id: reg.id + 'actionHint3', key: 'action_plans', type: 'upcond', val: actionPlans },
 				];
 				eqValues.forEach((item) => {
@@ -111,7 +90,7 @@ export default Controller.extend({
 				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
 				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
-			Promise.all(promiseArray).then(() => {
+			rsvp.Promise.all(promiseArray).then(() => {
 				let hint = {
 					hintModal: false,
 					hintImg: true,

@@ -25,13 +25,11 @@ export default Controller.extend(SignupLogic, {
 					second: true,
 					last: false
 				};
-				break;
 			case (step === 2):
 				return {
 					second: true,
 					last: true
 				}
-				break;
 			default:
 				return {
 					second: false,
@@ -45,7 +43,7 @@ export default Controller.extend(SignupLogic, {
 		if (email === "") {
 			return { text: "", status: false };
 		} else if (email.indexOf('@') < 0 || email.indexOf('.com') < 0) {
-			return { text: this.i18n.t('apm.sign.inputRightMail') + "", status: false };
+			return { text: this.get('i18n').t('apm.sign.inputRightMail') + "", status: false };
 		} else {
 			return { text: "", status: true };
 		}
@@ -55,10 +53,8 @@ export default Controller.extend(SignupLogic, {
 		switch (true) {
 			case pw.length === 0:
 				return { text: "", status: false };
-				break;
 			case pw.length < 6 || pw.length > 18:
-				return { text: this.i18n.t('apm.sign.passwordLength') + "", status: false };
-				break;
+				return { text: this.get('i18n').t('apm.sign.passwordLength') + "", status: false };
 			default:
 				return { text: '', status: true }
 		}
@@ -69,10 +65,8 @@ export default Controller.extend(SignupLogic, {
 		switch (true) {
 			case pw === '' && cpw === '':
 				return { text: '', status: false };
-				break;
 			case pw === '' || pw !== cpw:
 				return { text: '*两次输入不一致', status: false };
-				break;
 			default:
 				return { text: '', status: true };
 		}
@@ -83,10 +77,8 @@ export default Controller.extend(SignupLogic, {
 		switch (true) {
 			case name.length === 0:
 				return { text: "", status: false }
-				break;
 			case name.length > 8:
-				return { text: this.i18n.t('apm.sign.eightLetter') + "", status: false }
-				break;
+				return { text: this.get('i18n').t('apm.sign.eightLetter') + "", status: false }
 			default:
 				return { text: "", status: true }
 		}
@@ -190,7 +182,7 @@ export default Controller.extend(SignupLogic, {
 						let hint = {
 							hintModal: true,
 							hintImg: true,
-							title: this.i18n.t('apm.sign.tips') + "",
+							title: this.get('i18n').t('apm.sign.tips') + "",
 							content: content,
 							hintBtn: false,
 						}
@@ -228,7 +220,7 @@ export default Controller.extend(SignupLogic, {
 						let hint = {
 							hintModal: true,
 							hintImg: true,
-							title: this.i18n.t('apm.sign.tips') + "",
+							title: this.get('i18n').t('apm.sign.tips') + "",
 							content: content,
 							hintBtn: false,
 						}
@@ -238,7 +230,7 @@ export default Controller.extend(SignupLogic, {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
-					title: this.i18n.t('apm.sign.tips') + "",
+					title: this.get('i18n').t('apm.sign.tips') + "",
 					content: '请填写全部内容.',
 					hintBtn: false,
 				}

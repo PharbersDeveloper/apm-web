@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import rsvp from 'rsvp';
 
 export default Controller.extend({
 	init() {
@@ -24,9 +25,9 @@ export default Controller.extend({
 
 			let isNoteEmpty = region.every(function(item) {
 				if (item.notes.length === 0) {
-					emptyNotesRegion = item.name
+					emptyNotesRegion = item.get('name')
 				}
-				return item.notes.length > 0
+				return item.get('notes').length > 0
 			});
 
 			if (isNoteEmpty) {
@@ -56,13 +57,13 @@ export default Controller.extend({
 
 			let promiseArray = region.map((reg) => {
 				let req = this.get('pmController').get('Store').createModel('request', {
-					id: reg.id + '0',
+					id: reg.get('id') + '0',
 					res: 'paperinput',
 				});
 				let eqValues = [
 					{ id: reg.id + '1', key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ id: reg.id + '2', key: 'region_id', type: 'eqcond', val: reg.id },
-					{ id: reg.id + '3', key: 'hint', type: 'upcond', val: reg.notes }
+					{ id: reg.id + '2', key: 'region_id', type: 'eqcond', val: reg.get('id') },
+					{ id: reg.id + '3', key: 'hint', type: 'upcond', val: reg.get('notes') }
 				];
 				eqValues.forEach((item) => {
 					req.get(item.type).pushObject(this.get('pmController').get('Store').createModel(item.type, {
@@ -72,10 +73,11 @@ export default Controller.extend({
 					}))
 				});
 				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
+
 				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
-			Promise.all(promiseArray).then((res) => {
+			rsvp.Promise.all(promiseArray).then((res) => {
 				let hint = {
 					hintModal: false,
 					hintImg: true,

@@ -18,7 +18,7 @@ export default Controller.extend({
 			component.set('startTip', false);
 			this.getPaper(component.get('courseid')).then(data => {
 				localStorage.setItem('history', false)
-				this.transitionToRoute('new-project.project-start.index.analyze', component.get('courseid'), data.id)
+				this.transitionToRoute('new-project.project-start.index.analyze', component.get('courseid'), data.get('id'))
 			})
 		},
 		goScenarioDescribe(component) {
@@ -28,7 +28,7 @@ export default Controller.extend({
 				localStorage.setItem('history', false);
 				localStorage.removeItem('totalRegion');
 				localStorage.removeItem('regionResort');
-				this.transitionToRoute('new-project.project-start.index.analyze', component.get('courseid'), data.id)
+				this.transitionToRoute('new-project.project-start.index.analyze', component.get('courseid'), data.get('id'))
 			})
 
 		}

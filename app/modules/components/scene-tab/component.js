@@ -25,7 +25,7 @@ export default Component.extend({
 				let hint = {
 					hintModal: true,
 					hintImg: true,
-					title: this.i18n.t('apm.component.sceneTab.tips') + "",
+					title: this.get('i18n').t('apm.component.sceneTab.tips') + "",
 					content: '确认退出',
 					hintBtn: true,
 				}
@@ -34,8 +34,8 @@ export default Component.extend({
 				let hint = {
 					hintModal: true,
 					hintImg: true,
-					title: this.i18n.t('apm.component.sceneTab.tips') + "",
-					content: this.i18n.t('apm.component.sceneTab.tipContent') + "",
+					title: this.get('i18n').t('apm.component.sceneTab.tips') + "",
+					content: this.get('i18n').t('apm.component.sceneTab.tipContent') + "",
 					hintBtn: true,
 				}
 				this.set('hint', hint);

@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import rsvp from 'rsvp';
 
 export default Route.extend({
 	model() {
@@ -22,7 +23,7 @@ export default Route.extend({
 			let conditions = this.get('pmController').get('Store').object2JsonApi(req);
 			return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findRegionRep/0', 'representative', conditions)
 		})
-		return Promise.all(promiseArray)
+		return rsvp.Promise.all(promiseArray)
 			.then(data => { // 处理所有区域的负责代表
 				let represents = [];
 				data.forEach((elem, index) => {
