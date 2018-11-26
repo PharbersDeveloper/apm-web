@@ -3,8 +3,10 @@
 		width: 1400px;
 	}
 }
+
 /*注释掉部分样式，原因是，修改了页面部分结构，在顶层使用了Bootstrap Container，不需要每个都加入，看到注释后可以删除了*/
 .action-plan-container {
+
 	// padding: 0;
 	// background: #FFFFFF;
 	// box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
@@ -12,6 +14,7 @@
 		position: relative;
 		margin-bottom: 10px;
 		background: #FFFFFF;
+		-webkit-box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 		box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 
 		.choose-area {
@@ -34,6 +37,7 @@
 		padding: 6px 20px;
 		font-size: 0;
 		background: #FFFFFF;
+		-webkit-box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 		box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 
 		.title-section {
@@ -63,6 +67,7 @@
 					letter-spacing: 2px;
 					text-align: left;
 					background: #FFFFFF;
+					-webkit-box-shadow: 0 2px 4px 0 #E2E2E2;
 					box-shadow: 0 2px 4px 0 #E2E2E2;
 					border: 0;
 					border-radius: 1px;

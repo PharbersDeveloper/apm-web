@@ -3,14 +3,17 @@
 	width: 100%;
 	height: 100%;
 }
+
 .introduced {
-    display: none;
-    background-color: #efeff0;
-    &.show {
-        display: block
-    }
+	display: none;
+	background-color: #efeff0;
+
+	&.show {
+		display: block
+	}
 }
+
 .content {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }

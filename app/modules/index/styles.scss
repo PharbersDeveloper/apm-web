@@ -1,121 +1,157 @@
 .content-page {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 1000px;
+	height: 100%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	min-width: 1000px;
 }
-.content{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    .left {
-        height: 100%;
-        width: 70%;
-        // background: red;
-        background: url('https://pharbers-images.oss-cn-beijing.aliyuncs.com/pharbers-tm-login-ember-addon/%E7%99%BB%E5%85%A5%E9%85%8D%E5%9C%96.png');
-        background-repeat: no-repeat;
-        background-position: top;
-        background-size: cover;
-    }
-    .right {
-        width: 30%;
-        min-width: 405px;
-        height: 100%;
-        padding: 25px;
-        .margin {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            background: #FFFFFF;
-            box-shadow: 0 2px 4px 0 rgba(144,144,144,0.50);
-            border-radius: 3px;
-        }
-        .head {
-            margin-bottom: 50px;
-            // width: 355px;
-            height: 65px;
-            line-height: 65px;
-            background-image: linear-gradient(-90deg, #38539C 0%, #92A8E8 100%);
-            p {
-                font-family: PingFangSC-Regular;
-                font-size: 20px;
-                color: #FFFFFF;
-                letter-spacing: 2.86px;
-            }
-        }
-        .con {
-            .title {
-                margin-bottom: 40px;
-                font-family: PingFangSC-Regular;
-                font-size: 20px;
-                color: #485465;
-                letter-spacing: 2.86px;
-            }
-            .input-area {
-                margin-bottom: 70px;
-                padding: 0 25px;
-                text-align: left;
-                .password {
-                    position: absolute;
-                    right: 50px;
-                    font-family: PingFangSC-Regular;
-                    font-size: 12px;
-                    color: #AAAAAA;
-                    letter-spacing: 2.92px;
-                }
-                .signin {
-                    font-family: PingFangSC-Regular;
-                    font-size: 12px;
-                    color: #485465;
-                    letter-spacing: 1.71px;
-                    a {
-                        color: #72aefe;
-                        line-height: 17px;
-                    }
-                }
-                div {
-                    margin-bottom: 25px;
-                }
-                label {
-                    font-family: PingFangSC-Regular;
-                    font-size: 14px;
-                    color: #767A80;
-                    letter-spacing: 3px;
-                    margin-bottom: 5px;
-                }
-                input {
-                    height: 45px;
-                    border: 1px solid #E3E3E3;
-                    border-radius: 4px;
-                }
-                :global(.form-control-feedback) {
-                    top: 30px;
-                }
-            }
-            .btn {
-                margin-bottom: 80px;
-                width: 220px;
-                height: 40px;
-                background-image: linear-gradient(-110deg, #4060AE 0%, #8F9CC3 100%);
-                box-shadow: 0 2px 4px 0 rgba(214,214,214,0.50);
-                border-radius: 4px;
-                font-family: PingFangSC-Semibold;
-                font-size: 14px;
-                color: #FFFFFF;
-                letter-spacing: 3px;
-            }
-            .link-to {
-                text-align: right;
-                padding-right: 25px;
-                font-family: PingFangSC-Semibold;
-                font-size: 12px;
-                color: #6D90B9;
-                letter-spacing: 2.5px;
-            }
-            
-        }
-    }
+
+.content {
+	height: 100%;
+	width: 100%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	text-align: center;
+
+	.left {
+		height: 100%;
+		width: 70%;
+		// background: red;
+		background: url('https://pharbers-images.oss-cn-beijing.aliyuncs.com/pharbers-tm-login-ember-addon/%E7%99%BB%E5%85%A5%E9%85%8D%E5%9C%96.png');
+		background-repeat: no-repeat;
+		background-position: top;
+		background-size: cover;
+	}
+
+	.right {
+		width: 30%;
+		min-width: 405px;
+		height: 100%;
+		padding: 25px;
+
+		.margin {
+			height: 100%;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			background: #FFFFFF;
+			-webkit-box-shadow: 0 2px 4px 0 rgba(144, 144, 144, 0.50);
+			box-shadow: 0 2px 4px 0 rgba(144, 144, 144, 0.50);
+			border-radius: 3px;
+		}
+
+		.head {
+			margin-bottom: 50px;
+			// width: 355px;
+			height: 65px;
+			line-height: 65px;
+			background-image: -webkit-gradient(linear, right top, left top, from(#38539C), to(#92A8E8));
+			background-image: linear-gradient(-90deg, #38539C 0%, #92A8E8 100%);
+
+			p {
+				font-family: PingFangSC-Regular;
+				font-size: 20px;
+				color: #FFFFFF;
+				letter-spacing: 2.86px;
+			}
+		}
+
+		.con {
+			.title {
+				margin-bottom: 40px;
+				font-family: PingFangSC-Regular;
+				font-size: 20px;
+				color: #485465;
+				letter-spacing: 2.86px;
+			}
+
+			.input-area {
+				margin-bottom: 70px;
+				padding: 0 25px;
+				text-align: left;
+
+				.password {
+					position: absolute;
+					right: 50px;
+					font-family: PingFangSC-Regular;
+					font-size: 12px;
+					color: #AAAAAA;
+					letter-spacing: 2.92px;
+				}
+
+				.signin {
+					font-family: PingFangSC-Regular;
+					font-size: 12px;
+					color: #485465;
+					letter-spacing: 1.71px;
+
+					a {
+						color: #72aefe;
+						line-height: 17px;
+					}
+				}
+
+				div {
+					margin-bottom: 25px;
+				}
+
+				label {
+					font-family: PingFangSC-Regular;
+					font-size: 14px;
+					color: #767A80;
+					letter-spacing: 3px;
+					margin-bottom: 5px;
+				}
+
+				input {
+					height: 45px;
+					border: 1px solid #E3E3E3;
+					border-radius: 4px;
+				}
+
+				:global(.form-control-feedback) {
+					top: 30px;
+				}
+			}
+
+			.btn {
+				margin-bottom: 80px;
+				width: 220px;
+				height: 40px;
+				background-image: linear-gradient(-110deg, #4060AE 0%, #8F9CC3 100%);
+				-webkit-box-shadow: 0 2px 4px 0 rgba(214, 214, 214, 0.50);
+				box-shadow: 0 2px 4px 0 rgba(214, 214, 214, 0.50);
+				border-radius: 4px;
+				font-family: PingFangSC-Semibold;
+				font-size: 14px;
+				color: #FFFFFF;
+				letter-spacing: 3px;
+			}
+
+			.link-to {
+				text-align: right;
+				padding-right: 25px;
+				font-family: PingFangSC-Semibold;
+				font-size: 12px;
+				color: #6D90B9;
+				letter-spacing: 2.5px;
+			}
+
+		}
+	}
 }
