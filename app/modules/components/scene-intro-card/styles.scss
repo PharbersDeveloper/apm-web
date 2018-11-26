@@ -2,7 +2,7 @@
 	padding: 0 20px;
 	background: #efeff0;
 	height: auto;
-	// padding-top: 70px;
+
 	.fork-area {
 		position: fixed;
 		top: 84px;
@@ -34,14 +34,18 @@
 			background: #fff;
 			min-height: 82vh;
 			padding: 60px;
+			display: -webkit-box;
+			display: -ms-flexbox;
 			display: flex;
+			-webkit-box-orient: horizontal;
+			-webkit-box-direction: normal;
+			-ms-flex-direction: row;
 			flex-direction: row;
 
 			img {
 				min-width: 134px !important;
 				height: 134px;
 				border-radius: 50%;
-				background: red;
 				margin-right: 25px;
 			}
 

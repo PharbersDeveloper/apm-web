@@ -1,5 +1,10 @@
 .content {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
 	flex-direction: row;
 	background: #fff;
 	margin-bottom: 15px;
@@ -11,9 +16,18 @@
 	.left {
 		min-width: 170px;
 		background-image: linear-gradient(46deg, #E9EFFF 0%, #F8FCFF 100%);
+		display: -webkit-box;
+		display: -ms-flexbox;
 		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
 		flex-direction: column;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
 		justify-content: center;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
 		align-items: center;
 
 		img {
@@ -21,7 +35,8 @@
 			width: 130px;
 			height: 130px;
 			background: #FFFFFF;
-			box-shadow: 0 2px 4px 0 rgba(173,173,173,0.50);
+			-webkit-box-shadow: 0 2px 4px 0 rgba(173, 173, 173, 0.50);
+			box-shadow: 0 2px 4px 0 rgba(173, 173, 173, 0.50);
 			border-radius: 3px;
 		}
 
@@ -34,13 +49,23 @@
 	}
 
 	.right {
+		display: -webkit-box;
+		display: -ms-flexbox;
 		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
 		flex-direction: column;
 		padding: 20px 15px;
 
 		.head {
 			margin-bottom: 10px;
+			display: -webkit-box;
+			display: -ms-flexbox;
 			display: flex;
+			-webkit-box-orient: horizontal;
+			-webkit-box-direction: normal;
+			-ms-flex-direction: row;
 			flex-direction: row;
 			line-height: 30px;
 			text-align: center;

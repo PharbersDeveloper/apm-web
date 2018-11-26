@@ -17,7 +17,7 @@ export default Controller.extend(SignupLogic, {
 	userPhone: '',
 	userCompanyName: '',
 	userPosition: '',
-	stepFlow: computed('whichStep', function() {
+	stepFlow: computed('whichStep', function () {
 		let step = this.get('whichStep');
 		switch (true) {
 			case (step === 1):
@@ -38,17 +38,26 @@ export default Controller.extend(SignupLogic, {
 		}
 	}),
 
-	emailHint: computed('userEmail', function() {
-		let email = this.get('userEmail');
-		if (email === "") {
+	emailHint: computed('userEmail', function () {
+		let email = this.get('userEmail'),
+			emailText = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+		// console.log(emailText.test(email));
+		// if (email === "") {
+		// 	return { text: "", status: false };
+		// } else if (emailText.test(email) && email !== "") {
+		// 	return { text: this.get('i18n').t('apm.sign.inputRightMail') + "", status: false };
+		// } else {
+		// 	return { text: "", status: true };
+		// }
+		if (emailText.test(email) && email !== "") {
+			return { text: "", status: true }
+		} else if (email === "") {
 			return { text: "", status: false };
-		} else if (email.indexOf('@') < 0 || email.indexOf('.com') < 0) {
-			return { text: this.get('i18n').t('apm.sign.inputRightMail') + "", status: false };
 		} else {
-			return { text: "", status: true };
+			return { text: this.get('i18n').t('apm.sign.inputRightMail') + "", status: false };
 		}
 	}),
-	pwHint: computed('userPassword', function() {
+	pwHint: computed('userPassword', function () {
 		let pw = this.get('userPassword');
 		switch (true) {
 			case pw.length === 0:
@@ -59,7 +68,7 @@ export default Controller.extend(SignupLogic, {
 				return { text: '', status: true }
 		}
 	}),
-	cpwHint: computed('confirmPassword', 'userPassword', function() {
+	cpwHint: computed('confirmPassword', 'userPassword', function () {
 		let pw = this.get('userPassword');
 		let cpw = this.get('confirmPassword');
 		switch (true) {
@@ -71,7 +80,7 @@ export default Controller.extend(SignupLogic, {
 				return { text: '', status: true };
 		}
 	}),
-	nameHint: computed('userName', function() {
+	nameHint: computed('userName', function () {
 		let userName = this.get('userName');
 		let name = userName.replace(/(^s*)|(s*$)/g, "");
 		switch (true) {
@@ -83,7 +92,7 @@ export default Controller.extend(SignupLogic, {
 				return { text: "", status: true }
 		}
 	}),
-	phoneHint: computed('userPhone', function() {
+	phoneHint: computed('userPhone', function () {
 		let userPhone = this.get('userPhone');
 		let phoneTest = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
 		if (userPhone === "") {
@@ -94,7 +103,7 @@ export default Controller.extend(SignupLogic, {
 			return { text: "*手机格式错误", status: false }
 		}
 	}),
-	cNameHint: computed('userCompanyName', function() {
+	cNameHint: computed('userCompanyName', function () {
 		let userCompanyName = this.get('userCompanyName');
 		if (userCompanyName.length === 0) {
 			return { text: '', status: false };
@@ -102,7 +111,7 @@ export default Controller.extend(SignupLogic, {
 			return { text: '', status: true };
 		}
 	}),
-	positionHint: computed('userPosition', function() {
+	positionHint: computed('userPosition', function () {
 		let userPosition = this.get('userPosition');
 		if (userPosition.length === 0) {
 			return { text: '', status: false };
@@ -110,15 +119,15 @@ export default Controller.extend(SignupLogic, {
 			return { text: '', status: true };
 		}
 	}),
-	firstStepDisabled: computed('emailHint','pwHint','cpwHint', function() {
-		let status = [this.get('emailHint').status, this.get('pwHint').status, this.get('cpwHint').status, ]
+	firstStepDisabled: computed('emailHint', 'pwHint', 'cpwHint', function () {
+		let status = [this.get('emailHint').status, this.get('pwHint').status, this.get('cpwHint').status,]
 		let allIsOk = status.every((item) => {
 			return true === item;
 		});
 		return !allIsOk;
 	}),
-	submitDisabled: computed('nameHint','phoneHint','cNameHint','positionHint', function() {
-		let status = [this.get('nameHint').status, this.get('phoneHint').status, this.get('cNameHint').status, this.get('positionHint').status, ]
+	submitDisabled: computed('nameHint', 'phoneHint', 'cNameHint', 'positionHint', function () {
+		let status = [this.get('nameHint').status, this.get('phoneHint').status, this.get('cNameHint').status, this.get('positionHint').status,]
 		let allIsOk = status.every((item) => {
 			return true === item;
 		});
@@ -146,7 +155,7 @@ export default Controller.extend(SignupLogic, {
 		},
 
 		nextStep() {
-			let status = [this.get('emailHint').status, this.get('pwHint').status, this.get('cpwHint').status, ]
+			let status = [this.get('emailHint').status, this.get('pwHint').status, this.get('cpwHint').status,]
 			let allIsOk = status.every((item) => {
 				return true === item;
 			});
@@ -191,7 +200,7 @@ export default Controller.extend(SignupLogic, {
 			}
 		},
 		submit() {
-			let status = [this.get('nameHint').status, this.get('phoneHint').status, this.get('cNameHint').status, this.get('positionHint').status, ]
+			let status = [this.get('nameHint').status, this.get('phoneHint').status, this.get('cNameHint').status, this.get('positionHint').status,]
 			let allIsOk = status.every((item) => {
 				return true === item;
 			});

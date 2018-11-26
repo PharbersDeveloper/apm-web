@@ -35,8 +35,8 @@ export default Route.extend({
 					})
 					represents.pushObject({
 						region_id: elem.query.included[0].attributes.val,
-						rep_id: elem.firstObject.id,
-						rep_name: elem.firstObject.rep_name
+						rep_id: elem.get('firstObject.id'),
+						rep_name: elem.get('firstObject.rep_name')
 					})
 				})
 				this.controllerFor('new-project.project-start.index.sort').set('represents', represents);

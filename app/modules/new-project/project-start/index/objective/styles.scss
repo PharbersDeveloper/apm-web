@@ -6,6 +6,7 @@
 		margin-bottom: 10px;
 		padding: 6px 20px;
 		background: #FFFFFF;
+		-webkit-box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 		box-shadow: 0 3px 2px 0 rgba(210, 210, 210, 0.50);
 
 		.choose-area {
@@ -49,7 +50,8 @@
 				padding: 10px;
 				width: 250px;
 				height: 80px;
-				box-shadow: 0 0 4px 0 rgba(173,173,173,0.50);
+				-webkit-box-shadow: 0 0 4px 0 rgba(173, 173, 173, 0.50);
+				box-shadow: 0 0 4px 0 rgba(173, 173, 173, 0.50);
 				border-right: 1px solid #D0D0D0;
 
 				p:first-child {

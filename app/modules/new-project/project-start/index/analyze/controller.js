@@ -10,7 +10,7 @@ export default Controller.extend({
 			totalRegion.forEach((item) => {
 				this.get('pmController').get('Store').pushPayload('region', item);
 			})
-		};
+		}
 		this.set('hint', {
 			hintModal: false,
 			title: '提示',
@@ -23,8 +23,8 @@ export default Controller.extend({
 			let emptyNotesRegion = "";
 			let region = this.get('pmController').get('Store').peekAll('region');
 
-			let isNoteEmpty = region.every(function(item) {
-				if (item.notes.length === 0) {
+			let isNoteEmpty = region.every(function (item) {
+				if (item.get('notes').length === 0) {
 					emptyNotesRegion = item.get('name')
 				}
 				return item.get('notes').length > 0
