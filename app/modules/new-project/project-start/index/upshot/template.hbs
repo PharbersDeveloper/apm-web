@@ -1,7 +1,6 @@
-{{!-- {{outlet}} --}}
 {{!-- {{#unless history}} --}}
 <div class="next-step">
-	{{#bs-button class="btn-next" local-class="output" onClick=(action "commitResult")}}
+	{{#bs-button class="btn-next" local-class="output" disabled=isCommit onClick=(action "commitResult")}}
 		{{#if isCommit}}
 			{{t "apm.newProject.upshot.outputted"}}
 		{{else}}

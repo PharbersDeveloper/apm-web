@@ -3,7 +3,7 @@ import { inject } from '@ember/service';
 
 export default Component.extend({
 
-	i18n:inject(),
+	i18n: inject(),
 	introduced: inject('introduced-service'),
 	actions: {
 		showScenario(name) {
@@ -21,12 +21,12 @@ export default Component.extend({
 		exit() {
 			let history = JSON.parse(localStorage.getItem('history'));
 
-			if(history) {
+			if (history) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
 					title: this.get('i18n').t('apm.component.sceneTab.tips') + "",
-					content: '确认退出',
+					content: '确认退出？',
 					hintBtn: true,
 				}
 				this.set('hint', hint);
