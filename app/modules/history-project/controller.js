@@ -65,6 +65,8 @@ export default Controller.extend({
 		lookOver(paperid, courseid) {
 			localStorage.setItem('history', false)
 			this.loadInputData(paperid, courseid).then(data => {
+				this.get('logger').log(data);
+
 				switch (data) {
 					case 0:
 						this.transitionToRoute('new-project.project-start.index.analyze', courseid, paperid)
@@ -86,7 +88,7 @@ export default Controller.extend({
 				}
 			})
 		},
-		continue (paperid, courseid) {
+		continue(paperid, courseid) {
 			this.loadInputData(paperid, courseid).then(() => {
 				localStorage.setItem('history', true)
 				this.transitionToRoute('new-project.project-start.index.analyze', courseid, paperid)

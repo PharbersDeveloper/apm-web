@@ -8,13 +8,13 @@ export default Controller.extend({
 	},
 	actions: {
 		nextStep() {
-			let resortRegion = JSON.parse(localStorage.getItem('regionResort'));
-			let params = this.get('params');
-			let isAllResort = resortRegion.every((item) => {
-				return item.selected !== null
-			});
+			let resortRegion = JSON.parse(localStorage.getItem('regionResort')) || [],
+				isAllResort = resortRegion.every((item) => {
+					return item.selected !== null && item.name !== ''
+				});
+
 			this.set('isAllResort', isAllResort);
-			if (isAllResort) {
+			if (resortRegion.get('length') > 0 && isAllResort) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -42,16 +42,22 @@ export default Controller.extend({
 				title: '提示',
 				content: '确认进入下一步后，将不可修改当前内容。',
 				hintBtn: true,
-			}
+			},
+				resortRegion = JSON.parse(localStorage.getItem('regionResort')),
+				params = this.get('params'),
+				req = null,
+				eqValues = null,
+				promiseArray = [],
+				jsonReq = null;
 			this.set('hint', hint);
-			let resortRegion = JSON.parse(localStorage.getItem('regionResort'));
-			let params = this.get('params');
-			let promiseArray = resortRegion.map((reg) => {
-				let req = this.get('pmController').get('Store').createModel('request', {
+			// let resortRegion = JSON.parse(localStorage.getItem('regionResort'));
+			// let params = this.get('params');
+			promiseArray = resortRegion.map((reg) => {
+				req = this.get('pmController').get('Store').createModel('request', {
 					id: reg.id + 'paperinput0',
 					res: 'paperinput',
 				});
-				let eqValues = [
+				eqValues = [
 					{ id: reg.id + '1', key: 'paper_id', type: 'eqcond', val: params.paperid },
 					{ id: reg.id + '2', key: 'region_id', type: 'eqcond', val: reg.selected.data.id },
 					{ id: reg.id + '3', key: 'sorting', type: 'upcond', val: reg.name }
@@ -63,11 +69,11 @@ export default Controller.extend({
 						val: item.val,
 					}))
 				});
-				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
+				jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
 				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 			});
 
-			rsvp.Promise.all(promiseArray).then((res) => {
+			rsvp.Promise.all(promiseArray).then(() => {
 				this.transitionToRoute('new-project.project-start.index.objective')
 			}).catch((error) => {
 				this.get('logger').log(error);

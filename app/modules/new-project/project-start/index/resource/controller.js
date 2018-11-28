@@ -10,7 +10,7 @@ export default Controller.extend({
 		this.set('region', this.get('pmController').get('Store').peekAll('region'));
 		this.set('history', JSON.parse(localStorage.getItem('history')));
 	},
-	newRegionData: computed('regionResort', function() {
+	newRegionData: computed('regionResort', function () {
 		let regionResort = JSON.parse(localStorage.getItem('regionResort'));
 		regionResort.sort((a, b) => {
 			return a.id - b.id;
@@ -28,7 +28,7 @@ export default Controller.extend({
 		return newRegion;
 	}),
 
-	coVisit: computed('region.@each.covisit', function() {
+	coVisit: computed('region.@each.covisit', function () {
 		let region = this.get('region');
 		let covisit = 0;
 		region.forEach((item) => {
@@ -51,7 +51,7 @@ export default Controller.extend({
 			overHundred: covisit > 100 ? true : false
 		}
 	}),
-	nationMeeting: computed('region.@each.nationMeeting', function() {
+	nationMeeting: computed('region.@each.nationMeeting', function () {
 		let region = this.get('region');
 		let nationMeeting = 0;
 		region.forEach((item) => {
@@ -74,7 +74,7 @@ export default Controller.extend({
 			overHundred: nationMeeting > 100 ? true : false
 		}
 	}),
-	cityMeeting: computed('region.@each.cityMeeting', function() {
+	cityMeeting: computed('region.@each.cityMeeting', function () {
 		let region = this.get('region');
 		let cityMeeting = 0;
 		let total = this.get('totalCityMeeting');
@@ -98,7 +98,7 @@ export default Controller.extend({
 			overHundred: cityMeeting > 100 ? true : false
 		}
 	}),
-	departmentMeeting: computed('region.@each.departmentMeeting', function() {
+	departmentMeeting: computed('region.@each.departmentMeeting', function () {
 		let region = this.get('region');
 		let departmentMeeting = 0;
 		region.forEach((item) => {
@@ -149,16 +149,19 @@ export default Controller.extend({
 			let iscoVisitEmpty = region.every((item) => {
 				let total = '';
 				total = item.get('covisit') + item.get('nationMeeting') + item.get('cityMeeting') + item.get('departmentMeeting');
+
 				if (isNaN(total)) {
 					wrongRegionName = item.get('name');
 				}
-				return item.get('covisit').length > 0 && item.get('nationMeeting').length > 0 &&
-					item.get('cityMeeting').length > 0 && item.get('departmentMeeting').length > 0 && !isNaN(total);
+
+				return String(item.get('covisit')).length > 0 && String(item.get('nationMeeting')).length > 0 &&
+					String(item.get('cityMeeting')).length > 0 && String(item.get('departmentMeeting')).length > 0 && !isNaN(total);
 			});
+
 			this.set('iscoVisitEmpty', iscoVisitEmpty);
 			if (iscoVisitEmpty) {
 				let [_totalCoVisit, _totalNationMeeting, _totalCityMeeting, _totalDepartMeeting] =
-				[this.get('coVisit').value, this.get('nationMeeting').value, this.get('cityMeeting').value, this.get('departmentMeeting').value];
+					[this.get('coVisit').value, this.get('nationMeeting').value, this.get('cityMeeting').value, this.get('departmentMeeting').value];
 				if (_totalCoVisit > 100 || _totalNationMeeting > 100 ||
 					_totalCityMeeting > 100 || _totalDepartMeeting > 100) {
 					let hint = {

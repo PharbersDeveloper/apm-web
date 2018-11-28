@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { set } from '@ember/object';
+import { verificationInput } from '../../../../phtool/tool';
 import rsvp from 'rsvp';
 
 export default Controller.extend({
@@ -10,7 +11,7 @@ export default Controller.extend({
 	},
 	areaBarData: null,
 	initSelectedRegionId: '',
-	totalForecast: computed('regionData.@each.forecast', function() {
+	totalForecast: computed('regionData.@each.forecast', function () {
 		let total = 0;
 		// let region = this.get('pmController').get('Store').peekAll('region');
 		let region = this.get('regionData');
@@ -20,10 +21,13 @@ export default Controller.extend({
 			singleRegionJsonApi = this.get('pmController').get('Store').object2JsonApi(item, false);
 			return singleRegionJsonApi
 		});
+
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 
 		region.forEach((item) => {
-			if (isNaN(item.get('forecast')) || item.get('forecast')< 0) {
+			let verificationForecast = verificationInput(item.get('forecast'));
+
+			if (verificationForecast) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -32,16 +36,12 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '单个协访天数数据不能超过100%');
-				set(item, 'forecast', '');
 			}
 			total += parseInt(item.get('forecast')) || 0;
 		});
 		return total;
 	}),
-	regionCotri: computed('regionData.@each.forecast', function() {
+	regionCotri: computed('regionData.@each.forecast', function () {
 		// let region = this.get('pmController').get('Store').peekAll('region');
 		let region = this.get('regionData');
 
@@ -64,7 +64,7 @@ export default Controller.extend({
 		});
 		return data;
 	}),
-	newRegionData: computed('regionResort', function() {
+	newRegionData: computed('regionResort', function () {
 		let regionResort = this.get('regionResort');
 		regionResort.sort((a, b) => {
 			return a.id - b.id;
@@ -85,20 +85,32 @@ export default Controller.extend({
 	}),
 	actions: {
 		nextStep() {
-			let emptyForecastRegion = "";
-			// let region = this.set('region', this.get('pmController').get('Store').peekAll('region'));
-			let region = this.get('regionData');
-			let isForecastEmpty = region.every((item) => {
-				if (item.get('forecast').length == 0) {
+			let emptyForecastRegion = "",
+				// region = this.get('regionData'),
+				region = this.get('newRegionData'),
+				isForecastEmpty = null;
+
+			isForecastEmpty = region.every((item) => {
+				let verif = verificationInput(item.get('forecast'));
+				if (verif) {
 					emptyForecastRegion = item.get('name');
+					return !verif;
+				} else {
+					return true;
 				}
-				if (isNaN(Boolean(item.get('forecast')) ? item.get('forecast') : 0)) {
-					emptyForecastRegion = item.get('name');
-				}
-				return item.get('forecast').length > 0 && !isNaN(Boolean(item.get('forecast')) ? item.get('forecast') : 0)
+				// if (item.get('forecast').length == 0) {
+				// 	emptyForecastRegion = item.get('name');
+				// 	return false;
+				// } else if (isNaN(item.get('forecast') ? item.get('forecast') : 0)) {
+				// 	emptyForecastRegion = item.get('name');
+				// 	return false;
+				// } else {
+				// 	return true;
+				// }
+				// return item.get('forecast').length > 0 && !isNaN(Boolean(item.get('forecast')) ? item.get('forecast') : 0)
+
 			});
 			this.set('isForecastEmpty', isForecastEmpty);
-			// this.set('tipsTitle', '提示');
 
 			if (isForecastEmpty) {
 				let totalCompanyTarget = this.get('totalCompanyTarget');
