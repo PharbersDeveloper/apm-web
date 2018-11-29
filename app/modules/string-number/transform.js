@@ -4,12 +4,13 @@ export default DS.Transform.extend({
 	deserialize(serialized) {
 		if (serialized === '') {
 			return '';
+		} else if (serialized === -1) {
+			return '';
 		} else {
-			return serialized - 0;
+			return serialized;
 		}
 	},
-
 	serialize(deserialized) {
-		return deserialized.toString();
+		return deserialized;
 	}
 });

@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { set } from '@ember/object';
 import rsvp from 'rsvp';
+import { verificationInput } from '../../../../phtool/tool';
 
 export default Controller.extend({
 	init() {
@@ -27,12 +28,29 @@ export default Controller.extend({
 		});
 		return newRegion;
 	}),
+	// totalScore: computed('race.@each.score', function () {
+	// 	let race = this.get('race');
+	// 	let totalScore = 0;
+	// 	race.forEach((item) => {
+	// 		if (item.get('score') > 100 || item.get('score') < 0 || isNaN(item.get('score'))) {
 
+	// 			set(item, 'score', '');
+	// 		}
+	// 		totalScore += parseInt(item.get('score') - 0) || 0;
+	// 	});
+	// 	return {
+	// 		value: totalScore,
+	// 		overHundred: totalScore > 100 ? true : false
+	// 	}
+	// }),
 	coVisit: computed('region.@each.covisit', function () {
 		let region = this.get('region');
-		let covisit = 0;
+		let totalCovisit = 0;
+		let verificationCovisit = false;
+
 		region.forEach((item) => {
-			if (item.get('covisit') > 100 || item.get('covisit') < 0 || isNaN(item.get('covisit'))) {
+			verificationCovisit = verificationInput(item.get('covisit'), true);
+			if (verificationCovisit) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -42,20 +60,25 @@ export default Controller.extend({
 				}
 				this.set('hint', hint);
 				set(item, 'covisit', '');
+
 			}
-			covisit += parseInt(item.get('covisit') - 0);
-		})
-		// return covisit;
+			totalCovisit += parseInt(item.get('covisit') - 0) || 0;
+		});
 		return {
-			value: covisit,
-			overHundred: covisit > 100 ? true : false
+			value: totalCovisit,
+			overHundred: totalCovisit > 100 ? true : false
 		}
 	}),
 	nationMeeting: computed('region.@each.nationMeeting', function () {
 		let region = this.get('region');
 		let nationMeeting = 0;
+		let verificationNMeeting = false;
+
 		region.forEach((item) => {
-			if (item.get('nationMeeting') > 100 || item.get('nationMeeting') < 0 || isNaN(item.get('nationMeeting'))) {
+			verificationNMeeting = verificationInput(item.get('nationMeeting'), true);
+			// if (item.get('nationMeeting') > 100 || item.get('nationMeeting') < 0 || isNaN(item.get('nationMeeting'))) {
+			if (verificationNMeeting) {
+
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -77,9 +100,13 @@ export default Controller.extend({
 	cityMeeting: computed('region.@each.cityMeeting', function () {
 		let region = this.get('region');
 		let cityMeeting = 0;
+		let verificationCMeeting = false;
 		let total = this.get('totalCityMeeting');
 		region.forEach((item) => {
-			if (item.get('cityMeeting') > 100 || item.get('cityMeeting') < 0 || isNaN(item.get('cityMeeting'))) {
+			verificationCMeeting = verificationInput(item.get('cityMeeting'), true);
+
+			// if (item.get('cityMeeting') > 100 || item.get('cityMeeting') < 0 || isNaN(item.get('cityMeeting'))) {
+			if (verificationCMeeting) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -101,8 +128,14 @@ export default Controller.extend({
 	departmentMeeting: computed('region.@each.departmentMeeting', function () {
 		let region = this.get('region');
 		let departmentMeeting = 0;
+		let verificationDMeeting = false;
+
 		region.forEach((item) => {
-			if (item.get('departmentMeeting') > 100 || item.get('departmentMeeting') < 0 || isNaN(item.get('departmentMeeting'))) {
+			verificationDMeeting = verificationInput(item.get('departmentMeeting'), true);
+
+			// if (item.get('departmentMeeting') > 100 || item.get('departmentMeeting') < 0 || isNaN(item.get('departmentMeeting'))) {
+			if (verificationDMeeting) {
+
 				let hint = {
 					hintModal: true,
 					hintImg: true,

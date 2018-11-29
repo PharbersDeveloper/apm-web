@@ -12,7 +12,7 @@ export default Controller.extend({
 		this.set('history', JSON.parse(localStorage.getItem('history')));
 		this.set('readyChoose', []);
 	},
-	resortRegionModel: computed('regionResort', function() {
+	resortRegionModel: computed('regionResort', function () {
 		let regionResort = this.get('regionResort');
 		regionResort.sort((a, b) => {
 			return a.id - b.id
@@ -40,8 +40,15 @@ export default Controller.extend({
 			this.set('radarData', data)
 		},
 		nextStep() {
-			let region = this.get('pmController').get('Store').peekAll('region');
-			let isActionplanEmpty = region.every((item) => {
+			// let region = this.get('pmController').get('Store').peekAll('region');
+			let _name = '';
+			let isActionplanEmpty = this.get('resortRegionModel').every((item) => {
+				this.get('logger').log(item.get('actionplan'));
+				this.get('logger').log(item);
+
+				if (item.get('actionplan') === '') {
+					_name = item.get('name');
+				}
 				return item.get('actionplan')
 			});
 			this.set('isActionplanEmpty', isActionplanEmpty);
@@ -59,7 +66,7 @@ export default Controller.extend({
 					hintModal: true,
 					hintImg: true,
 					title: '提示',
-					content: '请为所有的区域选择适当的行动计划,并保证最多两项！',
+					content: '请为 ' + _name + ' 选择适当的行动计划,并保证最多两项！',
 					hintBtn: false,
 				}
 				this.set('hint', hint);
@@ -99,8 +106,8 @@ export default Controller.extend({
 					hintBtn: true,
 				}
 				this.set('hint', hint);
-					this.transitionToRoute('new-project.project-start.index.upshot')
-				})
+				this.transitionToRoute('new-project.project-start.index.upshot')
+			})
 				.catch((error) => {
 					let content = "";
 					error.errors.forEach(ele => {

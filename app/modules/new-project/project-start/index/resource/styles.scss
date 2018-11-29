@@ -64,6 +64,7 @@
 				}
 
 				.progress {
+					position: relative;
 					margin: 0;
 					border-radius: 100px;
 					background-color: #CDE4FF;
@@ -76,6 +77,13 @@
 					.progress-bar-danger {
 						border-radius: 100px;
 						background-color: #ffc107;
+					}
+
+					.warning-text {
+						position: absolute;
+						left: 50%;
+						font-size: 14px;
+						color: red;
 					}
 				}
 			}
@@ -130,6 +138,15 @@
 						letter-spacing: 1.17px;
 						background: #F3F3F3;
 						border-radius: 1px;
+					}
+
+					input::-webkit-outer-spin-button,
+					input::-webkit-inner-spin-button {
+						-webkit-appearance: none;
+					}
+
+					input[type="number"] {
+						-moz-appearance: textfield;
 					}
 				}
 			}

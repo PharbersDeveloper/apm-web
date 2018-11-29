@@ -77,29 +77,26 @@ export function numberThousands(number) {
  * @param {*} value typeof string
  * @return Boolean 
  */
-export function verificationInput(value) {
+export function verificationInput(value, range = false) {
 	let isOk = false,
-		pointPosition = value.indexOf('.');
-	// if (isNaN(value)) {
-	// 	return true;
-	// } else if (value === '0' || value.charAt(0) === '0') {
-	// 	return true;
-	// }
-	switch (true) {
-		case (isNaN(value)):
-			isOk = true;
-			break;
-		case (Number(value) < 0):
-			isOk = true;
-			break;
-		case (value.charAt(1) === '0'):
-			isOk = true;
-			break;
-		case (pointPosition > 0 && value.length > (pointPosition + 2)):
-			isOk = true;
-			break;
+		reg = null;
+	if (range) {
+		reg = /^100$|^[\d]{1,2}(\.[\d])?$/;
+		isOk = reg.test(value);
+		return !isOk && value !== '';
+	} else {
+		reg = /^[\d]{1,10}(\.[\d])?$/;
+		if (value === '') {
+			return false
+		} else {
+			isOk = reg.test(value);
+			return !isOk;
+		}
+
 	}
-	return isOk;
+	// isOk = reg.test(value);
+	// return !isOk && value !== '';
+
 }
 
 

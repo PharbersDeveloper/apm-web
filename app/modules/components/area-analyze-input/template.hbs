@@ -1,28 +1,27 @@
 <div local-class="analyze-section">
-    <div class="row">
-        <div class="col-md-12 col-lg-12 col-sm-12">
-            <p local-class="title-section">
-                <span local-class="title">{{data.name}}</span>
-                <div local-class="toggle-area">
-                    {{#unless history}}
-                        <span local-class="clear" {{action 'clearNotes'}}><span class="glyphicon glyphicon-trash"></span></span>
-                    {{/unless}}
-                    
-                    {{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
-    					{{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
-    					{{else}}<span class="glyphicon glyphicon-triangle-top"></span>
-    					{{/if}}
-    				{{/bs-button}}
-                </div>
-            </p>
-            {{#bs-collapse local-class="content-container" collapsed=collapsed}}
-                {{#if history}}
-                    {{textarea rows=10 placeholder=(t 'apm.component.areaAnalyzeInput.placeholder') key-up=(action 'keyUp') value=data.notes maxlength=600 disabled=true}}
-                {{else}}
-                    {{textarea rows=10 placeholder=(t 'apm.component.areaAnalyzeInput.placeholder') key-up=(action 'keyUp') value=data.notes maxlength=600 }}
-                {{/if}}
-                
-            {{/bs-collapse}}
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-12 col-lg-12 col-sm-12">
+			<p local-class="title-section">
+				<span local-class="title">{{data.name}}</span>
+				<div local-class="toggle-area">
+					{{#unless history}}
+						<span local-class="clear" {{action 'clearNotes'}}><span class="glyphicon glyphicon-trash"></span></span>
+					{{/unless}}
+					{{#bs-button local-class="btn-toggle" active=notCollapsed onClick=(action "toggle")}}
+						{{#if collapsed}} <span class="glyphicon glyphicon-triangle-bottom"></span>
+						{{else}}<span class="glyphicon glyphicon-triangle-top"></span>
+						{{/if}}
+					{{/bs-button}}
+				</div>
+			</p>
+			{{#bs-collapse local-class="content-container" collapsed=collapsed}}
+				{{#if history}}
+					{{textarea rows=10 placeholder=(t 'apm.component.areaAnalyzeInput.placeholder') key-up=(action 'keyUp') value=data.notes maxlength=300 disabled=true}}
+				{{else}}
+					{{textarea rows=10 placeholder=(t 'apm.component.areaAnalyzeInput.placeholder') key-up=(action 'keyUp') value=data.notes maxlength=300 }}
+					<p local-class="rest-word">还可输入{{restWord}}</p>
+				{{/if}}
+			{{/bs-collapse}}
+		</div>
+	</div>
 </div>

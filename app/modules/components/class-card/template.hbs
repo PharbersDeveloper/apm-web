@@ -1,34 +1,34 @@
 {{#each data as |course|}}
-    <div class="col-md-4 col-sm-4 col-xs-4">
-        <div local-class="content">
-            <div local-class="title">
-                <p local-class="name">{{course.name}}</p>
-                {{#unless course.state}}
-                    <p local-class="time">{{t "apm.component.classCard.soon"}}</p>
-                {{/unless}}
-            </div>
-            <div local-class="btn">
-                {{#if course.state}}
-                    {{#bs-button onClick=(action 'sendTitle' course.name course.prompt course.id) local-class="start"}}{{t "apm.component.classCard.start"}}{{/bs-button}}
-                {{/if}}
-            </div>
-        </div>
-    </div>
+	<div class="col-md-4 col-sm-4 col-xs-4">
+		<div local-class="content">
+			<div local-class="title">
+				<p local-class="name">{{course.name}}</p>
+				{{#unless course.state}}
+					<p local-class="time">{{t "apm.component.classCard.soon"}}</p>
+				{{/unless}}
+			</div>
+			<div local-class="btn">
+				{{#if course.state}}
+					{{#bs-button onClick=(action 'sendTitle' course.name course.prompt course.id) local-class="start"}}{{t "apm.component.classCard.start"}}{{/bs-button}}
+				{{/if}}
+			</div>
+		</div>
+	</div>
 {{/each}}
 <div local-class="modal-dialog">
-    {{#bs-modal backdropClose=false open=startTip onHidden=(action (mut startTip) false) as |modal|}}
-        {{#modal.body}}
-            <div local-class="alert">
-                <div local-class="con">
-                    {{!-- <p local-class="part-title">您好！</p>
-                    <p local-class="part-2">{{newtitle}}即将开始</p> --}}
-                    <p>{{content-bound-helper content}}</p>
-                </div>
-            </div>
-        {{/modal.body}}
-        {{#modal.footer}}
-            {{#bs-button local-class="jump" onClick=(action 'skip') }}{{t "apm.component.classCard.skip"}}{{/bs-button}}
-            {{#bs-button local-class="enter" onClick=(action 'goScenarioDescribe')}}{{t "apm.component.classCard.enterSceneInfo"}}{{/bs-button}}
-        {{/modal.footer}}
-    {{/bs-modal}}
+	{{#bs-modal backdropClose=false open=startTip onHidden=(action (mut startTip) false) as |modal|}}
+		{{#modal.header}}
+		{{/modal.header}}
+		{{#modal.body}}
+			<div local-class="alert">
+				<div local-class="con">
+					<p>{{content-bound-helper content}}</p>
+				</div>
+			</div>
+		{{/modal.body}}
+		{{#modal.footer}}
+			{{#bs-button local-class="jump" onClick=(action 'skip') }}{{t "apm.component.classCard.skip"}}{{/bs-button}}
+			{{#bs-button local-class="enter" onClick=(action 'goScenarioDescribe')}}{{t "apm.component.classCard.enterSceneInfo"}}{{/bs-button}}
+		{{/modal.footer}}
+	{{/bs-modal}}
 </div>

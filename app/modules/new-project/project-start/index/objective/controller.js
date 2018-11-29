@@ -25,9 +25,8 @@ export default Controller.extend({
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 
 		region.forEach((item) => {
-			let verificationForecast = verificationInput(item.get('forecast'));
-
-			if (verificationForecast) {
+			let verif = verificationInput(item.get('forecast'), false);
+			if (verif) {
 				let hint = {
 					hintModal: true,
 					hintImg: true,
@@ -36,6 +35,7 @@ export default Controller.extend({
 					hintBtn: false,
 				}
 				this.set('hint', hint);
+				set(item, 'forecast', '');
 			}
 			total += parseInt(item.get('forecast')) || 0;
 		});
@@ -91,13 +91,23 @@ export default Controller.extend({
 				isForecastEmpty = null;
 
 			isForecastEmpty = region.every((item) => {
-				let verif = verificationInput(item.get('forecast'));
-				if (verif) {
+				let verif = verificationInput(item.get('forecast'), false);
+				// if (verif) {
+				// 	emptyForecastRegion = item.get('name');
+				// 	return !verif;
+				// } else {
+				// 	return true;
+				// }
+				if (item.get('forecast') === '') {
 					emptyForecastRegion = item.get('name');
-					return !verif;
+					return false;
+				} else if (verif) {
+					emptyForecastRegion = item.get('name');
+					return false;
 				} else {
 					return true;
 				}
+
 				// if (item.get('forecast').length == 0) {
 				// 	emptyForecastRegion = item.get('name');
 				// 	return false;
@@ -158,7 +168,7 @@ export default Controller.extend({
 				let eqValues = [
 					{ id: reg.id + 'objectiveHint1', key: 'paper_id', type: 'eqcond', val: params.paperid },
 					{ id: reg.id + 'objectiveHint2', key: 'region_id', type: 'eqcond', val: reg.get('id') },
-					{ id: reg.id + 'objectiveHint3', key: 'predicted_target', type: 'upcond', val: parseInt(reg.get('forecast')) }
+					{ id: reg.id + 'objectiveHint3', key: 'predicted_target', type: 'upcond', val: Number(reg.get('forecast')) }
 				];
 				eqValues.forEach((item) => {
 					req.get(item.type).pushObject(this.get('pmController').get('Store').createModel(item.type, {
