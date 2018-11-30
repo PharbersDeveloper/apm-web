@@ -70,15 +70,15 @@ export default Route.extend({
 					return {
 						region_id: elem.get('region_id'),
 						data: [{
-								name: that.get('i18n').t('apm.component.radar.areaAvg') + "",
-								axes: axes(ave.get('radarfigure')),
-								color: '#762712'
-							},
-							{
-								name: regionCache.get('name'),
-								axes: axes(elem.get('radarfigure')),
-								color: '#26AF32'
-							}
+							name: that.get('i18n').t('apm.component.radar.areaAvg') + "",
+							axes: axes(ave.get('radarfigure')),
+							color: '#762712'
+						},
+						{
+							name: regionCache.get('name'),
+							axes: axes(elem.get('radarfigure')),
+							color: '#26AF32'
+						}
 						]
 					}
 				});
@@ -215,7 +215,7 @@ export default Route.extend({
 					// 绑定区域与人员关系，方便缓存读取
 					represents.pushObject({
 						region_id: elem.query.included[0].attributes.val,
-						data: [elem.firstObject.rep_name],
+						data: [elem.get('firstObject.rep_name')],
 					})
 				})
 				controller.set('areaReps', represents);
