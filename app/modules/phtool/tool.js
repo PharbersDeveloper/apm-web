@@ -94,9 +94,6 @@ export function verificationInput(value, range = false) {
 		}
 
 	}
-	// isOk = reg.test(value);
-	// return !isOk && value !== '';
-
 }
 
 

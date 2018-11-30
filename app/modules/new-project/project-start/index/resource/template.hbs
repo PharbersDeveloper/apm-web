@@ -20,14 +20,6 @@
 								<span local-class="warning-text">{{coVisit.value}}%</span>
 							{{/if}}
 						{{/bs-progress}}
-						{{!-- {{#bs-progress local-class="progress" as |p|}}
-							{{p.bar local-class=(if totalScore.overHundred 'progress-bar-danger' 'progress-bar')
-								showLabel=(if totalScore.overHundred false true) 
-								value=totalScore.value type='info' }}
-							{{#if totalScore.overHundred}}
-								<span local-class="warning-text">{{totalScore.value}}%</span>
-							{{/if}}
-						{{/bs-progress}} --}}
 					</div>
 					<div local-class="card-item" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 						<p local-class="title-card-item"><span>{{t "apm.newProject.resource.countryQuota"}}</span><span>{{t "apm.newProject.resource.total"}}
@@ -95,16 +87,16 @@
 									</td>
 									<td>{{number-format region.forecast}}</td>
 									<td>
-										{{input type="number" key-up=(action 'saveToLocalStorage') value=region.covisit dir="ltr" disabled=(if history true false)}}
+										{{input type="text" key-up=(action 'saveToLocalStorage') change=(action 'verifInput' region region.covisit 'covisit') value=region.covisit dir="ltr" disabled=(if history true false)}}
 									</td>
 									<td>
-										{{input type="number" key-up=(action 'saveToLocalStorage') value=region.nationMeeting dir="ltr" disabled=(if history true false)}}
+										{{input type="text" key-up=(action 'saveToLocalStorage') change=(action 'verifInput' region region.nationMeeting 'nationMeeting') value=region.nationMeeting dir="ltr" disabled=(if history true false)}}
 									</td>
 									<td>
-										{{input type="number" key-up=(action 'saveToLocalStorage') value=region.cityMeeting dir="ltr" disabled=(if history true false)}}
+										{{input type="text" key-up=(action 'saveToLocalStorage') change=(action 'verifInput' region region.cityMeeting 'cityMeeting') value=region.cityMeeting dir="ltr" disabled=(if history true false)}}
 									</td>
 									<td>
-										{{input type="number" key-up=(action 'saveToLocalStorage') value=region.departmentMeeting dir="ltr" disabled=(if history true false)}}
+										{{input type="text" key-up=(action 'saveToLocalStorage') change=(action 'verifInput' region region.departmentMeeting 'departmentMeeting') value=region.departmentMeeting dir="ltr" disabled=(if history true false)}}
 									</td>
 								</tr>
 							{{/each}}

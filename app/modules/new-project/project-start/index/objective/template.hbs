@@ -68,7 +68,7 @@
 									{{/if}}
 								{{/each}}
 								<td>
-									{{input type="number" value=region.forecast maxlength="10" dir="ltr" disabled=(if history true false)}}
+									{{input type="text" value=region.forecast maxlength="10" change=(action 'verifInput' region region.forecast) dir="ltr" disabled=(if history true false)}}
 								</td>
 								{{#each regionCotri as |item|}}
 									{{#if (eq region.id item.id)}}

@@ -1,4 +1,3 @@
-{{!-- {{#unless history}} --}}
 <div class="next-step">
 	{{#bs-button class="btn-next" local-class="output" disabled=isCommit onClick=(action "commitResult")}}
 		{{#if isCommit}}
@@ -8,12 +7,11 @@
 		{{/if}}
 	{{/bs-button}}
 	{{#unless history}}
-		{{#bs-button class="btn-next" onClick=(action "saveUpshot")}}
+		{{#bs-button class="btn-next" local-class="btn-save-exit" onClick=(action "saveUpshot")}}
 			{{t "apm.newProject.upshot.saveExit"}}
 		{{/bs-button}}
 	{{/unless}}
 </div>
-{{!-- {{/unless}} --}}
 <div local-class="area-sales">
 	<p>{{t "apm.newProject.upshot.areaSales"}}</p>
 	{{d3-histogram-area-sales data=model.quarterD3BarData}}

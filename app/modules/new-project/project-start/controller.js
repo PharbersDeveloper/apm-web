@@ -7,6 +7,7 @@ import rsvp from 'rsvp';
 export default Controller.extend({
 	i18n: inject(),
 	introduced: inject('introduced-service'),
+	// isUpshotFinish: false,
 	actions: {
 		close() {
 			this.get('introduced').set('isSelectedName', '')
@@ -324,6 +325,7 @@ export default Controller.extend({
 						});
 						// let promiseArray = data.map(elem => {
 						let eqValues = [
+							{ id: 6, type: 'eqcond', key: 'region_id', val: 'all' },
 							{ id: 5, type: 'eqcond', key: 'time_type', val: 'month' },
 							{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
 							{ id: 2, type: 'eqcond', key: 'goods_id', val: data.get('firstObject.id') },
@@ -390,6 +392,7 @@ export default Controller.extend({
 							})
 						});
 						let eqValues = [
+							{ id: 6, type: 'eqcond', key: 'region_id', val: 'all' },
 							{ id: 5, type: 'eqcond', key: 'time_type', val: 'month' },
 							{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
 							{ id: 2, type: 'eqcond', key: 'goods_id', val: firstCompete.get('id') },
@@ -418,6 +421,7 @@ export default Controller.extend({
 							})
 						});
 						let eqValues = [
+							{ id: 6, type: 'eqcond', key: 'region_id', val: 'all' },
 							{ id: 5, type: 'eqcond', key: 'time_type', val: 'month' },
 							{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
 							{ id: 2, type: 'eqcond', key: 'goods_id', val: secondCompete.get('id') },
@@ -444,7 +448,7 @@ export default Controller.extend({
 						});
 						let eqValues = [
 							{ id: 5, type: 'eqcond', key: 'time_type', val: 'month' },
-
+							{ id: 6, type: 'eqcond', key: 'region_id', val: 'all' },
 							{ id: 1, type: 'eqcond', key: 'course_id', val: ids.courseid },
 							{ id: 2, type: 'eqcond', key: 'goods_id', val: lastCompete.get('id') },
 							{ id: 3, type: 'gtecond', key: 'time', val: '17-01' },
@@ -482,7 +486,9 @@ export default Controller.extend({
 						// let outSeason = medicineList.forEach((item) => {
 						// 	return item.ym.indexOf('q') < 0;
 						// });
-						let medicineAll = groupBy(medicineList.filter(elem => elem.get('region_id') === 'all' && elem.get('time').indexOf('q') < 0), 'goods_id');
+						// let medicineAll = groupBy(medicineList.filter(elem => elem.get('region_id') === 'all' && elem.get('time').indexOf('q') < 0), 'goods_id');
+						let medicineAll = groupBy(medicineList.filter(elem => elem.get('region_id') === 'all' && elem.get('time_type') === 'month'), 'goods_id');
+
 
 						d3Data(medicineAll);
 						let lineData = medicines.map((item) => {

@@ -5,12 +5,12 @@ import rsvp from 'rsvp';
 
 export default Controller.extend({
 	collapsed: false,
-	regionResort: [],
 	init() {
 		this._super(...arguments);
 		this.set('areaRadars', []);
 		this.set('history', JSON.parse(localStorage.getItem('history')));
 		this.set('readyChoose', []);
+		this.set('regionResort', []);
 	},
 	resortRegionModel: computed('regionResort', function () {
 		let regionResort = this.get('regionResort');
@@ -18,7 +18,6 @@ export default Controller.extend({
 			return a.id - b.id
 		});
 		let localStorageRegion = JSON.parse(localStorage.getItem('totalRegion'));
-		// debugger;
 		let region = this.get('pmController').get('Store').peekAll('region');
 		let newRegion = regionResort.map((item) => {
 			let singleRegion = null;
@@ -43,8 +42,6 @@ export default Controller.extend({
 			// let region = this.get('pmController').get('Store').peekAll('region');
 			let _name = '';
 			let isActionplanEmpty = this.get('resortRegionModel').every((item) => {
-				this.get('logger').log(item.get('actionplan'));
-				this.get('logger').log(item);
 
 				if (item.get('actionplan') === '') {
 					_name = item.get('name');

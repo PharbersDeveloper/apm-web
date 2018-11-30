@@ -174,7 +174,9 @@ export default {
 				"info": "区域信息",
 				"quit": "退出",
 				"tips": "提示",
-				"tipContent": "将保存您当前的填写纪录,未完成的课程,可在 \"历史项目>进行中\" ,继续完成.",
+				"tipContent": "将保存您当前的填写纪录,未完成的课程,可在 \"历史项目 > 进行中\" ,继续完成.",
+				"tipContentFinish": "已将您填写的全部内容保存在已完成中，可在\"历史项目 > 已完成\"中查看.",
+
 			},
 
 			"productInfoCard": {
@@ -262,7 +264,8 @@ export default {
 				"title": "行动计划",
 				"subTitle": "针对区域情況作出行动计划优化区域有效性问题。（最多两项）",
 				"choosePlan": "选择行动计划",
-				"choosePlan2": "选择行动计划（最多两项）",
+				"choosePlan2": "选择行动计划",
+				"choosePlan3": "（最多两项）",
 				"confirm": "确认",
 			},
 
