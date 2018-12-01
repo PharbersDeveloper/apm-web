@@ -43,14 +43,14 @@
 			flex-direction: row;
 
 			img {
-				min-width: 134px !important;
+				min-width: 134px;
 				height: 134px;
 				border-radius: 50%;
-				margin-right: 25px;
 			}
 
 			.article {
-				font-family: PingFangSC-Regular;
+				margin-left: 25px;
+				width: calc(100% - 134px);
 				font-size: 13px;
 				color: #485465;
 				letter-spacing: 2px;

@@ -2,9 +2,9 @@ import Component from '@ember/component';
 import { inject } from '@ember/service';
 
 export default Component.extend({
-
-	i18n:inject(),
+	i18n: inject(),
 	introduced: inject('introduced-service'),
+
 	actions: {
 		showScenario(name) {
 			this.get('introduced').set('isSelectedName', name);
@@ -19,25 +19,37 @@ export default Component.extend({
 			this.sendAction('changeTab', name);
 		},
 		exit() {
-			let history = JSON.parse(localStorage.getItem('history'));
+			let history = JSON.parse(localStorage.getItem('history')),
+				hint = null;
 
-			if(history) {
-				let hint = {
+			if (history) {
+				hint = {
 					hintModal: true,
 					hintImg: true,
 					title: this.get('i18n').t('apm.component.sceneTab.tips') + "",
-					content: '确认退出',
+					content: '确认退出？',
 					hintBtn: true,
 				}
 				this.set('hint', hint);
 			} else {
-				let hint = {
-					hintModal: true,
-					hintImg: true,
-					title: this.get('i18n').t('apm.component.sceneTab.tips') + "",
-					content: this.get('i18n').t('apm.component.sceneTab.tipContent') + "",
-					hintBtn: true,
+				if (this.get('isFinish')) {
+					hint = {
+						hintModal: true,
+						hintImg: true,
+						title: this.get('i18n').t('apm.component.sceneTab.tips') + "",
+						content: this.get('i18n').t('apm.component.sceneTab.tipContentFinish') + "",
+						hintBtn: true,
+					}
+				} else {
+					hint = {
+						hintModal: true,
+						hintImg: true,
+						title: this.get('i18n').t('apm.component.sceneTab.tips') + "",
+						content: this.get('i18n').t('apm.component.sceneTab.tipContent') + "",
+						hintBtn: true,
+					}
 				}
+
 				this.set('hint', hint);
 			}
 		},

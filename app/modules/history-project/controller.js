@@ -12,7 +12,7 @@ export default Controller.extend({
 			key: 'paper_id',
 			val: paperid,
 		}))
-		let paperConditions = this.get('pmController').get('Store').object2JsonApi(paperReq, false);
+		let paperConditions = this.get('pmController').get('Store').object2JsonApi(paperReq);
 
 		let regionReq = this.get('pmController').get('Store').createModel('request', {
 			id: 'history1',
@@ -23,7 +23,7 @@ export default Controller.extend({
 			key: 'course_id',
 			val: courseid,
 		}))
-		let regionConditions = this.get('pmController').get('Store').object2JsonApi(regionReq, false);
+		let regionConditions = this.get('pmController').get('Store').object2JsonApi(regionReq);
 
 		let promistArray = [
 			this.get('pmController').get('Store').queryMultipleObject('/api/v1/paperInputLst/0', 'paperinput', paperConditions),
@@ -65,6 +65,8 @@ export default Controller.extend({
 		lookOver(paperid, courseid) {
 			localStorage.setItem('history', false)
 			this.loadInputData(paperid, courseid).then(data => {
+				this.get('logger').log(data);
+
 				switch (data) {
 					case 0:
 						this.transitionToRoute('new-project.project-start.index.analyze', courseid, paperid)
@@ -86,7 +88,7 @@ export default Controller.extend({
 				}
 			})
 		},
-		continue (paperid, courseid) {
+		continue(paperid, courseid) {
 			this.loadInputData(paperid, courseid).then(() => {
 				localStorage.setItem('history', true)
 				this.transitionToRoute('new-project.project-start.index.analyze', courseid, paperid)

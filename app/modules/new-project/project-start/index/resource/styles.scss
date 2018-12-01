@@ -4,7 +4,6 @@
 		background: #FFFFFF;
 		-webkit-box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
 		box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
-		// padding: 0;
 		font-size: 0;
 
 		.title-resource {
@@ -52,7 +51,6 @@
 				padding: 0 20px;
 
 				.title-card-item {
-					// margin: 0;
 					height: 20px;
 					line-height: 20px;
 					font-size: 14px;
@@ -65,6 +63,7 @@
 				}
 
 				.progress {
+					position: relative;
 					margin: 0;
 					border-radius: 100px;
 					background-color: #CDE4FF;
@@ -77,6 +76,14 @@
 					.progress-bar-danger {
 						border-radius: 100px;
 						background-color: #ffc107;
+					}
+
+					.warning-text {
+						position: absolute;
+						left: 50%;
+						transform: translateX(-50%);
+						font-size: 14px;
+						color: red;
 					}
 				}
 			}
@@ -126,6 +133,7 @@
 					input {
 						padding: 0 14px;
 						width: 90px;
+						height: 40px;
 						border: 0;
 						letter-spacing: 1.17px;
 						background: #F3F3F3;

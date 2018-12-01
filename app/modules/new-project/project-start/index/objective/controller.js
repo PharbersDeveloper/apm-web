@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { set } from '@ember/object';
+import { verificationInput } from '../../../../phtool/tool';
 import rsvp from 'rsvp';
 
 export default Controller.extend({
@@ -10,65 +11,50 @@ export default Controller.extend({
 	},
 	areaBarData: null,
 	initSelectedRegionId: '',
-	totalForecast: computed('regionData.@each.forecast', function() {
-		let total = 0;
-		// let region = this.get('pmController').get('Store').peekAll('region');
-		let region = this.get('regionData');
+	totalForecast: computed('regionData.@each.forecast', function () {
+		let total = 0,
+			// let region = this.get('pmController').get('Store').peekAll('region');
+			region = this.get('regionData'),
 
-		let singleRegionJsonApi = null;
-		let regionLocalStorage = region.map((item) => {
-			singleRegionJsonApi = this.get('pmController').get('Store').object2JsonApi(item, false);
-			return singleRegionJsonApi
-		});
+			singleRegionJsonApi = null,
+			regionLocalStorage = region.map((item) => {
+				singleRegionJsonApi = this.get('pmController').get('Store').object2JsonApi(item, false);
+				return singleRegionJsonApi
+			});
+
 		localStorage.setItem('totalRegion', JSON.stringify(regionLocalStorage));
 
 		region.forEach((item) => {
-			if (isNaN(item.get('forecast')) || item.get('forecast')< 0) {
-				let hint = {
-					hintModal: true,
-					hintImg: true,
-					title: '提示',
-					content: '请输入正整数.若不分配,请输入0.',
-					hintBtn: false,
-				}
-				this.set('hint', hint);
-				// this.set('tipsModal', true);
-				// this.set('tipsTitle', '提示');
-				// this.set('tipsContent', '单个协访天数数据不能超过100%');
-				set(item, 'forecast', '');
-			}
 			total += parseInt(item.get('forecast')) || 0;
 		});
 		return total;
 	}),
-	regionCotri: computed('regionData.@each.forecast', function() {
+	regionCotri: computed('regionData.@each.forecast', function () {
 		// let region = this.get('pmController').get('Store').peekAll('region');
-		let region = this.get('regionData');
-
-		let total = this.get('totalForecast');
-
-		let data = region.map((item) => {
-			let contri = parseInt(item.get('forecast')) || 0;
-			if (contri == 0) {
-				return {
-					id: item.get('id'),
-					contri: '0%',
+		let region = this.get('regionData'),
+			total = this.get('totalForecast'),
+			data = region.map((item) => {
+				let contri = parseInt(item.get('forecast')) || 0;
+				if (contri == 0) {
+					return {
+						id: item.get('id'),
+						contri: '0%',
+					}
+				} else {
+					let rate = ((contri / total) * 100).toFixed(2) + '%';
+					return {
+						id: item.id,
+						contri: rate,
+					}
 				}
-			} else {
-				let rate = ((contri / total) * 100).toFixed(2) + '%';
-				return {
-					id: item.id,
-					contri: rate,
-				}
-			}
-		});
+			});
 		return data;
 	}),
-	newRegionData: computed('regionResort', function() {
+	newRegionData: computed('regionResort', function () {
 		let regionResort = this.get('regionResort');
 		regionResort.sort((a, b) => {
 			return a.id - b.id;
-		})
+		});
 		// let region = this.get('pmController').get('Store').peekAll('region');
 		let region = this.get('regionData');
 
@@ -84,21 +70,42 @@ export default Controller.extend({
 		return newRegion;
 	}),
 	actions: {
+		verifInput(region, value) {
+			let verif = verificationInput(value, false);
+			if (value === '') {
+				region.set('forecast', '')
+			} else if (verif) {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请输入正整数.若不分配,请输入0.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				region.set('forecast', '')
+			}
+		},
 		nextStep() {
-			let emptyForecastRegion = "";
-			// let region = this.set('region', this.get('pmController').get('Store').peekAll('region'));
-			let region = this.get('regionData');
-			let isForecastEmpty = region.every((item) => {
-				if (item.get('forecast').length == 0) {
+			let emptyForecastRegion = "",
+				// region = this.get('regionData'),
+				region = this.get('newRegionData'),
+				isForecastEmpty = null;
+
+			isForecastEmpty = region.every((item) => {
+				let verif = verificationInput(item.get('forecast'), false);
+				if (item.get('forecast') === '') {
 					emptyForecastRegion = item.get('name');
-				}
-				if (isNaN(Boolean(item.get('forecast')) ? item.get('forecast') : 0)) {
+					return false;
+				} else if (verif) {
 					emptyForecastRegion = item.get('name');
+					return false;
+				} else {
+					return true;
 				}
-				return item.get('forecast').length > 0 && !isNaN(Boolean(item.get('forecast')) ? item.get('forecast') : 0)
+
 			});
 			this.set('isForecastEmpty', isForecastEmpty);
-			// this.set('tipsTitle', '提示');
 
 			if (isForecastEmpty) {
 				let totalCompanyTarget = this.get('totalCompanyTarget');
@@ -136,30 +143,30 @@ export default Controller.extend({
 			}
 		},
 		toResource() {
-			let region = this.set('region', this.get('pmController').get('Store').peekAll('region'));
-			let params = this.get('params');
-			let promiseArray = region.map((reg) => {
-				let req = this.get('pmController').get('Store').createModel('request', {
-					id: reg.get('id') + 'objectiveHint0',
-					res: 'paperinput',
+			let region = this.set('region', this.get('pmController').get('Store').peekAll('region')),
+				params = this.get('params'),
+				promiseArray = region.map((reg) => {
+					let req = this.get('pmController').get('Store').createModel('request', {
+						id: reg.get('id') + 'objectiveHint0',
+						res: 'paperinput',
+					});
+					let eqValues = [
+						{ id: reg.id + 'objectiveHint1', key: 'paper_id', type: 'eqcond', val: params.paperid },
+						{ id: reg.id + 'objectiveHint2', key: 'region_id', type: 'eqcond', val: reg.get('id') },
+						{ id: reg.id + 'objectiveHint3', key: 'predicted_target', type: 'upcond', val: Number(reg.get('forecast')) }
+					];
+					eqValues.forEach((item) => {
+						req.get(item.type).pushObject(this.get('pmController').get('Store').createModel(item.type, {
+							id: item.id,
+							key: item.key,
+							val: item.val,
+						}))
+					});
+					let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
+					return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
 				});
-				let eqValues = [
-					{ id: reg.id + 'objectiveHint1', key: 'paper_id', type: 'eqcond', val: params.paperid },
-					{ id: reg.id + 'objectiveHint2', key: 'region_id', type: 'eqcond', val: reg.get('id') },
-					{ id: reg.id + 'objectiveHint3', key: 'predicted_target', type: 'upcond', val: parseInt(reg.get('forecast')) }
-				];
-				eqValues.forEach((item) => {
-					req.get(item.type).pushObject(this.get('pmController').get('Store').createModel(item.type, {
-						id: item.id,
-						key: item.key,
-						val: item.val,
-					}))
-				});
-				let jsonReq = this.get('pmController').get('Store').object2JsonApi(req);
-				return this.get('pmController').get('Store').transaction('/api/v1/answer/0', 'region', jsonReq)
-			});
 
-			rsvp.Promise.all(promiseArray).then((res) => {
+			rsvp.Promise.all(promiseArray).then(() => {
 				let hint = {
 					hintModal: false,
 					hintImg: true,

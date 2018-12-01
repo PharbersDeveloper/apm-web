@@ -4,8 +4,7 @@ import { inject } from '@ember/service';
 import d3 from 'd3';
 
 export default Component.extend({
-	i18n:inject(),
-	tagName: 'div',
+	i18n: inject(),
 	chartId: '',
 	localClassNames: 'bar-line-container',
 	backgroundColor: '#FFF',
@@ -22,7 +21,6 @@ export default Component.extend({
 	},
 	drawChart() {
 		let that = this;
-		// d3.select(`#${this.get('chartId')}`).selectAll('svg').remove();
 		const parent = d3.select(this.element);
 		parent.selectAll("svg").remove();
 		parent.select('.legendContainer').remove();
@@ -52,15 +50,23 @@ export default Component.extend({
 		// let svgContainer = d3.select(`#${this.get('chartId')}`);
 		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
 		let svg = svgContainer.append("svg")
+			.attr('class', 'histogram-container')
+			.attr('min-height', '420px')
 			.style('background-color', this.get('backgroundColor'))
-			// .style('padding', '0 10px')
 			.style('padding', '0 0')
-			.attr('preserveAspectRatio', 'xMidYMid meet')
+			.attr('preserveAspectRatio', 'none')
 			.attr('viewBox', '0 0 960 420')
 
+		// svg.attr("width", "100%")
+		// .attr("height", 380)
+		// .attr('preserveAspectRatio', 'none')
+		// .attr('viewBox', '-30 10 950 380')
+		// .append('g');
 		let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-		g.attr('class', '_container-g_1mas67')
+		// g.attr('class', '_container-g_1mas67')
+		g.attr('class', 'container-g')
+
 			.append('text')
 			.attr('transform', 'translate(' + (width / 2) + ',' + (-margin.top / 2) + ')')
 			.attr('text-anchor', 'middle')
@@ -112,9 +118,9 @@ export default Component.extend({
 		 * 渐变结束
 		 */
 		chart.append('rect')
-			.attr('height', function(d) { return height - yScale(d.value); })
-			.attr('x', function(d) { return xScale(d.key); })
-			.attr('y', function(d) { return yScale(d.value); })
+			.attr('height', function (d) { return height - yScale(d.value); })
+			.attr('x', function (d) { return xScale(d.key); })
+			.attr('y', function (d) { return yScale(d.value); })
 			.attr('width', xScale.bandwidth() / 2)
 			.attr('class', '_bar_1mas67')
 
@@ -130,21 +136,24 @@ export default Component.extend({
 		if (this.get('laterThreeChangeBg')) {
 			// d3.select(`#${this.get('chartId')}`)
 			svgContainer
-				.selectAll('._container-g_1mas67')
+				// .selectAll('._container-g_1mas67')
+				.selectAll('.container-g')
 				.selectAll('g:nth-last-of-type(3)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
 
 			// d3.select(`#${this.get('chartId')}`)
 			svgContainer
-				.selectAll('._container-g_1mas67')
+				// .selectAll('._container-g_1mas67')
+				.selectAll('.container-g')
 				.selectAll('g:nth-last-of-type(2)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
 
 			// d3.select(`#${this.get('chartId')}`)
 			svgContainer
-				.selectAll('._container-g_1mas67')
+				// .selectAll('._container-g_1mas67')
+				.selectAll('.container-g')
 				.selectAll('g:last-of-type')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
@@ -152,8 +161,8 @@ export default Component.extend({
 		}
 
 		let line = d3.line()
-			.x(function(d) { return xScale(d.key); })
-			.y(function(d) { return yScale2(d.value2); });
+			.x(function (d) { return xScale(d.key); })
+			.y(function (d) { return yScale2(d.value2); });
 		if (!noLine) {
 			g.append("path")
 				.datum(this.dataset)
@@ -168,14 +177,14 @@ export default Component.extend({
 		// Line
 
 
-		chart.on('mouseover', function(d) {
+		chart.on('mouseover', function (d) {
 			tooltip.style("opacity", 1.0);
 			tooltip.html(d.key + "<br>" + that.get('i18n').t('apm.component.d3BarLine.share') + "" + "：" + d.value2 + "%" + "<br>" + that.get('i18n').t('apm.component.d3BarLine.sales') + "" + "：" + d.value)
 				.style("left", (d3.event.clientX + 20) + "px")
 				.style("top", (d3.event.clientY) + "px")
 
 			d3.select(this).attr('opacity', 0.7);
-		}).on('mouseout', function(d) {
+		}).on('mouseout', function (d) {
 			tooltip.style("opacity", 0.0);
 			d3.select(this).attr('opacity', 1)
 		});
@@ -197,7 +206,7 @@ export default Component.extend({
 			} else {
 				legendData = [this.get('i18n').t('apm.component.d3BarLine.share') + "", this.get('i18n').t('apm.component.d3BarLine.sales') + "", this.get('i18n').t('apm.component.d3BarLine.forecastSales') + ""];
 			}
-		}else {
+		} else {
 			if (noLine) {
 				legendData = [this.get('i18n').t('apm.component.d3BarLine.sales') + ""];
 			} else {
@@ -208,7 +217,7 @@ export default Component.extend({
 			.data(legendData)
 			.enter()
 			.append("g")
-			.attr("transform", function(d, i) {
+			.attr("transform", function (d, i) {
 				// return "translate(" + parseInt(i * 2 + 2) * 100 + ",0)";
 				return "translate(" + parseInt(i * 120) + ",0)";
 
@@ -218,21 +227,21 @@ export default Component.extend({
 		legend.append("rect")
 			.attr("x", 10)
 			.attr("y", 5)
-			.attr('width', function(d, i) {
+			.attr('width', function (d, i) {
 				if (d == that.get('i18n').t('apm.component.d3BarLine.share') + "") {
 					return 20;
 				} else {
 					return 10;
 				}
 			})
-			.attr('height', function(d, i) {
+			.attr('height', function (d, i) {
 				if (d == that.get('i18n').t('apm.component.d3BarLine.share') + "") {
 					return 5;
 				} else {
 					return 30;
 				}
 			})
-			.style("fill", function(d, i) {
+			.style("fill", function (d, i) {
 				if (d == that.get('i18n').t('apm.component.d3BarLine.share') + "") {
 					return '#FA6F80';
 				} else if (d == that.get('i18n').t('apm.component.d3BarLine.sales') + "") {
@@ -240,7 +249,7 @@ export default Component.extend({
 				} else {
 					return '#F5A623';
 				}
-			}).attr("transform", function(d, i) {
+			}).attr("transform", function (d, i) {
 				if (d == that.get('i18n').t('apm.component.d3BarLine.share') + "") {
 					return "translate(0 ,5)";
 				}
@@ -253,7 +262,7 @@ export default Component.extend({
 			.style("fill", '#485465')
 			.style('font-size', '14px')
 			.attr("dy", ".35em")
-			.text(function(d, i) {
+			.text(function (d, i) {
 				return d;
 			});
 

@@ -1,5 +1,22 @@
 .bar-line-container {
 	background-color: #FFF;
+	width: 100%;
+	min-height: 420px;
+
+	:global(.histogram-container) {
+		min-height: 420px;
+	}
+
+	:global(.container-g) {
+
+		.bar {
+			fill: #8D9ECD;
+		}
+
+		.predict-bar {
+			fill: #FFE68C;
+		}
+	}
 }
 
 .objective-bar-line {
@@ -27,15 +44,7 @@
 	border-radius: 5px;
 }
 
-.container-g {
-	.bar {
-		fill: #8D9ECD;
-	}
 
-	.predict-bar {
-		fill: #FFE68C;
-	}
-}
 
 .barText {
 	fill: #FFFFFF;

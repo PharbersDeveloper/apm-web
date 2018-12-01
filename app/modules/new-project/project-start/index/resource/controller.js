@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { set } from '@ember/object';
 import rsvp from 'rsvp';
+import { verificationInput } from '../../../../phtool/tool';
 
 export default Controller.extend({
 	init() {
@@ -10,7 +10,7 @@ export default Controller.extend({
 		this.set('region', this.get('pmController').get('Store').peekAll('region'));
 		this.set('history', JSON.parse(localStorage.getItem('history')));
 	},
-	newRegionData: computed('regionResort', function() {
+	newRegionData: computed('regionResort', function () {
 		let regionResort = JSON.parse(localStorage.getItem('regionResort'));
 		regionResort.sort((a, b) => {
 			return a.id - b.id;
@@ -27,102 +27,77 @@ export default Controller.extend({
 		});
 		return newRegion;
 	}),
+	coVisit: computed('region.@each.covisit', function () {
+		let region = this.get('region'),
+			totalCovisit = 0;
 
-	coVisit: computed('region.@each.covisit', function() {
-		let region = this.get('region');
-		let covisit = 0;
 		region.forEach((item) => {
-			if (item.get('covisit') > 100 || item.get('covisit') < 0 || isNaN(item.get('covisit'))) {
-				let hint = {
-					hintModal: true,
-					hintImg: true,
-					title: '提示',
-					content: '请输入正整数.若不分配,请输入0.',
-					hintBtn: false,
-				}
-				this.set('hint', hint);
-				set(item, 'covisit', '');
-			}
-			covisit += parseInt(item.get('covisit') - 0);
-		})
-		// return covisit;
+			totalCovisit += parseInt(item.get('covisit') - 0) || 0;
+		});
+
 		return {
-			value: covisit,
-			overHundred: covisit > 100 ? true : false
+			value: totalCovisit,
+			overHundred: totalCovisit > 100 ? true : false
 		}
 	}),
-	nationMeeting: computed('region.@each.nationMeeting', function() {
-		let region = this.get('region');
-		let nationMeeting = 0;
+	nationMeeting: computed('region.@each.nationMeeting', function () {
+		let region = this.get('region'),
+			nationMeeting = 0;
+
 		region.forEach((item) => {
-			if (item.get('nationMeeting') > 100 || item.get('nationMeeting') < 0 || isNaN(item.get('nationMeeting'))) {
-				let hint = {
-					hintModal: true,
-					hintImg: true,
-					title: '提示',
-					content: '请输入正整数.若不分配,请输入0.',
-					hintBtn: false,
-				}
-				this.set('hint', hint);
-				set(item, 'nationMeeting', '');
-			}
+
 			nationMeeting += parseInt(item.get('nationMeeting') - 0) || 0;
 		});
-		// return nationMeeting;
+
 		return {
 			value: nationMeeting,
 			overHundred: nationMeeting > 100 ? true : false
 		}
 	}),
-	cityMeeting: computed('region.@each.cityMeeting', function() {
-		let region = this.get('region');
-		let cityMeeting = 0;
-		let total = this.get('totalCityMeeting');
+	cityMeeting: computed('region.@each.cityMeeting', function () {
+		let region = this.get('region'),
+			cityMeeting = 0,
+			total = this.get('totalCityMeeting');
+
 		region.forEach((item) => {
-			if (item.get('cityMeeting') > 100 || item.get('cityMeeting') < 0 || isNaN(item.get('cityMeeting'))) {
-				let hint = {
-					hintModal: true,
-					hintImg: true,
-					title: '提示',
-					content: '请输入正整数.若不分配,请输入0.',
-					hintBtn: false,
-				}
-				this.set('hint', hint);
-				set(item, 'cityMeeting', '');
-			}
 			cityMeeting += parseInt(item.get('cityMeeting') - 0) || 0;
 		})
-		// return cityMeeting;
+
 		return {
 			value: cityMeeting,
 			overHundred: cityMeeting > 100 ? true : false
 		}
 	}),
-	departmentMeeting: computed('region.@each.departmentMeeting', function() {
-		let region = this.get('region');
-		let departmentMeeting = 0;
+	departmentMeeting: computed('region.@each.departmentMeeting', function () {
+		let region = this.get('region'),
+			departmentMeeting = 0;
+
 		region.forEach((item) => {
-			if (item.get('departmentMeeting') > 100 || item.get('departmentMeeting') < 0 || isNaN(item.get('departmentMeeting'))) {
-				let hint = {
-					hintModal: true,
-					hintImg: true,
-					title: '提示',
-					content: '请输入正整数.若不分配,请输入0.',
-					hintBtn: false,
-				}
-				this.set('hint', hint);
-				set(item, 'departmentMeeting', '');
-			}
 			departmentMeeting += parseInt(item.get('departmentMeeting') - 0) || 0;
 		})
 
-		// this.get('logger').log(departmentMeeting);
 		return {
 			value: departmentMeeting,
 			overHundred: departmentMeeting > 100 ? true : false
 		}
 	}),
 	actions: {
+		verifInput(region, value, key) {
+			let verif = verificationInput(value, true);
+			if (value === '') {
+				region.set(key, '')
+			} else if (verif) {
+				let hint = {
+					hintModal: true,
+					hintImg: true,
+					title: '提示',
+					content: '请输入0~100的整数.不分配时,请输入0.',
+					hintBtn: false,
+				}
+				this.set('hint', hint);
+				region.set(key, '')
+			}
+		},
 		saveToLocalStorage() {
 			let region = this.get('pmController').get('Store').peekAll('region');
 			let singleRegionJsonApi = null;
@@ -144,21 +119,24 @@ export default Controller.extend({
 			this.set('hint', hint);
 		},
 		nextStep() {
-			let wrongRegionName = '';
-			let region = this.get('region');
-			let iscoVisitEmpty = region.every((item) => {
-				let total = '';
-				total = item.get('covisit') + item.get('nationMeeting') + item.get('cityMeeting') + item.get('departmentMeeting');
-				if (isNaN(total)) {
-					wrongRegionName = item.get('name');
-				}
-				return item.get('covisit').length > 0 && item.get('nationMeeting').length > 0 &&
-					item.get('cityMeeting').length > 0 && item.get('departmentMeeting').length > 0 && !isNaN(total);
-			});
+			let wrongRegionName = '',
+				region = this.get('region'),
+				iscoVisitEmpty = region.every((item) => {
+					let total = '';
+					total = item.get('covisit') + item.get('nationMeeting') + item.get('cityMeeting') + item.get('departmentMeeting');
+
+					if (isNaN(total)) {
+						wrongRegionName = item.get('name');
+					}
+
+					return String(item.get('covisit')).length > 0 && String(item.get('nationMeeting')).length > 0 &&
+						String(item.get('cityMeeting')).length > 0 && String(item.get('departmentMeeting')).length > 0 && !isNaN(total);
+				});
+
 			this.set('iscoVisitEmpty', iscoVisitEmpty);
 			if (iscoVisitEmpty) {
 				let [_totalCoVisit, _totalNationMeeting, _totalCityMeeting, _totalDepartMeeting] =
-				[this.get('coVisit').value, this.get('nationMeeting').value, this.get('cityMeeting').value, this.get('departmentMeeting').value];
+					[this.get('coVisit').value, this.get('nationMeeting').value, this.get('cityMeeting').value, this.get('departmentMeeting').value];
 				if (_totalCoVisit > 100 || _totalNationMeeting > 100 ||
 					_totalCityMeeting > 100 || _totalDepartMeeting > 100) {
 					let hint = {

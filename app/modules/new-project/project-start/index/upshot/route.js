@@ -39,6 +39,7 @@ export default Route.extend({
 	},
 	model() {
 		this.get('pmController').get('Store').peekAll('bind_course_region_rep').forEach(elem => elem.destroyRecord().then(rec => rec.unloadRecord()));
+		this.controllerFor('new-project.project-start').set('isUpshotFinish', true);
 
 		let parentModel = this.modelFor('new-project.project-start');
 		this.controllerFor('new-project.project-start.index.upshot').set('paperid', parentModel.paperid);
@@ -105,6 +106,29 @@ export default Route.extend({
 					return null;
 				}
 			})
+			//检查是否提交
+			.then(() => {
+				let req = {},
+					conditions = {};
+				req = this.get('pmController').get('Store').createModel('request', {
+					id: 'hascommit',
+					res: 'bind_teacher_student_time_paper'
+				});
+				req.get('eqcond').pushObject(this.get('pmController').get('Store').createModel('eqcond', {
+					id: 'eqcond01',
+					key: 'paper_id',
+					val: parentModel.paperid
+				}));
+				conditions = this.get('pmController').get('Store').object2JsonApi(req);
+
+				return this.get('pmController').get('Store').queryMultipleObject('/api/v1/findBindTeacherStudentTimePaper/0', 'bind_teacher_student_time_paper', conditions)
+
+			})
+			//	处理是否提交的数据
+			.then((data) => {
+				this.controllerFor('new-project.project-start.index.upshot').set('isCommit', data.get('length') > 0 ? true : false);
+				return null;
+			})
 			.then(() => {
 				let medicine = this.get('pmController').get('Store').peekAll('medicine').filter(elem => !elem.get('compete')).get('firstObject');
 
@@ -154,10 +178,10 @@ export default Route.extend({
 						})
 					});
 					let eqValues = [
-						{ id: medicine.get('id')  + 'upshotMedicine06', type: 'eqcond', key: 'time_type', val: 'season' },
-						{ id: medicine.get('id')  + 'upshotMedicine02', type: 'eqcond', key: 'goods_id', val: medicine.get('id') },
-						{ id: medicine.get('id')  + 'upshotMedicine03', type: 'eqcond', key: 'paper_id', val: parentModel.paperid },
-						{ id: medicine.get('id')  + 'upshotMedicine05', type: 'eqcond', key: 'time', val: '18-q1' },
+						{ id: medicine.get('id') + 'upshotMedicine06', type: 'eqcond', key: 'time_type', val: 'season' },
+						{ id: medicine.get('id') + 'upshotMedicine02', type: 'eqcond', key: 'goods_id', val: medicine.get('id') },
+						{ id: medicine.get('id') + 'upshotMedicine03', type: 'eqcond', key: 'paper_id', val: parentModel.paperid },
+						{ id: medicine.get('id') + 'upshotMedicine05', type: 'eqcond', key: 'time', val: '18-q1' },
 					]
 					eqValues.forEach((elem) => {
 						req.get(elem.type).pushObject(this.get('pmController').get('Store').createModel(elem.type, {

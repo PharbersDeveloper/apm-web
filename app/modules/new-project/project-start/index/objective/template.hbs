@@ -1,24 +1,23 @@
 <div local-class="objective-container">
-    {{#unless history}}
-        <div class="next-step">
-            {{#bs-button class="btn-next" onClick=(action "nextStep")}}
-                {{t "apm.newProject.next"}}
-            {{/bs-button}}
-        </div>
-    {{/unless}}
+	{{#unless history}}
+		<div class="next-step">
+			{{#bs-button class="btn-next" onClick=(action "nextStep")}}
+				{{t "apm.newProject.next"}}
+			{{/bs-button}}
+		</div>
+	{{/unless}}
 	<div local-class="objective-section">
 		{{!-- <div class="row"> --}}
-			{{!-- <div class="col-md-12 col-lg-12 col-sm-12"> --}}
-				<select local-class="choose-area" onchange= {{action 'changeArea' value="target.value"}}>
-				    {{#each regionData as |area index|}}
-				        <option value={{area.id}}>{{area.name}}</option>
-				    {{/each}}
-				</select>
-                {{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true dataset=barData noLine=true}}
-			{{!-- </div> --}}
+		{{!-- <div class="col-md-12 col-lg-12 col-sm-12"> --}}
+		<select local-class="choose-area" onchange={{action 'changeArea' value="target.value"}}>
+			{{#each regionData as |area index|}}
+				<option value={{area.id}}>{{area.name}}</option>
+			{{/each}}
+		</select>
+		{{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true dataset=barData noLine=true}}
+		{{!-- </div> --}}
 		{{!-- </div> --}}
 	</div>
-
 	<div local-class="objective-section">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-sm-12">
@@ -35,56 +34,54 @@
 						<p>{{t "apm.newProject.objective.yourForecast"}}</p>
 						<p>{{number-format totalForecast}}</p>
 					</div>
-
 				</div>
 				{{!-- <div class="table-responsive"> --}}
-					<table local-class="table-container" class="table">
-						<thead>
+				<table local-class="table-container" class="table">
+					<thead>
+						<tr>
+							<td>{{t "apm.newProject.objective.sort"}}</td>
+							<td>{{t "apm.newProject.objective.area"}}</td>
+							<td>{{t "apm.newProject.objective.companyIndex"}}($)</td>
+							<td>{{t "apm.newProject.objective.lqSalesContribution"}}(%)</td>
+							<td>{{t "apm.newProject.objective.tqForecastIndex"}}($)</td>
+							<td>{{t "apm.newProject.objective.tqIndexContributionRate"}}(%)</td>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each newRegionData as |region index|}}
 							<tr>
-								<td>{{t "apm.newProject.objective.sort"}}</td>
-								<td>{{t "apm.newProject.objective.area"}}</td>
-								<td>{{t "apm.newProject.objective.companyIndex"}}($)</td>
-                                <td>{{t "apm.newProject.objective.lqSalesContribution"}}(%)</td>
-								<td>{{t "apm.newProject.objective.tqForecastIndex"}}($)</td>
-                                <td>{{t "apm.newProject.objective.tqIndexContributionRate"}}(%)</td>
+								<td>{{index-to-normal index}}</td>
+								<td>
+									<span {{action 'openTips' region}}>
+										{{region.name}}
+										<img src="/assets/images/note.png" width="16px" height="20px" alt="note">
+									</span>
+								</td>
+								{{#each regionCompanyTargets as |item|}}
+									{{#if (eq region.id item.region_id)}}
+										<td>{{number-format item.company_targe}}</td>
+									{{/if}}
+								{{/each}}
+								{{#each regionSalesContri as |item|}}
+									{{#if (eq region.id item.region_id)}}
+										<td>{{number-percent item.sales_contri}}</td>
+									{{/if}}
+								{{/each}}
+								<td>
+									{{input type="text" value=region.forecast maxlength="10" change=(action 'verifInput' region region.forecast) dir="ltr" disabled=(if history true false)}}
+								</td>
+								{{#each regionCotri as |item|}}
+									{{#if (eq region.id item.id)}}
+										<td>{{item.contri}}</td>
+									{{/if}}
+								{{/each}}
 							</tr>
-						</thead>
-						<tbody>
-							{{#each newRegionData as |region index|}}
-								<tr>
-									<td>{{index-to-normal index}}</td>
-									<td>
-										<span {{action 'openTips' region}}>
-											{{region.name}}
-											<img src="/assets/images/note.png" width="16px" height="20px" alt="note">
-										</span>
-								    </td>
-                                    {{#each regionCompanyTargets as |item|}}
-                                        {{#if (eq region.id item.region_id)}}
-                                            <td>{{number-format item.company_targe}}</td>
-                                        {{/if}}
-                                    {{/each}}
-                                    {{#each regionSalesContri as |item|}}
-                                        {{#if (eq region.id item.region_id)}}
-                                            <td>{{number-percent item.sales_contri}}</td>
-                                        {{/if}}
-                                    {{/each}}
-                                    {{!-- <td>30%</td> --}}
-									<td>{{input type="text" value=region.forecast maxlength="10" dir="ltr" disabled=(if history true false)}} </td>
-                                    {{#each regionCotri as |item|}}
-                                        {{#if (eq region.id item.id)}}
-                                            <td>{{item.contri}}</td>
-                                        {{/if}}
-                                    {{/each}}
-                                </tr>
-							{{/each}}
-						</tbody>
-					</table>
+						{{/each}}
+					</tbody>
+				</table>
 				{{!-- </div> --}}
 			</div>
-
 		</div>
 	</div>
 </div>
-
 {{hint-modal hint=hint confirm=(action 'toResource')}}

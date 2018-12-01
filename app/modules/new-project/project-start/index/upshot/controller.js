@@ -9,7 +9,7 @@ export default Controller.extend({
 		this._super(...arguments);
 		this.set('history', JSON.parse(localStorage.getItem('history')));
 		this.set('teachers', [{ name: 'teacher one', id: 'teacherone' }]);
-		this.set('isCommit', false)
+		this.set('isCommit', false);
 	},
 	actions: {
 		saveUpshot() {
@@ -35,7 +35,6 @@ export default Controller.extend({
 			let confirmTeacherId = this.get('confirmTeacherId'),
 				req = {},
 				conditions = {};
-			this.get('logger').log(confirmTeacherId);
 			if (typeof confirmTeacherId !== 'undefined') {
 				req = this.get('pmController').get('Store').createModel('bind_teacher_student_time_paper', {
 					id: 'commitStuResult',
@@ -43,10 +42,8 @@ export default Controller.extend({
 					paper_id: this.get('paperid')
 				});
 				conditions = this.get('pmController').get('Store').object2JsonApi(req);
-				this.get('logger').log(conditions);
 				this.get('pmController').get('Store').transaction('/api/v1/pushBindTeacherStudentTimePaper/0', 'bind_teacher_student_time_paper', conditions)
 					.then(data => {
-						this.get('logger').log(data.get('paper_id'));
 						let responsePaperId = data.get('paper_id');
 						if (responsePaperId === this.get('paperid')) {
 							this.set('hintCT', {
