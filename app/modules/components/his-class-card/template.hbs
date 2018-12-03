@@ -1,17 +1,17 @@
 <div local-class="content">
-    <div local-class="head">
-        <p local-class="title">{{t "apm.component.hisClassCard.title"}}</p>
-        {{#if data.state}}
-            <p local-class="date">{{t "apm.component.hisClassCard.date"}}{{data.start_time}}</p>
-        {{else}}
-            <p local-class="date">{{t "apm.component.hisClassCard.date"}}{{data.end_time}}</p> 
-        {{/if}}
-    </div>
-    <div local-class="btn">
-        {{#if data.state}}
-            <p {{action "lookOver" data.id data.course.id}}>{{t "apm.component.hisClassCard.continue"}}</p>
-        {{else}}
-            <p {{action "continue" data.id data.course.id}}>{{t "apm.component.hisClassCard.examine"}}</p> 
-        {{/if}}
-</div>
+	<div local-class="head">
+		<p local-class="title">{{t "apm.component.hisClassCard.title"}}</p>
+		{{#if data.state}}
+			<p local-class="date">{{t "apm.component.hisClassCard.date"}}{{data.start_time}}</p>
+		{{else}}
+			<p local-class="date">{{t "apm.component.hisClassCard.date"}}{{data.end_time}}</p>
+		{{/if}}
+	</div>
+	<div local-class="btn">
+		{{#if data.state}}
+			<button {{action "lookOver" data.id data.course.id}}>{{t "apm.component.hisClassCard.continue"}}</button>
+		{{else}}
+			<button {{action "continue" data.id data.course.id}}>{{t "apm.component.hisClassCard.examine"}}</button>
+		{{/if}}
+	</div>
 </div>

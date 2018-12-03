@@ -17,14 +17,10 @@
 	}
 
 	.reginonal-info-content {
-		padding-top: 40px;
 
 		&>ul {
-			position: fixed;
-			top: 84px;
-			left: 0;
-			right: 0;
-			z-index: 1;
+
+			border-bottom: 0;
 			margin-bottom: 5px;
 			height: 40px;
 			background-color: #EFEEF0;
@@ -45,6 +41,13 @@
 				background-color: transparent;
 				cursor: pointer;
 			}
+		}
+
+		.line {
+			position: relative;
+			top: -6px;
+			width: 100%;
+			border-bottom: 1px solid #DDD;
 		}
 
 		.section-total {

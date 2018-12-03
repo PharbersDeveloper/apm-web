@@ -20,7 +20,6 @@
 	z-index: 2;
 
 	.title {
-		font-family: PingFangSC-Regular;
 		font-size: 14px;
 		color: #FFFFFF;
 		letter-spacing: 0.88px;
@@ -30,10 +29,28 @@
 		width: 120px;
 
 		button {
-			opacity: 0.46;
+			background-color: transparent;
+			// opacity: 0.46;
+
 			border: none;
 			height: 40px;
 			width: 120px;
+			font-size: 14px;
+			color: #FFFFFF;
+			letter-spacing: 1px;
+
+			&:active {
+				background-color: transparent;
+			}
+
+			&:active:hover {
+				background-color: transparent;
+			}
+
+			&:focus {
+				background-color: transparent;
+			}
+
 		}
 
 		ul {
@@ -45,9 +62,6 @@
 				cursor: pointer;
 			}
 
-			// a:hover {
-			// 	background-color: inherit;
-			// }
 		}
 	}
 }

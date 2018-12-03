@@ -18,31 +18,24 @@
 	justify-content: center;
 	z-index: 1;
 
-	.quit {
-		position: absolute;
-		right: 20px;
-		width: 30px;
-		margin-top: 10px;
-		cursor: pointer;
-
-		button {
-			border: none;
-		}
-
-		ul {
-			left: -110px;
-			top: -14px;
-			padding: 0;
-			min-width: 50px;
-
-			li {
-				line-height: 40px;
-			}
-		}
+	.inside-title {
+		display: inline-block;
+		padding-left: 4px;
+		height: 100%;
+		line-height: 40px;
+		font-size: 16px;
+		color: #485465;
+		letter-spacing: 2px;
 	}
 
+	.nav-container {
+		float: right;
+	}
+
+
+
 	:global(.active) {
-		background-color: #8090B9 !important;
+		background-color: rgba($color: #7F92C9, $alpha: .5) !important;
 		color: #fff !important;
 	}
 
@@ -60,7 +53,6 @@
 		cursor: pointer;
 
 		a {
-			font-family: PingFangSC-Light;
 			font-size: 13px;
 			color: #485465;
 			letter-spacing: 2px;
