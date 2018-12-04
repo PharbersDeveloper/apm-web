@@ -41,13 +41,11 @@ export default Component.extend({
 		let noLine = this.get('noLine');
 		xScale.domain(xDatas);
 		let maxVal = d3.max(values) * 1.3
-		// let maxVal2 = d3.max(values2) * 3;
 		let maxVal2 = 100;
 		yScale.domain([0, maxVal]);
 		yScale2.domain([0, maxVal2]);
 		let svgContainer = d3.select(this.element);
 
-		// let svgContainer = d3.select(`#${this.get('chartId')}`);
 		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
 		let svg = svgContainer.append("svg")
 			.attr('class', 'histogram-container')
@@ -123,7 +121,38 @@ export default Component.extend({
 			.attr('y', function (d) { return yScale(d.value); })
 			.attr('width', xScale.bandwidth() / 2)
 			.attr('class', '_bar_1mas67')
+			.on('mouseover', function (d, i) {
 
+				let htmlWidth = parseInt(d3.select('html').style('width')),
+					xPosition = parseFloat(d3.select(this).attr('x')),
+					yPosition = parseFloat(d3.select(this).attr('y'));
+				switch (true) {
+					case (htmlWidth > 1359):
+						xPosition = xPosition * (1360 / 836);
+						yPosition = yPosition * (1360 / 836);
+						break;
+					case (htmlWidth < 1360 && htmlWidth > 1169):
+						xPosition = xPosition * (1170 / 836);
+						yPosition = yPosition * (1170 / 836);
+						break;
+					case (htmlWidth < 1171 && htmlWidth > 969):
+						xPosition = xPosition * (970 / 836);
+						yPosition = yPosition * (970 / 836);
+						break;
+					default:
+				}
+
+				tooltip.style("opacity", 1.0);
+				tooltip.html(d.key + "<br>" + that.get('i18n').t('apm.component.d3BarLine.share') + "" + "：" + d.value2 + "%" + "<br>" + that.get('i18n').t('apm.component.d3BarLine.sales') + "" + "：" + d.value)
+					.style("left", (xPosition) + "px")//x位置为当前鼠标X坐标向右10px
+					.style("top", (yPosition) + "px");//y位置为当前鼠标Y坐标向上10px
+
+
+				d3.select(this).attr('opacity', 0.7);
+			}).on('mouseout', function (d) {
+				tooltip.style("opacity", 0.0);
+				d3.select(this).attr('opacity', 1)
+			});
 		// chart.append('text')
 		// 	.attr('class', '_barText_1mas67')
 		// 	.attr('x', function(d) { return xScale(d.key); })
@@ -175,19 +204,6 @@ export default Component.extend({
 				.attr("d", line);
 		}
 		// Line
-
-
-		chart.on('mouseover', function (d) {
-			tooltip.style("opacity", 1.0);
-			tooltip.html(d.key + "<br>" + that.get('i18n').t('apm.component.d3BarLine.share') + "" + "：" + d.value2 + "%" + "<br>" + that.get('i18n').t('apm.component.d3BarLine.sales') + "" + "：" + d.value)
-				.style("left", (d3.event.clientX + 20) + "px")
-				.style("top", (d3.event.clientY) + "px")
-
-			d3.select(this).attr('opacity', 0.7);
-		}).on('mouseout', function (d) {
-			tooltip.style("opacity", 0.0);
-			d3.select(this).attr('opacity', 1)
-		});
 
 		//绘制图例区域
 		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer')

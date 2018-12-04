@@ -13,7 +13,6 @@ export default Controller.extend({
 	initSelectedRegionId: '',
 	totalForecast: computed('regionData.@each.forecast', function () {
 		let total = 0,
-			// let region = this.get('pmController').get('Store').peekAll('region');
 			region = this.get('regionData'),
 
 			singleRegionJsonApi = null,
@@ -30,7 +29,6 @@ export default Controller.extend({
 		return total;
 	}),
 	regionCotri: computed('regionData.@each.forecast', function () {
-		// let region = this.get('pmController').get('Store').peekAll('region');
 		let region = this.get('regionData'),
 			total = this.get('totalForecast'),
 			data = region.map((item) => {
@@ -41,7 +39,7 @@ export default Controller.extend({
 						contri: '0%',
 					}
 				} else {
-					let rate = ((contri / total) * 100).toFixed(2) + '%';
+					let rate = ((contri / total) * 100).toFixed(1) + '%';
 					return {
 						id: item.id,
 						contri: rate,
@@ -55,7 +53,6 @@ export default Controller.extend({
 		regionResort.sort((a, b) => {
 			return a.id - b.id;
 		});
-		// let region = this.get('pmController').get('Store').peekAll('region');
 		let region = this.get('regionData');
 
 		let newRegion = regionResort.map((item) => {
@@ -88,7 +85,6 @@ export default Controller.extend({
 		},
 		nextStep() {
 			let emptyForecastRegion = "",
-				// region = this.get('regionData'),
 				region = this.get('newRegionData'),
 				isForecastEmpty = null;
 

@@ -1,40 +1,40 @@
-<div local-class="reginonal-info-container">
-	{{#unless data}}
-		{{svg-loading}}
-	{{else}}
-		<button type="button" class="close" local-class="turn" {{action "close"}}>
-			<span local-class="clos" aria-hidden="true">&times;</span>
-		</button>
-		{{#bs-tab local-class="reginonal-info-content" customTabs=true as |tab|}}
-			{{#bs-nav type="tabs" class="container" as |nav|}}
-				{{#nav.item active=(bs-eq tab.activeId "all")}}
-					<a href="#all" class="nav-link" role="tab" {{action 'changeRegion' tab "all"}}>{{t "apm.component.regionalInfoCard.overview"}}<span
-						 class="badge">{{badge}}</span></a>
+{{!-- <div local-class="reginonal-info-container"> --}}
+{{#unless data}}
+	{{svg-loading}}
+{{else}}
+	<button type="button" class="close" local-class="turn" {{action "close"}}>
+		<span local-class="clos" aria-hidden="true">&times;</span>
+	</button>
+	{{#bs-tab local-class="reginonal-info-content" customTabs=true as |tab|}}
+		{{#bs-nav type="tabs" class="container" as |nav|}}
+			{{#nav.item active=(bs-eq tab.activeId "all")}}
+				<a href="#all" class="nav-link" role="tab" {{action 'changeRegion' tab "all"}}>{{t "apm.component.regionalInfoCard.overview"}}<span
+					 class="badge">{{badge}}</span></a>
+			{{/nav.item}}
+			{{#each data.info as |item|}}
+				{{#nav.item active=(bs-eq tab.activeId item.id)}}
+					<a href="#all" class="nav-link" role="tab" {{action 'changeRegion' tab item.id}}>{{item.name}}</a>
 				{{/nav.item}}
-				{{#each data.info as |item|}}
-					{{#nav.item active=(bs-eq tab.activeId item.id)}}
-						<a href="#all" class="nav-link" role="tab" {{action 'changeRegion' tab item.id}}>{{item.name}}</a>
-					{{/nav.item}}
-				{{/each}}
-			{{/bs-nav}}
-			<div local-class="line"></div>
-			<div class="tab-content container" local-class="pane-content">
-				{{#tab.pane local-class="section-total" elementId="all" title=(t "apm.component.regionalInfoCard.overview")}}
-					{{d3-line-multi-legend chooseData=data.overall.lineData title=(t "apm.component.regionalInfoCard.areaShare") class="pre-area-share" }}
-					<div local-class="analyze-section">
-						{{area-base-info-table data=data.overall.tableData}}
-					</div>
+			{{/each}}
+		{{/bs-nav}}
+		<div local-class="line"></div>
+		<div class="tab-content container" local-class="pane-content">
+			{{#tab.pane local-class="section-total" elementId="all" title=(t "apm.component.regionalInfoCard.overview")}}
+				{{d3-line-multi-legend chooseData=data.overall.lineData title=(t "apm.component.regionalInfoCard.areaShare") class="pre-area-share" }}
+				<div local-class="analyze-section">
+					{{area-base-info-table data=data.overall.tableData}}
+				</div>
+			{{/tab.pane}}
+			{{#each data.info as |item|}}
+				{{#tab.pane title=item.name elementId=item.id }}
+					{{#if newDataReady}}
+						{{regional-intro data=item  singleRegionData=singleRegionData}}
+					{{else}}
+						{{svg-loading}}
+					{{/if}}
 				{{/tab.pane}}
-				{{#each data.info as |item|}}
-					{{#tab.pane title=item.name elementId=item.id }}
-						{{#if newDataReady}}
-							{{regional-intro data=item  singleRegionData=singleRegionData}}
-						{{else}}
-							{{svg-loading}}
-						{{/if}}
-					{{/tab.pane}}
-				{{/each}}
-			</div>
-		{{/bs-tab}}
-	{{/unless}}
-</div>
+			{{/each}}
+		</div>
+	{{/bs-tab}}
+{{/unless}}
+{{!-- </div> --}}
