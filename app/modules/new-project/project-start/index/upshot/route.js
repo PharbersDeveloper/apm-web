@@ -212,11 +212,15 @@ export default Route.extend({
 				modelData.quarterD3BarData = modelData.quarterD3BarData.sort(function (o1, o2) {
 					return o1.id - o2.id
 				})
-				modelData.quarterTableData.pushObject({
+				let currentSeasonResult = {
 					name: '本季结果',
 					sales: all.filter(elem => elem.get('goods_id') === companyMedicine.id && elem.get('region_id') === 'all').get('lastObject.apmreport.unit'),
 					share: (all.filter(elem => elem.get('goods_id') === companyMedicine.id && elem.get('region_id') === 'all').get('lastObject.apmreport.share') * 100).toFixed(1)
-				});
+				};
+				let bestResult = modelData.quarterTableData.get('lastObject');
+				modelData.quarterTableData.removeObject(bestResult);
+				modelData.quarterTableData.pushObject(currentSeasonResult);
+				modelData.quarterTableData.pushObject(bestResult);
 
 				let prodForRegionidIsAll = all.map(item => {
 					return {

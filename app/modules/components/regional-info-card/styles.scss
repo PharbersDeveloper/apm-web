@@ -1,4 +1,5 @@
 .reginonal-info-container {
+	height: 100%;
 	font-size: 0;
 
 	.turn {
@@ -17,13 +18,10 @@
 	}
 
 	.reginonal-info-content {
+		height: 93%;
 
 		&>ul {
-			position: fixed;
-			z-index: 1;
-			top: 82px;
-			left: 50%;
-			transform: translateX(-50%);
+
 			border-bottom: 0;
 			margin-bottom: 5px;
 			height: 40px;
@@ -55,8 +53,10 @@
 		}
 
 		.pane-content {
-			margin-top: 30px;
-			padding-top: 17px;
+			padding-bottom: 20px;
+			height: 100%;
+			overflow-y: auto;
+			overflow-x: hidden;
 		}
 
 		.section-total {
