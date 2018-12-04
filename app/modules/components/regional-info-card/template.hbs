@@ -18,7 +18,7 @@
 				{{/each}}
 			{{/bs-nav}}
 			<div local-class="line"></div>
-			<div class="tab-content container">
+			<div class="tab-content container" local-class="pane-content">
 				{{#tab.pane local-class="section-total" elementId="all" title=(t "apm.component.regionalInfoCard.overview")}}
 					{{d3-line-multi-legend chooseData=data.overall.lineData title=(t "apm.component.regionalInfoCard.areaShare") class="pre-area-share" }}
 					<div local-class="analyze-section">

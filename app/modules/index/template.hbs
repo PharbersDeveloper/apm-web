@@ -1,38 +1,37 @@
 <div local-class="content-page">
-    <div local-class="content">
-        <div local-class="left">
-            <img src="" alt="">
-        </div>
-        <div local-class="right">
-            <div local-class="margin">
-                <div local-class="head">
-                    <p>{{t 'apm.sysName'}}</p>
-                </div>
-                <div local-class="con">
-                    <div local-class="title">
-                        <p>{{t 'apm.index.slogan'}}</p>
-                    </div>
-                    <div local-class="input-area">
-                        {{#bs-form model=login onSubmit=(action "submit") novalidate=false as |form|}}
-                            {{form.element controlType="email" label=(t 'apm.account') placeholder=(t 'apm.account') property="email"}}
-                            <p local-class="password" {{action 'links' transition}}>{{t 'apm.index.forgetPassword'}}</p>
-                            {{form.element controlType="password" label=(t 'apm.password') placeholder=(t 'apm.password') property="password"}}
-                            <div local-class="signin">
-                                <p>
-                                    {{t 'apm.index.doNotHaveAccount'}}
-                                    {{#link-to 'sign_up'}}{{t 'apm.index.clickToSignUp'}}{{/link-to}}
-                                </p>
-                            </div>
-                            <div class="text-center">
-                                 {{bs-button defaultText=(t 'apm.signIn') local-class="btn" buttonType="submit"}}
-                            </div>
-                        {{/bs-form}}
-                    </div>
-                    {{!-- {{#link-to 'project-sort'}}{{/link-to}} --}}
-                </div>
-            </div>
-        </div>
-    </div>
+	<div local-class="content">
+		<div local-class="left">
+			<img src="" alt="">
+		</div>
+		<div local-class="right">
+			<div local-class="margin">
+				<div local-class="head">
+					<p>{{t 'apm.sysName'}}</p>
+				</div>
+				<div local-class="con">
+					<div local-class="title">
+						<p>{{t 'apm.index.slogan'}}</p>
+					</div>
+					<div local-class="input-area">
+						{{#bs-form model=login onSubmit=(action "submit") novalidate=false as |form|}}
+							{{form.element controlType="email" label=(t 'apm.account') placeholder=(t 'apm.account') property="email"}}
+							<p local-class="password" {{action 'links' transition}}>{{t 'apm.index.forgetPassword'}}</p>
+							{{form.element controlType="password" label=(t 'apm.password') placeholder=(t 'apm.password') property="password"}}
+							<div local-class="signin">
+								<p>
+									{{t 'apm.index.doNotHaveAccount'}}
+									{{#link-to 'sign_up'}}{{t 'apm.index.clickToSignUp'}}{{/link-to}}
+								</p>
+							</div>
+							<div class="text-center">
+								{{bs-button defaultText=(t 'apm.signIn') local-class="btn" buttonType="submit"}}
+							</div>
+						{{/bs-form}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 {{hint-modal hint=hint }}
 {{outlet}}

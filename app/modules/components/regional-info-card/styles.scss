@@ -5,7 +5,7 @@
 		position: fixed;
 		right: 0;
 		top: 84px;
-		z-index: 3;
+		z-index: 0;
 		display: block;
 		padding: 0 40px;
 
@@ -19,7 +19,11 @@
 	.reginonal-info-content {
 
 		&>ul {
-
+			position: fixed;
+			z-index: 1;
+			top: 82px;
+			left: 50%;
+			transform: translateX(-50%);
 			border-bottom: 0;
 			margin-bottom: 5px;
 			height: 40px;
@@ -44,15 +48,18 @@
 		}
 
 		.line {
-			position: relative;
-			top: -6px;
+			position: fixed;
+			top: 122px;
 			width: 100%;
 			border-bottom: 1px solid #DDD;
 		}
 
-		.section-total {
+		.pane-content {
+			margin-top: 30px;
 			padding-top: 17px;
+		}
 
+		.section-total {
 			.analyze-section {
 				padding: 0 20px;
 				background: #FFFFFF;
