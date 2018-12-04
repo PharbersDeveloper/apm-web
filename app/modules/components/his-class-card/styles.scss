@@ -32,19 +32,32 @@
 	}
 
 	.btn {
-		background-image: linear-gradient(-110deg, #4060AE 0%, #8F9CC3 100%);
-		-webkit-box-shadow: 0 2px 4px 0 rgba(214, 214, 214, 0.50);
-		box-shadow: 0 2px 4px 0 rgba(214, 214, 214, 0.50);
-		width: 100px;
-		height: 30px;
-		border-radius: 100px;
-		color: #fff;
-		text-align: center;
-		line-height: 30px;
+		// background-image: linear-gradient(-110deg, #4060AE 0%, #8F9CC3 100%);
+		// -webkit-box-shadow: 0 2px 4px 0 rgba(214, 214, 214, 0.50);
+		// box-shadow: 0 2px 4px 0 rgba(214, 214, 214, 0.50);
+		// width: 100px;
+		// height: 30px;
+		// border-radius: 100px;
+		// color: #fff;
+		// text-align: center;
+		// line-height: 30px;
 		-ms-flex-item-align: end;
 		align-self: flex-end;
 
-		p {
+		button {
+			background-image: linear-gradient(-110deg, #4060AE 0%, #8F9CC3 100%);
+			-webkit-box-shadow: 0 2px 4px 0 rgba(214, 214, 214, 0.50);
+			box-shadow: 0 2px 4px 0 rgba(214, 214, 214, 0.50);
+			width: 100px;
+			height: 30px;
+			border-radius: 100px;
+			color: #fff;
+			text-align: center;
+			line-height: 30px;
+			-ms-flex-item-align: end;
+			align-self: flex-end;
+			font-size: 14px;
+			border: 0;
 			cursor: pointer;
 		}
 	}

@@ -79,7 +79,7 @@ export default Controller.extend({
 					hintModal: true,
 					hintImg: true,
 					title: '提示',
-					content: '请输入正整数.若不分配,请输入0.',
+					content: '请填写预测数据,并保证数据为正整数或0.',
 					hintBtn: false,
 				}
 				this.set('hint', hint);

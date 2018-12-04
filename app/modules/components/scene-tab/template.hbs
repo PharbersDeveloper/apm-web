@@ -1,16 +1,30 @@
 <div local-class='content'>
-    {{#bs-nav type="tabs" as |nav|}}
-        {{#nav.item active=(if (eq introduced.isSelectedName 'showScenario') true false) onClick=(action 'showScenario' 'showScenario')}}{{t "apm.component.sceneTab.scene"}}{{/nav.item}}
-        {{#nav.item active=(if (eq introduced.isSelectedName 'showProduct') true false) onClick=(action 'showProduct' 'showProduct')}}{{t "apm.component.sceneTab.prodInfo"}}{{/nav.item}}
-        {{#nav.item active=(if (eq introduced.isSelectedName 'showArea') true false) onClick=(action 'showArea' 'showArea')}}{{t "apm.component.sceneTab.info"}}{{/nav.item}}
-    {{/bs-nav}}
-    <div class="dropdown" local-class="quit">
+	<div class="container">
+		<span local-class="inside-title">区域计划管理</span>
+		{{#bs-nav local-class="nav-container" type="tabs" as |nav|}}
+			{{#nav.item active=(if (eq introduced.isSelectedName 'showScenario') true false) onClick=(action 'showScenario' 'showScenario')}}{{t "apm.component.sceneTab.scene"}}{{/nav.item}}
+			{{#nav.item active=(if (eq introduced.isSelectedName 'showProduct') true false) onClick=(action 'showProduct' 'showProduct')}}{{t "apm.component.sceneTab.prodInfo"}}{{/nav.item}}
+			{{#nav.item active=(if (eq introduced.isSelectedName 'showArea') true false) onClick=(action 'showArea' 'showArea')}}{{t "apm.component.sceneTab.info"}}{{/nav.item}}
+			{{#nav.item local-class="exitArea" active=(if (eq introduced.isSelectedName 'showExit') true false) onClick=(action 'showExit' 'showExit')}}
+				<div class="dropdown" local-class="quit">
+					<div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+					 aria-expanded="false">
+						<span class="glyphicon glyphicon-option-horizontal"></span>
+					</div>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+						<li {{action "exit"}}>{{t "apm.component.sceneTab.quit"}}</li>
+					</ul>
+				</div>
+			{{/nav.item}}
+		{{/bs-nav}}
+	</div>
+	{{!-- <div class="dropdown" local-class="quit">
         <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="glyphicon glyphicon-option-horizontal"></span>
         </div>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <li {{action "exit"}}>{{t "apm.component.sceneTab.quit"}}</li>
         </ul>
-    </div>
+    </div> --}}
 </div>
 {{hint-modal hint=hint confirm=(action 'exitTest')}}

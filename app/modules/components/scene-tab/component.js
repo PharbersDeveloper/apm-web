@@ -4,7 +4,7 @@ import { inject } from '@ember/service';
 export default Component.extend({
 	i18n: inject(),
 	introduced: inject('introduced-service'),
-
+	exitBtnShow: false,
 	actions: {
 		showScenario(name) {
 			this.get('introduced').set('isSelectedName', name);
@@ -17,6 +17,9 @@ export default Component.extend({
 		showArea(name) {
 			this.get('introduced').set('isSelectedName', name);
 			this.sendAction('changeTab', name);
+		},
+		showExit() {
+			this.toggleProperty('exitBtnShow')
 		},
 		exit() {
 			let history = JSON.parse(localStorage.getItem('history')),

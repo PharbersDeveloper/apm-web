@@ -163,7 +163,7 @@ export default Controller.extend({
 					hintModal: true,
 					hintImg: true,
 					title: '提示',
-					content: '请填写全部的预测数据,并保证数据为正整数.',
+					content: '请填写全部的数据.',
 					hintBtn: false,
 				}
 				this.set('hint', hint);

@@ -1,26 +1,38 @@
 <div local-class="center">
-    <div local-class="content-page" class="container">
-        <div local-class="head">
-            <p local-class="title">{{#link-to 'project-sort'}}<span class="glyphicon glyphicon-triangle-left"></span>{{t "apm.hisProject.hisPlan"}}{{/link-to}}</p>
-        </div>
-        <div>
-            <p local-class="headline"><span local-class="point-span"></span><span>{{t "apm.hisProject.ongoing"}}</span></p>
-            {{#each model as |item|}}
-                {{#if item.state}}
-                    {{his-class-card data=item lookOver=(action 'lookOver')}}
-                {{/if}}
-            {{/each}}
-        </div>
-        <div>
-            <p local-class="headline"><span local-class="point-span"></span><span>{{t "apm.hisProject.done"}}</span></p>
-             {{#each model as |item|}}
-                {{#unless item.state}}
-                    {{his-class-card data=item continue=(action 'continue')}} 
-                {{/unless}}
+	{{#bs-tab customTabs=true local-class="project-container" as |tab|}}
+		{{#bs-nav local-class="project-nav" type="tabs" as |nav|}}
+			<section class="container">
+				<p local-class="title">{{#link-to 'project-sort'}}<span class="glyphicon glyphicon-triangle-left"></span>{{t "apm.hisProject.hisPlan"}}{{/link-to}}</p>
+				<div local-class="content">
+					{{#nav.item active=(bs-eq tab.activeId "doingproject")}}
+						<a href="#pane1" class="nav-link" role="tab" {{action tab.select "doingproject"}}>{{t "apm.hisProject.ongoing"}}<span
+							 class="badge">{{badge}}</span></a>
+					{{/nav.item}}
+					{{#nav.item active=(bs-eq tab.activeId "doneproject")}}
+						<a href="#pane1" class="nav-link" role="tab" {{action tab.select "doneproject"}}>{{t "apm.hisProject.done"}}</a>
+					{{/nav.item}}
+				</div>
+			</section>
+		{{/bs-nav}}
+		<div class="tab-content container" local-class="project-content">
+			{{#tab.pane elementId="doingproject" title=(t "apm.hisProject.ongoing")}}
+				{{#each model as |item|}}
+					{{#if item.state}}
+						{{his-class-card data=item lookOver=(action 'lookOver')}}
+					{{/if}}
 				{{else}}
 					<h3>{{t "apm.hisProject.noDoneClass"}}</h3>
-            {{/each}}
-        </div>
-    </div>
+				{{/each}}
+			{{/tab.pane}}
+			{{#tab.pane elementId="doneproject" title=(t "apm.hisProject.done")}}
+				{{#each model as |item|}}
+					{{#unless item.state}}
+						{{his-class-card data=item continue=(action 'continue')}}
+					{{/unless}}
+				{{else}}
+					<h3>{{t "apm.hisProject.noDoneClass"}}</h3>
+				{{/each}}
+			{{/tab.pane}}
+		</div>
+	{{/bs-tab}}
 </div>
-{{outlet}}

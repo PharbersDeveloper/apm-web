@@ -1,7 +1,6 @@
 :global .radar-section-effectiveness {
 	position: relative;
 	text-align: center;
-	font-family: "Open Sans", sans-serif;
 	font-size: 14px;
 	font-weight: 300;
 	fill: #242424;
@@ -27,7 +26,6 @@
 	}
 
 	:global .legend {
-		font-family: "Raleway", sans-serif;
 		fill: #333333;
 	}
 }

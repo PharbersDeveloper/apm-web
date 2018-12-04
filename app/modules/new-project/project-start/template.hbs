@@ -1,9 +1,4 @@
 <div local-class="content-page">
-	{{!-- {{#if isUpshotFinish}}
-		{{scene-tab changeTab=(action 'changeTab') isFinish=true}}
-	{{else}}
-		{{scene-tab changeTab=(action 'changeTab') isFinish=false}}
-	{{/if}} --}}
 	{{scene-tab changeTab=(action 'changeTab') isFinish=isUpshotFinish}}
 	<div local-class={{if (eq introduced.isSelectedName 'showScenario') 'introduced show' 'introduced'}}>
 		{{scene-intro-card data=ScenarioModel close=(action 'close')}}
