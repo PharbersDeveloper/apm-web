@@ -20,6 +20,14 @@
 	}
 }
 
+:global(.hit-container) {
+	position: absolute;
+	width: 100px;
+	height: 60px;
+	background-color: red;
+	border-radius: 10px;
+}
+
 .objective-bar-line {
 	position: relative;
 	padding: 0 20px;
@@ -37,13 +45,13 @@
 }
 
 .tooltip {
-    width: 70px;
-    height: 50px;
-    fill: #FFF;
-    fill-opacity: 1;
-    stroke-width: .5px;
-    stroke-opacity: 1;
-    stroke: #000;
+	width: 70px;
+	height: 50px;
+	fill: #FFF;
+	fill-opacity: 1;
+	stroke-width: .5px;
+	stroke-opacity: 1;
+	stroke: #000;
 }
 
 

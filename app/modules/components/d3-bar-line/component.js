@@ -43,10 +43,10 @@ export default Component.extend({
 		let maxVal2 = 100;
 		yScale.domain([0, maxVal]);
 		yScale2.domain([0, maxVal2]);
-        let svgContainer = d3.select(this.element);
-        
-        
-		
+		let svgContainer = d3.select(this.element);
+
+
+
 		let svg = svgContainer.append("svg")
 			.attr('class', 'histogram-container')
 			.attr('min-height', '420px')
@@ -55,8 +55,9 @@ export default Component.extend({
 			.attr('preserveAspectRatio', 'none')
 			.attr('viewBox', '0 0 960 420')
 
-        let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-        let tooltip = g.append('g').style("opacity", 0.0);
+		let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+		let tooltip = g.append('g').style("opacity", 0.0);
 
 		g.attr('class', 'container-g')
 
@@ -105,11 +106,14 @@ export default Component.extend({
 
 		linearGradient.append("stop")
 			.attr("offset", "100%")
-            .attr("stop-color", '#E9A782');
+			.attr("stop-color", '#E9A782');
 
 
 		/**
 		 * 渐变结束
+		 */
+		/**
+		 * 添加柱状图以及hover 动作
 		 */
 		chart.append('rect')
 			.attr('height', function (d) { return height - yScale(d.value); })
@@ -118,7 +122,7 @@ export default Component.extend({
 			.attr('width', xScale.bandwidth() / 2)
 			.attr('class', '_bar_1mas67')
 			.on('mouseover', function (d) {
-                let html = `
+				let html = `
                     <rect x="${parseFloat(d3.select(this).attr('x'))}" y="${parseFloat(d3.select(this).attr('y') - 50)}" rx="5" ry="5" class="_tooltip_1mas67"></rect>
                     <text 
                         style='font-size: 10px;' 
@@ -134,10 +138,10 @@ export default Component.extend({
                         </tspan> 
                     </text>
                 `;
-                
-                tooltip.style("opacity", 1);
+				tooltip.style("opacity", 1);
 				d3.select(this).attr('opacity', 0.7);
-                tooltip.html(html);
+				tooltip.html(html);
+
 
 			}).on('mouseout', function () {
 				tooltip.style("opacity", 0.0);
