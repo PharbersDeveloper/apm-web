@@ -33,7 +33,7 @@ export default Component.extend({
 			i18n: this.get('i18n'),
 			width: 900,
 			height: 340,
-			margin : { top: 50, right: 20, bottom: 30, left: 50 },
+			margin: { top: 50, right: 20, bottom: 30, left: 50 },
 			backgroundColor: this.get('backgroundColor'),
 			laterThreeChangeBg: this.get('laterThreeChangeBg'),
 			noLine: this.get('noLine')
@@ -49,8 +49,6 @@ export default Component.extend({
 		let maxVal = d3.max(values) * 1.3
 
 		yScale.domain([0, maxVal]);
-
-
 
 		let rootD3Container = drawRootD3Container(this.element, setting);
 		let viewContainer = drawViewContainer(rootD3Container, xScale, yScale);
@@ -81,7 +79,7 @@ export default Component.extend({
 		// let maxVal2 = 100;
 		// yScale.domain([0, maxVal]);
 		// yScale2.domain([0, maxVal2]);
-        // let svgContainer = d3.select(this.element);
+		// let svgContainer = d3.select(this.element);
 
 
 
@@ -93,8 +91,8 @@ export default Component.extend({
 		// 	.attr('preserveAspectRatio', 'none')
 		// 	.attr('viewBox', '0 0 960 420')
 
-        // let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-        // let tooltip = g.append('g').style("opacity", 0.0);
+		// let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+		// let tooltip = g.append('g').style("opacity", 0.0);
 
 		// g.attr('class', 'container-g')
 
@@ -144,7 +142,7 @@ export default Component.extend({
 
 		// linearGradient.append("stop")
 		// 	.attr("offset", "100%")
-        //     .attr("stop-color", '#E9A782');
+		//     .attr("stop-color", '#E9A782');
 
 
 		// /**
@@ -157,26 +155,26 @@ export default Component.extend({
 		// 	.attr('width', xScale.bandwidth() / 2)
 		// 	.attr('class', '_bar_1mas67')
 		// 	.on('mouseover', function (d) {
-        //         let html = `
-        //             <rect x="${parseFloat(d3.select(this).attr('x'))}" y="${parseFloat(d3.select(this).attr('y') - 50)}" rx="5" ry="5" class="_tooltip_1mas67"></rect>
-        //             <text
-        //                 style='font-size: 10px;'
-        //                 x = ${parseFloat(d3.select(this).attr('x'))}
-        //                 y = ${parseFloat(d3.select(this).attr('y') - 50 + 12)}>
+		//         let html = `
+		//             <rect x="${parseFloat(d3.select(this).attr('x'))}" y="${parseFloat(d3.select(this).attr('y') - 50)}" rx="5" ry="5" class="_tooltip_1mas67"></rect>
+		//             <text
+		//                 style='font-size: 10px;'
+		//                 x = ${parseFloat(d3.select(this).attr('x'))}
+		//                 y = ${parseFloat(d3.select(this).attr('y') - 50 + 12)}>
 
-        //                 <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 5)}>${d.key}</tspan>
-        //                 <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 15)}>
-        //                     ${that.get('i18n').t('apm.component.d3BarLine.share')}: ${d.value2}%
-        //                 </tspan>
-        //                 <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 25)}>
-        //                     ${that.get('i18n').t('apm.component.d3BarLine.sales')}: ${d.value}
-        //                 </tspan>
-        //             </text>
-        //         `;
+		//                 <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 5)}>${d.key}</tspan>
+		//                 <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 15)}>
+		//                     ${that.get('i18n').t('apm.component.d3BarLine.share')}: ${d.value2}%
+		//                 </tspan>
+		//                 <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 25)}>
+		//                     ${that.get('i18n').t('apm.component.d3BarLine.sales')}: ${d.value}
+		//                 </tspan>
+		//             </text>
+		//         `;
 
-        //         tooltip.style("opacity", 1);
+		//         tooltip.style("opacity", 1);
 		// 		d3.select(this).attr('opacity', 0.7);
-        //         tooltip.html(html);
+		//         tooltip.html(html);
 
 		// 	}).on('mouseout', function () {
 		// 		tooltip.style("opacity", 0.0);
