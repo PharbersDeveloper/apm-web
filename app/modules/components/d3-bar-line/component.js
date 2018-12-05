@@ -33,7 +33,6 @@ export default Component.extend({
 
 		let xDatas = this.dataset.map(elem => elem.key);
 		let values = this.dataset.map(elem => elem.value);
-		let values2 = this.dataset.map(elem => elem.value2);
 
 		let xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 			yScale = d3.scaleLinear().rangeRound([height, 0]),
@@ -44,9 +43,10 @@ export default Component.extend({
 		let maxVal2 = 100;
 		yScale.domain([0, maxVal]);
 		yScale2.domain([0, maxVal2]);
-		let svgContainer = d3.select(this.element);
-
-		let tooltip = svgContainer.append('div').attr("class", "_tooltip_1mas67").style("opacity", 0.0);
+        let svgContainer = d3.select(this.element);
+        
+        
+		
 		let svg = svgContainer.append("svg")
 			.attr('class', 'histogram-container')
 			.attr('min-height', '420px')
@@ -55,14 +55,9 @@ export default Component.extend({
 			.attr('preserveAspectRatio', 'none')
 			.attr('viewBox', '0 0 960 420')
 
-		// svg.attr("width", "100%")
-		// .attr("height", 380)
-		// .attr('preserveAspectRatio', 'none')
-		// .attr('viewBox', '-30 10 950 380')
-		// .append('g');
-		let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        let tooltip = g.append('g').style("opacity", 0.0);
 
-		// g.attr('class', '_container-g_1mas67')
 		g.attr('class', 'container-g')
 
 			.append('text')
@@ -110,7 +105,8 @@ export default Component.extend({
 
 		linearGradient.append("stop")
 			.attr("offset", "100%")
-			.attr("stop-color", '#E9A782');
+            .attr("stop-color", '#E9A782');
+
 
 		/**
 		 * 渐变结束
@@ -121,67 +117,48 @@ export default Component.extend({
 			.attr('y', function (d) { return yScale(d.value); })
 			.attr('width', xScale.bandwidth() / 2)
 			.attr('class', '_bar_1mas67')
-			.on('mouseover', function (d, i) {
+			.on('mouseover', function (d) {
+                let html = `
+                    <rect x="${parseFloat(d3.select(this).attr('x'))}" y="${parseFloat(d3.select(this).attr('y') - 50)}" rx="5" ry="5" class="_tooltip_1mas67"></rect>
+                    <text 
+                        style='font-size: 10px;' 
+                        x = ${parseFloat(d3.select(this).attr('x'))} 
+                        y = ${parseFloat(d3.select(this).attr('y') - 50 + 12)}>
 
-				let htmlWidth = parseInt(d3.select('html').style('width')),
-					xPosition = parseFloat(d3.select(this).attr('x')),
-					yPosition = parseFloat(d3.select(this).attr('y'));
-				switch (true) {
-					case (htmlWidth > 1359):
-						xPosition = xPosition * (1360 / 836);
-						yPosition = yPosition * (1360 / 836);
-						break;
-					case (htmlWidth < 1360 && htmlWidth > 1169):
-						xPosition = xPosition * (1170 / 836);
-						yPosition = yPosition * (1170 / 836);
-						break;
-					case (htmlWidth < 1171 && htmlWidth > 969):
-						xPosition = xPosition * (970 / 836);
-						yPosition = yPosition * (970 / 836);
-						break;
-					default:
-				}
-
-				tooltip.style("opacity", 1.0);
-				tooltip.html(d.key + "<br>" + that.get('i18n').t('apm.component.d3BarLine.share') + "" + "：" + d.value2 + "%" + "<br>" + that.get('i18n').t('apm.component.d3BarLine.sales') + "" + "：" + d.value)
-					.style("left", (xPosition) + "px")//x位置为当前鼠标X坐标向右10px
-					.style("top", (yPosition) + "px");//y位置为当前鼠标Y坐标向上10px
-
-
+                        <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 5)}>${d.key}</tspan> 
+                        <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 15)}>
+                            ${that.get('i18n').t('apm.component.d3BarLine.share')}: ${d.value2}%
+                        </tspan> 
+                        <tspan x = ${parseFloat(d3.select(this).attr('x')) + 2} y = ${parseFloat(d3.select(this).attr('y') - 50 + 12 + 25)}>
+                            ${that.get('i18n').t('apm.component.d3BarLine.sales')}: ${d.value}
+                        </tspan> 
+                    </text>
+                `;
+                
+                tooltip.style("opacity", 1);
 				d3.select(this).attr('opacity', 0.7);
-			}).on('mouseout', function (d) {
+                tooltip.html(html);
+
+			}).on('mouseout', function () {
 				tooltip.style("opacity", 0.0);
 				d3.select(this).attr('opacity', 1)
 			});
-		// chart.append('text')
-		// 	.attr('class', '_barText_1mas67')
-		// 	.attr('x', function(d) { return xScale(d.key); })
-		// 	.attr('y', function(d) { return yScale(d.value); })
-		// 	.attr('dx', xScale.bandwidth() / 4)
-		// 	.attr('dy', 20)
-		// 	.attr('text-anchor', 'middle')
-		// 	.text(function(d) { return d.value; });
+
 
 		if (this.get('laterThreeChangeBg')) {
-			// d3.select(`#${this.get('chartId')}`)
 			svgContainer
-				// .selectAll('._container-g_1mas67')
 				.selectAll('.container-g')
 				.selectAll('g:nth-last-of-type(3)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
 
-			// d3.select(`#${this.get('chartId')}`)
 			svgContainer
-				// .selectAll('._container-g_1mas67')
 				.selectAll('.container-g')
 				.selectAll('g:nth-last-of-type(2)')
 				.select('rect')
 				.style("fill", "url(#" + this.get('chartId') + "linearColor" + ")");
 
-			// d3.select(`#${this.get('chartId')}`)
 			svgContainer
-				// .selectAll('._container-g_1mas67')
 				.selectAll('.container-g')
 				.selectAll('g:last-of-type')
 				.select('rect')
@@ -209,8 +186,6 @@ export default Component.extend({
 		let legendContainer = svgContainer.append('div').attr('class', 'legendContainer')
 			.style('text-align', 'center');
 		var legendArea = legendContainer.append("svg")
-			// .attr('preserveAspectRatio', 'xMidYMid meet')
-			// .attr('viewBox', '0 0 960 20')
 			.attr('class', 'legendArea')
 			.attr('width', 240)
 			.attr('height', 20)
@@ -234,7 +209,6 @@ export default Component.extend({
 			.enter()
 			.append("g")
 			.attr("transform", function (d, i) {
-				// return "translate(" + parseInt(i * 2 + 2) * 100 + ",0)";
 				return "translate(" + parseInt(i * 120) + ",0)";
 
 			});
