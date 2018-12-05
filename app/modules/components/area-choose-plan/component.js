@@ -47,9 +47,18 @@ export default Component.extend({
 			localStorageRegion = JSON.parse(localStorage.getItem('totalRegion'));
 
 		if (planPaire.length > 2) {
-			let _set = new Set(_temporaryChoose),
-				differenceABSet = planPaire.filter(v => !_set.has(v));
-			_temporaryChoose.pushObject(differenceABSet.get('firstObject'));
+			/**
+			 * ES6 写法求差集在IE11 上不被支持
+			 * let _set = new Set(_temporaryChoose),
+			 * differenceABSet = planPaire.filter(v => !_set.has(v));
+			 * _temporaryChoose.pushObject(differenceABSet.get('firstObject'));
+			 */
+
+			let newDiff = planPaire.filter((item) => {
+				return _temporaryChoose.indexOf(item) === -1
+			});
+			_temporaryChoose.pushObject(newDiff.get('firstObject'));
+
 			// later(this, function () {
 			let _id = _temporaryChoose.get('firstObject.id')
 			planPaire.forEach((ele) => {
@@ -59,7 +68,6 @@ export default Component.extend({
 				}
 			})
 			// set(planPaire.get('firstObject'), 'isChecked', false);
-
 			planPaire.forEach((item) => {
 				if (item.isChecked) {
 					checkedString = item.text + ',' + checkedString;
