@@ -7,16 +7,12 @@
 		</div>
 	{{/unless}}
 	<div local-class="objective-section">
-		{{!-- <div class="row"> --}}
-		{{!-- <div class="col-md-12 col-lg-12 col-sm-12"> --}}
 		<select local-class="choose-area" onchange={{action 'changeArea' value="target.value"}}>
 			{{#each regionData as |area index|}}
 				<option value={{area.id}}>{{area.name}}</option>
 			{{/each}}
 		</select>
 		{{d3-bar-line chartId="objective-chart" laterThreeChangeBg=true dataset=barData noLine=true}}
-		{{!-- </div> --}}
-		{{!-- </div> --}}
 	</div>
 	<div local-class="objective-section">
 		<div class="row">
