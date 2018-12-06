@@ -34,6 +34,7 @@ export default Component.extend({
 				i18n: this.get('i18n'),
 				width: 900,
 				height: 340,
+				chartId: this.get('chartId'),
 				margin: { top: 50, right: 20, bottom: 30, left: 50 },
 				backgroundColor: this.get('backgroundColor'),
 				laterThreeChangeBg: this.get('laterThreeChangeBg'),
