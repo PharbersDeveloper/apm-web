@@ -16,19 +16,19 @@
 		{{/bs-nav}}
 		<div class="tab-content container" local-class="project-content">
 			{{#tab.pane elementId="doingproject" title=(t "apm.hisProject.ongoing")}}
-				{{#each model as |item|}}
-					{{#if item.state}}
-						{{his-class-card data=item lookOver=(action 'lookOver')}}
-					{{/if}}
+				{{#each model.doing as |item|}}
+					{{!-- {{#if item.state}} --}}
+					{{his-class-card data=item lookOver=(action 'lookOver')}}
+					{{!-- {{/if}} --}}
 				{{else}}
 					<h3>{{t "apm.hisProject.noDoneClass"}}</h3>
 				{{/each}}
 			{{/tab.pane}}
 			{{#tab.pane elementId="doneproject" title=(t "apm.hisProject.done")}}
-				{{#each model as |item|}}
-					{{#unless item.state}}
-						{{his-class-card data=item continue=(action 'continue')}}
-					{{/unless}}
+				{{#each model.done as |item|}}
+					{{!-- {{#unless item.state}} --}}
+					{{his-class-card data=item continue=(action 'continue')}}
+					{{!-- {{/unless}} --}}
 				{{else}}
 					<h3>{{t "apm.hisProject.noDoneClass"}}</h3>
 				{{/each}}

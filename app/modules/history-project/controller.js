@@ -65,7 +65,6 @@ export default Controller.extend({
 		lookOver(paperid, courseid) {
 			localStorage.setItem('history', false)
 			this.loadInputData(paperid, courseid).then(data => {
-				this.get('logger').log(data);
 
 				switch (data) {
 					case 0:

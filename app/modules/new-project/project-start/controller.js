@@ -62,8 +62,7 @@ export default Controller.extend({
 						return this.store.queryMultipleObject('/api/v1/findAllMedPatient/0', 'bind_course_region_goods_time_patient', conditions)
 					})
 					.then((data) => { // 处理卡片数据
-						let patient = data.get('firstObject.patient');
-						this.get('logger').log(patient);
+						let patient = data.get('firstObject');
 						let regionData = this.store.peekAll('bind_course_region_goods_time_unit');
 						let filtrerData = regionData.filter(felem => felem.get('region_id') == id);
 						let card = {};
@@ -563,7 +562,6 @@ export default Controller.extend({
 								});
 								let valuesWithoutSeason = [];
 								values.forEach((elem) => {
-									that.get('logger').log(elem);
 									if (elem.ym.indexOf('q') < 0) {
 										valuesWithoutSeason.pushObject(elem)
 									}
