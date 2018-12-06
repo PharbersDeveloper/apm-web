@@ -129,8 +129,25 @@ const drawBarChart = function(rootD3Container, viewContainer, xScale, yScale, da
 		}
 }
 
-const drawLineChart = function(dataset) {
+const drawLineChart = function(viewContainer, xScale, yScale, dataset) {
+	viewContainer.append('g')
+		.attr('class', 'axisY')
+		.attr('transform', 'translate(' + (variable.width - variable.margin.right) + ', 0)')
+		.call(d3.axisRight(yScale).ticks(10));
 
+	let line = d3.line()
+		.x(function(d) { return xScale(d.key); })
+		.y(function(d) { return yScale(d.value2); });
+
+	viewContainer.append("path")
+		.datum(dataset)
+		.attr("fill", "none")
+		.attr("stroke", "#FF8190")
+		.attr("stroke-linejoin", "round")
+		.attr("stroke-linecap", "round")
+		.attr("transform", "translate(" + xScale.bandwidth() / 4 + ",0)")
+		.attr("stroke-width", 1.5)
+		.attr("d", line);
 }
 
 const drawDefsChart = function(rootD3Container) {
@@ -234,6 +251,7 @@ export {
 	drawRootD3Container,
 	drawViewContainer,
 	drawBarChart,
+	drawLineChart,
 	drawDefsChart,
 	drawLegendChart
 }
