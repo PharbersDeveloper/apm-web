@@ -151,6 +151,8 @@ export default {
 			"ongoing": "进行中",
 			"done": "已完成",
 			"noDoneClass": "暂无已完成课程。",
+			"doingClass": "暂无正在进行中的课程。",
+
 		},
 
 		"component": {
