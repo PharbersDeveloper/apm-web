@@ -1,12 +1,11 @@
-<div local-class="analyze-container">
-    {{#unless history}}
-        <div class="next-step">
-            {{#bs-button class="btn-next" onClick=(action "nextStep")}}
-                {{t "apm.newProject.next"}}
-            {{/bs-button}}
-        </div>
-    {{/unless}}
-
+<div local-class="analyze-container" class="container">
+	{{#unless history}}
+		<div class="next-step">
+			{{#bs-button class="btn-next" onClick=(action "nextStep")}}
+				{{t "apm.newProject.next"}}
+			{{/bs-button}}
+		</div>
+	{{/unless}}
 	<div local-class="analyze-section">
 		{{area-base-info-table data=model.tableData}}
 	</div>
@@ -15,5 +14,4 @@
 	{{/each}}
 	{{!-- {{area-analyze-input }} --}}
 </div>
-
 {{hint-modal hint=hint confirm=(action 'toSort')}}

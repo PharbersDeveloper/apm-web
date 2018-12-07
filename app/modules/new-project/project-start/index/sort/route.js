@@ -28,11 +28,11 @@ export default Route.extend({
 				let represents = [];
 				data.forEach((elem, index) => {
 					// 绑定区域与人员关系，方便缓存读取
-					this.get('pmController').get('Store').createModel('bind_course_region_rep', {
-						id: index,
-						region_id: elem.query.included[0].attributes.val,
-						represents: elem.map(x => x.id)
-					})
+					// this.get('pmController').get('Store').createModel('bind_course_region_rep', {
+					// 	id: 'reginrep' + index,
+					// 	region_id: elem.query.included[0].attributes.val,
+					// 	represents: elem.map(x => x.id)
+					// })
 					represents.pushObject({
 						region_id: elem.query.included[0].attributes.val,
 						rep_id: elem.get('firstObject.id'),
@@ -40,8 +40,7 @@ export default Route.extend({
 					})
 				})
 				this.controllerFor('new-project.project-start.index.sort').set('represents', represents);
-
-				return represents
+				return represents;
 			}).then((data) => {
 				return JSON.parse(localStorage.getItem('totalRegion'));
 			})

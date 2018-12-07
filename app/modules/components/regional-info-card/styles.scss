@@ -18,7 +18,14 @@
 	}
 
 	.reginonal-info-content {
-		height: 93%;
+		// height: 93%;
+		height: calc(100% - 45px);
+		/* Firefox */
+		height: -moz-calc(100% - 45px);
+		/* WebKit */
+		height: -webkit-calc(100% - 45px);
+		/* Opera */
+		height: -o-calc(100% - 45px);
 
 		&>ul {
 
@@ -53,7 +60,6 @@
 		}
 
 		.pane-content {
-			padding-bottom: 20px;
 			height: 100%;
 			overflow-y: auto;
 			overflow-x: hidden;

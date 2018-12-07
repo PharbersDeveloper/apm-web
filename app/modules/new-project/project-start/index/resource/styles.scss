@@ -1,10 +1,12 @@
 .resource-container {
+	margin-top: 4px;
+	font-size: 0;
+
 	.resource-content {
 		padding: 18px 20px;
 		background: #FFFFFF;
 		-webkit-box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
 		box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
-		font-size: 0;
 
 		.title-resource {
 			height: 20px;

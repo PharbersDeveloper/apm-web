@@ -1,11 +1,13 @@
-@media (min-width: 1400px) {
-	.action-plan-container {
-		width: 1400px;
-	}
-}
+// @media (min-width: 1400px) {
+// 	.action-plan-container {
+// 		width: 1400px;
+// 	}
+// }
 
 /*注释掉部分样式，原因是，修改了页面部分结构，在顶层使用了Bootstrap Container，不需要每个都加入，看到注释后可以删除了*/
 .action-plan-container {
+	margin-top: 4px;
+	font-size: 0;
 
 	// padding: 0;
 	// background: #FFFFFF;

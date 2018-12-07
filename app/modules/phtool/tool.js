@@ -81,11 +81,13 @@ export function verificationInput(value, range = false) {
 	let isOk = false,
 		reg = null;
 	if (range) {
-		reg = /^100$|^[\d]{1,2}(\.[\d])?$/;
+		// reg = /^100$|^[\d]{1,2}(\.[\d])?$/;
+		reg = /^100$|^[\d]{1,2}?$/;
 		isOk = reg.test(value);
 		return !isOk && value !== '';
 	} else {
-		reg = /^[\d]{1,10}(\.[\d])?$/;
+		// reg = /^[\d]{1,10}(\.[\d])?$/;
+		reg = /^[\d]{1,10}?$/;
 		if (value === '') {
 			return false
 		} else {

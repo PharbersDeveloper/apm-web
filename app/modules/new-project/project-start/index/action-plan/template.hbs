@@ -1,22 +1,21 @@
-<div local-class="action-plan-container">
-    {{#unless history}}
-        <div class="next-step">
-            {{#bs-button class="btn-next" onClick=(action "nextStep")}}
-                {{t "apm.newProject.next"}}
-            {{/bs-button}}
-        </div>
-    {{/unless}}
+<div local-class="action-plan-container" class="container">
+	{{#unless history}}
+		<div class="next-step">
+			{{#bs-button class="btn-next" onClick=(action "nextStep")}}
+				{{t "apm.newProject.next"}}
+			{{/bs-button}}
+		</div>
+	{{/unless}}
 	<div local-class="action-plan-radar">
-		<select local-class="choose-area" onchange= {{action 'changeArea' value="target.value"}}>
-		    {{#each model as |area|}}
-		        <option  value={{area.id}}>{{area.name}}</option>
-		    {{/each}}
+		<select local-class="choose-area" onchange={{action 'changeArea' value="target.value"}}>
+			{{#each model as |area|}}
+				<option value={{area.id}}>{{area.name}}</option>
+			{{/each}}
 		</select>
-		{{radar-section-effectiveness  gradient="glowplan" radarSectionData=radarData }}
+		{{radar-section-effectiveness gradient="glowplan" radarSectionData=radarData }}
 	</div>
 	{{#each resortRegionModel as |region index|}}
-        {{area-plan-info data=region readyChoose=readyChoose areaReps=areaReps regionCompanyTargets=regionCompanyTargets index=index history=history}}
+		{{area-plan-info data=region readyChoose=readyChoose areaReps=areaReps regionCompanyTargets=regionCompanyTargets index=index history=history}}
 	{{/each}}
 </div>
-
 {{hint-modal hint=hint confirm=(action 'toUpshot')}}

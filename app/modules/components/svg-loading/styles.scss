@@ -5,11 +5,10 @@
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	background: trasparent;
-	width: 200px;
-	height: 200px;
+	width: 160px;
+	height: 160px;
 	border-radius: 100%;
 	border: 1px solid gray;
-
 }
 
 .loading:before {
@@ -53,7 +52,7 @@
 	margin: 0;
 	height: 40px;
 	line-height: 40px;
-	font-size: 32px;
+	font-size: 28px;
 	color: gray;
 	letter-spacing: 1.2px;
 }

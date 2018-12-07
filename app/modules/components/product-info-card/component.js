@@ -1,9 +1,10 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-    actions: {
-        close() {
-            this.sendAction('close')
-        }
-    }
+	localClassNames: 'product-container',
+	actions: {
+		close() {
+			this.sendAction('close')
+		}
+	}
 });

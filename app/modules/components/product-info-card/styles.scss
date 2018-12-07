@@ -1,14 +1,15 @@
-.content {
-	padding: 0 20px;
-	height: 100%;
+.product-container {
+	height: calc(100% - 45px);
+	/* Firefox */
+	height: -moz-calc(100% - 45px);
+	/* WebKit */
+	height: -webkit-calc(100% - 45px);
+	/* Opera */
+	height: -o-calc(100% - 45px);
 	background: #efeff0;
 
 	.fork-area {
-		position: fixed;
-		top: 82px;
-		width: 100%;
 		height: 40px;
-		right: 0;
 		background: #efeff1;
 		border-bottom: 1px solid #dfdfdf;
 	}
@@ -25,13 +26,10 @@
 	}
 
 	.con {
-		margin-top: 40px;
 		width: 100%;
-		padding-top: 20px;
-
-		.center {
-			max-width: 1400px;
-		}
+		height: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
 
 		.intro {
 			height: 350px;

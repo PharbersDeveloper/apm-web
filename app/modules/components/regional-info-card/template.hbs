@@ -17,15 +17,15 @@
 			{{/each}}
 		{{/bs-nav}}
 		<div local-class="line"></div>
-		<div class="tab-content container" local-class="pane-content">
-			{{#tab.pane local-class="section-total" elementId="all" title=(t "apm.component.regionalInfoCard.overview")}}
+		<div class="tab-content " local-class="pane-content">
+			{{#tab.pane local-class="section-total" class="container" elementId="all" title=(t "apm.component.regionalInfoCard.overview")}}
 				{{d3-line-multi-legend chooseData=data.overall.lineData title=(t "apm.component.regionalInfoCard.areaShare") class="pre-area-share" }}
 				<div local-class="analyze-section">
 					{{area-base-info-table data=data.overall.tableData}}
 				</div>
 			{{/tab.pane}}
 			{{#each data.info as |item|}}
-				{{#tab.pane title=item.name elementId=item.id }}
+				{{#tab.pane class="container" title=item.name elementId=item.id }}
 					{{#if newDataReady}}
 						{{regional-intro data=item  singleRegionData=singleRegionData}}
 					{{else}}
@@ -36,4 +36,3 @@
 		</div>
 	{{/bs-tab}}
 {{/unless}}
-{{!-- </div> --}}

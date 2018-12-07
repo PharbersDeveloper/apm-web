@@ -1,28 +1,32 @@
-.sort-conent {
-	padding: 18px 20px;
-	background: #FFF;
-	-webkit-box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
-	box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
+.sort-container {
+	margin-top: 4px;
 
-	.title-sort {
-		height: 20px;
-		line-height: 20px;
-		font-size: 0;
-		letter-spacing: 1.5px;
+	.sort-conent {
+		padding: 18px 20px;
+		background: #FFF;
+		-webkit-box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
+		box-shadow: 0 0 4px 0 rgba(210, 210, 210, 0.50);
 
-		span:first-child {
-			font-size: 16px;
-			color: #485465;
+		.title-sort {
+			height: 20px;
+			line-height: 20px;
+			font-size: 0;
+			letter-spacing: 1.5px;
+
+			span:first-child {
+				font-size: 16px;
+				color: #485465;
+			}
+
+			span:last-child {
+				font-size: 14px;
+				color: #aaa;
+			}
 		}
 
-		span:last-child {
-			font-size: 14px;
-			color: #aaa;
+		.tips-sort {
+			margin-top: 20px;
+			margin-bottom: 20px;
 		}
-	}
-
-	.tips-sort {
-		margin-top: 20px;
-		margin-bottom: 20px;
 	}
 }
