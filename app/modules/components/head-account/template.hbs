@@ -1,18 +1,11 @@
-<div local-class="head">
-	<div local-class="title">
-		<p>{{t "apm.sysName"}}</p>
-	</div>
-	<div local-class="account">
-		<div class="dropdown">
-			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
-			 aria-haspopup="true" aria-expanded="false">
-				{{data}}
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-				<li {{action 'exitSystem'}}>{{t "apm.logOut"}}</li>
-				{{!-- <li role="separator" class="divider"></li> --}}
-			</ul>
-		</div>
-	</div>
+<span local-class="title">{{t "apm.sysName"}}</span>
+<div local-class="account" class="dropdown">
+	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+	 aria-expanded="false">
+		{{data}}
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+		<li {{action 'exitSystem'}}>{{t "apm.logOut"}}</li>
+	</ul>
 </div>

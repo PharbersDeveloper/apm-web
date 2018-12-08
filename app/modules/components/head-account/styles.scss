@@ -1,42 +1,30 @@
-.head {
-	position: fixed;
-	top: 0;
-	width: 100%;
+.header {
 	padding: 0 40px;
 	height: 40px;
 	line-height: 40px;
 	background-image: -webkit-gradient(linear, right top, left top, from(#4863AC), to(#8090BD));
 	background-image: linear-gradient(-90deg, #4863AC 0%, #8090BD 100%);
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	-ms-flex-direction: row;
-	flex-direction: row;
-	-webkit-box-pack: justify;
-	-ms-flex-pack: justify;
-	justify-content: space-between;
-	z-index: 2;
+
 
 	.title {
+		display: inline-block;
 		font-size: 14px;
 		color: #FFFFFF;
 		letter-spacing: 0.88px;
 	}
 
 	.account {
+		float: right;
 		width: 120px;
 
 		button {
-			background-color: transparent;
-			// opacity: 0.46;
-
-			border: none;
+			border: 0;
 			height: 40px;
 			width: 120px;
 			font-size: 14px;
 			color: #FFFFFF;
+			background-color: transparent;
+
 			letter-spacing: 1px;
 
 			&:active {
@@ -55,6 +43,7 @@
 
 		ul {
 			width: 120px;
+			list-style: none;
 			background-color: #E3E3E3;
 
 			li {

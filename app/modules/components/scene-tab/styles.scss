@@ -1,12 +1,9 @@
-.content {
-	position: fixed;
-	top: 40px;
-	width: 100%;
+.scene-tab-container {
+	margin-bottom: 4px;
 	height: 40px;
 	background: #FDFDFD;
 	-webkit-box-shadow: 0 2px 4px 0 rgba(162, 162, 162, 0.50);
 	box-shadow: 0 2px 4px 0 rgba(162, 162, 162, 0.50);
-	z-index: 2;
 
 	.inside-title {
 		display: inline-block;
@@ -20,6 +17,13 @@
 
 	.nav-container {
 		float: right;
+
+		ul.drop-ul {
+			list-style-position: inside;
+			// list-style-type: none;
+			list-style: none;
+			// list-style-image: none;
+		}
 	}
 
 	:global(.active) {

@@ -1,65 +1,71 @@
-.content-page {
+.project-sort-container {
+	padding-top: 90px;
+	height: calc(100% - 44px);
+	/* Firefox */
+	height: -moz-calc(100% - 44px);
+	/* WebKit */
+	height: -webkit-calc(100% - 44px);
+	/* Opera */
+	height: -o-calc(100% - 44px);
 	width: 100%;
-	min-width: 1000px;
+	overflow-x: hidden;
+	overflow-y: auto;
 
-	.content {
-		// padding-left:6.8%;
-		padding-top: 90px;
+	.name {
+		margin-bottom: 12px;
+		font-size: 48px;
+		color: #020202;
+		letter-spacing: 3px;
+	}
 
-		.name {
-			margin-bottom: 12px;
-			font-size: 48px;
-			color: #020202;
-			letter-spacing: 3px;
+	.dec {
+		margin-bottom: 40px;
+		font-size: 20px;
+		color: #485465;
+		letter-spacing: 3px;
+	}
+
+	.lists {
+		a:hover {
+			text-decoration: none;
 		}
 
-		.dec {
-			margin-bottom: 40px;
-			font-size: 20px;
-			color: #485465;
-			letter-spacing: 3px;
+		.select {
+			width: 230px;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-orient: horizontal;
+			-webkit-box-direction: normal;
+			-ms-flex-direction: row;
+			flex-direction: row;
+			-webkit-box-align: start;
+			-ms-flex-align: start;
+			align-items: flex-start;
+			cursor: pointer;
+
+			span {
+				width: 25px;
+				height: 25px;
+				border-radius: 50%;
+				line-height: 20px;
+				background: orange;
+			}
 		}
 
-		.lists {
-			a:hover {
-				text-decoration: none;
-			}
-
-			.select {
-				width: 230px;
-				display: -webkit-box;
-				display: -ms-flexbox;
-				display: flex;
-				-webkit-box-orient: horizontal;
-				-webkit-box-direction: normal;
-				-ms-flex-direction: row;
-				flex-direction: row;
-				-webkit-box-align: start;
-				-ms-flex-align: start;
-				align-items: flex-start;
-				cursor: pointer;
-
-				span {
-					width: 25px;
-					height: 25px;
-					border-radius: 50%;
-					line-height: 20px;
-					background: orange;
-				}
-			}
-
-			.list {
-				margin-bottom: 20px;
-				width: 225px;
-				height: 40px;
-				background-image: linear-gradient(-110deg, #4060AE 0%, #8F9CC3 100%);
-				border-radius: 100px;
-				text-align: center;
-				line-height: 40px;
-				font-size: 18px;
-				color: #FFFFFF;
-				letter-spacing: 2px;
-			}
+		.list {
+			margin-bottom: 20px;
+			width: 225px;
+			height: 40px;
+			background-image: linear-gradient(-110deg, #4060AE 0%, #8F9CC3 100%);
+			border-radius: 100px;
+			text-align: center;
+			line-height: 40px;
+			font-size: 18px;
+			color: #FFFFFF;
+			letter-spacing: 2px;
 		}
 	}
+
+	// }
 }

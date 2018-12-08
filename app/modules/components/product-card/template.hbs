@@ -1,21 +1,21 @@
-<div local-class="content">
-	<div local-class="left">
-		<img src={{data.prod_image}} alt="">
-		<p local-class="title">{{data.prod_name}}</p>
+{{!-- <div local-class="product-card-container"> --}}
+<div local-class="left">
+	<img src={{data.prod_image}} alt="">
+	<p local-class="title">{{data.prod_name}}</p>
+</div>
+<div local-class="right">
+	<div local-class="head">
+		{{!-- TODO 张璐: 下次你在写这么模糊的class name 你就自己打屁股 --}}
+		{{#if data.compete}}
+			<p local-class="label">{{t "apm.component.productCard.compete"}}</p>
+		{{else}}
+			<p local-class="labels">{{t "apm.component.productCard.corpProd"}}</p>
+		{{/if}}
+		<p local-class="factory">{{t "apm.component.productCard.manu"}}:{{data.corp_name}}</p>
+		<p local-class="sort">{{t "apm.component.productCard.type"}}:{{data.research_type}}</p>
 	</div>
-	<div local-class="right">
-		<div local-class="head">
-			{{!-- TODO 张璐: 下次你在写这么模糊的class name 你就自己打屁股 --}}
-			{{#if data.compete}}
-				<p local-class="label">{{t "apm.component.productCard.compete"}}</p>
-			{{else}}
-				<p local-class="labels">{{t "apm.component.productCard.corpProd"}}</p>
-			{{/if}}
-			<p local-class="factory">{{t "apm.component.productCard.manu"}}:{{data.corp_name}}</p>
-			<p local-class="sort">{{t "apm.component.productCard.type"}}:{{data.research_type}}</p>
-		</div>
-		<div local-class="intro">
-			<p>{{data.prod_describe}}</p>
-		</div>
+	<div local-class="intro">
+		<p>{{data.prod_describe}}</p>
 	</div>
 </div>
+{{!-- </div> --}}

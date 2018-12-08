@@ -1,15 +1,15 @@
 <div local-class="content-page">
 	{{scene-tab changeTab=(action 'changeTab') isFinish=isUpshotFinish}}
-	<div local-class={{if (eq introduced.isSelectedName 'showScenario') 'introduced show' 'introduced'}}>
+	<section local-class={{if (eq introduced.isSelectedName 'showScenario') 'introduced show' 'introduced'}}>
 		{{scene-intro-card data=ScenarioModel close=(action 'close')}}
-	</div>
-	<div local-class={{if (eq introduced.isSelectedName 'showProduct') 'introduced show' 'introduced'}}>
+	</section>
+	<section local-class={{if (eq introduced.isSelectedName 'showProduct') 'introduced show' 'introduced'}}>
 		{{product-info-card data=ProductModel close=(action 'close')}}
-	</div>
-	<div local-class={{if (eq introduced.isSelectedName 'showArea') 'introduced show' 'introduced'}}>
+	</section>
+	<section local-class={{if (eq introduced.isSelectedName 'showArea') 'introduced show' 'introduced'}}>
 		{{regional-info-card data=AreaModel close=(action 'close') changeRegion=(action 'changeRegion')}}
-	</div>
-	<div class={{if (not-eq introduced.isSelectedName '') 'display-none' ''}} local-class="content">
+	</section>
+	<section class={{if (not-eq introduced.isSelectedName '') 'display-none' ''}} local-class="content">
 		{{outlet}}
-	</div>
+	</section>
 </div>

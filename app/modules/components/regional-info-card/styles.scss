@@ -1,4 +1,5 @@
 .reginonal-info-container {
+	position: relative;
 	height: 100%;
 	font-size: 0;
 
@@ -18,7 +19,6 @@
 	}
 
 	.reginonal-info-content {
-		// height: 93%;
 		height: calc(100% - 45px);
 		/* Firefox */
 		height: -moz-calc(100% - 45px);
@@ -60,6 +60,7 @@
 		}
 
 		.pane-content {
+			position: relative;
 			height: 100%;
 			overflow-y: auto;
 			overflow-x: hidden;

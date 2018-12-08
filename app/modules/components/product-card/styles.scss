@@ -1,4 +1,4 @@
-.content {
+.product-card-container {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -6,16 +6,12 @@
 	-webkit-box-direction: normal;
 	-ms-flex-direction: row;
 	flex-direction: row;
-	background: #fff;
 	margin-bottom: 15px;
-	// margin-bottom: 15px;
-	// margin-left: 40px;
-	// margin-right: 20px;
 	height: 250px;
+	background: #fff;
 
 	.left {
 		min-width: 170px;
-
 		background-image: linear-gradient(46deg, #E9EFFF 0%, #F8FCFF 100%);
 		display: -webkit-box;
 		display: -ms-flexbox;

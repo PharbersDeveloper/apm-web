@@ -1,19 +1,13 @@
-.center {
-	padding-top: 40px;
+.history-container {
+	height: -webkit-calc(100% - 44px);
+	height: calc(100% - 44px);
+
 	width: 100%;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	-ms-flex-direction: row;
-	flex-direction: row;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
+
 
 	.project-container {
-		width: 100%;
+		height: 100%;
+		// width: 100%;
 		font-size: 0;
 
 		.project-nav {
@@ -78,6 +72,11 @@
 
 		.project-content {
 			padding-top: 10px;
+			height: -webkit-calc(100% - 42px);
+			height: calc(100% - 42px);
+			width: 100%;
+			overflow-y: auto;
+
 		}
 	}
 

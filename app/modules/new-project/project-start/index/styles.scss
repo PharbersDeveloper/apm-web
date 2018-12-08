@@ -27,22 +27,30 @@
 		color: #fff !important;
 	}
 
-	li {
-		width: 100px;
-		height: 30px;
-		background: #fff;
-		line-height: 40px;
-		text-align: center;
-		-webkit-box-shadow: 0 2px 4px 0 rgba(210, 210, 210, 0.50);
-		box-shadow: 0 2px 4px 0 rgba(210, 210, 210, 0.50);
+	ul {
+		list-style-position: inside;
+		list-style-type: none;
+		list-style: none;
 
-		a {
-			font-size: 13px;
-			color: #485465;
-			letter-spacing: 2px;
-			border: 0 !important;
+		li {
+			width: 100px;
+			height: 30px;
+			background: #fff;
+			line-height: 40px;
+			text-align: center;
+			-webkit-box-shadow: 0 2px 4px 0 rgba(210, 210, 210, 0.50);
+			box-shadow: 0 2px 4px 0 rgba(210, 210, 210, 0.50);
+
+			a {
+				font-size: 13px;
+				color: #485465;
+				letter-spacing: 2px;
+				border: 0 !important;
+			}
 		}
 	}
+
+
 }
 
 :global(.next-step) {

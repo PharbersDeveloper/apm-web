@@ -4,6 +4,8 @@ import { inject } from '@ember/service';
 export default Component.extend({
 	i18n: inject(),
 	introduced: inject('introduced-service'),
+	localClassNames: 'scene-tab-container',
+	tagName: 'nav',
 	exitBtnShow: false,
 	actions: {
 		showScenario(name) {
