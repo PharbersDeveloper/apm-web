@@ -11,20 +11,27 @@
 						<p>{{t 'apm.index.slogan'}}</p>
 					</div>
 					<div local-class="input-area">
-						{{#bs-form model=login onSubmit=(action "submit") novalidate=false as |form|}}
-							{{form.element controlType="email" label=(t 'apm.account') placeholder=(t 'apm.account') property="email"}}
-							<p local-class="password" {{action 'links' transition}}>{{t 'apm.index.forgetPassword'}}</p>
-							{{form.element controlType="password" label=(t 'apm.password') placeholder=(t 'apm.password') property="password"}}
-							<div local-class="signin">
-								<p>
-									{{t 'apm.index.doNotHaveAccount'}}
-									{{#link-to 'sign_up'}}{{t 'apm.index.clickToSignUp'}}{{/link-to}}
-								</p>
-							</div>
-							<div class="text-center">
-								{{bs-button defaultText=(t 'apm.signIn') local-class="btn" buttonType="submit"}}
-							</div>
-						{{/bs-form}}
+						<div local-class="userinfo">
+							<label local-class="label-title" for="useremail">{{t 'apm.account'}}</label>
+							{{input id="useremail" name="user-email" type="email" value=userEmail placeholder='请输入账号' required=true local-class="email"}}
+							<p local-class={{if emailHint.status 'hint' 'wrongText'}}>{{emailHint.text}}</p>
+						</div>
+						<div local-class="userinfo">
+							<label local-class="label-title" for="userpassword">{{t 'apm.password'}}</label>
+							{{input id="userpassword" type="password" value=userPassword placeholder='请输入密码' required=true local-class="password"}}
+							<p local-class={{if pwHint.status 'hint' 'wrongText'}}>{{pwHint.text}}</p>
+						</div>
+						<div local-class="signin">
+							<p>
+								{{t 'apm.index.doNotHaveAccount'}}
+								{{#link-to 'sign_up'}}{{t 'apm.index.clickToSignUp'}}{{/link-to}}
+							</p>
+						</div>
+						<div class="text-center">
+							{{#bs-button type="submit" local-class="btn" disabled=shouldDisabled onClick=(action "submit")}}
+								登入
+							{{/bs-button}}
+						</div>
 					</div>
 				</div>
 			</div>

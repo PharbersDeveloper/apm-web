@@ -38,10 +38,10 @@ export default Component.extend({
 		// let parseDate = d3.timeParse("%y-%m");
 		// let formatDateIntoYearMonth = d3.timeFormat('%y-%m');
 
-		let data = chooseData.map(function(item) {
+		let data = chooseData.map(function (item) {
 			let proditem = {};
 			proditem.name = item.name;
-			let inValues = item.values.map(function(iitem) {
+			let inValues = item.values.map(function (iitem) {
 				let valueItem = {};
 				// valueItem.ym = parseDate(iitem.ym);
 				valueItem.ym = iitem.ym;
@@ -120,7 +120,7 @@ export default Component.extend({
 			.data(data).enter()
 			.append('g')
 			.attr('class', 'line-group')
-			.on("mouseover", function(d, i) {
+			.on("mouseover", function (d, i) {
 				svg.append("text")
 					.attr("class", "title-text")
 					.style("fill", color(i))
@@ -129,7 +129,7 @@ export default Component.extend({
 					.attr("x", (width - margin) / 2)
 					.attr("y", 0);
 			})
-			.on("mouseout", function() {
+			.on("mouseout", function () {
 				svg.select(".title-text").remove();
 			})
 			.append('path')
@@ -137,7 +137,7 @@ export default Component.extend({
 			.attr('d', d => line(d.values))
 			.style('stroke', (d, i) => color(i))
 			.style('opacity', lineOpacity)
-			.on("mouseover", function() {
+			.on("mouseover", function () {
 				d3.selectAll('.much-lines .line')
 					.style('opacity', otherLinesOpacityHover);
 				d3.selectAll('.much-lines .circle')
@@ -147,7 +147,7 @@ export default Component.extend({
 					.style("stroke-width", lineStrokeHover)
 					.style("cursor", "pointer");
 			})
-			.on("mouseout", function() {
+			.on("mouseout", function () {
 				d3.selectAll(".much-lines .line")
 					.style('opacity', lineOpacity);
 				d3.selectAll('.much-lines .circle')
@@ -166,7 +166,7 @@ export default Component.extend({
 			.data(d => d.values).enter()
 			.append("g")
 			.attr("class", "circle")
-			.on("mouseover", function(d) {
+			.on("mouseover", function (d) {
 				d3.select(this)
 					.style("cursor", "pointer")
 					.append("text")
@@ -175,7 +175,7 @@ export default Component.extend({
 					.attr("x", d => xScale(d.ym) + 5)
 					.attr("y", d => yScale(d.value) - 10);
 			})
-			.on("mouseout", function() {
+			.on("mouseout", function () {
 				d3.select(this)
 					.style("cursor", "none")
 					// .transition()
@@ -187,13 +187,13 @@ export default Component.extend({
 			.attr("cy", d => yScale(d.value))
 			.attr("r", circleRadius)
 			.style('opacity', circleOpacity)
-			.on("mouseover", function() {
+			.on("mouseover", function () {
 				d3.select(this)
 					// .transition()
 					// .duration(duration)
 					.attr("r", circleRadiusHover);
 			})
-			.on("mouseout", function() {
+			.on("mouseout", function () {
 				d3.select(this)
 					// .transition()
 					// .duration(duration)
@@ -207,7 +207,7 @@ export default Component.extend({
 		svg.append("g")
 			.attr("class", "x axis")
 			// .attr("transform", `translate(0, ${height-margin})`)
-			.attr("transform", `translate(0, ${height-margin})`)
+			.attr("transform", `translate(0, ${height - margin})`)
 			.call(xAxis);
 
 		svg.append("g")
@@ -239,7 +239,7 @@ export default Component.extend({
 			.data(data)
 			.enter()
 			.append("g")
-			.attr("transform", function(d, i) {
+			.attr("transform", function (d, i) {
 				return "translate(" + (i * 100) + ",0)";
 			});
 		//添加图例的矩形色块
@@ -253,15 +253,15 @@ export default Component.extend({
 		// 	});
 		legend.append("line")
 			.attr("x1", 0)
-			.attr("x2", 10)
+			.attr("x2", 18)
 			.attr("y1", 10)
 			.attr("y2", 10)
-			.attr("stroke", function(d, i) {
+			.attr("stroke", function (d, i) {
 				return color(i);
 			})
-			.attr("stroke-width", '3')
+			.attr("stroke-width", '4')
 
-			.attr("fill", function(d, i) {
+			.attr("fill", function (d, i) {
 				return color(i);
 			});
 		//添加图例文字
@@ -270,9 +270,9 @@ export default Component.extend({
 			.attr("y", 9)
 			.attr('class', 'legend-text')
 			.style("fill", '#485465')
-			.style('font-size', '12px')
+			.style('font-size', '14px')
 			.attr("dy", ".35em")
-			.text(function(d) {
+			.text(function (d) {
 				return d.name;
 			});
 	}

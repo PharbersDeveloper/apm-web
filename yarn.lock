@@ -3778,7 +3778,7 @@ ember-cli-app-version@^3.0.0:
     ember-cli-babel "^6.12.0"
     git-repo-version "^1.0.2"
 
-ember-cli-babel@^6.0.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0, ember-cli-babel@^6.9.2:
+ember-cli-babel@^6.0.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0:
   version "6.17.1"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.17.1.tgz#db2d325da1975149b688177f44915903fa2ecb9f"
   dependencies:
@@ -4194,14 +4194,6 @@ ember-cookies@^0.3.1:
     ember-cli-babel "^6.8.2"
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
 
-ember-cp-validations@^4.0.0-beta.2:
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-4.0.0-beta.2.tgz#7a36f2dacc77869b3b61d16b71cfdb842fe0a68c"
-  dependencies:
-    ember-cli-babel "^6.6.0"
-    ember-require-module "^0.3.0"
-    ember-validators "^1.2.0"
-
 ember-css-modules-sass@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ember-css-modules-sass/-/ember-css-modules-sass-1.0.1.tgz#2c988a373ea473af35487c21efd6a889cb70bf54"
@@ -4418,18 +4410,6 @@ ember-raf-scheduler@^0.1.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-require-module@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.2.0.tgz#eafe436737ead4762220a9166b78364abf754274"
-  dependencies:
-    ember-cli-babel "^6.9.2"
-
-ember-require-module@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.3.0.tgz#65aff7908b5b846467e4526594d33cfe0c23456b"
-  dependencies:
-    ember-cli-babel "^6.9.2"
-
 ember-resolver@^4.0.0:
   version "4.5.6"
   resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-4.5.6.tgz#61cecc683fbe3464d759e6d0c2bab97b3914ee4b"
@@ -4538,13 +4518,6 @@ ember-try@^0.2.15, ember-try@^0.2.23:
     rimraf "^2.3.2"
     rsvp "^3.0.17"
     semver "^5.1.0"
-
-ember-validators@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-1.2.0.tgz#b4bc9aeaf97921d80c41b7dc21acca288d1216ae"
-  dependencies:
-    ember-cli-babel "^6.9.2"
-    ember-require-module "^0.2.0"
 
 ember-wormhole@^0.5.4:
   version "0.5.4"
