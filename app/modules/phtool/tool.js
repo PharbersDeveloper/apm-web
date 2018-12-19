@@ -50,7 +50,7 @@ export function dateFormat(timestamp, format) {
  * @return 千分位的字符串
  */
 export function numberThousands(number) {
-	let p = params.toString().replace(/[,，、]/g, "");
+	let p = number.toString().replace(/[,，、]/g, "");
 	if (isNaN(p)) {
 		return p;
 	} else {
@@ -58,7 +58,7 @@ export function numberThousands(number) {
 		let groups = zznf.exec("" + p),
 			mask = groups[1], //符号位
 			integers = (groups[2] || "").split(""), //整数部分
-			decimal = groups[3] || "", //小数部分
+			// decimal = groups[3] || "", //小数部分
 			remain = integers.length % 3;
 
 		let temp = integers.reduce(function (previousValue, currentValue, index) {

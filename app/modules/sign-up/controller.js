@@ -180,6 +180,7 @@ export default Controller.extend(SignupLogic, {
 
 				this.get('pmController').get('Store').queryObject('/api/v1/emailVerify/0', 'user', conditions)
 					.then(data => {
+						this.get('logger').log(data);
 						this.set('whichStep', 1);
 					})
 					.catch((error) => {
@@ -219,6 +220,7 @@ export default Controller.extend(SignupLogic, {
 
 				this.get('pmController').get('Store').queryObject('/api/v1/userRegister/0', 'user', conditions)
 					.then(data => {
+						this.get('logger').log(data);
 						this.set('whichStep', 2);
 					})
 					.catch((error) => {
